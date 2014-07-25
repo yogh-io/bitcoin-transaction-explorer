@@ -1,0 +1,14 @@
+# Compiled source #
+*.class
+*.jar
+*.war
+
+# Eclipse files #
+/.metadata/
+.settings/
+.project
+.classpath
+
+# Build folders #
+target/
+bin/
