@@ -5,5 +5,7 @@
   </ui:style>
   <g:FlowPanel>
     <g:Label text="Textstst" />
+    <g:SimplePanel ui:field="contentPanel" />
+    <g:Label text="end.." />
   </g:FlowPanel>
 </ui:UiBinder>
