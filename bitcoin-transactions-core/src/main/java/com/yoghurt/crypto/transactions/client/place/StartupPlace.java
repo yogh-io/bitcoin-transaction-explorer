@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.activity;
+package com.yoghurt.crypto.transactions.client.place;
 
 public class StartupPlace extends ApplicationPlace {
 

@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.activity;
+package com.yoghurt.crypto.transactions.client.place;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;

@@ -1,11 +1,94 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style>
-  
+  html {
+  	height: 100%;
+  	margin: 0;
+  	padding: 0;
+  }
+  body {
+  	color: #555;
+  	font: normal normal normal 0.75em/normal 'Lucida Grande', sans-serif;
+  	text-align: center;
+  	background-color: rgb(250, 143, 8);
+  	margin: 0;
+  	padding: 0;
+  	overflow-y: auto;
+  	height: 100%;
+  }
+  .mainPanel {
+  	margin: 0 auto;
+  	padding-top: 0;
+  	text-align: left;
+  	width: 800px;
+  	min-height: 100%;
+  	position: relative;
+  }
+  .headerPanel {
+  	background-color: #fff;
+  	padding: 20px;
+  	padding-top: 1px;
+  	border-bottom-left-radius: 5px;
+  	border-bottom-right-radius: 5px;
+  	box-shadow: 0px 0px 5px #fff;
+  	height: 140px;
+  }
+  .title {
+  	line-height: 36px;
+  	float: left;
+	font-size: 31px;
+	font-weight: bold;
+	margin: 20px 0px;
+  }
+  .title:hover {
+	text-decoration: underline;
+	color: rgb(250, 143, 8);
+	cursor: pointer;
+  }
+  .subTitle {
+	font-size: 16px;
+  	color: #888;
+  	float: right;
+	font-weight: bold;
+  	line-height: 41px;
+	margin: 20px 0px;
+  }
+  .lookup {
+	border: 1px solid #999;
+	border-radius: 5px;
+	font-size: 2.4em;
+	width: 740px;
+	padding: 10px 9px;
+  }
+  .contentContainer {
+	padding-bottom: 105px;
+  }
+  .footer {
+	position: absolute;
+	height: 92px;
+	width: 800px;
+	bottom: 0px;
+	box-shadow: 0px 0px 5px #fff;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background-color: #fff;
+  }
+  .innerFooter {
+	margin: 10px 20px;
+	text-align: right;
+  }
   </ui:style>
-  <g:FlowPanel>
-    <g:Label text="Textstst" />
-    <g:SimplePanel ui:field="contentPanel" />
-    <g:Label text="end.." />
+  <g:FlowPanel styleName="{style.mainPanel}">
+    <g:FlowPanel styleName="{style.headerPanel}">
+      <g:Label styleName="{style.title}" ui:field="title">Bitcoin Transactions</g:Label>
+      <g:Label styleName="{style.subTitle}">Broken down to the bone</g:Label>
+      <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
+    </g:FlowPanel>
+    <g:FlowPanel ui:field="contentPanel" styleName="{style.contentContainer}" />
+    <g:FlowPanel styleName="{style.footer}">
+      <g:FlowPanel styleName="{style.innerFooter}">
+        <g:Label styleName="{style.subTitle}">&copy; 2014 - JornC</g:Label>
+      </g:FlowPanel>
+    </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>
