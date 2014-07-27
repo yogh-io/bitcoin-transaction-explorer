@@ -8,7 +8,9 @@
   <inherits name='com.google.gwt.place.Place' />
   <inherits name='com.google.web.bindery.event.Event' />
 
+  <!-- Third party inherits -->
   <inherits name="com.google.gwt.inject.Inject" />
+  <inherits name="com.googlecode.gwt.crypto.Crypto" />
 
   <entry-point class='com.yoghurt.crypto.transactions.client.Application' />
 
