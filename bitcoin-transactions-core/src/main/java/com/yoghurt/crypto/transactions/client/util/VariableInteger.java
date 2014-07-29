@@ -5,6 +5,9 @@ public final class VariableInteger {
   private final long value;
   private int byteSize;
 
+  // TODO Don't store the bytes.
+  private final byte[] bytes;
+
   public VariableInteger(final byte[] bytes) {
     this(bytes, 0);
   }
@@ -25,6 +28,10 @@ public final class VariableInteger {
       value = NumberParseUtil.parseLong(arrayCopy(bytes, pointer + 1, pointer + 9));
       byteSize = 9;
     }
+
+    this.bytes = arrayCopy(bytes, pointer, pointer + byteSize);
+
+
   }
 
   public int getByteSize() {
@@ -46,5 +53,9 @@ public final class VariableInteger {
     System.arraycopy(bytes, start, destBytes, 0, end - start);
 
     return destBytes;
+  }
+
+  public byte[] getBytes() {
+    return bytes;
   }
 }

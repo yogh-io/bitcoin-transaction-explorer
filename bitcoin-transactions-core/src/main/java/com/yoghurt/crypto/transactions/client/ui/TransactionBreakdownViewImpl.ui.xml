@@ -1,5 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+xmlns:g="urn:import:com.google.gwt.user.client.ui"
+xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:style>
   .content {
   	border-radius: 5px;
@@ -22,5 +24,6 @@
   <g:FlowPanel styleName="{style.content}">
     <g:Label styleName="{style.contentHeading}" text="Transaction Breakdown" />
     <g:Label styleName="{style.transactionHex}" ui:field="transactionHex" />
+    <w:TransactionHexViewer ui:field="transactionHexViewer" />
   </g:FlowPanel>
 </ui:UiBinder>

@@ -3,21 +3,14 @@ package com.yoghurt.crypto.transactions.client.util;
 import java.util.ArrayList;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.yoghurt.crypto.transactions.client.domain.ScriptEntity;
-import com.yoghurt.crypto.transactions.client.domain.SignatureScript;
-import com.yoghurt.crypto.transactions.client.domain.Transaction;
-import com.yoghurt.crypto.transactions.client.domain.TransactionInput;
-import com.yoghurt.crypto.transactions.client.domain.TransactionOutPoint;
-import com.yoghurt.crypto.transactions.client.domain.TransactionOutput;
+import com.yoghurt.crypto.transactions.client.domain.transaction.ScriptEntity;
+import com.yoghurt.crypto.transactions.client.domain.transaction.SignatureScript;
+import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionInput;
+import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutPoint;
+import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutput;
 
-public final class TransactionParseUtil {
-  private static final int TRANSACTION_VERSION_FIELD_SIZE = 4;
-  private static final int TRANSACTION_INPUT_OUTPOINT_SIZE = 32;
-  private static final int TRANSACTION_SEQUENCE_SIZE = 4;
-  private static final int TRANSACTION_OUTPOINT_INDEX_SIZE = 4;
-  private static final int TRANSACTION_OUTPUT_VALUE_SIZE = 8;
-  private static final int TRANSACTION_LOCK_TIME_SIZE = 4;
-
+public final class TransactionParseUtil extends TransactionUtil {
   private TransactionParseUtil() {}
 
   public static Transaction parseTransactionHex(final String hex) {
@@ -49,6 +42,7 @@ public final class TransactionParseUtil {
     // Parse the transaction outputs
     pointer = parseTransactionOutputs(transaction, pointer, bytes);
 
+    // Parse the lock time
     pointer = parseLockTime(transaction, pointer, bytes);
 
     return transaction;
@@ -90,7 +84,7 @@ public final class TransactionParseUtil {
   private static int parseTransactionOutputs(final Transaction transaction, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
 
-    final long numOutputs = transaction.getInputSize().getValue();
+    final long numOutputs = transaction.getOutputSize().getValue();
     final ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>((int) numOutputs);
 
     // Iterate over the number of output in the transaction
@@ -102,10 +96,10 @@ public final class TransactionParseUtil {
       output.setTransactionValue(NumberParseUtil.parseLong(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPUT_VALUE_SIZE)));
 
       // Parse the script length
-      parseScriptSize(output, pointer, bytes);
+      pointer = parseScriptSize(output, pointer, bytes);
 
       // Parse the script bytes
-      parseScriptBytes(output, pointer, bytes);
+      pointer = parseScriptBytes(output, pointer, bytes);
 
       // Add the complete output to the list
       outputs.add(output);
@@ -122,7 +116,7 @@ public final class TransactionParseUtil {
 
     final TransactionOutPoint outPoint = new TransactionOutPoint();
     outPoint.setReferenceTransaction(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_INPUT_OUTPOINT_SIZE));
-    outPoint.setIndex(parseInt(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPOINT_INDEX_SIZE)));
+    outPoint.setIndex(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPOINT_INDEX_SIZE)));
 
     input.setOutPoint(outPoint);
 
@@ -158,34 +152,22 @@ public final class TransactionParseUtil {
     return pointer;
   }
 
-  @Deprecated
   private static int parseSequence(final TransactionInput input, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    input.setTransactionSequence(parseInt(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_SEQUENCE_SIZE)));
+    input.setTransactionSequence(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_SEQUENCE_SIZE)));
     return pointer;
   }
 
-  @Deprecated
   private static int parseVersion(final Transaction transaction, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    transaction.setVersion(parseInt(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_VERSION_FIELD_SIZE)));
+    transaction.setVersion(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_VERSION_FIELD_SIZE)));
     return pointer;
   }
 
-  @Deprecated
   private static int parseLockTime(final Transaction transaction, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    transaction.setLockTime(parseInt(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_LOCK_TIME_SIZE)));
+    transaction.setLockTime(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_LOCK_TIME_SIZE)));
     return pointer;
-  }
-
-  // TODO Use NumberParseUtil
-  @Deprecated
-  private static int parseInt(final byte[] bytes) {
-    return bytes[0]
-        | (bytes[1] & 0xFF) << 8
-        | (bytes[2] & 0xFF) << 16
-        | bytes[3] & 0xFF << 24;
   }
 
   @Deprecated
