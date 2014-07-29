@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yoghurt.crypto</groupId>
   <artifactId>bitcoin-transactions</artifactId>
@@ -18,9 +17,45 @@
             <target>1.7</target>
           </configuration>
         </plugin>
+        
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>gwt-maven-plugin</artifactId>
+          <version>2.5.1</version>
+          <executions>
+            <execution>
+              <configuration>
+                <enableClosureCompiler>true</enableClosureCompiler>
+                <force>true</force>
+                <localWorkers>4</localWorkers>
+                <module>${aerius.gwt.module}</module>
+                <strict>true</strict>
+              </configuration>
+              <goals>
+                <goal>compile</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.16</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-catalina</artifactId>
+        <version>7.0.54</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <profiles>
     <profile>
@@ -30,7 +65,41 @@
       </activation>
       <modules>
         <module>bitcoin-transactions-core</module>
+        <module>bitcoin-transactions-server</module>
       </modules>
+    </profile>
+    
+    
+    <profile>
+      <id>ide</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>gwt-maven-plugin</artifactId>
+              <executions>
+                <execution>
+                  <configuration>
+                    <extraJvmArgs>-Xmx1024m</extraJvmArgs>
+                    <compileReport>true</compileReport>
+                    <draftCompile>true</draftCompile>
+                    <style>DETAILED</style>
+                    <force>true</force>
+                    <module>${aerius.gwt.module.debug}</module>
+                    <localWorkers>4</localWorkers>
+                    <soycDetailed>true</soycDetailed>
+                    <strict>true</strict>
+                  </configuration>
+                  <goals>
+                    <goal>compile</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
   </profiles>
 </project>
