@@ -5,7 +5,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.yoghurt.crypto.transactions.client.domain.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace;
 import com.yoghurt.crypto.transactions.client.util.TransactionParseUtil;
 

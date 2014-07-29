@@ -4,7 +4,7 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.yoghurt.crypto.transactions.client.domain.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 
 
 public class TransactionParseUtilTest {
