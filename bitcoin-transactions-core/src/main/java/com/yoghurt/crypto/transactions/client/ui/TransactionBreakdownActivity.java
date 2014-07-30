@@ -1,12 +1,15 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace;
+import com.yoghurt.crypto.transactions.client.util.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.TransactionParseUtil;
 
 public class TransactionBreakdownActivity extends AbstractActivity implements TransactionBreakdownView.Presenter {
@@ -23,8 +26,22 @@ public class TransactionBreakdownActivity extends AbstractActivity implements Tr
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     panel.setWidget(view);
 
-    final Transaction transaction = TransactionParseUtil.parseTransactionHex(place.getHex());
+    final Transaction transaction = new Transaction();
+    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
 
-    view.setTransactionData(transaction);
+    try {
+      TransactionParseUtil.parseTransactionHex(place.getHex(), transaction);
+    } catch (final Exception e) {
+      GWT.log("Parse error");
+      // TODO Parse error, display how far we got
+    }
+    try {
+      TransactionEncodeUtil.encodeTransaction(transaction, rawTransaction);
+    } catch (final Exception e) {
+      GWT.log("Encode error");
+      // TODO Parse error, display how far we got
+    }
+
+    view.setTransactionData(transaction, rawTransaction);
   }
 }

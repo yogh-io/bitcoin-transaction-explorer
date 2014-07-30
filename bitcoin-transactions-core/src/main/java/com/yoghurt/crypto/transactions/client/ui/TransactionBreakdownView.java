@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.user.client.ui.IsWidget;
+import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 
 public interface TransactionBreakdownView extends IsWidget {
@@ -9,6 +10,6 @@ public interface TransactionBreakdownView extends IsWidget {
 
   }
 
-  void setTransactionData(Transaction transaction);
+  void setTransactionData(Transaction transaction, RawTransactionContainer rawTransaction);
 
 }
