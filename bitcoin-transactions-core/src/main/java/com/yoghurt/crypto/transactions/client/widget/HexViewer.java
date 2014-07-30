@@ -38,4 +38,8 @@ public abstract class HexViewer<T> extends Composite {
   }
 
   protected abstract String getColorForType(final T type);
+
+  public void clear() {
+    fieldPanel.clear();
+  }
 }

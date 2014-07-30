@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:style>
+  .label {
+  	margin: 10px 10px 10px 0px;
+  	display: inline-block;
+  	width: 150px;
+  }
+  
+  .labelledValue {
+  	display: inline-block;
+  	font-weight: bold;
+  	word-wrap: break-word;
+  }
+  </ui:style>
+  <g:FlowPanel ui:field="inputPanel">
+    <w:LabelledValue label="Previous transaction" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="previousOutputField" />
+    <w:LabelledValue label="Signature script:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="signatureScriptField" />
+    <w:LabelledValue label="Sequence:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="sequenceField" />
+  </g:FlowPanel>
+</ui:UiBinder>

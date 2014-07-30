@@ -10,7 +10,7 @@
   	color: #555;
   	font: normal normal normal 0.75em/normal 'Lucida Grande', sans-serif;
   	text-align: center;
-  	background-color: rgb(250, 143, 8);
+  	background-color: #E7E7E7;/*rgb(250, 143, 8);*/
   	margin: 0;
   	padding: 0;
   	overflow-y: auto;

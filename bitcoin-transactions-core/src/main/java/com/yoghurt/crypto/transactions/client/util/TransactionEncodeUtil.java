@@ -11,8 +11,10 @@ public final class TransactionEncodeUtil extends TransactionUtil {
   private TransactionEncodeUtil() {}
 
   public static RawTransactionContainer encodeTransaction(final Transaction transaction) {
-    final RawTransactionContainer container = new RawTransactionContainer();
+    return encodeTransaction(transaction, new RawTransactionContainer());
+  }
 
+  public static RawTransactionContainer encodeTransaction(final Transaction transaction, final RawTransactionContainer container) {
     // Encode the version
     container.add(encodeVersion(transaction));
 

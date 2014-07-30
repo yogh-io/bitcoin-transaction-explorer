@@ -3,7 +3,7 @@
   <ui:style type="com.yoghurt.crypto.transactions.client.widget.HexViewer.CustomStyle">
   .hexViewer {
 	font-family: consolas, courier new;
-	width: 390px;
+	width: 780px;
   }
   .byteField {
 	line-height: 24px;

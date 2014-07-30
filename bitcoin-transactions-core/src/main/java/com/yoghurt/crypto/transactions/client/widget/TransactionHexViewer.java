@@ -2,13 +2,11 @@ package com.yoghurt.crypto.transactions.client.widget;
 
 import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionPart;
-import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionPartType;
-import com.yoghurt.crypto.transactions.client.util.TransactionEncodeUtil;
 
 public class TransactionHexViewer extends HexViewer<TransactionPartType> {
-  public void setTransaction(final Transaction transaction) {
-    final RawTransactionContainer rawTransaction = TransactionEncodeUtil.encodeTransaction(transaction);
+  public void setTransaction(final RawTransactionContainer rawTransaction) {
+    clear();
 
     for (final RawTransactionPart part : rawTransaction) {
       final TransactionPartType type = part.getType();

@@ -11,19 +11,34 @@ xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   	box-shadow: 0px 0px 5px #fff;
   }
   .contentHeading {
-	font-size: 31px;
-	height: 37px;
-	font-weight: bold;
-	margin: 10px;
+  	font-size: 31px;
+  	height: 37px;
+  	font-weight: bold;
   }
   .transactionHex {
-	font-family: courier new;
-	word-wrap: break-word;
+  	font-family: courier new;
+  	word-wrap: break-word;
+  }
+  .label {
+  	margin: 10px 10px 10px 0px;
+	display: inline-block;
+	width: 150px;
+  }
+  .labelledValue {
+	display: inline-block;
+	font-weight: bold;
   }
   </ui:style>
-  <g:FlowPanel styleName="{style.content}">
+  <g:HTMLPanel styleName="{style.content}">
     <g:Label styleName="{style.contentHeading}" text="Transaction Breakdown" />
-    <g:Label styleName="{style.transactionHex}" ui:field="transactionHex" />
+    <h2>Transaction inputs</h2>
+    <g:FlowPanel ui:field="inputContainer" />
+    <h2>Transaction outputs</h2>
+    <g:FlowPanel ui:field="outputViewer" />
+    <h2>Raw transaction in hex</h2>
     <w:TransactionHexViewer ui:field="transactionHexViewer" />
-  </g:FlowPanel>
+    <h2>Other information:</h2>
+    <w:LabelledValue label="Transaction format version:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="versionField" />
+    <w:LabelledValue label="Transaction lock time:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="lockTimeField" />
+  </g:HTMLPanel>
 </ui:UiBinder>

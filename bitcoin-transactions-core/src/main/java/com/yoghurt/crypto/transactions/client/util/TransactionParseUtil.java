@@ -2,6 +2,7 @@ package com.yoghurt.crypto.transactions.client.util;
 
 import java.util.ArrayList;
 
+import com.google.gwt.core.shared.GWT;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.domain.transaction.ScriptEntity;
 import com.yoghurt.crypto.transactions.client.domain.transaction.SignatureScript;
@@ -13,19 +14,25 @@ import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutp
 public final class TransactionParseUtil extends TransactionUtil {
   private TransactionParseUtil() {}
 
+
   public static Transaction parseTransactionHex(final String hex) {
-    return parseTransactionBytes(Hex.decode(hex.getBytes()));
+    return parseTransactionHex(hex, new Transaction());
+  }
+
+  public static Transaction parseTransactionHex(final String hex, final Transaction transaction) {
+    return parseTransactionBytes(Hex.decode(hex.getBytes()), transaction);
   }
 
   public static Transaction parseTransactionBytes(final byte[] bytes) {
-    return parseTransactionBytes(bytes, 0);
+    return parseTransactionBytes(bytes, new Transaction());
   }
 
-  public static Transaction parseTransactionBytes(final byte[] bytes, final int initialPointer) {
-    int pointer = initialPointer;
+  public static Transaction parseTransactionBytes(final byte[] bytes, final Transaction transaction) {
+    return parseTransactionBytes(bytes, transaction, 0);
+  }
 
-    // Create an empty transaction
-    final Transaction transaction = new Transaction();
+  public static Transaction parseTransactionBytes(final byte[] bytes, final Transaction transaction, final int initialPointer) {
+    int pointer = initialPointer;
 
     // Parse the version bytes
     pointer = parseVersion(transaction, pointer, bytes);
@@ -45,6 +52,12 @@ public final class TransactionParseUtil extends TransactionUtil {
     // Parse the lock time
     pointer = parseLockTime(transaction, pointer, bytes);
 
+    // Verify if the byte array size is equal to the pointer
+    if(pointer != bytes.length) {
+      GWT.log(pointer + " > " + bytes.length);
+      throw new IllegalStateException("Raw transaction bytes not fully consumed");
+    }
+
     return transaction;
   }
 
@@ -53,6 +66,9 @@ public final class TransactionParseUtil extends TransactionUtil {
 
     final long numInputs = transaction.getInputSize().getValue();
     final ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>((int) numInputs);
+
+    // Stick it all in the transaction
+    transaction.setInputs(inputs);
 
     // Iterate over the number of inputs in the transaction
     for (long i = 0; i < numInputs; i++) {
@@ -75,9 +91,6 @@ public final class TransactionParseUtil extends TransactionUtil {
       inputs.add(input);
     }
 
-    // Stick it all in the transaction
-    transaction.setInputs(inputs);
-
     return pointer;
   }
 
@@ -86,6 +99,9 @@ public final class TransactionParseUtil extends TransactionUtil {
 
     final long numOutputs = transaction.getOutputSize().getValue();
     final ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>((int) numOutputs);
+
+    // Stick it all in the transaction
+    transaction.setOutputs(outputs);
 
     // Iterate over the number of output in the transaction
     for (long i = 0; i < numOutputs; i++) {
@@ -104,9 +120,6 @@ public final class TransactionParseUtil extends TransactionUtil {
       // Add the complete output to the list
       outputs.add(output);
     }
-
-    // Stick it all in the transaction
-    transaction.setOutputs(outputs);
 
     return pointer;
   }
