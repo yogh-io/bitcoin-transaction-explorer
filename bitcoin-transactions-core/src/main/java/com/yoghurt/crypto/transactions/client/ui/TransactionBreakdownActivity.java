@@ -34,13 +34,16 @@ public class TransactionBreakdownActivity extends AbstractActivity implements Tr
     } catch (final Exception e) {
       GWT.log("Parse error");
       // TODO Parse error, display how far we got
+      throw new RuntimeException(e);
     }
     try {
       TransactionEncodeUtil.encodeTransaction(transaction, rawTransaction);
     } catch (final Exception e) {
       GWT.log("Encode error");
       // TODO Parse error, display how far we got
+      throw new RuntimeException(e);
     }
+
 
     view.setTransactionData(transaction, rawTransaction);
   }

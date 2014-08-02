@@ -1,16 +1,14 @@
 package com.yoghurt.crypto.transactions.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -24,23 +22,17 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
   private static final ApplicationRootViewUiBinder UI_BINDER = GWT.create(ApplicationRootViewUiBinder.class);
 
   @UiField FlowPanel contentPanel;
-  @UiField Label title;
+  @UiField Anchor title;
   @UiField TextBox lookupField;
 
-  private final PlaceController placeController;
-
   @Inject
-  public ApplicationRootView(final PlaceController placeController) {
-    this.placeController = placeController;
+  public ApplicationRootView(final PlaceHistoryMapper historyMapper) {
     initWidget(UI_BINDER.createAndBindUi(this));
+
+    title.setHref("#" + historyMapper.getToken(new StartupPlace()));
 
     lookupField.getElement().setPropertyString("placeholder", "Lookup txid, parse raw or parse encoded.");
     lookupField.setFocus(true);
-  }
-
-  @UiHandler("title")
-  void onTitleClick(final ClickEvent e) {
-    placeController.goTo(new StartupPlace());
   }
 
   @Override

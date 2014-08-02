@@ -2,10 +2,7 @@ package com.yoghurt.crypto.transactions.client.util;
 
 import java.util.ArrayList;
 
-import com.google.gwt.core.shared.GWT;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.yoghurt.crypto.transactions.client.domain.transaction.ScriptEntity;
-import com.yoghurt.crypto.transactions.client.domain.transaction.SignatureScript;
 import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionInput;
 import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutPoint;
@@ -13,7 +10,6 @@ import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutp
 
 public final class TransactionParseUtil extends TransactionUtil {
   private TransactionParseUtil() {}
-
 
   public static Transaction parseTransactionHex(final String hex) {
     return parseTransactionHex(hex, new Transaction());
@@ -54,7 +50,6 @@ public final class TransactionParseUtil extends TransactionUtil {
 
     // Verify if the byte array size is equal to the pointer
     if(pointer != bytes.length) {
-      GWT.log(pointer + " > " + bytes.length);
       throw new IllegalStateException("Raw transaction bytes not fully consumed");
     }
 
@@ -75,20 +70,17 @@ public final class TransactionParseUtil extends TransactionUtil {
       // Create an empty transaction input
       final TransactionInput input = new TransactionInput();
 
+      // Add the input to the list (early, to be able to see from where it went wrong, if it goes wrong)
+      inputs.add(input);
+
       // Parse the tx out point to the previous transaction
       pointer = parseTransactionOutPoint(input, pointer, bytes);
 
-      // Parse the script length
-      pointer = parseScriptSize(input, pointer, bytes);
-
-      // Parse the signature script
-      pointer = parseScriptBytes(input, pointer, bytes);
+      // Parse the script
+      pointer = ScriptParseUtil.parseScript(input, pointer, bytes);
 
       // Parse the sequence bytes
       pointer = parseSequence(input, pointer, bytes);
-
-      // Add the complete input to the list
-      inputs.add(input);
     }
 
     return pointer;
@@ -108,17 +100,14 @@ public final class TransactionParseUtil extends TransactionUtil {
       // Create an empty transaction output
       final TransactionOutput output = new TransactionOutput();
 
-      // Parse the transaction value
-      output.setTransactionValue(NumberParseUtil.parseLong(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPUT_VALUE_SIZE)));
-
-      // Parse the script length
-      pointer = parseScriptSize(output, pointer, bytes);
-
-      // Parse the script bytes
-      pointer = parseScriptBytes(output, pointer, bytes);
-
-      // Add the complete output to the list
+      // Add the output to the list (early, to be able to see from where it went wrong, if it goes wrong)
       outputs.add(output);
+
+      // Parse the transaction value
+      output.setTransactionValue(NumberParseUtil.parseLong(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPUT_VALUE_SIZE)));
+
+      // Parse the script
+      pointer = ScriptParseUtil.parseScript(output, pointer, bytes);
     }
 
     return pointer;
@@ -128,8 +117,8 @@ public final class TransactionParseUtil extends TransactionUtil {
     int pointer = initialPointer;
 
     final TransactionOutPoint outPoint = new TransactionOutPoint();
-    outPoint.setReferenceTransaction(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_INPUT_OUTPOINT_SIZE));
-    outPoint.setIndex(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPOINT_INDEX_SIZE)));
+    outPoint.setReferenceTransaction(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_INPUT_OUTPOINT_SIZE));
+    outPoint.setIndex(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPOINT_INDEX_SIZE)));
 
     input.setOutPoint(outPoint);
 
@@ -137,58 +126,32 @@ public final class TransactionParseUtil extends TransactionUtil {
   }
 
   private static int parseTransactionInputSize(final Transaction transaction, final int pointer, final byte[] bytes) {
-    final VariableInteger variableInteger = new VariableInteger(bytes, pointer);
+    final VariableLengthInteger variableInteger = new VariableLengthInteger(bytes, pointer);
     transaction.setInputSize(variableInteger);
     return pointer + variableInteger.getByteSize();
   }
 
   private static int parseTransactionOutputSize(final Transaction transaction, final int pointer, final byte[] bytes) {
-    final VariableInteger variableInteger = new VariableInteger(bytes, pointer);
+    final VariableLengthInteger variableInteger = new VariableLengthInteger(bytes, pointer);
     transaction.setOutputSize(variableInteger);
     return pointer + variableInteger.getByteSize();
   }
 
-  private static int parseScriptSize(final ScriptEntity scriptEntity, final int pointer, final byte[] bytes) {
-    final VariableInteger variableInteger = new VariableInteger(bytes, pointer);
-    scriptEntity.setScriptSize(variableInteger);
-    return pointer + variableInteger.getByteSize();
-  }
-
-  private static int parseScriptBytes(final ScriptEntity scriptEntity, final int initialPointer, final byte[] bytes) {
-    int pointer = initialPointer;
-
-    final SignatureScript signatureScript = new SignatureScript();
-    signatureScript.setScriptBytes(arrayCopy(bytes, pointer, pointer = pointer + (int) scriptEntity.getScriptSize().getValue()));
-
-    scriptEntity.setSignatureScript(signatureScript);
-
-    return pointer;
-  }
-
   private static int parseSequence(final TransactionInput input, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    input.setTransactionSequence(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_SEQUENCE_SIZE)));
+    input.setTransactionSequence(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_SEQUENCE_SIZE)));
     return pointer;
   }
 
   private static int parseVersion(final Transaction transaction, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    transaction.setVersion(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_VERSION_FIELD_SIZE)));
+    transaction.setVersion(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_VERSION_FIELD_SIZE)));
     return pointer;
   }
 
   private static int parseLockTime(final Transaction transaction, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    transaction.setLockTime(NumberParseUtil.parseUint32(arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_LOCK_TIME_SIZE)));
+    transaction.setLockTime(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_LOCK_TIME_SIZE)));
     return pointer;
-  }
-
-  @Deprecated
-  private static byte[] arrayCopy(final byte[] bytes, final int start, final int end) {
-    final byte[] destBytes = new byte[end - start];
-
-    System.arraycopy(bytes, start, destBytes, 0, end - start);
-
-    return destBytes;
   }
 }

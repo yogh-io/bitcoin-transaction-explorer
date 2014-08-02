@@ -2,18 +2,30 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style type="com.yoghurt.crypto.transactions.client.widget.HexViewer.CustomStyle">
   .hexViewer {
-	font-family: consolas, courier new;
-	width: 780px;
+  	font-family: consolas, courier new;
+  	width: 780px;
+  }
+  .byteSet {
+  	margin-right: 15px;
+  	display: inline-block;
   }
   .byteField {
-	line-height: 24px;
-	padding: 0px 4px;
-	display: inline-block;
-	background-color: rgba(255, 255, 255, 0);
-	border-top: 3px solid transparent;
+  	line-height: 24px;
+  	padding: 0px 4px;
+  	display: inline-block;
+  	background-color: rgba(255, 255, 255, 0);
+  	border-top: 3px solid transparent;
+  	margin-bottom: 15px;
   }
-  .byteField:nth-child\(8n\) {
-	margin-right: 15px;
+  .byteField:hover {
+  	background-color: #EEEEEE !important;
+  	cursor: pointer;
+  }
+  .byteField:active {
+  	background-color: white !important;
+  }
+  .fieldSelected {
+  	background-color: white !important;
   }
   </ui:style>
   <g:FlowPanel styleName="{style.hexViewer}" ui:field="fieldPanel">

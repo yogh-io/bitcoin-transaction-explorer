@@ -17,7 +17,7 @@ public final class NumberParseUtil {
   }
 
   public static int parseUint32(final byte[] bytes) {
-    return bytes[0]
+    return bytes[0] & 0xFF
         | (bytes[1] & 0xFF) << 8
         | (bytes[2] & 0xFF) << 16
         | bytes[3] & 0xFF << 24;
