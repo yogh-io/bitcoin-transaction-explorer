@@ -32,7 +32,7 @@ public class ApplicationClientModule extends AbstractGinModule {
 
     // Binding views
     bind(StartupView.class).to(StartupViewImpl.class).in(Singleton.class);
-    bind(TransactionBreakdownView.class).to(TransactionBreakdownViewImpl.class).in(Singleton.class);
+    bind(TransactionBreakdownView.class).to(TransactionBreakdownViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }

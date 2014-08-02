@@ -10,7 +10,7 @@
   	color: #555;
   	font: normal normal normal 0.75em/normal 'Lucida Grande', sans-serif;
   	text-align: center;
-  	background-color: #E7E7E7;/*rgb(250, 143, 8);*/
+  	background-color: /*#E7E7E7;*/rgb(250, 143, 8);
   	margin: 0;
   	padding: 0;
   	overflow-y: auto;
@@ -34,11 +34,13 @@
   	height: 140px;
   }
   .title {
+  	color: #555;
   	line-height: 36px;
   	float: left;
 	font-size: 31px;
 	font-weight: bold;
 	margin: 20px 0px;
+	text-decoration: none;
   }
   .title:hover {
 	text-decoration: underline;
@@ -61,7 +63,7 @@
 	padding: 10px 9px;
   }
   .contentContainer {
-	padding-bottom: 105px;
+	padding-bottom: 140px;
   }
   .footer {
 	position: absolute;
@@ -80,7 +82,7 @@
   </ui:style>
   <g:FlowPanel styleName="{style.mainPanel}">
     <g:FlowPanel styleName="{style.headerPanel}">
-      <g:Label styleName="{style.title}" ui:field="title">Bitcoin Transactions</g:Label>
+      <g:Anchor styleName="{style.title}" ui:field="title">Bitcoin Transactions</g:Anchor>
       <g:Label styleName="{style.subTitle}">Broken down to the bone</g:Label>
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>

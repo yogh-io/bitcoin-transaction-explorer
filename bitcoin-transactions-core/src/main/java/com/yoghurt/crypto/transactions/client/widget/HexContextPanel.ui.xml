@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+  .contextPanel {
+	box-shadow: 2px 3px 6px 2px #888;
+	background-color: rgba(255, 255, 255, 0.90);
+	border-top: 6px solid transparent;
+  }
+  </ui:style>
+  <g:SimplePanel styleName="{style.contextPanel}">
+    <g:SimplePanel ui:field="contextPanel" />
+  </g:SimplePanel>
+</ui:UiBinder>

@@ -2,16 +2,16 @@ package com.yoghurt.crypto.transactions.client.domain.transaction;
 
 import java.util.ArrayList;
 
-import com.yoghurt.crypto.transactions.client.util.VariableInteger;
+import com.yoghurt.crypto.transactions.client.util.VariableLengthInteger;
 
 public class Transaction {
   private int version;
   private int lockTime;
 
-  private VariableInteger inputSize;
+  private VariableLengthInteger inputSize;
   private ArrayList<TransactionInput> inputs;
 
-  private VariableInteger outputSize;
+  private VariableLengthInteger outputSize;
   private ArrayList<TransactionOutput> outputs;
 
 
@@ -23,11 +23,11 @@ public class Transaction {
     this.version = version;
   }
 
-  public VariableInteger getInputSize() {
+  public VariableLengthInteger getInputSize() {
     return inputSize;
   }
 
-  public void setInputSize(final VariableInteger inputSize) {
+  public void setInputSize(final VariableLengthInteger inputSize) {
     this.inputSize = inputSize;
   }
 
@@ -39,11 +39,11 @@ public class Transaction {
     this.inputs = inputs;
   }
 
-  public VariableInteger getOutputSize() {
+  public VariableLengthInteger getOutputSize() {
     return outputSize;
   }
 
-  public void setOutputSize(final VariableInteger outputSize) {
+  public void setOutputSize(final VariableLengthInteger outputSize) {
     this.outputSize = outputSize;
   }
 

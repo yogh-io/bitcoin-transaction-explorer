@@ -1,11 +1,9 @@
 package com.yoghurt.crypto.transactions.client.domain.transaction;
 
-import com.yoghurt.crypto.transactions.client.util.VariableInteger;
+import com.yoghurt.crypto.transactions.client.domain.transaction.script.ScriptEntity;
 
-public class TransactionInput implements ScriptEntity  {
+public class TransactionInput extends ScriptEntity  {
   private TransactionOutPoint outPoint;
-  private VariableInteger scriptSize;
-  private SignatureScript signatureScript;
   private int transactionSequence;
 
   public void setOutPoint(final TransactionOutPoint outPoint) {
@@ -14,26 +12,6 @@ public class TransactionInput implements ScriptEntity  {
 
   public TransactionOutPoint getOutPoint() {
     return outPoint;
-  }
-
-  @Override
-  public VariableInteger getScriptSize() {
-    return scriptSize;
-  }
-
-  @Override
-  public void setScriptSize(final VariableInteger scriptSize) {
-    this.scriptSize = scriptSize;
-  }
-
-  @Override
-  public SignatureScript getSignatureScript() {
-    return signatureScript;
-  }
-
-  @Override
-  public void setSignatureScript(final SignatureScript signatureScript) {
-    this.signatureScript = signatureScript;
   }
 
   public int getTransactionSequence() {

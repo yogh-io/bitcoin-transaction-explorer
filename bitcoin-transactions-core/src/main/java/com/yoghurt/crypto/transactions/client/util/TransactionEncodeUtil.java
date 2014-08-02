@@ -6,6 +6,8 @@ import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
 import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionInput;
 import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutput;
 import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionPartType;
+import com.yoghurt.crypto.transactions.client.domain.transaction.script.ScriptEntity;
+import com.yoghurt.crypto.transactions.client.domain.transaction.script.ScriptPart;
 
 public final class TransactionEncodeUtil extends TransactionUtil {
   private TransactionEncodeUtil() {}
@@ -62,8 +64,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(new RawTransactionPart(TransactionPartType.INPUT_SCRIPT_LENGTH, scriptSizeBytes));
 
     // Encode the signature script
-    final byte[] scriptSig = input.getSignatureScript().getScriptBytes();
-    container.add(new RawTransactionPart(TransactionPartType.INPUT_SIGNATURE_SCRIPT, scriptSig));
+    encodeScript(input, container);
 
     // Encode the sequence bytes
     final byte[] sequenceBytes = NumberEncodeUtil.encodeUint32(input.getTransactionSequence());
@@ -80,8 +81,17 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(new RawTransactionPart(TransactionPartType.OUTPUT_SCRIPT_LENGTH, scriptSizeBytes));
 
     // Encode the output script
-    final byte[] scriptSigBytes = output.getSignatureScript().getScriptBytes();
-    container.add(new RawTransactionPart(TransactionPartType.OUTPUT_SIGNATURE_SCRIPT, scriptSigBytes));
+    encodeScript(output, container);
+  }
+
+  private static void encodeScript(final ScriptEntity script, final RawTransactionContainer container) {
+    for(final ScriptPart part : script.getInstructions()) {
+      container.add(new RawTransactionPart(TransactionPartType.OPCODE, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
+
+      if(ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
+        container.add(new RawTransactionPart(TransactionPartType.OPCODE_PUSH_DATA, part.getBytes()));
+      }
+    }
   }
 
   private static RawTransactionPart encodeLockTime(final Transaction transaction) {
@@ -97,7 +107,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     return new RawTransactionPart(TransactionPartType.INPUT_SIZE, encodeVariableInteger(transaction.getInputSize()));
   }
 
-  private static byte[] encodeVariableInteger(final VariableInteger varInt) {
+  private static byte[] encodeVariableInteger(final VariableLengthInteger varInt) {
     return varInt.getBytes();
   }
 

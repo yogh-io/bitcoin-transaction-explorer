@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.domain;
+package com.yoghurt.crypto.transactions.client.domain.transaction.script;
 
 public class SignatureScript {
 
