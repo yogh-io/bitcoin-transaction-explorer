@@ -1,12 +1,18 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.widget.Arrow.Orientation;
 
-public class AttachedContextPanel extends PopupPanel {
+public class AttachedContextPanel extends PopupPanel implements ResizeHandler {
   private final Arrow arr;
   private Widget widget;
+
+  private HandlerRegistration resizeRegistration;
 
   /**
    * Default constructor.
@@ -31,6 +37,25 @@ public class AttachedContextPanel extends PopupPanel {
     getContainerElement().appendChild(arr.getElement());
   }
 
+  @Override
+  public void hide(final boolean autoClosed) {
+    super.hide(autoClosed);
+
+    if(resizeRegistration != null) {
+      resizeRegistration.removeHandler();
+    }
+  }
+
+  @Override
+  public void show() {
+    super.show();
+
+    if(resizeRegistration != null) {
+      resizeRegistration.removeHandler();
+    }
+    resizeRegistration = Window.addResizeHandler(this);
+  }
+
   /**
    * Attaches this popup to the given widget and repositions the arrow to be
    * placed in the middle of the given widget.
@@ -39,7 +64,11 @@ public class AttachedContextPanel extends PopupPanel {
    */
   public void attachToWidget(final Widget w) {
     this.widget = w;
-    setPopupPosition(w.getAbsoluteLeft() + w.getOffsetWidth() / 2 - getWidget().getOffsetWidth() / 2, w.getAbsoluteTop() - getWidget().getOffsetHeight() - 10);
+
+    final int x = Math.max(5, w.getAbsoluteLeft() + w.getOffsetWidth() / 2 - getWidget().getOffsetWidth() / 2);
+    final int y = w.getAbsoluteTop() - getWidget().getOffsetHeight() - 10;
+
+    setPopupPosition(x, y);
     updateArrowPosition();
   }
 
@@ -65,5 +94,10 @@ public class AttachedContextPanel extends PopupPanel {
     if (widget != null && widget.isAttached()) {
       arr.setPosition(widget.getAbsoluteLeft() - getAbsoluteLeft() + widget.getOffsetWidth() / 2 - 10);
     }
+  }
+
+  @Override
+  public void onResize(final ResizeEvent event) {
+    attachToWidget(widget);
   }
 }

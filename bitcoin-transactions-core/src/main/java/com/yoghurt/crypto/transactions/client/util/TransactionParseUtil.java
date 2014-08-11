@@ -16,7 +16,7 @@ public final class TransactionParseUtil extends TransactionUtil {
   }
 
   public static Transaction parseTransactionHex(final String hex, final Transaction transaction) {
-    return parseTransactionBytes(Hex.decode(hex.getBytes()), transaction);
+    return parseTransactionBytes(Hex.decode(hex), transaction);
   }
 
   public static Transaction parseTransactionBytes(final byte[] bytes) {

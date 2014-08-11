@@ -31,7 +31,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
     title.setHref("#" + historyMapper.getToken(new StartupPlace()));
 
-    lookupField.getElement().setPropertyString("placeholder", "Lookup txid, parse raw or parse encoded.");
+    lookupField.getElement().setPropertyString("placeholder", "Insert tx to look up, or insert raw transaction hex");
     lookupField.setFocus(true);
   }
 

@@ -39,13 +39,13 @@ public final class TransactionEncodeUtil extends TransactionUtil {
   }
 
   private static void encodeTransactionInputs(final Transaction transaction, final RawTransactionContainer container) {
-    for(int i = 0; i < transaction.getInputSize().getValue(); i++) {
+    for (int i = 0; i < transaction.getInputSize().getValue(); i++) {
       encodeInput(transaction.getInputs().get(i), container);
     }
   }
 
   private static void encodeTransactionOutputs(final Transaction transaction, final RawTransactionContainer container) {
-    for(int i = 0; i < transaction.getOutputs().size(); i++) {
+    for (int i = 0; i < transaction.getOutputs().size(); i++) {
       encodeOutput(transaction.getOutputs().get(i), container);
     }
   }
@@ -64,7 +64,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(new RawTransactionPart(TransactionPartType.INPUT_SCRIPT_LENGTH, scriptSizeBytes));
 
     // Encode the signature script
-    encodeScript(input, container);
+    encodeScript(input, container, ScriptType.SCRIPT_SIG);
 
     // Encode the sequence bytes
     final byte[] sequenceBytes = NumberEncodeUtil.encodeUint32(input.getTransactionSequence());
@@ -81,15 +81,17 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(new RawTransactionPart(TransactionPartType.OUTPUT_SCRIPT_LENGTH, scriptSizeBytes));
 
     // Encode the output script
-    encodeScript(output, container);
+    encodeScript(output, container, ScriptType.SCRIPT_PUB_KEY);
   }
 
-  private static void encodeScript(final ScriptEntity script, final RawTransactionContainer container) {
-    for(final ScriptPart part : script.getInstructions()) {
-      container.add(new RawTransactionPart(TransactionPartType.OPCODE, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
+  private static void encodeScript(final ScriptEntity script, final RawTransactionContainer container, final ScriptType type) {
+    for (final ScriptPart part : script.getInstructions()) {
+      final TransactionPartType partType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.OP_CODE);
+      container.add(new RawTransactionPart(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
 
-      if(ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
-        container.add(new RawTransactionPart(TransactionPartType.OPCODE_PUSH_DATA, part.getBytes()));
+      if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
+        final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
+        container.add(new RawTransactionPart(pushPartType, part.getBytes()));
       }
     }
   }

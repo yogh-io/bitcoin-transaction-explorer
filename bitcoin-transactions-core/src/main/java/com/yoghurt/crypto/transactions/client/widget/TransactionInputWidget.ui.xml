@@ -1,21 +1,33 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget"
+  xmlns:ws="urn:import:com.yoghurt.crypto.transactions.client.widget.script">
   <ui:style>
   .label {
   	margin: 10px 10px 10px 0px;
   	display: inline-block;
-  	width: 150px;
+  	width: 85px;
   }
-  
   .labelledValue {
   	display: inline-block;
   	font-weight: bold;
   	word-wrap: break-word;
   }
+  .widg {
+  	display: inline-block;
+  }
   </ui:style>
-  <g:FlowPanel ui:field="inputPanel">
-    <w:LabelledValue label="Previous transaction" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="previousOutputField" />
-    <w:LabelledValue label="Signature script:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="signatureScriptField" />
-    <w:LabelledValue label="Sequence:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="sequenceField" />
+  <g:FlowPanel>
+    <w:LabelledWidget label="Previous tx:" labelStyleName="{style.label}">
+      <w:HashViewer ui:field="hashViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="Index:" labelStyleName="{style.label}">
+      <w:ValueViewer ui:field="indexViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="ScriptSig:" labelStyleName="{style.label}">
+      <ws:ScriptViewer ui:field="signatureScriptViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="Sequence:" labelStyleName="{style.label}">
+      <w:ValueViewer ui:field="sequenceViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
   </g:FlowPanel>
 </ui:UiBinder>

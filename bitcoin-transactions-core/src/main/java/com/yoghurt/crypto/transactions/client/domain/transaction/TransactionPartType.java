@@ -21,7 +21,11 @@ public enum TransactionPartType {
 
   LOCK_TIME,
 
-  OPCODE,
+  SCRIPT_SIG_OP_CODE,
 
-  OPCODE_PUSH_DATA,
+  SCRIPT_SIG_PUSH_DATA,
+
+  SCRIPT_PUB_KEY_OP_CODE,
+
+  SCRIPT_PUB_KEY_PUSH_DATA;
 }
