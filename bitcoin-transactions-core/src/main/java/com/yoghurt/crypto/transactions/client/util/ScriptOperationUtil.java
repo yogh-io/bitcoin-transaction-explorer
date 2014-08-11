@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.client.util;
 
+import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionPartType;
 import com.yoghurt.crypto.transactions.client.domain.transaction.script.Operation;
 import com.yoghurt.crypto.transactions.client.domain.transaction.script.ScriptPart;
 
@@ -7,7 +8,7 @@ public final class ScriptOperationUtil {
 
   private ScriptOperationUtil() {}
 
-  // TODO Get these out of some cache
+  // TODO Get these out of some cache instead of iterating over the enum values
   public static Operation getOperation(final int opcode) {
     // Test for simple push data ops
     if(opcode > 0 && 75 >= opcode) {
@@ -23,6 +24,27 @@ public final class ScriptOperationUtil {
 
     // Can't find it, return invalid op
     return Operation.OP_INVALIDOPCODE;
+  }
+
+  public static TransactionPartType getScriptPartType(final ScriptType type, final ScriptPartType partType) {
+    switch (type) {
+    case SCRIPT_PUB_KEY:
+      switch (partType) {
+      case OP_CODE:
+        return TransactionPartType.SCRIPT_PUB_KEY_OP_CODE;
+      case PUSH_DATA:
+        return TransactionPartType.SCRIPT_PUB_KEY_PUSH_DATA;
+      }
+    case SCRIPT_SIG:
+      switch (partType) {
+      case OP_CODE:
+        return TransactionPartType.SCRIPT_SIG_OP_CODE;
+      case PUSH_DATA:
+        return TransactionPartType.SCRIPT_SIG_PUSH_DATA;
+      }
+    }
+
+    return null;
   }
 
   /**

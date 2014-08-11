@@ -1,7 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-xmlns:g="urn:import:com.google.gwt.user.client.ui"
-xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget"
+  xmlns:wt="urn:import:com.yoghurt.crypto.transactions.client.widget.transaction">
   <ui:style>
   .content {
   	border-radius: 5px;
@@ -10,23 +9,30 @@ xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   	background-color: #fff;
   	box-shadow: 0px 0px 5px #fff;
   }
+  
   .contentHeading {
   	font-size: 31px;
   	height: 37px;
   	font-weight: bold;
   }
+  
   .transactionHex {
   	font-family: courier new;
   	word-wrap: break-word;
   }
+  
   .label {
   	margin: 10px 10px 10px 0px;
-	display: inline-block;
-	width: 150px;
+  	display: inline-block;
+  	width: 85px;
   }
-  .labelledValue {
-	display: inline-block;
-	font-weight: bold;
+  
+  .hexViewer {
+  	width: 780px;
+  }
+  
+  .widg {
+  	display: inline-block;
   }
   </ui:style>
   <g:HTMLPanel styleName="{style.content}">
@@ -34,11 +40,15 @@ xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
     <h2>Transaction inputs</h2>
     <g:FlowPanel ui:field="inputContainer" />
     <h2>Transaction outputs</h2>
-    <g:FlowPanel ui:field="outputViewer" />
-    <h2>Raw transaction in hex</h2>
-    <w:TransactionHexViewer ui:field="transactionHexViewer" />
+    <g:FlowPanel ui:field="outputContainer" />
     <h2>Other information:</h2>
-    <w:LabelledValue label="Transaction format version:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="versionField" />
-    <w:LabelledValue label="Transaction lock time:" labelStyle="{style.label}" valueStyle="{style.labelledValue}" ui:field="lockTimeField" />
+    <w:LabelledWidget label="Format version:" labelStyleName="{style.label}">
+      <w:ValueViewer ui:field="versionViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="Lock time:" labelStyleName="{style.label}">
+      <w:ValueViewer ui:field="lockTimeViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
+    <h2>Raw transaction in hex</h2>
+    <wt:TransactionHexViewer ui:field="transactionHexViewer" styleName="{style.hexViewer}" />
   </g:HTMLPanel>
 </ui:UiBinder>
