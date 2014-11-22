@@ -57,7 +57,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
   private static void encodeInput(final TransactionInput input, final RawTransactionContainer container) {
     // Encode the outpoint hash
     final byte[] outpointHash = input.getOutPoint().getReferenceTransaction();
-    container.add(new RawTransactionPart(TransactionPartType.INPUT_OUTPOINT_HASH, outpointHash));
+    container.add(new RawTransactionPart(TransactionPartType.TRANSACTION_HASH, outpointHash));
 
     // Encode the outpoint index
     final byte[] indexBytes = NumberEncodeUtil.encodeUint32(input.getOutPoint().getIndex());

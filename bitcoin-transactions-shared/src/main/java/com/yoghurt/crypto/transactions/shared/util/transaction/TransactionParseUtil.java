@@ -42,12 +42,27 @@ public final class TransactionParseUtil extends TransactionUtil {
     // Parse the lock time
     pointer = parseLockTime(transaction, pointer, bytes);
 
+    // Compute the transaction tx
+    computeTransactionHash(transaction, initialPointer, pointer, bytes);
+
     // Verify if the byte array size is equal to the pointer
+    // TODO This will not working in the future because it'd be possible that a massive byte array is passed
+    // which contains more than one transaction (such as blocks)
     if(pointer != bytes.length) {
       throw new IllegalStateException("Raw transaction bytes not fully consumed");
     }
 
     return transaction;
+  }
+
+  private static void computeTransactionHash(final Transaction transaction, final int initialPointer, final int pointer, final byte[] bytes) {
+    final byte[] txBytes = ArrayUtil.arrayCopy(bytes, initialPointer, pointer);
+
+    // Create SHA256 digest and feed it the tx bytes
+    final byte[] txHash = ComputeUtil.computeDoubleSHA256(txBytes);
+
+    // Set the transaction tx
+    transaction.setTransactionId(txHash);
   }
 
   private static int parseTransactionInputs(final Transaction transaction, final int initialPointer, final byte[] bytes) {

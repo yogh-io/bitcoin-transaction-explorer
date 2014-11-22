@@ -18,12 +18,14 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 
-public class TransactionBreakdownViewImpl extends Composite implements TransactionBreakdownView {
-  interface TransactionBreakdownViewImplUiBinder extends UiBinder<Widget, TransactionBreakdownViewImpl> {}
+public class TransactionViewImpl extends Composite implements TransactionView {
+  interface TransactionViewImplUiBinder extends UiBinder<Widget, TransactionViewImpl> {}
 
-  private static final TransactionBreakdownViewImplUiBinder UI_BINDER = GWT.create(TransactionBreakdownViewImplUiBinder.class);
+  private static final TransactionViewImplUiBinder UI_BINDER = GWT.create(TransactionViewImplUiBinder.class);
 
   @UiField TransactionHexViewer transactionHexViewer;
+
+  @UiField(provided = true)  ValueViewer txIdViewer;
 
   @UiField FlowPanel inputContainer;
   @UiField FlowPanel outputContainer;
@@ -32,7 +34,8 @@ public class TransactionBreakdownViewImpl extends Composite implements Transacti
   @UiField(provided = true) ValueViewer lockTimeViewer;
 
   @Inject
-  public TransactionBreakdownViewImpl() {
+  public TransactionViewImpl() {
+    txIdViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH));
     versionViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.VERSION));
     lockTimeViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
 
@@ -42,6 +45,8 @@ public class TransactionBreakdownViewImpl extends Composite implements Transacti
   @Override
   public void setTransactionData(final Transaction transaction, final RawTransactionContainer rawTransaction) {
     transactionHexViewer.setTransaction(rawTransaction);
+
+    txIdViewer.setValue(transaction.getTransactionId());
 
     versionViewer.setValue(String.valueOf(transaction.getVersion()));
     lockTimeViewer.setValue(String.valueOf(transaction.getLockTime()));
@@ -53,7 +58,7 @@ public class TransactionBreakdownViewImpl extends Composite implements Transacti
       }
     }
 
-    if (transaction.getInputs() != null) {
+    if (transaction.getOutputs() != null) {
       for (final TransactionOutput output : transaction.getOutputs()) {
         final TransactionOutputWidget inputWidget = new TransactionOutputWidget(output);
         outputContainer.add(inputWidget);

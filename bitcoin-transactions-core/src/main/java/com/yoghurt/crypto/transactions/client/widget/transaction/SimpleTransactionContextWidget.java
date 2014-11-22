@@ -20,7 +20,7 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<RawTr
 
   private String getTextForPart(final RawTransactionPart value) {
     switch (value.getType()) {
-    case INPUT_OUTPOINT_HASH:
+    case TRANSACTION_HASH:
       return "Previous transaction hash";
     case INPUT_OUTPOINT_INDEX:
       return "Previous output index: " + new VariableLengthInteger(value.getBytes()).getValue();

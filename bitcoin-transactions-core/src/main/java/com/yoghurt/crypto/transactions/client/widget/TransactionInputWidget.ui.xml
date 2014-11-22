@@ -18,7 +18,7 @@
   </ui:style>
   <g:FlowPanel>
     <w:LabelledWidget label="Previous tx:" labelStyleName="{style.label}">
-      <w:HashViewer ui:field="hashViewer" styleName="{style.widg}" />
+      <w:ValueViewer ui:field="hashViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="Index:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="indexViewer" styleName="{style.widg}" />

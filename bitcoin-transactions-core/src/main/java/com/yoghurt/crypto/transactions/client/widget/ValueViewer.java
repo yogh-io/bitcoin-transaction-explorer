@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ValueViewer extends ContextFieldSet<String> {
@@ -27,8 +29,12 @@ public class ValueViewer extends ContextFieldSet<String> {
     return value;
   }
 
-  public void setValue(final String hash) {
+  public void setValue(final byte[] hash) {
+    setValue(Str.toString(Hex.encode(hash)).toUpperCase());
+  }
+
+  public void setValue(final String value) {
     clear();
-    addField(hash);
+    addField(value);
   }
 }

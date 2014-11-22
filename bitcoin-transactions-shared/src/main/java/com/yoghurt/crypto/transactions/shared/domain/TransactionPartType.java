@@ -5,7 +5,7 @@ public enum TransactionPartType {
 
   INPUT_SIZE,
 
-  INPUT_OUTPOINT_HASH,
+  TRANSACTION_HASH,
 
   INPUT_OUTPOINT_INDEX,
 

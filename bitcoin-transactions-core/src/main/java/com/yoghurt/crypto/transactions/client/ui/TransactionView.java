@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
-public interface TransactionBreakdownView extends IsWidget {
+public interface TransactionView extends IsWidget {
 
   public interface Presenter {
 

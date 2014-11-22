@@ -18,8 +18,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace.TransactionType;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionType;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget {
@@ -51,7 +51,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
       return;
     }
 
-    placeController.goTo(new TransactionBreakdownPlace(TransactionType.ID, lookupField.getText()));
+    placeController.goTo(new TransactionPlace(TransactionType.ID, lookupField.getText()));
   }
 
   @Override
