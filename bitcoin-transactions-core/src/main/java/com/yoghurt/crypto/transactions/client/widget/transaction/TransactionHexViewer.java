@@ -1,10 +1,10 @@
 package com.yoghurt.crypto.transactions.client.widget.transaction;
 
-import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionPart;
-import com.yoghurt.crypto.transactions.client.util.Color;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.widget.HexViewer;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionPart;
 
 public class TransactionHexViewer extends HexViewer<RawTransactionPart> {
   public TransactionHexViewer() {

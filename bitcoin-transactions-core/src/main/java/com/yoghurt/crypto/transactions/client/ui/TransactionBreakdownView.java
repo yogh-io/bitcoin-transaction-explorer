@@ -1,8 +1,8 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 public interface TransactionBreakdownView extends IsWidget {
 

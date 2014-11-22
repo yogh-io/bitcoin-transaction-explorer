@@ -6,11 +6,12 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace;
-import com.yoghurt.crypto.transactions.client.util.TransactionEncodeUtil;
-import com.yoghurt.crypto.transactions.client.util.TransactionParseUtil;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public class TransactionBreakdownActivity extends AbstractActivity implements TransactionBreakdownView.Presenter {
   private final TransactionBreakdownView view;
@@ -30,7 +31,7 @@ public class TransactionBreakdownActivity extends AbstractActivity implements Tr
     final RawTransactionContainer rawTransaction = new RawTransactionContainer();
 
     try {
-      TransactionParseUtil.parseTransactionHex(place.getHex(), transaction);
+      TransactionParseUtil.parseTransactionBytes(Hex.decode(place.getHex()), transaction);
     } catch (final Exception e) {
       GWT.log("Parse error");
       // TODO Parse error, display how far we got

@@ -5,10 +5,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutput;
-import com.yoghurt.crypto.transactions.client.util.ColorBuilder;
-import com.yoghurt.crypto.transactions.client.util.ScriptType;
+import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
 import com.yoghurt.crypto.transactions.client.widget.script.ScriptViewer;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 
 public class TransactionOutputWidget extends Composite {
   interface TransactionOutputWidgetUiBinder extends UiBinder<Widget, TransactionOutputWidget> {}

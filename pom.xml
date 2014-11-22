@@ -5,6 +5,11 @@
   <version>0.1</version>
   <packaging>pom</packaging>
   <name>Bitcoin transaction explorer</name>
+  
+  <properties>
+    <com.google.gwt.version>2.7.0-rc1</com.google.gwt.version>
+    <org.codehaus.mojo.gwtmavenplugin.version>2.7.0-rc1</org.codehaus.mojo.gwtmavenplugin.version>
+  </properties>
 
   <build>
     <pluginManagement>
@@ -21,7 +26,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>gwt-maven-plugin</artifactId>
-          <version>2.5.1</version>
+          <version>${org.codehaus.mojo.gwtmavenplugin.version}</version>
           <executions>
             <execution>
               <configuration>
@@ -43,6 +48,22 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-user</artifactId>
+        <scope>provided</scope>
+        <version>${com.google.gwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-servlet</artifactId>
+        <version>${com.google.gwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-dev</artifactId>
+        <version>${com.google.gwt.version}</version>
+      </dependency>
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
@@ -66,6 +87,7 @@
       <modules>
         <module>bitcoin-transactions-core</module>
         <module>bitcoin-transactions-server</module>
+        <module>bitcoin-transactions-shared</module>
       </modules>
     </profile>
     

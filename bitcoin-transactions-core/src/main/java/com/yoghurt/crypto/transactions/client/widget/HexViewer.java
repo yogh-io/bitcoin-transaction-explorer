@@ -7,7 +7,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.yoghurt.crypto.transactions.client.util.Color;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public abstract class HexViewer<T> extends ContextFieldSet<T> {
   interface HexViewerUiBinder extends UiBinder<Widget, HexViewer<?>> {}

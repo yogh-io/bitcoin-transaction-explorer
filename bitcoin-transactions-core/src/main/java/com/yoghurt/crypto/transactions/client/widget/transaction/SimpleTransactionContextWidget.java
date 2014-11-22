@@ -3,12 +3,12 @@ package com.yoghurt.crypto.transactions.client.widget.transaction;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionPart;
-import com.yoghurt.crypto.transactions.client.domain.transaction.script.Operation;
-import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
-import com.yoghurt.crypto.transactions.client.util.ScriptOperationUtil;
-import com.yoghurt.crypto.transactions.client.util.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.client.widget.ContextFieldSet.FieldContextFactory;
+import com.yoghurt.crypto.transactions.shared.domain.Operation;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionPart;
+import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
+import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.ScriptOperationUtil;
 
 public class SimpleTransactionContextWidget implements FieldContextFactory<RawTransactionPart> {
   @Override

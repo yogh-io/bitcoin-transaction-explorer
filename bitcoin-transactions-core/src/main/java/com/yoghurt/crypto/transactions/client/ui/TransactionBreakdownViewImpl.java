@@ -8,16 +8,16 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.yoghurt.crypto.transactions.client.domain.transaction.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
-import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionInput;
-import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionOutput;
-import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionPartType;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.client.widget.transaction.TransactionHexViewer;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 
 @Singleton
 public class TransactionBreakdownViewImpl extends Composite implements TransactionBreakdownView {

@@ -5,6 +5,9 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
+import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
+
 public class ColorBuilderTest {
   @Test
   public void testColorInterpret() {

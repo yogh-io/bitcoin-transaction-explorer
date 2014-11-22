@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import com.google.gwt.dom.client.Style.Unit;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
-import com.yoghurt.crypto.transactions.client.domain.transaction.script.ScriptPart;
-import com.yoghurt.crypto.transactions.client.util.Color;
-import com.yoghurt.crypto.transactions.client.util.EllipsisUtil;
-import com.yoghurt.crypto.transactions.client.util.ScriptOperationUtil;
-import com.yoghurt.crypto.transactions.client.util.ScriptPartType;
-import com.yoghurt.crypto.transactions.client.util.ScriptType;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
+import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
 import com.yoghurt.crypto.transactions.client.widget.ContextField;
 import com.yoghurt.crypto.transactions.client.widget.ContextFieldSet;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
+import com.yoghurt.crypto.transactions.shared.util.transaction.ScriptOperationUtil;
 
 public class ScriptViewer extends ContextFieldSet<ScriptPart> {
   private static final int HASH_ELLIPSIS = 20;
