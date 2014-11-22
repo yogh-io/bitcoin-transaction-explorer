@@ -37,4 +37,8 @@ public class ValueViewer extends ContextFieldSet<String> {
     clear();
     addField(value);
   }
+
+  public void setValue(final Object obj) {
+    setValue(String.valueOf(obj));
+  }
 }

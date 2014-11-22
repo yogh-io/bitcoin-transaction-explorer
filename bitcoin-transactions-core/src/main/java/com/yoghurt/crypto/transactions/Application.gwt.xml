@@ -6,6 +6,7 @@
   <inherits name="com.google.gwt.i18n.I18N" />
   <inherits name='com.google.gwt.activity.Activity' />
   <inherits name='com.google.gwt.place.Place' />
+  <inherits name='com.google.gwt.logging.Logging'/>
   <inherits name='com.google.web.bindery.event.Event' />
 
   <!-- Third party inherits -->
@@ -17,4 +18,16 @@
   <!-- Sources -->
   <source path='client' />
   <source path='shared' />
+  
+  <!-- Enable server site logging -->
+  <set-property name="gwt.logging.enabled" value="TRUE"/>
+  <set-property name="gwt.logging.logLevel" value="INFO"/>
+  <set-property name="gwt.logging.consoleHandler" value="DISABLED" />
+  <set-property name="gwt.logging.developmentModeHandler" value="ENABLED" />
+  <set-property name="gwt.logging.hasWidgetsHandler" value="DISABLED" />
+  <set-property name="gwt.logging.systemHandler" value="DISABLED" />
+  <set-property name="gwt.logging.simpleRemoteHandler" value="ENABLED" />
+  <set-property name="compiler.stackMode" value="emulated" />
+  <set-configuration-property name="compiler.emulatedStack.recordLineNumbers" value="true"/>
+  <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true"/> 
 </module>

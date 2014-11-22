@@ -6,23 +6,24 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionType;
+import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
-public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements
-TransactionView.Presenter {
+public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements TransactionView.Presenter {
   private final TransactionView view;
   private final BlockchainRetrievalServiceAsync service;
 
   @Inject
-  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place,
-      final BlockchainRetrievalServiceAsync service) {
+  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service) {
     super(place);
     this.view = view;
     this.service = service;
@@ -44,7 +45,14 @@ TransactionView.Presenter {
       throw new RuntimeException(e);
     }
 
-    view.setTransactionData(transaction, rawTransaction);
+    view.setTransaction(transaction, rawTransaction);
+
+    service.getTransactionInformation(Str.toString(Hex.encode(transaction.getTransactionId())), new AppAsyncCallback<TransactionInformation>() {
+      @Override
+      public void onSuccess(final TransactionInformation result) {
+        view.setBlockchainInformation(result);
+      }
+    });
   }
 
   @Override
