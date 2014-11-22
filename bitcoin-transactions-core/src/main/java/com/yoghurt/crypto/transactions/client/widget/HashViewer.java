@@ -1,9 +1,14 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
 
 public class HashViewer extends ContextFieldSet<String> {
+  /**
+   * The number of characters to show before applying an inner ellipsis.
+   */
   private static final int HASH_ELLIPSIS = 20;
 
   private final Color color;
@@ -29,7 +34,7 @@ public class HashViewer extends ContextFieldSet<String> {
     return EllipsisUtil.applyInner(value, HASH_ELLIPSIS);
   }
 
-  public void setValue(final String hash) {
-    addField(hash.toUpperCase());
+  public void setValue(final byte[] bytes) {
+    addField(Str.toString(Hex.encode(bytes)).toUpperCase());
   }
 }

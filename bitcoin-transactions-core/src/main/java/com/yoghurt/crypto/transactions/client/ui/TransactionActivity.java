@@ -6,8 +6,8 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace.TransactionType;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionType;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
@@ -15,13 +15,13 @@ import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
-public class TransactionBreakdownActivity extends LookupActivity<Transaction, TransactionBreakdownPlace> implements
-TransactionBreakdownView.Presenter {
-  private final TransactionBreakdownView view;
+public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements
+TransactionView.Presenter {
+  private final TransactionView view;
   private final BlockchainRetrievalServiceAsync service;
 
   @Inject
-  public TransactionBreakdownActivity(final TransactionBreakdownView view, @Assisted final TransactionBreakdownPlace place,
+  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place,
       final BlockchainRetrievalServiceAsync service) {
     super(place);
     this.view = view;
@@ -48,12 +48,12 @@ TransactionBreakdownView.Presenter {
   }
 
   @Override
-  protected boolean mustPerformLookup(final TransactionBreakdownPlace place) {
+  protected boolean mustPerformLookup(final TransactionPlace place) {
     return place.getType() == TransactionType.ID;
   }
 
   @Override
-  protected Transaction createInfo(final TransactionBreakdownPlace place) {
+  protected Transaction createInfo(final TransactionPlace place) {
     return getTransactionFromHex(place.getHex());
   }
 
@@ -62,7 +62,7 @@ TransactionBreakdownView.Presenter {
   }
 
   @Override
-  protected void doLookup(final TransactionBreakdownPlace place, final AsyncCallback<Transaction> callback) {
+  protected void doLookup(final TransactionPlace place, final AsyncCallback<Transaction> callback) {
     service.getRawTransactionHex(place.getHex(), new MorphCallback<String, Transaction>(callback) {
       @Override
       protected Transaction morphResult(final String result) {

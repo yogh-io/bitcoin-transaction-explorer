@@ -9,36 +9,33 @@
   	background-color: #fff;
   	box-shadow: 0px 0px 5px #fff;
   }
-  
   .contentHeading {
   	font-size: 31px;
   	height: 37px;
   	font-weight: bold;
   }
-  
   .transactionHex {
   	font-family: courier new;
   	word-wrap: break-word;
   }
-  
   .label {
   	margin: 10px 10px 10px 0px;
   	display: inline-block;
   	width: 85px;
   }
-  
   .hexViewer {
   	width: 780px;
   }
-  
   .widg {
   	display: inline-block;
   }
   </ui:style>
   <g:HTMLPanel styleName="{style.content}">
     <g:Label styleName="{style.contentHeading}" text="Transaction Breakdown" />
-    <h2>Presence in the block chain</h2>
-    
+    <h2>Transaction information</h2>
+    <w:LabelledWidget label="Transaction id:" labelStyleName="{style.label}">
+      <w:ValueViewer ui:field="txIdViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
     <h2>Transaction inputs</h2>
     <g:FlowPanel ui:field="inputContainer" />
     <h2>Transaction outputs</h2>

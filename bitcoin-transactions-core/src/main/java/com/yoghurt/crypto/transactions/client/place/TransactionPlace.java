@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.client.place;
 
 import com.google.gwt.place.shared.Prefix;
 
-public class TransactionBreakdownPlace extends ApplicationPlace {
+public class TransactionPlace extends ApplicationPlace {
   private static final String PREFIX = "tx";
 
   public enum TransactionType {
@@ -35,21 +35,21 @@ public class TransactionBreakdownPlace extends ApplicationPlace {
   private final String hex;
 
   @Prefix(PREFIX)
-  public static class Tokenizer extends DelimitedTokenizer<TransactionBreakdownPlace> {
+  public static class Tokenizer extends DelimitedTokenizer<TransactionPlace> {
     @Override
-    protected TransactionBreakdownPlace createPlace(final String[] tokens) {
+    protected TransactionPlace createPlace(final String[] tokens) {
       final TransactionType type = TransactionType.fromToken(tokens[0]);
 
-      return new TransactionBreakdownPlace(type, tokens[1]);
+      return new TransactionPlace(type, tokens[1]);
     }
 
     @Override
-    protected String[] getTokens(final TransactionBreakdownPlace place) {
+    protected String[] getTokens(final TransactionPlace place) {
       return new String[] { place.getType().getToken(), place.getHex() };
     }
   }
 
-  public TransactionBreakdownPlace(final TransactionType type, final String hex) {
+  public TransactionPlace(final TransactionType type, final String hex) {
     this.type = type;
     this.hex = hex;
   }

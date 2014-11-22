@@ -17,8 +17,8 @@ import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.ui.StartupView;
 import com.yoghurt.crypto.transactions.client.ui.StartupViewImpl;
-import com.yoghurt.crypto.transactions.client.ui.TransactionBreakdownView;
-import com.yoghurt.crypto.transactions.client.ui.TransactionBreakdownViewImpl;
+import com.yoghurt.crypto.transactions.client.ui.TransactionView;
+import com.yoghurt.crypto.transactions.client.ui.TransactionViewImpl;
 
 public class ApplicationClientModule extends AbstractGinModule {
   @Override
@@ -32,7 +32,7 @@ public class ApplicationClientModule extends AbstractGinModule {
 
     // Binding views
     bind(StartupView.class).to(StartupViewImpl.class).in(Singleton.class);
-    bind(TransactionBreakdownView.class).to(TransactionBreakdownViewImpl.class);
+    bind(TransactionView.class).to(TransactionViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }

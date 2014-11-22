@@ -12,8 +12,8 @@ public class TransactionPartColorPicker {
     final Color color;
 
     switch (value) {
-    case INPUT_OUTPOINT_HASH:
-      color = ColorBuilder.interpret("mediumslateblue");
+    case TRANSACTION_HASH:
+      color = ColorBuilder.interpret("cornflowerblue");
       break;
     case INPUT_OUTPOINT_INDEX:
       color = ColorBuilder.interpret("lightblue");

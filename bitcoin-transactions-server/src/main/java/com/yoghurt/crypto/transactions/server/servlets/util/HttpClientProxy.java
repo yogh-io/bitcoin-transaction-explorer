@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.server.servlets.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -18,13 +19,13 @@ import org.apache.http.util.EntityUtils;
  */
 public class HttpClientProxy {
 
-  public static byte[] getRemoteContent(final HttpClient client, final String url) throws URISyntaxException, ClientProtocolException, IOException, ParseException, HttpException {
+  public static InputStream getRemoteContent(final HttpClient client, final String url) throws URISyntaxException, ClientProtocolException, IOException, ParseException, HttpException {
     final URI uri = new URI(url);
     final HttpGet getRequest = new HttpGet(uri);
     final HttpResponse httpResponse = client.execute(getRequest);
 
     if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-      return EntityUtils.toByteArray(httpResponse.getEntity());
+      return httpResponse.getEntity().getContent();
     } else {
       throw new HttpException(httpResponse.getStatusLine().toString() + EntityUtils.toString(httpResponse.getEntity()));
     }

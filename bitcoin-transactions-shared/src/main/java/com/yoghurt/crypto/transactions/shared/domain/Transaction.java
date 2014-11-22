@@ -3,6 +3,8 @@ package com.yoghurt.crypto.transactions.shared.domain;
 import java.util.ArrayList;
 
 public class Transaction {
+  private byte[] txId;
+
   private int version;
   private int lockTime;
 
@@ -12,6 +14,13 @@ public class Transaction {
   private VariableLengthInteger outputSize;
   private ArrayList<TransactionOutput> outputs;
 
+  public byte[] getTransactionId() {
+    return txId;
+  }
+
+  public void setTransactionId(final byte[] txId) {
+    this.txId = txId;
+  }
 
   public int getVersion() {
     return version;

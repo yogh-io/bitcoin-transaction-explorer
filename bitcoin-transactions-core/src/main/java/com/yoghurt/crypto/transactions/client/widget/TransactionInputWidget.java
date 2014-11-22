@@ -19,20 +19,20 @@ public class TransactionInputWidget extends Composite {
 
   private static final TransactionInputWidgetUiBinder UI_BINDER = GWT.create(TransactionInputWidgetUiBinder.class);
 
-  @UiField(provided = true) HashViewer hashViewer;
+  @UiField(provided = true) ValueViewer hashViewer;
   @UiField(provided = true) ScriptViewer signatureScriptViewer;
   @UiField(provided = true) ValueViewer indexViewer;
   @UiField(provided = true) ValueViewer sequenceViewer;
 
   public TransactionInputWidget(final TransactionInput input) {
-    hashViewer = new HashViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.INPUT_OUTPOINT_HASH));
+    hashViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH));
     signatureScriptViewer = new ScriptViewer(ScriptType.SCRIPT_SIG);
     indexViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.INPUT_OUTPOINT_INDEX));
     sequenceViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.INPUT_SEQUENCE));
 
     initWidget(UI_BINDER.createAndBindUi(this));
 
-    hashViewer.setValue(Str.toString(Hex.encode(input.getOutPoint().getReferenceTransaction())));
+    hashViewer.setValue(input.getOutPoint().getReferenceTransaction());
     signatureScriptViewer.setScript(input.getInstructions());
     indexViewer.setValue(String.valueOf(input.getOutPoint().getIndex()));
     sequenceViewer.setValue(Str.toString(Hex.encode(NumberEncodeUtil.encodeUint32(input.getTransactionSequence()))).toUpperCase());
