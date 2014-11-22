@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
@@ -19,7 +18,6 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 
-@Singleton
 public class TransactionBreakdownViewImpl extends Composite implements TransactionBreakdownView {
   interface TransactionBreakdownViewImplUiBinder extends UiBinder<Widget, TransactionBreakdownViewImpl> {}
 
@@ -48,7 +46,6 @@ public class TransactionBreakdownViewImpl extends Composite implements Transacti
     versionViewer.setValue(String.valueOf(transaction.getVersion()));
     lockTimeViewer.setValue(String.valueOf(transaction.getLockTime()));
 
-    inputContainer.clear();
     if (transaction.getInputs() != null) {
       for (final TransactionInput input : transaction.getInputs()) {
         final TransactionInputWidget inputWidget = new TransactionInputWidget(input);
@@ -56,7 +53,6 @@ public class TransactionBreakdownViewImpl extends Composite implements Transacti
       }
     }
 
-    outputContainer.clear();
     if (transaction.getInputs() != null) {
       for (final TransactionOutput output : transaction.getOutputs()) {
         final TransactionOutputWidget inputWidget = new TransactionOutputWidget(output);

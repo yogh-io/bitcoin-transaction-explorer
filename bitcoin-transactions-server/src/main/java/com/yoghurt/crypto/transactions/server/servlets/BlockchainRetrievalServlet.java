@@ -12,13 +12,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
-import com.yoghurt.crypto.transactions.server.util.json.BlockrApiParser;
+import com.yoghurt.crypto.transactions.server.servlets.util.HttpClientProxy;
+import com.yoghurt.crypto.transactions.server.servlets.util.json.BlockrApiParser;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
 
 @WebServlet("/application/blockchain-retrieve")
 public class BlockchainRetrievalServlet extends RemoteServiceServlet implements BlockchainRetrievalService {
-  private static final long serialVersionUID = 6387375151114553935L;
+  private static final long serialVersionUID = 7984638304207123693L;
 
   private final String BLOCKR_API_TX_FORMAT = "http://btc.blockr.io/api/v1/tx/raw/%s";
 
@@ -32,7 +32,7 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
       return BlockrApiParser.getRawTransactionHex(jsonData);
     } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
       e.printStackTrace();
-      throw new Exception("Could not retrieve tx info.", e);
+      throw new Exception("Could not retrieve tx info.");
     }
   }
 }

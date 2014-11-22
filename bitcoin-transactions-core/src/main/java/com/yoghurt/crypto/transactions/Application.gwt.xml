@@ -14,10 +14,6 @@
 
   <entry-point class='com.yoghurt.crypto.transactions.client.Application' />
   
-  <!-- SDM config -->
-  <add-linker name="xsiframe"/>
-  <set-configuration-property name="devModeRedirectEnabled" value="true"/>
-
   <!-- Sources -->
   <source path='client' />
   <source path='shared' />
