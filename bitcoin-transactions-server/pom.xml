@@ -18,6 +18,11 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
+      <groupId>com.yoghurt.crypto</groupId>
+      <artifactId>bitcoin-transactions-shared</artifactId>
+      <version>0.1</version>
+    </dependency>
+    <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
       <version>2.6.1</version>
@@ -41,6 +46,16 @@
       <artifactId>jsp-api</artifactId>
       <version>2.0</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.3.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.12</version>
     </dependency>
   </dependencies>
 
@@ -73,7 +88,7 @@
       </plugin>
     </plugins>
   </build>
-  
+
   <profiles>
     <profile>
       <id>ide</id>
@@ -93,7 +108,7 @@
             </configuration>
           </plugin>
         </plugins>
-       </build>
+      </build>
     </profile>
   </profiles>
 </project>

@@ -37,6 +37,8 @@
   </ui:style>
   <g:HTMLPanel styleName="{style.content}">
     <g:Label styleName="{style.contentHeading}" text="Transaction Breakdown" />
+    <h2>Presence in the block chain</h2>
+    
     <h2>Transaction inputs</h2>
     <g:FlowPanel ui:field="inputContainer" />
     <h2>Transaction outputs</h2>

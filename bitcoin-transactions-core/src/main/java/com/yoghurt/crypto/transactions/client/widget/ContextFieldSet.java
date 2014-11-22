@@ -12,7 +12,7 @@ import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.yoghurt.crypto.transactions.client.util.Color;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ContextFieldSet<T> extends FlowPanel {
   private static final int POPUP_SHOW_DELAY = 150;

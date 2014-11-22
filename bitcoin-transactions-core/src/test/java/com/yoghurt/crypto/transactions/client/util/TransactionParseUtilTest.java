@@ -4,7 +4,9 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.yoghurt.crypto.transactions.client.domain.transaction.Transaction;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 
 public class TransactionParseUtilTest {
@@ -12,20 +14,20 @@ public class TransactionParseUtilTest {
 
   @Test
   public void testVersionBytes() throws DecoderException {
-    final Transaction parsedTransaction = TransactionParseUtil.parseTransactionHex(TX_HEX);
+    final Transaction parsedTransaction = TransactionParseUtil.parseTransactionBytes(Hex.decode(TX_HEX));
     Assert.assertEquals(1, parsedTransaction.getVersion());
   }
 
   @Test
   public void testInputSize() throws DecoderException {
-    final Transaction parsedTransaction = TransactionParseUtil.parseTransactionHex(TX_HEX);
+    final Transaction parsedTransaction = TransactionParseUtil.parseTransactionBytes(Hex.decode(TX_HEX));
     Assert.assertEquals(1, parsedTransaction.getInputSize().getValue());
     Assert.assertEquals(1, parsedTransaction.getInputs().size());
   }
 
   @Test
   public void testScriptSize() throws DecoderException {
-    final Transaction parsedTransaction = TransactionParseUtil.parseTransactionHex(TX_HEX);
+    final Transaction parsedTransaction = TransactionParseUtil.parseTransactionBytes(Hex.decode(TX_HEX));
     Assert.assertEquals(108, parsedTransaction.getInputs().get(0).getScriptSize().getValue());
   }
 

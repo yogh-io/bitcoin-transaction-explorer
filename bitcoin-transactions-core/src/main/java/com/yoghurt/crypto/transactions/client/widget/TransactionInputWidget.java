@@ -7,12 +7,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
-import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionInput;
-import com.yoghurt.crypto.transactions.client.domain.transaction.TransactionPartType;
-import com.yoghurt.crypto.transactions.client.util.NumberEncodeUtil;
-import com.yoghurt.crypto.transactions.client.util.ScriptType;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.script.ScriptViewer;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 public class TransactionInputWidget extends Composite {
   interface TransactionInputWidgetUiBinder extends UiBinder<Widget, TransactionInputWidget> {}

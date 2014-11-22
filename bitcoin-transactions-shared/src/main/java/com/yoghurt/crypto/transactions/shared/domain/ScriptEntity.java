@@ -1,0 +1,24 @@
+package com.yoghurt.crypto.transactions.shared.domain;
+
+import java.util.ArrayList;
+
+public class ScriptEntity {
+  private VariableLengthInteger scriptSize;
+  private final ArrayList<ScriptPart> instructions = new ArrayList<ScriptPart>();
+
+  public VariableLengthInteger getScriptSize() {
+    return scriptSize;
+  }
+
+  public void setScriptSize(final VariableLengthInteger scriptSize) {
+    this.scriptSize = scriptSize;
+  }
+
+  public void addInstruction(final ScriptPart part) {
+    instructions.add(part);
+  }
+
+  public ArrayList<ScriptPart> getInstructions() {
+    return instructions;
+  }
+}

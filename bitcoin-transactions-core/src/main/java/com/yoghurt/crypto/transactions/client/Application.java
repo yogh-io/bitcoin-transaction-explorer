@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.yoghurt.crypto.transactions.client.di.ApplicationGinjector;
 import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
+import com.yoghurt.crypto.transactions.client.ui.ApplicationRootView;
 
 public class Application implements EntryPoint {
 

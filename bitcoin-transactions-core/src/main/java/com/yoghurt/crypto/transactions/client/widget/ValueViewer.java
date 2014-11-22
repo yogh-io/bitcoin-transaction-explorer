@@ -1,6 +1,6 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
-import com.yoghurt.crypto.transactions.client.util.Color;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ValueViewer extends ContextFieldSet<String> {
 
@@ -28,6 +28,7 @@ public class ValueViewer extends ContextFieldSet<String> {
   }
 
   public void setValue(final String hash) {
+    clear();
     addField(hash);
   }
 }

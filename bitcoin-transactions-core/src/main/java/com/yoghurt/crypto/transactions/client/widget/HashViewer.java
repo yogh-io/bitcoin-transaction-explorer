@@ -1,7 +1,7 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
-import com.yoghurt.crypto.transactions.client.util.Color;
-import com.yoghurt.crypto.transactions.client.util.EllipsisUtil;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
+import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
 
 public class HashViewer extends ContextFieldSet<String> {
   private static final int HASH_ELLIPSIS = 20;
