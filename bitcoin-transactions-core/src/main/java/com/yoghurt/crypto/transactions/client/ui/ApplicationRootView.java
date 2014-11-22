@@ -8,7 +8,6 @@ import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
@@ -20,7 +19,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.client.place.TransactionBreakdownPlace.TransactionType;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget {
@@ -33,13 +32,10 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
   @UiField TextBox lookupField;
 
   private final PlaceController placeController;
-  private final BlockchainRetrievalServiceAsync retrievalService;
 
   @Inject
-  public ApplicationRootView(final PlaceHistoryMapper historyMapper, final PlaceController placeController,
-      final BlockchainRetrievalServiceAsync retrievalService) {
+  public ApplicationRootView(final PlaceHistoryMapper historyMapper, final PlaceController placeController) {
     this.placeController = placeController;
-    this.retrievalService = retrievalService;
 
     initWidget(UI_BINDER.createAndBindUi(this));
 
@@ -55,21 +51,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
       return;
     }
 
-    goToTx();
-  }
-
-  private void goToTx() {
-    retrievalService.getRawTransactionHex(lookupField.getText(), new AsyncCallback<String>() {
-      @Override
-      public void onSuccess(final String result) {
-        placeController.goTo(new TransactionBreakdownPlace(result));
-      }
-
-      @Override
-      public void onFailure(final Throwable caught) {
-        // No-op for now
-      }
-    });
+    placeController.goTo(new TransactionBreakdownPlace(TransactionType.ID, lookupField.getText()));
   }
 
   @Override
