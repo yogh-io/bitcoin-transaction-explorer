@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
-public enum TransactionState {
+import java.io.Serializable;
+
+public enum TransactionState implements Serializable {
   CONFIRMED, UNCONFIRMED
 }
