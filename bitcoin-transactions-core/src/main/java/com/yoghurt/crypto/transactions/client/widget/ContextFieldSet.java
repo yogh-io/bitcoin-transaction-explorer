@@ -9,6 +9,8 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.logical.shared.AttachEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,7 +35,7 @@ public class ContextFieldSet<T> extends FlowPanel {
 
     @Override
     public void run() {
-      if(selectedField == null || selectedField == source) {
+      if (selectedField == null || selectedField == source) {
         displayContextPopup((Widget) source, valueContainer);
       }
     }
@@ -57,7 +59,7 @@ public class ContextFieldSet<T> extends FlowPanel {
     public void onMouseOver(final MouseOverEvent event) {
       popupHideTimer.cancel();
 
-      if(popupShowTimer != null) {
+      if (popupShowTimer != null) {
         popupShowTimer.cancel();
       }
 
@@ -69,30 +71,30 @@ public class ContextFieldSet<T> extends FlowPanel {
   private final MouseOutHandler mouseOutHandler = new MouseOutHandler() {
     @Override
     public void onMouseOut(final MouseOutEvent event) {
-      if(selectedField == null) {
+      if (selectedField == null) {
         popupShowTimer.cancel();
         delayedHide();
       }
     }
   };
 
-  private final ClickHandler mouseClickHandler = new ClickHandler() {
+  private ClickHandler mouseClickHandler = new ClickHandler() {
     @SuppressWarnings("unchecked")
     @Override
     public void onClick(final ClickEvent event) {
-      if(selectedField != null) {
+      if (selectedField != null) {
         selectedField.setSelected(false);
       }
 
-      if(selectedField == event.getSource()) {
+      if (selectedField == event.getSource()) {
         selectedField = null;
         return;
       }
 
-      selectedField = (ContextField<T>)event.getSource();
+      selectedField = (ContextField<T>) event.getSource();
       selectedField.setSelected(true);
 
-      selectedField.fireEvent(new MouseOverEvent(){});
+      selectedField.fireEvent(new MouseOverEvent() {});
     }
   };
 
@@ -102,6 +104,20 @@ public class ContextFieldSet<T> extends FlowPanel {
   private Timer popupShowTimer;
 
   private ContextField<T> selectedField;
+  private final AttachEvent.Handler attachHandler = new AttachEvent.Handler() {
+
+    @Override
+    public void onAttachOrDetach(final AttachEvent event) {
+      if (!event.isAttached()) {
+        popupPanel.hide();
+        if (attachRegistration != null) {
+          attachRegistration.removeHandler();
+        }
+      }
+    }
+
+  };
+  private HandlerRegistration attachRegistration;
 
   public ContextFieldSet(final FieldContextFactory<T> contextFactory) {
     this.contextFactory = contextFactory;
@@ -185,12 +201,13 @@ public class ContextFieldSet<T> extends FlowPanel {
   }
 
   private void displayContextPopup(final Widget target, final Widget popupContent) {
-    if(!popupPanel.isShowing()) {
+    if (!popupPanel.isShowing()) {
       popupContent.getElement().getStyle().setVisibility(Visibility.HIDDEN);
     }
 
     popupPanel.setWidget(popupContent);
     popupPanel.show();
+    attachRegistration = target.addAttachHandler(attachHandler);
 
     // Defer the attach event because we don't have the element's width/height at this point
     Scheduler.get().scheduleDeferred(new ScheduledCommand() {
@@ -200,5 +217,9 @@ public class ContextFieldSet<T> extends FlowPanel {
         popupContent.getElement().getStyle().clearVisibility();
       }
     });
+  }
+
+  public void setMouseClickHandler(final ClickHandler mouseClickHandler) {
+    this.mouseClickHandler = mouseClickHandler;
   }
 }

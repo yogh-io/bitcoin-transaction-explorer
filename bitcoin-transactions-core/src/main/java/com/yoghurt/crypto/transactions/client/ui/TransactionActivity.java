@@ -1,6 +1,6 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -11,41 +11,32 @@ import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements TransactionView.Presenter {
   private final TransactionView view;
   private final BlockchainRetrievalServiceAsync service;
+  private final PlaceController placeController;
 
   @Inject
-  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service) {
+  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service,
+      final PlaceController placeController) {
     super(place);
     this.view = view;
     this.service = service;
+    this.placeController = placeController;
+
+    view.setPresenter(this);
   }
 
   @Override
   protected void doDeferredStart(final AcceptsOneWidget panel, final Transaction transaction) {
     panel.setWidget(view);
 
-    // Prepare a raw transaction object that may be encoded in a hex viewer
-    // TODO This is ugly, logically, maybe we could have the view do this with the Transaction object, which is really the only object this activity
-    // should be concerned about.
-    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
-    try {
-      TransactionEncodeUtil.encodeTransaction(transaction, rawTransaction);
-    } catch (final Exception e) {
-      GWT.log("Encode error");
-      // TODO Parse error, display how far we got
-      throw new RuntimeException(e);
-    }
-
-    view.setTransaction(transaction, rawTransaction);
+    view.setTransaction(transaction);
 
     service.getTransactionInformation(Str.toString(Hex.encode(transaction.getTransactionId())), new AppAsyncCallback<TransactionInformation>() {
       @Override
@@ -66,7 +57,16 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
   }
 
   private Transaction getTransactionFromHex(final String hex) {
-    return TransactionParseUtil.parseTransactionBytes(Hex.decode(hex));
+    final Transaction t = new Transaction();
+
+    try {
+      TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
+    } catch (final IllegalStateException e) {
+      e.printStackTrace();
+      // Eat
+    }
+
+    return t;
   }
 
   @Override
@@ -77,5 +77,10 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
         return getTransactionFromHex(result);
       }
     });
+  }
+
+  @Override
+  public void goTo(final String txid) {
+    placeController.goTo(new TransactionPlace(TransactionType.ID, txid));
   }
 }

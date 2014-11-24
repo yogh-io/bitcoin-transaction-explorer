@@ -31,14 +31,14 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
   public void addFields(final T value) {
     final Color typeColor = getFieldColor(value);
 
-    for (final byte bite : getBytesForvalue(value)) {
+    for (final byte bite : getBytesForValue(value)) {
       final String hex = new String(Hex.encode(new byte[] {  bite })).toUpperCase();
 
       addField(value, typeColor, hex);
     }
   }
 
-  protected abstract byte[] getBytesForvalue(final T value);
+  protected abstract byte[] getBytesForValue(final T value);
 
   @Override
   protected void addField(final ContextField<T> field) {

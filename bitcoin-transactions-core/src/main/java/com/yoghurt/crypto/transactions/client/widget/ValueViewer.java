@@ -5,16 +5,21 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ValueViewer extends ContextFieldSet<String> {
-
   private final Color color;
 
+  protected String value;
+
   public ValueViewer(final Color color) {
-    super(new SimpleContextFactory<String>() {
+    this(color, new SimpleContextFactory<String>() {
       @Override
       protected String getTextValue(final String value) {
         return value;
       }
     });
+  }
+
+  public ValueViewer(final Color color, final FieldContextFactory<String> contextFactory) {
+    super(contextFactory);
 
     this.color = color;
   }
@@ -30,10 +35,14 @@ public class ValueViewer extends ContextFieldSet<String> {
   }
 
   public void setValue(final byte[] hash) {
-    setValue(Str.toString(Hex.encode(hash)).toUpperCase());
+    if(hash != null && hash.length != 0) {
+      setValue(Str.toString(Hex.encode(hash)).toUpperCase());
+    }
   }
 
   public void setValue(final String value) {
+    this.value = value;
+
     clear();
     addField(value);
   }

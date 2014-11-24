@@ -19,4 +19,14 @@ public class TransactionOutPoint {
   public void setIndex(final int index) {
     this.index = index;
   }
+
+  public boolean isCoinbase() {
+    for (int i = 0; i < referenceTransaction.length; i++) {
+      if (referenceTransaction[0] != 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

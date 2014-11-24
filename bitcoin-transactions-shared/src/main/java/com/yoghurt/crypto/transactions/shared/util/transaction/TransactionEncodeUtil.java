@@ -91,9 +91,12 @@ public final class TransactionEncodeUtil extends TransactionUtil {
   private static void encodeScript(final ScriptEntity script, final RawTransactionContainer container, final ScriptType type) {
     for (final ScriptPart part : script.getInstructions()) {
       final TransactionPartType partType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.OP_CODE);
-      container.add(new RawTransactionPart(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
 
-      if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
+      if (part.getOperation() == null) {
+        container.add(new RawTransactionPart(TransactionPartType.ARBITRARY_DATA, part.getBytes()));
+      } else if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
+        container.add(new RawTransactionPart(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
+
         final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
         container.add(new RawTransactionPart(pushPartType, part.getBytes()));
       }

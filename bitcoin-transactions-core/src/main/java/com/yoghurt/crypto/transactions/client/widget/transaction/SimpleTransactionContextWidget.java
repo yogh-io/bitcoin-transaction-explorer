@@ -58,6 +58,8 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<RawTr
       return "Transaction lock time";
     case VERSION:
       return "Transaction version";
+    case ARBITRARY_DATA:
+      return "Arbitrary coinbase data";
     default:
       return "Unknown transaction part";
     }

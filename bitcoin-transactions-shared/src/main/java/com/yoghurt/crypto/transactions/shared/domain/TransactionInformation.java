@@ -44,4 +44,11 @@ public class TransactionInformation implements Serializable {
   public void setConfirmations(final int confirmations) {
     this.confirmations = confirmations;
   }
+
+  @Override
+  public String toString() {
+    return "TransactionInformation [state=" + state + ", blockHeight=" + blockHeight + ", time=" + time + ", confirmations=" + confirmations + "]";
+  }
+
+
 }
