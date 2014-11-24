@@ -18,7 +18,6 @@ import com.yoghurt.crypto.transactions.shared.util.transaction.ScriptOperationUt
 public class ScriptViewer extends ContextFieldSet<ScriptPart> {
   private static final int HASH_ELLIPSIS = 20;
   private final ScriptType type;
-  private final boolean isCoinbase;
 
   public ScriptViewer(final ScriptType type, final boolean isCoinbase) {
     super(new SimpleScriptContextFactory() {
@@ -33,7 +32,6 @@ public class ScriptViewer extends ContextFieldSet<ScriptPart> {
     });
 
     this.type = type;
-    this.isCoinbase = isCoinbase;
   }
 
   public void setScript(final ArrayList<ScriptPart> instructions) {
