@@ -17,6 +17,9 @@
   }
   </ui:style>
   <g:FlowPanel>
+    <g:HTML>
+      <h3 ui:field="inputTitle" />
+    </g:HTML>
     <w:LabelledWidget label="Previous tx:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="hashViewer" styleName="{style.widg}" />
     </w:LabelledWidget>

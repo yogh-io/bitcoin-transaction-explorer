@@ -42,6 +42,7 @@
       <w:ValueViewer ui:field="txIdViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
     <g:Label text="Retrieving extra information ..." ui:field="loadPlaceHolder" />
+    <g:Label text="This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool." visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="State:" labelStyleName="{style.label}">
         <w:ValueViewer ui:field="txStateViewer" styleName="{style.widg}" />
@@ -60,7 +61,7 @@
     <g:FlowPanel ui:field="inputContainer" />
     <h2>Transaction outputs</h2>
     <g:FlowPanel ui:field="outputContainer" />
-    <h2>Other information:</h2>
+    <h2>Miscellaneous information:</h2>
     <w:LabelledWidget label="Format version:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="txVersionViewer" styleName="{style.widg}" />
     </w:LabelledWidget>

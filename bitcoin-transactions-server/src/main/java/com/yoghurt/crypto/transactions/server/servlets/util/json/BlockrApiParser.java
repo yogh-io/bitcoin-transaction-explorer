@@ -14,7 +14,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 
 public final class BlockrApiParser {
   private static final String STATUS_SUCCESS = "success";
-  private static final DateFormat DATETIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+  private static final DateFormat DATETIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
 
   private BlockrApiParser() {}
 
@@ -37,7 +37,7 @@ public final class BlockrApiParser {
 
     info.setBlockHeight(data.get("block").getIntValue());
     info.setState(data.get("is_unconfirmed").getBooleanValue() ? TransactionState.UNCONFIRMED : TransactionState.CONFIRMED);
-    info.setTime(DATETIME_FORMATTER.parse(tree.get("time_utc").getTextValue()));
+    info.setTime(DATETIME_FORMATTER.parse(data.get("time_utc").getTextValue()));
     info.setConfirmations(data.get("confirmations").getIntValue());
 
     return info;

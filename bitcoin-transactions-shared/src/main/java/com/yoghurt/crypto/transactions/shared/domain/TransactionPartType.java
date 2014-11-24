@@ -27,5 +27,7 @@ public enum TransactionPartType {
 
   SCRIPT_PUB_KEY_OP_CODE,
 
-  SCRIPT_PUB_KEY_PUSH_DATA;
+  SCRIPT_PUB_KEY_PUSH_DATA,
+
+  ARBITRARY_DATA;
 }

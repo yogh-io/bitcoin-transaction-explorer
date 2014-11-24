@@ -50,10 +50,10 @@ public final class ScriptOperationUtil {
   }
 
   /**
-   * Data push operations are 1-75 or 82-96.
+   * Data push operations are 1-75 or 82-96. And also null (indicating coinbase bullshit input)
    */
   public static boolean isDataPushOperation(final Operation op) {
-    return op == Operation.OP_PUSHDATA || isDataPushOperation(op.getOpcode());
+    return op == null || op == Operation.OP_PUSHDATA || isDataPushOperation(op.getOpcode());
   }
 
   public static boolean isDataPushOperation(final int opcode) {

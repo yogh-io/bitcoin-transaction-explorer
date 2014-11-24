@@ -20,7 +20,7 @@ public class TransactionOutputWidget extends Composite {
 
   public TransactionOutputWidget(final TransactionOutput output) {
     amountViewer = new ValueViewer(ColorBuilder.interpret("yellow"));
-    signatureScriptViewer = new ScriptViewer(ScriptType.SCRIPT_PUB_KEY);
+    signatureScriptViewer = new ScriptViewer(ScriptType.SCRIPT_PUB_KEY, false);
 
     initWidget(UI_BINDER.createAndBindUi(this));
 

@@ -20,6 +20,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 
 public class TransactionViewImpl extends Composite implements TransactionView {
   interface TransactionViewImplUiBinder extends UiBinder<Widget, TransactionViewImpl> {}
@@ -28,13 +29,14 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   private static final DateTimeFormat DATE_TIME_FORMATTER = DateTimeFormat.getFormat("MMMM dd, yyyy, HH:mm:ss Z");
 
-  @UiField(provided = true)  ValueViewer txIdViewer;
+  @UiField(provided = true) ValueViewer txIdViewer;
   @UiField Label loadPlaceHolder;
+  @UiField Label notFoundLabel;
   @UiField FlowPanel extraInformationContainer;
-  @UiField(provided = true)  ValueViewer txStateViewer;
-  @UiField(provided = true)  ValueViewer txBlockHeightViewer;
-  @UiField(provided = true)  ValueViewer txConfirmationsViewer;
-  @UiField(provided = true)  ValueViewer txTimeViewer;
+  @UiField(provided = true) ValueViewer txStateViewer;
+  @UiField(provided = true) ValueViewer txBlockHeightViewer;
+  @UiField(provided = true) ValueViewer txConfirmationsViewer;
+  @UiField(provided = true) ValueViewer txTimeViewer;
 
   @UiField FlowPanel inputContainer;
   @UiField FlowPanel outputContainer;
@@ -43,6 +45,8 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   @UiField(provided = true) ValueViewer txVersionViewer;
   @UiField(provided = true) ValueViewer txLockTimeViewer;
+
+  private Presenter presenter;
 
   @Inject
   public TransactionViewImpl() {
@@ -59,9 +63,12 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   }
 
   @Override
-  public void setTransaction(final Transaction transaction, final RawTransactionContainer rawTransaction) {
-    txHexViewer.setTransaction(rawTransaction);
+  public void setPresenter(final Presenter presenter) {
+    this.presenter = presenter;
+  }
 
+  @Override
+  public void setTransaction(final Transaction transaction) {
     txIdViewer.setValue(transaction.getTransactionId());
 
     txVersionViewer.setValue(String.valueOf(transaction.getVersion()));
@@ -69,7 +76,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
     if (transaction.getInputs() != null) {
       for (final TransactionInput input : transaction.getInputs()) {
-        final TransactionInputWidget inputWidget = new TransactionInputWidget(input);
+        final TransactionInputWidget inputWidget = new TransactionInputWidget(input, presenter);
         inputContainer.add(inputWidget);
       }
     }
@@ -80,11 +87,29 @@ public class TransactionViewImpl extends Composite implements TransactionView {
         outputContainer.add(inputWidget);
       }
     }
+
+    // Lastly, encode the transaction (back) to hex and display it.
+    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
+    try {
+      TransactionEncodeUtil.encodeTransaction(transaction, rawTransaction);
+    } catch (final Throwable e) {
+      e.printStackTrace();
+      // Eat.
+    }
+
+    GWT.log("Setting raw..");
+    txHexViewer.setTransaction(rawTransaction);
   }
 
   @Override
   public void setBlockchainInformation(final TransactionInformation transactionInformation) {
     loadPlaceHolder.removeFromParent();
+
+    if (transactionInformation == null) {
+      notFoundLabel.setVisible(true);
+      return;
+    }
+
     extraInformationContainer.setVisible(true);
 
     txStateViewer.setValue(transactionInformation.getState().name());

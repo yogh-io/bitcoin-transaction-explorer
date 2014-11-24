@@ -69,4 +69,8 @@ public class Transaction {
   public void setLockTime(final int lockTime) {
     this.lockTime = lockTime;
   }
+
+  public boolean isCoinbase() {
+    return !inputs.isEmpty() && inputs.get(0).isCoinbase();
+  }
 }

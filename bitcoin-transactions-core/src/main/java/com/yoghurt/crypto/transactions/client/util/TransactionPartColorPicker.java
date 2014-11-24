@@ -42,6 +42,9 @@ public class TransactionPartColorPicker {
     case SCRIPT_PUB_KEY_PUSH_DATA:
       color = ColorBuilder.interpret("green");
       break;
+    case ARBITRARY_DATA:
+      color = ColorBuilder.interpret("black");
+      break;
     case LOCK_TIME:
     case VERSION:
     default:

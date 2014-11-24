@@ -17,7 +17,7 @@ public class SimpleScriptContextFactory implements FieldContextFactory<ScriptPar
   }
 
   public String getFieldText(final ScriptPart value) {
-    if (value.getOperation() == Operation.OP_PUSHDATA) {
+    if (value.getOperation() == null || value.getOperation() == Operation.OP_PUSHDATA) {
       return new String(Hex.encode(value.getBytes())).toUpperCase();
     } else {
       return value.getOperation().name();

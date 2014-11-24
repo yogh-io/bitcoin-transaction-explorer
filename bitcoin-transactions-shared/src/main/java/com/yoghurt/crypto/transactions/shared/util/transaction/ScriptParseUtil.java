@@ -9,14 +9,27 @@ import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 public final class ScriptParseUtil {
   private ScriptParseUtil() {}
 
-  public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes) {
+  public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final boolean isCoinbase) {
     int pointer = initialPointer;
+
 
     // Parse the number of bytes in the script
     pointer = parseScriptSize(entity, pointer, bytes);
 
     // Parse the actual script bytes
-    pointer = parseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
+    if(isCoinbase) {
+      pointer = parseCoinbaseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
+    } else {
+      pointer = parseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
+    }
+
+    return pointer;
+  }
+
+  private static int parseCoinbaseScriptBytes(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final long value) {
+    int pointer = initialPointer;
+
+    entity.addInstruction(new ScriptPart(null, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + (int) entity.getScriptSize().getValue())));
 
     return pointer;
   }

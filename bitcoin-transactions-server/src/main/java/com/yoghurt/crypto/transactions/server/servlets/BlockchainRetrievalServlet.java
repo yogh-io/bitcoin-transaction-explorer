@@ -48,8 +48,7 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
       return transactionInformation;
     } catch (ParseException | URISyntaxException | IOException | HttpException e) {
-      e.printStackTrace();
-      throw new ApplicationException(String.format(ERROR_TX_FORMAT, txid));
+      return null;
     }
   }
 }

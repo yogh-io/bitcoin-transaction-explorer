@@ -46,8 +46,8 @@ public final class TransactionParseUtil extends TransactionUtil {
     computeTransactionHash(transaction, initialPointer, pointer, bytes);
 
     // Verify if the byte array size is equal to the pointer
-    // TODO This will not working in the future because it'd be possible that a massive byte array is passed
-    // which contains more than one transaction (such as blocks)
+    // TODO This will not working in the future because it'd be possible that a massive byte array which doesn't
+    // represent a single transaction is passed (such as blocks)
     if(pointer != bytes.length) {
       throw new IllegalStateException("Raw transaction bytes not fully consumed");
     }
@@ -75,9 +75,12 @@ public final class TransactionParseUtil extends TransactionUtil {
     transaction.setInputs(inputs);
 
     // Iterate over the number of inputs in the transaction
-    for (long i = 0; i < numInputs; i++) {
+    for (int i = 0; i < numInputs; i++) {
       // Create an empty transaction input
       final TransactionInput input = new TransactionInput();
+
+      // Set the index
+      input.setInputIndex(i);
 
       // Add the input to the list (early, to be able to see from where it went wrong, if it goes wrong)
       inputs.add(input);
@@ -86,7 +89,7 @@ public final class TransactionParseUtil extends TransactionUtil {
       pointer = parseTransactionOutPoint(input, pointer, bytes);
 
       // Parse the script
-      pointer = ScriptParseUtil.parseScript(input, pointer, bytes);
+      pointer = ScriptParseUtil.parseScript(input, pointer, bytes, transaction.isCoinbase());
 
       // Parse the sequence bytes
       pointer = parseSequence(input, pointer, bytes);
@@ -105,9 +108,12 @@ public final class TransactionParseUtil extends TransactionUtil {
     transaction.setOutputs(outputs);
 
     // Iterate over the number of output in the transaction
-    for (long i = 0; i < numOutputs; i++) {
+    for (int i = 0; i < numOutputs; i++) {
       // Create an empty transaction output
       final TransactionOutput output = new TransactionOutput();
+
+      // Set the index
+      output.setOutputIndex(i);
 
       // Add the output to the list (early, to be able to see from where it went wrong, if it goes wrong)
       outputs.add(output);
@@ -116,7 +122,7 @@ public final class TransactionParseUtil extends TransactionUtil {
       output.setTransactionValue(NumberParseUtil.parseLong(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPUT_VALUE_SIZE)));
 
       // Parse the script
-      pointer = ScriptParseUtil.parseScript(output, pointer, bytes);
+      pointer = ScriptParseUtil.parseScript(output, pointer, bytes, false);
     }
 
     return pointer;

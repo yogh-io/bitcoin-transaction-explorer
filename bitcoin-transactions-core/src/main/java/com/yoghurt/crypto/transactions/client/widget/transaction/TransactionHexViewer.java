@@ -20,7 +20,7 @@ public class TransactionHexViewer extends HexViewer<RawTransactionPart> {
   }
 
   @Override
-  protected byte[] getBytesForvalue(final RawTransactionPart value) {
+  protected byte[] getBytesForValue(final RawTransactionPart value) {
     return value.getBytes();
   }
 
