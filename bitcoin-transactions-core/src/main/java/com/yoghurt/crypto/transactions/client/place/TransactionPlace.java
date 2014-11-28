@@ -5,14 +5,14 @@ import com.google.gwt.place.shared.Prefix;
 public class TransactionPlace extends ApplicationPlace {
   private static final String PREFIX = "tx";
 
-  public enum TransactionType {
+  public enum TransactionDataType {
     RAW("raw"),
 
     ID("id");
 
     private final String token;
 
-    private TransactionType(final String token) {
+    private TransactionDataType(final String token) {
       this.token = token;
     }
 
@@ -20,8 +20,8 @@ public class TransactionPlace extends ApplicationPlace {
       return token;
     }
 
-    public static TransactionType fromToken(final String token) {
-      for (final TransactionType type : values()) {
+    public static TransactionDataType fromToken(final String token) {
+      for (final TransactionDataType type : values()) {
         if (type.getToken().equals(token)) {
           return type;
         }
@@ -31,14 +31,14 @@ public class TransactionPlace extends ApplicationPlace {
     }
   }
 
-  private final TransactionType type;
+  private final TransactionDataType type;
   private final String hex;
 
   @Prefix(PREFIX)
   public static class Tokenizer extends DelimitedTokenizer<TransactionPlace> {
     @Override
     protected TransactionPlace createPlace(final String[] tokens) {
-      final TransactionType type = TransactionType.fromToken(tokens[0]);
+      final TransactionDataType type = TransactionDataType.fromToken(tokens[0]);
 
       return new TransactionPlace(type, tokens[1]);
     }
@@ -49,12 +49,12 @@ public class TransactionPlace extends ApplicationPlace {
     }
   }
 
-  public TransactionPlace(final TransactionType type, final String hex) {
+  public TransactionPlace(final TransactionDataType type, final String hex) {
     this.type = type;
     this.hex = hex;
   }
 
-  public TransactionType getType() {
+  public TransactionDataType getType() {
     return type;
   }
 

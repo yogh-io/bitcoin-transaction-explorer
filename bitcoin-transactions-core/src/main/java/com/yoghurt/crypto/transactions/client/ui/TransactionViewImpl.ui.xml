@@ -48,7 +48,7 @@
         <w:ValueViewer ui:field="txStateViewer" styleName="{style.widg}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="Block height:" labelStyleName="{style.label}">
-        <w:ValueViewer ui:field="txBlockHeightViewer" styleName="{style.widg}" />
+        <w:BlockViewer ui:field="txBlockViewer" styleName="{style.widg}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="Confirmations:" labelStyleName="{style.label}">
         <w:ValueViewer ui:field="txConfirmationsViewer" styleName="{style.widg}" />

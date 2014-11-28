@@ -9,7 +9,9 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
+import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
@@ -34,7 +36,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   @UiField Label notFoundLabel;
   @UiField FlowPanel extraInformationContainer;
   @UiField(provided = true) ValueViewer txStateViewer;
-  @UiField(provided = true) ValueViewer txBlockHeightViewer;
+  @UiField(provided = true) BlockViewer txBlockViewer;
   @UiField(provided = true) ValueViewer txConfirmationsViewer;
   @UiField(provided = true) ValueViewer txTimeViewer;
 
@@ -46,25 +48,22 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   @UiField(provided = true) ValueViewer txVersionViewer;
   @UiField(provided = true) ValueViewer txLockTimeViewer;
 
-  private Presenter presenter;
+  private final BitcoinPlaceRouter router;
 
   @Inject
-  public TransactionViewImpl() {
+  public TransactionViewImpl(final BitcoinPlaceRouter router) {
+    this.router = router;
+
     txIdViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH));
     txVersionViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.VERSION));
     txLockTimeViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
 
     txStateViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    txBlockHeightViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
+    txBlockViewer = new BlockViewer(router);
     txConfirmationsViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
     txTimeViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
 
     initWidget(UI_BINDER.createAndBindUi(this));
-  }
-
-  @Override
-  public void setPresenter(final Presenter presenter) {
-    this.presenter = presenter;
   }
 
   @Override
@@ -76,7 +75,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
     if (transaction.getInputs() != null) {
       for (final TransactionInput input : transaction.getInputs()) {
-        final TransactionInputWidget inputWidget = new TransactionInputWidget(input, presenter);
+        final TransactionInputWidget inputWidget = new TransactionInputWidget(input, router);
         inputContainer.add(inputWidget);
       }
     }
@@ -97,7 +96,6 @@ public class TransactionViewImpl extends Composite implements TransactionView {
       // Eat.
     }
 
-    GWT.log("Setting raw..");
     txHexViewer.setTransaction(rawTransaction);
   }
 
@@ -113,7 +111,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     extraInformationContainer.setVisible(true);
 
     txStateViewer.setValue(transactionInformation.getState().name());
-    txBlockHeightViewer.setValue(transactionInformation.getBlockHeight());
+    txBlockViewer.setValue(transactionInformation.getBlockHeight());
     txConfirmationsViewer.setValue(transactionInformation.getConfirmations());
     txTimeViewer.setValue(DATE_TIME_FORMATTER.format(transactionInformation.getTime()));
   }

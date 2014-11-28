@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionType;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget {
@@ -51,7 +51,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
       return;
     }
 
-    placeController.goTo(new TransactionPlace(TransactionType.ID, lookupField.getText()));
+    placeController.goTo(new TransactionPlace(TransactionDataType.ID, lookupField.getText()));
   }
 
   @Override

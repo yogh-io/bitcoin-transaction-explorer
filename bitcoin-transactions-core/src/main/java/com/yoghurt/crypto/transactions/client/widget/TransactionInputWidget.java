@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
-import com.yoghurt.crypto.transactions.client.ui.TransactionView.Presenter;
+import com.yoghurt.crypto.transactions.client.ui.TransactionPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.script.ScriptViewer;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
@@ -27,8 +27,8 @@ public class TransactionInputWidget extends Composite {
   @UiField(provided = true) ValueViewer indexViewer;
   @UiField(provided = true) ValueViewer sequenceViewer;
 
-  public TransactionInputWidget(final TransactionInput input, final Presenter presenter) {
-    hashViewer = new TransactionViewer(presenter, input.isCoinbase());
+  public TransactionInputWidget(final TransactionInput input, final TransactionPlaceRouter router) {
+    hashViewer = new TransactionViewer(router, input.isCoinbase());
     signatureScriptViewer = new ScriptViewer(ScriptType.SCRIPT_SIG, input.isCoinbase());
     indexViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.INPUT_OUTPOINT_INDEX));
     sequenceViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.INPUT_SEQUENCE));
