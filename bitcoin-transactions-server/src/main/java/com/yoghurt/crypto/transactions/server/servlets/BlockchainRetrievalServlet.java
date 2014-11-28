@@ -14,6 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.yoghurt.crypto.transactions.server.servlets.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.servlets.util.json.BlockrApiParser;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
@@ -29,7 +30,7 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
-    try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+    try (CloseableHttpClient client = HttpClientProxy.buildProxyClient()) {
       final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid));
 
       return BlockrApiParser.getRawTransactionHex(jsonData);
@@ -48,7 +49,23 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
       return transactionInformation;
     } catch (ParseException | URISyntaxException | IOException | HttpException e) {
+      e.printStackTrace();
       return null;
     }
+  }
+
+  @Override
+  public String getRawBlock(final int height) {
+    return null;
+  }
+
+  @Override
+  public String getRawBlock(final String blockHash) {
+    return null;
+  }
+
+  @Override
+  public BlockInformation getBlockInformation(final String blockHash) {
+    return null;
   }
 }

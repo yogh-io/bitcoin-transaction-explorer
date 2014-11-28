@@ -47,7 +47,7 @@ public class TransactionInformation implements Serializable {
 
   @Override
   public String toString() {
-    return "TransactionInformation [state=" + state + ", blockHeight=" + blockHeight + ", time=" + time + ", confirmations=" + confirmations + "]";
+    return "TransactionInformation [state=" + state + ", block=" + blockHeight + ", time=" + time + ", confirmations=" + confirmations + "]";
   }
 
 

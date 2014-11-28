@@ -1,6 +1,5 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -8,7 +7,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionType;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
@@ -19,17 +18,12 @@ import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseU
 public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements TransactionView.Presenter {
   private final TransactionView view;
   private final BlockchainRetrievalServiceAsync service;
-  private final PlaceController placeController;
 
   @Inject
-  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service,
-      final PlaceController placeController) {
+  public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service) {
     super(place);
     this.view = view;
     this.service = service;
-    this.placeController = placeController;
-
-    view.setPresenter(this);
   }
 
   @Override
@@ -48,7 +42,7 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
 
   @Override
   protected boolean mustPerformLookup(final TransactionPlace place) {
-    return place.getType() == TransactionType.ID;
+    return place.getType() == TransactionDataType.ID;
   }
 
   @Override
@@ -77,10 +71,5 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
         return getTransactionFromHex(result);
       }
     });
-  }
-
-  @Override
-  public void goTo(final String txid) {
-    placeController.goTo(new TransactionPlace(TransactionType.ID, txid));
   }
 }
