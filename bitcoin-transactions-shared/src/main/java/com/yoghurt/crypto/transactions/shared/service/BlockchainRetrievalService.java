@@ -13,9 +13,9 @@ public interface BlockchainRetrievalService extends RemoteService {
 
   TransactionInformation getTransactionInformation(String txid) throws ApplicationException;
 
-  String getRawBlock(int height);
+  String getRawBlockHex(int height);
 
-  String getRawBlock(String blockHash);
+  String getRawBlockHex(String blockHash);
 
   BlockInformation getBlockInformation(String blockHash);
 }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Transaction {
   private byte[] txId;
 
-  private int version;
-  private int lockTime;
+  private long version;
+  private long lockTime;
 
   private VariableLengthInteger inputSize;
   private ArrayList<TransactionInput> inputs;
@@ -22,11 +22,11 @@ public class Transaction {
     this.txId = txId;
   }
 
-  public int getVersion() {
+  public long getVersion() {
     return version;
   }
 
-  public void setVersion(final int version) {
+  public void setVersion(final long version) {
     this.version = version;
   }
 
@@ -62,11 +62,11 @@ public class Transaction {
     this.outputs = outputs;
   }
 
-  public int getLockTime() {
+  public long getLockTime() {
     return lockTime;
   }
 
-  public void setLockTime(final int lockTime) {
+  public void setLockTime(final long lockTime) {
     this.lockTime = lockTime;
   }
 

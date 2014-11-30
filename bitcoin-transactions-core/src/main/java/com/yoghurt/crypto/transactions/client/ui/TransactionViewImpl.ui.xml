@@ -9,30 +9,21 @@
   	background-color: #fff;
   	box-shadow: 0px 0px 5px #fff;
   }
-  
   .contentHeading {
   	font-size: 31px;
   	height: 37px;
   	font-weight: bold;
   }
-  
-  .transactionHex {
-  	font-family: courier new;
-  	word-wrap: break-word;
-  }
-  
   .label {
   	margin: 10px 10px 10px 0px;
   	display: inline-block;
   	width: 85px;
   }
-  
-  .hexViewer {
-  	width: 780px;
-  }
-  
   .widg {
   	display: inline-block;
+  }
+  .hexViewer {
+  	width: 780px;
   }
   </ui:style>
   <g:HTMLPanel styleName="{style.content}">
@@ -41,7 +32,7 @@
     <w:LabelledWidget label="Transaction id:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="txIdViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
-    <g:Label text="Retrieving extra information ..." ui:field="loadPlaceHolder" />
+    <g:Label text="Checking existence in the blockchain ..." ui:field="loadPlaceHolder" />
     <g:Label text="This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool." visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="State:" labelStyleName="{style.label}">

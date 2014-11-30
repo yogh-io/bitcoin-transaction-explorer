@@ -19,6 +19,8 @@ import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
+import com.yoghurt.crypto.transactions.client.ui.BlockView;
+import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.StartupView;
 import com.yoghurt.crypto.transactions.client.ui.StartupViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.TransactionView;
@@ -27,7 +29,7 @@ import com.yoghurt.crypto.transactions.client.ui.TransactionViewImpl;
 public class ApplicationClientModule extends AbstractGinModule {
   @Override
   protected void configure() {
-    // Binding application critical architecure
+    // Binding application critical architecture
     bind(ActivityMapper.class).to(ApplicationActivityMapper.class).in(Singleton.class);;
     bind(Place.class).annotatedWith(DefaultPlace.class).to(StartupPlace.class).in(Singleton.class);
     bind(PlaceController.class).to(ApplicationPlaceController.class).in(Singleton.class);
@@ -38,6 +40,7 @@ public class ApplicationClientModule extends AbstractGinModule {
     // Binding views
     bind(StartupView.class).to(StartupViewImpl.class).in(Singleton.class);
     bind(TransactionView.class).to(TransactionViewImpl.class);
+    bind(BlockView.class).to(BlockViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }
@@ -49,12 +52,12 @@ public class ApplicationClientModule extends AbstractGinModule {
     }
 
     @Override
-    public void goTo(final String txid) {
+    public void goToTransaction(final String txid) {
       goTo(new TransactionPlace(TransactionDataType.ID, txid));
     }
 
     @Override
-    public void goTo(final int height) {
+    public void goToBlock(final int height) {
       goTo(new BlockPlace(BlockDataType.HEIGHT, height));
     }
   }

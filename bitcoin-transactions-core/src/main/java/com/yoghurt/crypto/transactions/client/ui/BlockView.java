@@ -13,6 +13,4 @@ public interface BlockView extends IsWidget {
   void setBlock(Block transaction);
 
   void setBlockInformation(BlockInformation transactionInformation);
-
-  void setPresenter(Presenter presenter);
 }

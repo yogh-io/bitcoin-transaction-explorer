@@ -3,8 +3,8 @@ package com.yoghurt.crypto.transactions.shared.domain;
 
 public class TransactionInput extends ScriptEntity  {
   private TransactionOutPoint outPoint;
-  private int inputIndex;
-  private int transactionSequence;
+  private long inputIndex;
+  private long transactionSequence;
 
   public void setOutPoint(final TransactionOutPoint outPoint) {
     this.outPoint = outPoint;
@@ -14,19 +14,19 @@ public class TransactionInput extends ScriptEntity  {
     return outPoint;
   }
 
-  public int getTransactionSequence() {
+  public long getTransactionSequence() {
     return transactionSequence;
   }
 
-  public void setTransactionSequence(final int transactionSequence) {
+  public void setTransactionSequence(final long transactionSequence) {
     this.transactionSequence = transactionSequence;
   }
 
-  public int getInputIndex() {
+  public long getInputIndex() {
     return inputIndex;
   }
 
-  public void setInputIndex(final int inputIndex) {
+  public void setInputIndex(final long inputIndex) {
     this.inputIndex = inputIndex;
   }
 

@@ -1,7 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
 public class TransactionOutPoint {
-  private int index;
+  private long index;
   private byte[] referenceTransaction;
 
   public byte[] getReferenceTransaction() {
@@ -12,11 +12,11 @@ public class TransactionOutPoint {
     this.referenceTransaction = referenceTransaction;
   }
 
-  public int getIndex() {
+  public long getIndex() {
     return index;
   }
 
-  public void setIndex(final int index) {
+  public void setIndex(final long index) {
     this.index = index;
   }
 

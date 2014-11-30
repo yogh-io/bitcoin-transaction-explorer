@@ -3,7 +3,10 @@ package com.yoghurt.crypto.transactions.shared.util;
 public final class NumberEncodeUtil {
   private NumberEncodeUtil() {}
 
-  public static byte[] encodeUint32(final int value) {
+  /**
+   * TODO Figure out what's happening with negative values for int values (ie. if overflow is encoded correctly and it doesn't matter, in other words, whether providing an int value rather than a long is sufficient)
+   */
+  public static byte[] encodeUint32(final long value) {
     final byte[] bytes = new byte[4];
 
     bytes[0] = (byte) (value >> 0 & 0xFF);
