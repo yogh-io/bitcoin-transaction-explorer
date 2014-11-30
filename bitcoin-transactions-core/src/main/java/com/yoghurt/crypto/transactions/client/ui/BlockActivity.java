@@ -42,7 +42,7 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
 
   @Override
   protected boolean mustPerformLookup(final BlockPlace place) {
-    return place.getType() != BlockDataType.ID;
+    return place.getType() == BlockDataType.ID || place.getType() == BlockDataType.HEIGHT;
   }
 
   @Override

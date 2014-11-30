@@ -7,6 +7,7 @@ import java.text.ParseException;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.http.HttpException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -71,7 +72,7 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
       final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_RAW_FORMAT, identifier));
 
       return BlockrApiParser.getRawBlockHex(jsonData);
-    } catch (ParseException | URISyntaxException | IOException | HttpException e) {
+    } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       return null;
     }

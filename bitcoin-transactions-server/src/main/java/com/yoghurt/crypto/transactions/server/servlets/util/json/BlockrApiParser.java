@@ -6,12 +6,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
+import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 public final class BlockrApiParser {
@@ -46,7 +48,7 @@ public final class BlockrApiParser {
     return info;
   }
 
-  public static String getRawBlockHex(final InputStream jsonData) throws JsonProcessingException, IOException, ParseException {
+  public static String getRawBlockHex(final InputStream jsonData) throws JsonProcessingException, IOException, ParseException, DecoderException {
     final JsonNode tree = JsonParser.mapper.readTree(jsonData);
 
     checkSuccess(tree);
@@ -58,17 +60,23 @@ public final class BlockrApiParser {
     // Version
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(data.get("version").getLongValue())));
 
-    // Prev block hash
-    builder.append(data.get("previousblockhash").getTextValue());
+    // Prev block hash (LE<>BE)
+    final byte[] prevBlockHash = Hex.decodeHex(data.get("previousblockhash").getTextValue().toCharArray());
+    ArrayUtil.reverse(prevBlockHash);
+    builder.append(Hex.encodeHex(prevBlockHash));
 
-    // Merkle root
-    builder.append(data.get("merkleroot").getTextValue());
+    // Merkle root (LE<>BE)
+    final byte[] merkleroot = Hex.decodeHex(data.get("merkleroot").getTextValue().toCharArray());
+    ArrayUtil.reverse(merkleroot);
+    builder.append(Hex.encodeHex(merkleroot));
 
     // Timestamp
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(data.get("time").getLongValue())));
 
-    // Bits
-    builder.append(data.get("bits").getTextValue());
+    // Bits (LE<>BE)
+    final byte[] bits = Hex.decodeHex(data.get("bits").getTextValue().toCharArray());
+    ArrayUtil.reverse(bits);
+    builder.append(Hex.encodeHex(bits));
 
     // Nonce
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(data.get("nonce").getLongValue())));
