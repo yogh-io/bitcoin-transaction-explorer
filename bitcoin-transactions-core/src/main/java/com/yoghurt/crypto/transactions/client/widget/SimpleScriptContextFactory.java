@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.widget.script;
+package com.yoghurt.crypto.transactions.client.widget;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Label;

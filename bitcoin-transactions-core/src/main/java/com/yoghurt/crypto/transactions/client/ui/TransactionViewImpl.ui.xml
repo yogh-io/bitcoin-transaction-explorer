@@ -1,6 +1,5 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget"
-  xmlns:wt="urn:import:com.yoghurt.crypto.transactions.client.widget.transaction">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:style>
   .content {
   	border-radius: 5px;
@@ -60,6 +59,6 @@
       <w:ValueViewer ui:field="txLockTimeViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
     <h2>Raw transaction in hex</h2>
-    <wt:TransactionHexViewer ui:field="txHexViewer" styleName="{style.hexViewer}" />
+    <w:TransactionHexViewer ui:field="txHexViewer" styleName="{style.hexViewer}" />
   </g:HTMLPanel>
 </ui:UiBinder>

@@ -28,7 +28,7 @@ public class HttpClientProxy {
     if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
       return httpResponse.getEntity().getContent();
     } else {
-      throw new HttpException(httpResponse.getStatusLine().toString() + EntityUtils.toString(httpResponse.getEntity()));
+      throw new HttpException(url + " > " + httpResponse.getStatusLine().toString() + EntityUtils.toString(httpResponse.getEntity()));
     }
   }
 

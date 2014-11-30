@@ -82,8 +82,8 @@
   </ui:style>
   <g:FlowPanel styleName="{style.mainPanel}">
     <g:FlowPanel styleName="{style.headerPanel}">
-      <g:Anchor styleName="{style.title}" ui:field="title">Bitcoin Transactions</g:Anchor>
-      <g:Label styleName="{style.subTitle}">Broken down to the bone</g:Label>
+      <g:Anchor styleName="{style.title}" ui:field="title">Blockchain reader</g:Anchor>
+      <g:Label styleName="{style.subTitle}">For developers - Breaking it down to the bone</g:Label>
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
     <g:FlowPanel ui:field="contentPanel" styleName="{style.contentContainer}" />

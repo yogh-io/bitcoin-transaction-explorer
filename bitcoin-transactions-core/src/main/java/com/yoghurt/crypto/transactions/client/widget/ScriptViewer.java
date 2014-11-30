@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.widget.script;
+package com.yoghurt.crypto.transactions.client.widget;
 
 import java.util.ArrayList;
 
@@ -8,8 +8,6 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
-import com.yoghurt.crypto.transactions.client.widget.ContextField;
-import com.yoghurt.crypto.transactions.client.widget.ContextFieldSet;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;

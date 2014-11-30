@@ -5,6 +5,7 @@ import java.util.Date;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 
 public final class BlockParseUtil extends BlockUtil {
   private static final int MS_TO_S = 1000;
@@ -38,7 +39,20 @@ public final class BlockParseUtil extends BlockUtil {
     // Parse the nonce
     pointer = parseNonce(block, pointer, bytes);
 
+    // Compute the block hash
+    computeBlockHash(block, initialPointer, pointer, bytes);
+
     return block;
+  }
+
+  private static void computeBlockHash(final Block block, final int initialPointer, final int pointer, final byte[] bytes) {
+    final byte[] blockBytes = ArrayUtil.arrayCopy(bytes, initialPointer, pointer);
+
+    // Create SHA256 digest and feed it the tx bytes
+    final byte[] blockHash = ComputeUtil.computeDoubleSHA256(blockBytes);
+
+    // Set the transaction tx
+    block.setBlockHash(blockHash);
   }
 
   private static int parseVersion(final Block block, final int initialPointer, final byte[] bytes) {

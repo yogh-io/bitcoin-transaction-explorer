@@ -56,7 +56,7 @@ public final class BlockrApiParser {
     final StringBuilder builder = new StringBuilder();
 
     // Version
-    builder.append("01000000");
+    builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(data.get("version").getLongValue())));
 
     // Prev block hash
     builder.append(data.get("previousblockhash").getTextValue());

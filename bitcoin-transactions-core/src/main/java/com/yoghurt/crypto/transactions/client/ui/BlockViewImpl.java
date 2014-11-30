@@ -20,6 +20,8 @@ public class BlockViewImpl extends Composite implements BlockView {
 
   private static final BlockViewImplUiBinder UI_BINDER = GWT.create(BlockViewImplUiBinder.class);
 
+  @UiField(provided = true) ValueViewer blockHashViewer;
+
   @UiField(provided = true) ValueViewer versionViewer;
   @UiField(provided = true) ValueViewer previousBlockHashViewer;
   @UiField(provided = true) ValueViewer merkleRootViewer;
@@ -28,6 +30,7 @@ public class BlockViewImpl extends Composite implements BlockView {
   @UiField(provided = true) ValueViewer nonceViewer;
 
   public BlockViewImpl() {
+    blockHashViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
     versionViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
     previousBlockHashViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
     merkleRootViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
@@ -40,6 +43,7 @@ public class BlockViewImpl extends Composite implements BlockView {
 
   @Override
   public void setBlock(final Block block) {
+    blockHashViewer.setValue(Str.toString(Hex.encode(block.getBlockHash())).toUpperCase());
     versionViewer.setValue(block.getVersion());
 
     previousBlockHashViewer.setValue(Str.toString(Hex.encode(block.getPreviousBlockHash())).toUpperCase());

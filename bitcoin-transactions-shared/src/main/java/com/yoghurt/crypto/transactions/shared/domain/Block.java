@@ -6,7 +6,7 @@ import java.util.Date;
 public class Block implements Serializable {
   private static final long serialVersionUID = -2309928857207399375L;
 
-  private byte[] hash;
+  private byte[] blockHash;
 
   private long version;
   private byte[] previousBlockHash;
@@ -17,12 +17,12 @@ public class Block implements Serializable {
 
   public Block() {}
 
-  public byte[] getHash() {
-    return hash;
+  public byte[] getBlockHash() {
+    return blockHash;
   }
 
-  public void setHash(final byte[] hash) {
-    this.hash = hash;
+  public void setBlockHash(final byte[] hash) {
+    this.blockHash = hash;
   }
 
   public long getVersion() {
