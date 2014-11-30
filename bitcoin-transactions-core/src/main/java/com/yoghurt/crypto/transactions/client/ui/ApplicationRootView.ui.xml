@@ -82,7 +82,7 @@
   </ui:style>
   <g:FlowPanel styleName="{style.mainPanel}">
     <g:FlowPanel styleName="{style.headerPanel}">
-      <g:Anchor styleName="{style.title}" ui:field="title">Blockchain reader</g:Anchor>
+      <g:Anchor styleName="{style.title}" ui:field="title" text="Blockchain reader" />
       <g:Label styleName="{style.subTitle}">For developers - Breaking it down to the bone</g:Label>
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>

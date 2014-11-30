@@ -21,13 +21,21 @@
   .widg {
   	display: inline-block;
   }
+  .hexViewer {
+  	width: 780px;
+  }
   </ui:style>
-  <g:HTMLPanel styleName="{style.content}">
+  <g:FlowPanel styleName="{style.content}">
     <g:Label styleName="{style.contentHeading}" text="Block Breakdown" />
-    <h2>Block information</h2>
+    <g:HTML>
+      <h2>Block information</h2>
+    </g:HTML>
     <w:LabelledWidget label="Block hash:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="blockHashViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
+    <g:HTML>
+      <h2>Block headers</h2>
+    </g:HTML>
     <w:LabelledWidget label="Version:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="versionViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
@@ -46,5 +54,9 @@
     <w:LabelledWidget label="Nonce:" labelStyleName="{style.label}">
       <w:ValueViewer ui:field="nonceViewer" styleName="{style.widg}" />
     </w:LabelledWidget>
-  </g:HTMLPanel>
+    <g:HTML>
+      <h2>Raw block in hex</h2>
+    </g:HTML>
+    <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
+  </g:FlowPanel>
 </ui:UiBinder>

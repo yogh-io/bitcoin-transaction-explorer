@@ -7,13 +7,16 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
-import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
+import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
+import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
+import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
 
 public class BlockViewImpl extends Composite implements BlockView {
   interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {}
@@ -29,14 +32,16 @@ public class BlockViewImpl extends Composite implements BlockView {
   @UiField(provided = true) HashViewer bitsViewer;
   @UiField(provided = true) ValueViewer nonceViewer;
 
+  @UiField BlockHexViewer blockHexViewer;
+
   public BlockViewImpl() {
-    blockHashViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    versionViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    previousBlockHashViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    merkleRootViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    timestampViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    bitsViewer = new HashViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    nonceViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
+    blockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
+    versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
+    previousBlockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
+    merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
+    timestampViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
+    bitsViewer = new HashViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
+    nonceViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.NONCE));
 
     initWidget(UI_BINDER.createAndBindUi(this));
   }
@@ -52,6 +57,16 @@ public class BlockViewImpl extends Composite implements BlockView {
     timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());
+
+    final RawBlockContainer rawTransaction = new RawBlockContainer();
+    try {
+      BlockEncodeUtil.encodeBlock(block, rawTransaction);
+    } catch (final Throwable e) {
+      e.printStackTrace();
+      // Eat.
+    }
+
+    blockHexViewer.setBlock(rawTransaction);
   }
 
   @Override
