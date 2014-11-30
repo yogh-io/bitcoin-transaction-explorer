@@ -9,7 +9,7 @@ public class BlockViewer extends ValueViewer {
   private final ClickHandler mouseClickHandler = new ClickHandler() {
     @Override
     public void onClick(final ClickEvent event) {
-      presenter.goTo(blockHeight);
+      presenter.goToBlock(blockHeight);
     }
   };
 

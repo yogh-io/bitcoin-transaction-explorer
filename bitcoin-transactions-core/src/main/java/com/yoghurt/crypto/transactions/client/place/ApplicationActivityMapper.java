@@ -4,6 +4,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
+import com.yoghurt.crypto.transactions.client.ui.BlockActivity;
 import com.yoghurt.crypto.transactions.client.ui.StartupActivity;
 import com.yoghurt.crypto.transactions.client.ui.TransactionActivity;
 
@@ -18,7 +19,9 @@ public class ApplicationActivityMapper implements ActivityMapper {
     if (place instanceof StartupPlace) {
       presenter = factory.createStartupPresenter((StartupPlace) place);
     } else if(place instanceof TransactionPlace) {
-      presenter = factory.createTransactionBreakdownPresenter((TransactionPlace) place);
+      presenter = factory.createTransactionPresenter((TransactionPlace) place);
+    } else if(place instanceof BlockPlace) {
+      presenter = factory.createBlockPresenter((BlockPlace) place);
     }
 
     return presenter;
@@ -27,6 +30,8 @@ public class ApplicationActivityMapper implements ActivityMapper {
   public interface ActivityFactory {
     StartupActivity createStartupPresenter(StartupPlace place);
 
-    TransactionActivity createTransactionBreakdownPresenter(TransactionPlace place);
+    BlockActivity createBlockPresenter(BlockPlace place);
+
+    TransactionActivity createTransactionPresenter(TransactionPlace place);
   }
 }

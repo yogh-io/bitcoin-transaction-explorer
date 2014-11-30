@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -72,14 +73,17 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
       }
     };
 
+    GWT.log("Looking up..");
+
     switch(place.getType()) {
     case HEIGHT:
-      service.getRawBlock(Integer.parseInt(place.getPayload()), morphCallback);
+      service.getRawBlockHex(Integer.parseInt(place.getPayload()), morphCallback);
       break;
     case ID:
-      service.getRawBlock(place.getPayload(), morphCallback);
+      service.getRawBlockHex(place.getPayload(), morphCallback);
       break;
     default:
+      callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));
       return;
     }
   }

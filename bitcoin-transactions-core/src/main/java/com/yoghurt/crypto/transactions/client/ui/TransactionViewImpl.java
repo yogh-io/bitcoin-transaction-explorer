@@ -1,7 +1,6 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -10,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
@@ -28,8 +28,6 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   interface TransactionViewImplUiBinder extends UiBinder<Widget, TransactionViewImpl> {}
 
   private static final TransactionViewImplUiBinder UI_BINDER = GWT.create(TransactionViewImplUiBinder.class);
-
-  private static final DateTimeFormat DATE_TIME_FORMATTER = DateTimeFormat.getFormat("MMMM dd, yyyy, HH:mm:ss Z");
 
   @UiField(provided = true) ValueViewer txIdViewer;
   @UiField Label loadPlaceHolder;
@@ -70,8 +68,8 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   public void setTransaction(final Transaction transaction) {
     txIdViewer.setValue(transaction.getTransactionId());
 
-    txVersionViewer.setValue(String.valueOf(transaction.getVersion()));
-    txLockTimeViewer.setValue(String.valueOf(transaction.getLockTime()));
+    txVersionViewer.setValue(transaction.getVersion());
+    txLockTimeViewer.setValue(transaction.getLockTime());
 
     if (transaction.getInputs() != null) {
       for (final TransactionInput input : transaction.getInputs()) {
@@ -113,6 +111,6 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     txStateViewer.setValue(transactionInformation.getState().name());
     txBlockViewer.setValue(transactionInformation.getBlockHeight());
     txConfirmationsViewer.setValue(transactionInformation.getConfirmations());
-    txTimeViewer.setValue(DATE_TIME_FORMATTER.format(transactionInformation.getTime()));
+    txTimeViewer.setValue(FormatUtil.formatDateTime(transactionInformation.getTime()));
   }
 }

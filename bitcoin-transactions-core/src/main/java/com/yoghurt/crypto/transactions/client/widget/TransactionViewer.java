@@ -11,7 +11,7 @@ public class TransactionViewer extends ValueViewer {
   private final ClickHandler mouseClickHandler = new ClickHandler() {
     @Override
     public void onClick(final ClickEvent event) {
-      placeController.goTo(value);
+      placeController.goToTransaction(value);
     }
   };
   private final TransactionPlaceRouter placeController;
