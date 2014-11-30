@@ -8,10 +8,10 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
  * TODO Move to proper package.
  */
 public class TransactionPartColorPicker {
-  public static Color getFieldColor(final TransactionPartType value) {
-    final Color color;
+  public static Color getFieldColor(final TransactionPartType type) {
+    Color color;
 
-    switch (value) {
+    switch (type) {
     case TRANSACTION_HASH:
       color = ColorBuilder.interpret("cornflowerblue");
       break;
