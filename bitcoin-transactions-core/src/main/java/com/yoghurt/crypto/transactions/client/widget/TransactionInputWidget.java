@@ -10,7 +10,6 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.ui.TransactionPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
-import com.yoghurt.crypto.transactions.client.widget.script.ScriptViewer;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;

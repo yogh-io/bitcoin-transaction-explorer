@@ -1,8 +1,7 @@
-package com.yoghurt.crypto.transactions.client.widget.transaction;
+package com.yoghurt.crypto.transactions.client.widget;
 
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
-import com.yoghurt.crypto.transactions.client.widget.HexViewer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionPart;
 

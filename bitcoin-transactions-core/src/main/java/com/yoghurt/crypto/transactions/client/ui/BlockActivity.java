@@ -1,6 +1,5 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -33,7 +32,7 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
 
     view.setBlock(block);
 
-    service.getBlockInformation(Str.toString(block.getHash()), new AppAsyncCallback<BlockInformation>() {
+    service.getBlockInformation(Str.toString(block.getBlockHash()), new AppAsyncCallback<BlockInformation>() {
       @Override
       public void onSuccess(final BlockInformation result) {
         view.setBlockInformation(result);
@@ -72,8 +71,6 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
         return getBlockFromHex(result);
       }
     };
-
-    GWT.log("Looking up..");
 
     switch(place.getType()) {
     case HEIGHT:
