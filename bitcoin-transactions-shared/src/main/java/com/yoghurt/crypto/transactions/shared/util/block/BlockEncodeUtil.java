@@ -4,6 +4,7 @@ import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockPart;
+import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 public final class BlockEncodeUtil {
@@ -40,11 +41,17 @@ public final class BlockEncodeUtil {
   }
 
   private static RawBlockPart encodePreviousBlockHash(final Block block) {
-    return new RawBlockPart(BlockPartType.PREV_BLOCK_HASH, block.getPreviousBlockHash());
+    final byte[] previousBlockHashBytes = block.getPreviousBlockHash();
+    ArrayUtil.reverse(previousBlockHashBytes);
+
+    return new RawBlockPart(BlockPartType.PREV_BLOCK_HASH, previousBlockHashBytes);
   }
 
   private static RawBlockPart encodeMerkleRoot(final Block block) {
-    return new RawBlockPart(BlockPartType.MERKLE_ROOT, block.getMerkleRoot());
+    final byte[] merkleRootBytes = block.getMerkleRoot();
+    ArrayUtil.reverse(merkleRootBytes);
+
+    return new RawBlockPart(BlockPartType.MERKLE_ROOT, merkleRootBytes);
   }
 
   private static RawBlockPart encodeTimestamp(final Block block) {
@@ -53,6 +60,7 @@ public final class BlockEncodeUtil {
 
   private static RawBlockPart encodeBits(final Block block) {
     final byte[] bitsBytes = block.getBits();
+    ArrayUtil.reverse(bitsBytes);
 
     return new RawBlockPart(BlockPartType.BITS, bitsBytes);
   }
