@@ -63,19 +63,31 @@ public final class BlockParseUtil extends BlockUtil {
 
   private static int parsePreviousBlockHash(final Block block, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    block.setPreviousBlockHash(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_PREVIOUS_BLOCK_HASH_SIZE));
+
+    final byte[] prevBlockBytes = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_PREVIOUS_BLOCK_HASH_SIZE);
+    ArrayUtil.reverse(prevBlockBytes);
+
+    block.setPreviousBlockHash(prevBlockBytes);
     return pointer;
   }
 
   private static int parseMerkleRoot(final Block block, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    block.setMerkleRoot(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_MERKLE_ROOT_SIZE));
+
+    final byte[] merkleRootBytes = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_MERKLE_ROOT_SIZE);
+    ArrayUtil.reverse(merkleRootBytes);
+
+    block.setMerkleRoot(merkleRootBytes);
     return pointer;
   }
 
   private static int parseBits(final Block block, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    block.setBits(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_BITS_FIELD_SIZE));
+
+    final byte[] bitsBytes = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_BITS_FIELD_SIZE);
+    ArrayUtil.reverse(bitsBytes);
+
+    block.setBits(bitsBytes);
     return pointer;
   }
 
