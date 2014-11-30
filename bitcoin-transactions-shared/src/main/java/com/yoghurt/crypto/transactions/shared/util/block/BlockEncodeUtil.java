@@ -52,7 +52,9 @@ public final class BlockEncodeUtil {
   }
 
   private static RawBlockPart encodeBits(final Block block) {
-    return new RawBlockPart(BlockPartType.BITS, block.getBits());
+    final byte[] bitsBytes = block.getBits();
+
+    return new RawBlockPart(BlockPartType.BITS, bitsBytes);
   }
 
   private static RawBlockPart encodeNonce(final Block block) {
