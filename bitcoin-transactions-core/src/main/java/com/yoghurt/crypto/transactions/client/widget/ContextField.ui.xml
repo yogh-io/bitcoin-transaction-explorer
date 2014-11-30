@@ -1,25 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R.ApplicationResource" />
   <ui:style type="com.yoghurt.crypto.transactions.client.widget.ContextField.CustomStyle">
-  .contextField {
-  	font-family: consolas, courier new;
-  	line-height: 24px;
-  	padding: 0px 4px;
-  	display: inline-block;
-  	background-color: rgba(255, 255, 255, 0);
-  	border-top: 3px solid transparent;
-  	margin-bottom: 15px;
-  }
-  .contextField:hover {
-  	background-color: #EEEEEE !important;
-  	cursor: pointer;
-  }
-  .contextField:active {
-  	background-color: white !important;
-  }
   .fieldSelected {
   	background-color: white !important;
   }
   </ui:style>
-  <g:Label styleName="{style.contextField}" ui:field="field" />
+  <g:Label styleName="{res.css.contextField}" ui:field="field" />
 </ui:UiBinder>
