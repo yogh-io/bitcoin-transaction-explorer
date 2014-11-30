@@ -9,15 +9,15 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class HexContextPanel extends Composite implements AcceptsOneWidget {
+public class ContextPanel extends Composite implements AcceptsOneWidget {
 
-  interface HexContextPanelUiBinder extends UiBinder<Widget, HexContextPanel> {}
+  interface ContextPanelUiBinder extends UiBinder<Widget, ContextPanel> {}
 
-  private static final HexContextPanelUiBinder UI_BINDER = GWT.create(HexContextPanelUiBinder.class);
+  private static final ContextPanelUiBinder UI_BINDER = GWT.create(ContextPanelUiBinder.class);
 
   @UiField SimplePanel contextPanel;
 
-  public HexContextPanel() {
+  public ContextPanel() {
     initWidget(UI_BINDER.createAndBindUi(this));
   }
 

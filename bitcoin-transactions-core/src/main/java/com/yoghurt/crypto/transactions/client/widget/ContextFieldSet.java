@@ -185,7 +185,7 @@ public class ContextFieldSet<T> extends FlowPanel {
     // Create a new content widget
     final Widget popupContent = contextFactory.getContextWidget(value);
 
-    final HexContextPanel panel = new HexContextPanel();
+    final ContextPanel panel = new ContextPanel();
     panel.setWidget(popupContent);
 
     final Color borderColor = getFieldColor(value);
