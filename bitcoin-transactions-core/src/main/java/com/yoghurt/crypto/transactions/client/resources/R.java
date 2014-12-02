@@ -14,7 +14,6 @@ public final class R {
    * Application CssResources.
    */
   public interface ApplicationCssResource extends CssResource {
-    String contextField();
   }
 
   /**

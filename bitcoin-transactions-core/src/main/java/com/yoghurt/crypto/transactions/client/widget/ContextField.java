@@ -29,6 +29,8 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
 
   public interface CustomStyle extends CssResource {
     String fieldSelected();
+
+    String fieldActive();
   }
   public ContextField(final String content) {
     initWidget(UI_BINDER.createAndBindUi(this));
@@ -38,6 +40,10 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
 
   public void setSelected(final boolean selected) {
     setStyleName(style.fieldSelected(), selected);
+  }
+
+  public void setActive(final boolean active) {
+    setStyleName(style.fieldActive(), active);
   }
 
   @Override

@@ -57,9 +57,9 @@ public class ScriptViewer extends ContextFieldSet<ScriptPart> {
   }
 
   @Override
-  protected void addField(final ContextField<ScriptPart> field) {
+  protected ContextField<ScriptPart> addField(final ContextField<ScriptPart> field) {
     field.getElement().getStyle().setMarginRight(10, Unit.PX);
 
-    super.addField(field);
+    return super.addField(field);
   }
 }
