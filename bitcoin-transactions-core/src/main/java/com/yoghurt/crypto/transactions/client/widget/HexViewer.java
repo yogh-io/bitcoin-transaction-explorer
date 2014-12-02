@@ -1,5 +1,9 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -20,7 +24,12 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
 
   @UiField CustomStyle style;
 
+  // Kind of a sketchy construct... it's basically a HashMap that allows duplicate values. Scales like a turd.
+  private final ArrayList<Entry<T, ArrayList<ContextField<T>>>> fieldMap = new ArrayList<Entry<T, ArrayList<ContextField<T>>>>();
+
   private FlowPanel byteSetContainer;
+
+  private ArrayList<ContextField<T>> activeFields;
 
   public HexViewer(final FieldContextFactory<T> contextFactory) {
     super(contextFactory);
@@ -31,17 +40,54 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
   public void addFields(final T value) {
     final Color typeColor = getFieldColor(value);
 
-    for (final byte bite : getBytesForValue(value)) {
-      final String hex = new String(Hex.encode(new byte[] {  bite })).toUpperCase();
+    final ArrayList<ContextField<T>> fields = new ArrayList<ContextField<T>>();
 
-      addField(value, typeColor, hex);
+    for (final byte bite : getBytesForValue(value)) {
+      final String hex = new String(Hex.encode(new byte[] { bite })).toUpperCase();
+
+      fields.add(addField(value, typeColor, hex));
     }
+
+    fieldMap.add(new AbstractMap.SimpleEntry<T, ArrayList<ContextField<T>>>(value, fields));
+  }
+
+  @Override
+  protected void displayContextForValue(final T value) {
+    clearActiveFields();
+
+    activeFields = findValueFields(value);
+
+    if (activeFields == null) {
+      return;
+    }
+
+    for (final ContextField<T> w : activeFields) {
+      w.setActive(true);
+    }
+  }
+
+  private void clearActiveFields() {
+    if (activeFields != null) {
+      for (final ContextField<T> field : activeFields) {
+        field.setActive(false);
+      }
+    }
+  }
+
+  private ArrayList<ContextField<T>> findValueFields(final T value) {
+    for (final Entry<T, ArrayList<ContextField<T>>> entry : fieldMap) {
+      if (entry.getKey() == value) {
+        return entry.getValue();
+      }
+    }
+
+    return null;
   }
 
   protected abstract byte[] getBytesForValue(final T value);
 
   @Override
-  protected void addField(final ContextField<T> field) {
+  protected ContextField<T> addField(final ContextField<T> field) {
     if (byteSetContainer == null) {
       byteSetContainer = new FlowPanel();
       byteSetContainer.setStyleName(style.byteSet());
@@ -53,11 +99,14 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
     if (byteSetContainer.getWidgetCount() == 8) {
       byteSetContainer = null;
     }
+
+    return field;
   }
 
   @Override
   public void clear() {
     super.clear();
     byteSetContainer = null;
+    clearActiveFields();
   }
 }

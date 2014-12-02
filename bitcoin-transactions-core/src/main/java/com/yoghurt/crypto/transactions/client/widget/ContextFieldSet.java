@@ -146,20 +146,20 @@ public class ContextFieldSet<T> extends FlowPanel {
     addField(value, color, getFieldText(value));
   }
 
-  public void addField(final T value, final Color color, final String text) {
+  public ContextField<T> addField(final T value, final Color color, final String text) {
     final ContextField<T> field = new ContextField<T>(text);
-
-    final Color backgroundColor = color.copy();
-    backgroundColor.setA(0.2);
 
     field.addMouseOverHandler(new ContextHandler(value));
     field.addMouseOutHandler(mouseOutHandler);
     field.addClickHandler(mouseClickHandler);
 
+    final Color backgroundColor = color.copy();
+    backgroundColor.setA(0.2);
+
     field.getElement().getStyle().setBorderColor(color.getValue());
     field.getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
 
-    addField(field);
+    return addField(field);
   }
 
   protected Color getFieldColor(final T value) {
@@ -172,8 +172,10 @@ public class ContextFieldSet<T> extends FlowPanel {
     return null;
   }
 
-  protected void addField(final ContextField<T> field) {
+  protected ContextField<T> addField(final ContextField<T> field) {
     add(field);
+
+    return field;
   }
 
   private void delayedHide() {
@@ -190,14 +192,21 @@ public class ContextFieldSet<T> extends FlowPanel {
 
     final Color borderColor = getFieldColor(value);
     final Color backgroundColor = borderColor.copy();
-    borderColor.setA(0.8);
+    borderColor.setA(0.9);
     backgroundColor.setA(0.02);
 
     panel.getElement().getStyle().setBorderColor(borderColor.getValue());
     popupContent.getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
 
+    // Notify display
+    displayContextForValue(value);
+
     // Display the popup
     displayContextPopup(target, panel);
+  }
+
+  protected void displayContextForValue(final T value) {
+    // No-op by default
   }
 
   private void displayContextPopup(final Widget target, final Widget popupContent) {
