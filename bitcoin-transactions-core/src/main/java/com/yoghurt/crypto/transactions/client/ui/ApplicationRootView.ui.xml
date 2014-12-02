@@ -1,60 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R.ApplicationResource" />
   <ui:style>
-  html {
-  	height: 100%;
-  	margin: 0;
-  	padding: 0;
-  }
-  body {
-  	color: #555;
-  	font: normal normal normal 0.75em/normal 'Lucida Grande', sans-serif;
-  	text-align: center;
-  	background-color: /*#E7E7E7;*/rgb(250, 143, 8);
-  	margin: 0;
-  	padding: 0;
-  	overflow-y: auto;
-  	height: 100%;
-  }
-  .mainPanel {
-  	margin: 0 auto;
-  	padding-top: 0;
-  	text-align: left;
-  	width: 800px;
-  	min-height: 100%;
-  	position: relative;
-  }
-  .headerPanel {
-  	background-color: #fff;
-  	padding: 20px;
-  	padding-top: 1px;
-  	border-bottom-left-radius: 5px;
-  	border-bottom-right-radius: 5px;
-  	box-shadow: 0px 0px 5px #fff;
-  	height: 140px;
-  }
-  .title {
-  	color: #555;
-  	line-height: 36px;
-  	float: left;
-	font-size: 31px;
-	font-weight: bold;
-	margin: 20px 0px;
-	text-decoration: none;
-  }
-  .title:hover {
-	text-decoration: underline;
-	color: rgb(250, 143, 8);
-	cursor: pointer;
-  }
-  .subTitle {
-	font-size: 16px;
-  	color: #888;
-  	float: right;
-	font-weight: bold;
-  	line-height: 41px;
-	margin: 20px 0px;
-  }
   .lookup {
 	border: 1px solid #999;
 	border-radius: 5px;
@@ -62,34 +9,17 @@
 	width: 740px;
 	padding: 10px 9px;
   }
-  .contentContainer {
-	padding-bottom: 140px;
-  }
-  .footer {
-	position: absolute;
-	height: 92px;
-	width: 800px;
-	bottom: 0px;
-	box-shadow: 0px 0px 5px #fff;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	background-color: #fff;
-  }
-  .innerFooter {
-	margin: 10px 20px;
-	text-align: right;
-  }
   </ui:style>
-  <g:FlowPanel styleName="{style.mainPanel}">
-    <g:FlowPanel styleName="{style.headerPanel}">
-      <g:Anchor styleName="{style.title}" ui:field="title" text="Blockchain reader" />
-      <g:Label styleName="{style.subTitle}">For developers - Breaking it down to the bone</g:Label>
+  <g:FlowPanel styleName="{res.css.applicationMainPanel}">
+    <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
+      <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="Blockchain reader" />
+      <g:Label styleName="{res.css.applicationSubTitle}">For developers - Breaking it down to the bone</g:Label>
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
-    <g:FlowPanel ui:field="contentPanel" styleName="{style.contentContainer}" />
-    <g:FlowPanel styleName="{style.footer}">
-      <g:FlowPanel styleName="{style.innerFooter}">
-        <g:Label styleName="{style.subTitle}">Donate / contribute</g:Label>
+    <g:FlowPanel ui:field="contentPanel" styleName="{res.css.applicationContentContainer}" />
+    <g:FlowPanel styleName="{res.css.applicationFooter}">
+      <g:FlowPanel styleName="{res.css.applicationInnerFooter}">
+        <g:Label styleName="{res.css.applicationSubTitle}">Donate / contribute</g:Label>
       </g:FlowPanel>
     </g:FlowPanel>
   </g:FlowPanel>
