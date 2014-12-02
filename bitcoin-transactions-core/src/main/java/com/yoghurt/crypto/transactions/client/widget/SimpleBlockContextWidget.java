@@ -19,15 +19,15 @@ public class SimpleBlockContextWidget implements FieldContextFactory<RawBlockPar
     case VERSION:
       return "Block version number";
     case PREV_BLOCK_HASH:
-      return "The hash of the block this block is built on top of";
+      return "Previous block hash";
     case MERKLE_ROOT:
-      return "The merkle root, the hash of all transactions combined";
+      return "Merkle root";
     case TIMESTAMP:
-      return "The timestamp";
+      return "Timestamp";
     case BITS:
-      return "The bits value for this block";
+      return "Bits value / difficulty target";
     case NONCE:
-      return "The nonce for this block";
+      return "Nonce";
     default:
       return "Unknown block part.";
     }

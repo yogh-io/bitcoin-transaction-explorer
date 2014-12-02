@@ -14,6 +14,19 @@ public final class R {
    * Application CssResources.
    */
   public interface ApplicationCssResource extends CssResource {
+    String applicationMainPanel();
+
+    String applicationHeaderPanel();
+
+    String applicationTitle();
+
+    String applicationSubTitle();
+
+    String applicationContentContainer();
+
+    String applicationFooter();
+
+    String applicationInnerFooter();
   }
 
   /**

@@ -1,3 +1,82 @@
+@def contentColor #fff;
+
+html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
 body {
-	color: #b00;
+	color: #555;
+	font: normal normal normal 0.75em/normal 'Lucida Grande', sans-serif;
+	text-align: center;
+	background-color: #575757; /*rgb( 250, 143, 8);*/
+	margin: 0;
+	padding: 0;
+	overflow-y: auto;
+	height: 100%;
+}
+
+.applicationMainPanel {
+	margin: 0 auto;
+	padding-top: 0;
+	text-align: left;
+	width: 800px;
+	min-height: 100%;
+	position: relative;
+}
+
+.applicationHeaderPanel {
+	background-color: contentColor;
+	padding: 20px;
+	padding-top: 1px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-shadow: 0px 0px 5px #fff;
+	height: 140px;
+}
+
+.applicationTitle {
+	color: #555;
+	line-height: 36px;
+	float: left;
+	font-size: 31px;
+	font-weight: bold;
+	margin: 20px 0px;
+	text-decoration: none;
+}
+
+.applicationTitle:hover {
+	text-decoration: underline;
+	color: rgb(250, 143, 8);
+	cursor: pointer;
+}
+
+.applicationSubTitle {
+	font-size: 16px;
+	color: #888;
+	float: right;
+	font-weight: bold;
+	line-height: 41px;
+	margin: 20px 0px;
+}
+
+.applicationContentContainer {
+	padding-bottom: 140px;
+}
+
+.applicationFooter {
+	position: absolute;
+	height: 92px;
+	width: 800px;
+	bottom: 0px;
+	box-shadow: 0px 0px 5px #fff;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background-color: contentColor;
+}
+
+.applicationInnerFooter {
+	margin: 10px 20px;
+	text-align: right;
 }

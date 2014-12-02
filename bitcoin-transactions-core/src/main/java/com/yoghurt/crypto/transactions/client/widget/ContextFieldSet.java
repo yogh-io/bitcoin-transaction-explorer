@@ -17,8 +17,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ContextFieldSet<T> extends FlowPanel {
-  private static final int POPUP_SHOW_DELAY = 150;
-  private static final int POPUP_HIDE_DELAY = 200;
+  private static final int POPUP_SHOW_DELAY = 50;
+  private static final int POPUP_HIDE_DELAY = 70;
 
   public interface FieldContextFactory<T> {
     Widget getContextWidget(T part);
@@ -192,8 +192,8 @@ public class ContextFieldSet<T> extends FlowPanel {
 
     final Color borderColor = getFieldColor(value);
     final Color backgroundColor = borderColor.copy();
-    borderColor.setA(0.9);
-    backgroundColor.setA(0.02);
+    borderColor.setA(0.8);
+    backgroundColor.setA(0.01);
 
     panel.getElement().getStyle().setBorderColor(borderColor.getValue());
     popupContent.getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
