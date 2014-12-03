@@ -24,7 +24,7 @@
   var hostName = $wnd.location.hostname;
   var serverUrl = 'http://' + hostName + ':9876';
   var module = 'application';
-  var nocacheUrl = serverUrl + '/' + module + '/' + module + '.recompile.nocache.js';
+  var nocacheUrl = serverUrl + '/recompile-requester/' + module;
 
   // Insert the superdevmode nocache script in the first position of the head
   var devModeScript = $doc.createElement('script');

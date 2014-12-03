@@ -7,8 +7,8 @@
   <name>Bitcoin transaction explorer</name>
   
   <properties>
-    <com.google.gwt.version>2.7.0-rc1</com.google.gwt.version>
-    <org.codehaus.mojo.gwtmavenplugin.version>2.7.0-rc1</org.codehaus.mojo.gwtmavenplugin.version>
+    <com.google.gwt.version>2.7.0</com.google.gwt.version>
+    <org.codehaus.mojo.gwtmavenplugin.version>2.7.0</org.codehaus.mojo.gwtmavenplugin.version>
   </properties>
 
   <build>
