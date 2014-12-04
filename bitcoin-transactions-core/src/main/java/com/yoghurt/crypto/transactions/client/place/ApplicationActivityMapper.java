@@ -5,12 +5,14 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.yoghurt.crypto.transactions.client.ui.BlockActivity;
+import com.yoghurt.crypto.transactions.client.ui.MineActivity;
 import com.yoghurt.crypto.transactions.client.ui.StartupActivity;
 import com.yoghurt.crypto.transactions.client.ui.TransactionActivity;
 
 public class ApplicationActivityMapper implements ActivityMapper {
 
-  @Inject private ActivityFactory factory;
+  @Inject
+  private ActivityFactory factory;
 
   @Override
   public Activity getActivity(final Place place) {
@@ -18,10 +20,12 @@ public class ApplicationActivityMapper implements ActivityMapper {
 
     if (place instanceof StartupPlace) {
       presenter = factory.createStartupPresenter((StartupPlace) place);
-    } else if(place instanceof TransactionPlace) {
+    } else if (place instanceof TransactionPlace) {
       presenter = factory.createTransactionPresenter((TransactionPlace) place);
-    } else if(place instanceof BlockPlace) {
+    } else if (place instanceof BlockPlace) {
       presenter = factory.createBlockPresenter((BlockPlace) place);
+    } else if (place instanceof MinePlace) {
+      presenter = factory.createMinePresenter((MinePlace) place);
     }
 
     return presenter;
@@ -33,5 +37,7 @@ public class ApplicationActivityMapper implements ActivityMapper {
     BlockActivity createBlockPresenter(BlockPlace place);
 
     TransactionActivity createTransactionPresenter(TransactionPlace place);
+
+    MineActivity createMinePresenter(MinePlace place);
   }
 }

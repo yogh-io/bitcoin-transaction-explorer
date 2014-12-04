@@ -66,7 +66,7 @@ public class AttachedContextPanel extends PopupPanel implements ResizeHandler {
     this.widget = w;
 
     final int x = Math.max(5, w.getAbsoluteLeft() + w.getOffsetWidth() / 2 - getWidget().getOffsetWidth() / 2);
-    final int y = w.getAbsoluteTop() - getWidget().getOffsetHeight() - 10;
+    final int y = w.getElement().getOffsetTop() - getWidget().getOffsetHeight() - 10;
 
     setPopupPosition(x, y);
     updateArrowPosition();
