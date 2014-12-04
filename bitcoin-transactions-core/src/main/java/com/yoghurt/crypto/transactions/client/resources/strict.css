@@ -1,9 +1,9 @@
 @def contentColor #fff;
 
 html {
-	height: 100%;
 	margin: 0;
 	padding: 0;
+	height: 100%;
 }
 
 body {
@@ -22,8 +22,8 @@ body {
 	padding-top: 0;
 	text-align: left;
 	width: 800px;
-	min-height: 100%;
 	position: relative;
+	min-height: 100%;
 }
 
 .applicationHeaderPanel {

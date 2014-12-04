@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:style>
+  .content {
+  	border-radius: 5px;
+  	padding: 20px;
+  	margin-top: 50px;
+  	background-color: #fff;
+  	box-shadow: 0px 0px 5px #fff;
+  }
+  .contentHeading {
+  	font-size: 31px;
+  	height: 37px;
+  	font-weight: bold;
+  }
+  .label {
+  	margin: 10px 10px 10px 0px;
+  	display: inline-block;
+  	width: 85px;
+  }
+  .widg {
+  	display: inline-block;
+  }
+  .hexViewer {
+  	width: 780px;
+  }
+  </ui:style>
+  <g:FlowPanel styleName="{style.content}">
+    <g:Label styleName="{style.contentHeading}" text="Mining simulator" />
+    <g:HTML>
+      <h2>Raw block and coinbase transaction in hex</h2>
+    </g:HTML>
+    <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
+  </g:FlowPanel>
+</ui:UiBinder>
