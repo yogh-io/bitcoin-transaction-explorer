@@ -25,18 +25,16 @@ public class ContextFieldSet<T> extends FlowPanel {
   }
 
   private final class TypedTimer extends Timer {
-    private final T valueContainer;
-    private final Object source;
+    private final ContextField<T> source;
 
-    public TypedTimer(final T valueContainer, final Object source) {
+    public TypedTimer(final ContextField<T> source) {
       this.source = source;
-      this.valueContainer = valueContainer;
     }
 
     @Override
     public void run() {
       if (selectedField == null || selectedField == source) {
-        displayContextPopup((Widget) source, valueContainer);
+        displayContextPopup(source);
       }
     }
   }
@@ -44,29 +42,25 @@ public class ContextFieldSet<T> extends FlowPanel {
   private final Timer popupHideTimer = new Timer() {
     @Override
     public void run() {
-      popupPanel.hide();
+      clearActivity();
     }
   };
 
-  private final class ContextHandler implements MouseOverHandler {
-    private final T valueContainer;
-
-    public ContextHandler(final T valueContainer) {
-      this.valueContainer = valueContainer;
-    }
-
+  private final MouseOverHandler mouseOverHandler = new MouseOverHandler() {
+    @SuppressWarnings("unchecked")
     @Override
     public void onMouseOver(final MouseOverEvent event) {
+
       popupHideTimer.cancel();
 
       if (popupShowTimer != null) {
         popupShowTimer.cancel();
       }
 
-      popupShowTimer = new TypedTimer(valueContainer, event.getSource());
+      popupShowTimer = new TypedTimer((ContextField<T>) event.getSource());
       popupShowTimer.schedule(popupPanel.isShowing() ? 0 : POPUP_SHOW_DELAY);
     }
-  }
+  };
 
   private final MouseOutHandler mouseOutHandler = new MouseOutHandler() {
     @Override
@@ -126,8 +120,12 @@ public class ContextFieldSet<T> extends FlowPanel {
   @Override
   public void clear() {
     super.clear();
-    popupPanel.hide();
+    clearActivity();
+  }
+
+  protected void clearActivity() {
     selectedField = null;
+    popupPanel.hide();
   }
 
   public FieldContextFactory<T> getContextFactory() {
@@ -147,9 +145,9 @@ public class ContextFieldSet<T> extends FlowPanel {
   }
 
   public ContextField<T> addField(final T value, final Color color, final String text) {
-    final ContextField<T> field = new ContextField<T>(text);
+    final ContextField<T> field = new ContextField<T>(value, text);
 
-    field.addMouseOverHandler(new ContextHandler(value));
+    field.addMouseOverHandler(mouseOverHandler);
     field.addMouseOutHandler(mouseOutHandler);
     field.addClickHandler(mouseClickHandler);
 
@@ -183,14 +181,14 @@ public class ContextFieldSet<T> extends FlowPanel {
   }
 
   // TODO delegate context styling out of here
-  private void displayContextPopup(final Widget target, final T value) {
+  private void displayContextPopup(final ContextField<T> field) {
     // Create a new content widget
-    final Widget popupContent = contextFactory.getContextWidget(value);
+    final Widget popupContent = contextFactory.getContextWidget(field.getValue());
 
     final ContextPanel panel = new ContextPanel();
     panel.setWidget(popupContent);
 
-    final Color borderColor = getFieldColor(value);
+    final Color borderColor = getFieldColor(field.getValue());
     final Color backgroundColor = borderColor.copy();
     borderColor.setA(0.8);
     backgroundColor.setA(0.01);
@@ -199,10 +197,10 @@ public class ContextFieldSet<T> extends FlowPanel {
     popupContent.getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
 
     // Notify display
-    displayContextForValue(value);
+    displayContextForValue(field.getValue());
 
     // Display the popup
-    displayContextPopup(target, panel);
+    displayContextPopup(field, panel);
   }
 
   protected void displayContextForValue(final T value) {

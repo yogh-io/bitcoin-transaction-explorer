@@ -25,7 +25,7 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
   @UiField CustomStyle style;
 
   // Kind of a sketchy construct... it's basically a HashMap that allows duplicate values. Scales like a turd.
-  private final ArrayList<Entry<T, ArrayList<ContextField<T>>>> fieldMap = new ArrayList<Entry<T, ArrayList<ContextField<T>>>>();
+  protected final ArrayList<Entry<T, ArrayList<ContextField<T>>>> fieldMap = new ArrayList<Entry<T, ArrayList<ContextField<T>>>>();
 
   private FlowPanel byteSetContainer;
 
@@ -43,12 +43,16 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
     final ArrayList<ContextField<T>> fields = new ArrayList<ContextField<T>>();
 
     for (final byte bite : getBytesForValue(value)) {
-      final String hex = new String(Hex.encode(new byte[] { bite })).toUpperCase();
+      final String hex = getHexFromByte(bite);
 
       fields.add(addField(value, typeColor, hex));
     }
 
     fieldMap.add(new AbstractMap.SimpleEntry<T, ArrayList<ContextField<T>>>(value, fields));
+  }
+
+  protected String getHexFromByte(final byte bite) {
+    return new String(Hex.encode(new byte[] { bite })).toUpperCase();
   }
 
   @Override
@@ -66,6 +70,13 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
     }
   }
 
+  @Override
+  protected void clearActivity() {
+    super.clearActivity();
+
+    clearActiveFields();
+  }
+
   private void clearActiveFields() {
     if (activeFields != null) {
       for (final ContextField<T> field : activeFields) {
@@ -74,7 +85,7 @@ public abstract class HexViewer<T> extends ContextFieldSet<T> {
     }
   }
 
-  private ArrayList<ContextField<T>> findValueFields(final T value) {
+  protected ArrayList<ContextField<T>> findValueFields(final T value) {
     for (final Entry<T, ArrayList<ContextField<T>>> entry : fieldMap) {
       if (entry.getKey() == value) {
         return entry.getValue();

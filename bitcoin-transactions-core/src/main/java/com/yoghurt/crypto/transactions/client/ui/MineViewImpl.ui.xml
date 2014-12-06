@@ -31,5 +31,8 @@
       <h2>Raw block and coinbase transaction in hex</h2>
     </g:HTML>
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
+    <w:LabelledWidget label="Block hash:" labelStyleName="{style.label}">
+      <w:ValueViewer ui:field="blockHashViewer" styleName="{style.widg}" />
+    </w:LabelledWidget>
   </g:FlowPanel>
 </ui:UiBinder>

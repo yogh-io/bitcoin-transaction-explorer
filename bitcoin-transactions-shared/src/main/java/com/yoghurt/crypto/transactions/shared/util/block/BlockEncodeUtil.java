@@ -1,9 +1,9 @@
 package com.yoghurt.crypto.transactions.shared.util.block;
 
+import java.util.Date;
+
 import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
-import com.yoghurt.crypto.transactions.shared.domain.RawBlockPart;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
@@ -16,56 +16,67 @@ public final class BlockEncodeUtil {
 
   public static RawBlockContainer encodeBlock(final Block block, final RawBlockContainer container) {
     // Encode the version
-    container.add(encodeVersion(block));
+    container.setVersion(encodeVersion(block));
 
     // Encode previous transaction hash
-    container.add(encodePreviousBlockHash(block));
+    container.setPreviousBlockHash(encodePreviousBlockHash(block));
 
     // Encode merkle root
-    container.add(encodeMerkleRoot(block));
+    container.setMerkleRoot(encodeMerkleRoot(block));
 
     // Encode timestamp
-    container.add(encodeTimestamp(block));
+    container.setTimestamp(encodeTimestamp(block));
 
     // Encode bits
-    container.add(encodeBits(block));
+    container.setBits(encodeBits(block));
 
     // Encode nonce
-    container.add(encodeNonce(block));
+    container.setNonce(encodeNonce(block));
 
     return container;
   }
 
-  private static RawBlockPart encodeVersion(final Block block) {
-    return new RawBlockPart(BlockPartType.VERSION, NumberEncodeUtil.encodeUint32(block.getVersion()));
+  public static byte[] encodeVersion(final Block block) {
+    return NumberEncodeUtil.encodeUint32(block.getVersion());
   }
 
-  private static RawBlockPart encodePreviousBlockHash(final Block block) {
+  private static byte[] encodePreviousBlockHash(final Block block) {
     final byte[] previousBlockHashBytes = block.getPreviousBlockHash();
     ArrayUtil.reverse(previousBlockHashBytes);
 
-    return new RawBlockPart(BlockPartType.PREV_BLOCK_HASH, previousBlockHashBytes);
+    return previousBlockHashBytes;
   }
 
-  private static RawBlockPart encodeMerkleRoot(final Block block) {
-    final byte[] merkleRootBytes = block.getMerkleRoot();
-    ArrayUtil.reverse(merkleRootBytes);
-
-    return new RawBlockPart(BlockPartType.MERKLE_ROOT, merkleRootBytes);
+  private static byte[] encodeMerkleRoot(final Block block) {
+    return encodeMerkleRoot(block.getMerkleRoot());
   }
 
-  private static RawBlockPart encodeTimestamp(final Block block) {
-    return new RawBlockPart(BlockPartType.TIMESTAMP, NumberEncodeUtil.encodeUint32(block.getTimestamp().getTime() / 1000));
+  public static byte[] encodeMerkleRoot(final byte[] merkleRootBE) {
+    ArrayUtil.reverse(merkleRootBE);
+
+    return merkleRootBE;
   }
 
-  private static RawBlockPart encodeBits(final Block block) {
+  private static byte[] encodeTimestamp(final Block block) {
+    return encodeTimestamp(block.getTimestamp());
+  }
+
+  public static byte[] encodeTimestamp(final Date date) {
+    return NumberEncodeUtil.encodeUint32(date.getTime() / 1000);
+  }
+
+  private static byte[] encodeBits(final Block block) {
     final byte[] bitsBytes = block.getBits();
     ArrayUtil.reverse(bitsBytes);
 
-    return new RawBlockPart(BlockPartType.BITS, bitsBytes);
+    return bitsBytes;
   }
 
-  private static RawBlockPart encodeNonce(final Block block) {
-    return new RawBlockPart(BlockPartType.NONCE, NumberEncodeUtil.encodeUint32(block.getNonce()));
+  private static byte[] encodeNonce(final Block block) {
+    return encodeNonce(block.getNonce());
+  }
+
+  public static byte[] encodeNonce(final long nonce) {
+    return NumberEncodeUtil.encodeUint32(nonce);
   }
 }

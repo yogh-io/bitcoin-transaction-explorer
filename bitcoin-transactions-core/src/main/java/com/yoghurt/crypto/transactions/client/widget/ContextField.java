@@ -27,15 +27,30 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
 
   @UiField Label field;
 
+  private T value;
+
   public interface CustomStyle extends CssResource {
     String fieldSelected();
 
     String fieldActive();
   }
-  public ContextField(final String content) {
+  public ContextField(final T value, final String text) {
+    this.value = value;
     initWidget(UI_BINDER.createAndBindUi(this));
 
+    field.setText(text);
+  }
+
+  public void setContent(final String content) {
     field.setText(content);
+  }
+
+  public T getValue() {
+    return value;
+  }
+
+  public void setValue(final T value) {
+    this.value = value;
   }
 
   public void setSelected(final boolean selected) {

@@ -51,6 +51,9 @@ public final class BlockParseUtil extends BlockUtil {
     // Create SHA256 digest and feed it the tx bytes
     final byte[] blockHash = ComputeUtil.computeDoubleSHA256(blockBytes);
 
+    // Convert to LE
+    ArrayUtil.reverse(blockHash);
+
     // Set the transaction tx
     block.setBlockHash(blockHash);
   }

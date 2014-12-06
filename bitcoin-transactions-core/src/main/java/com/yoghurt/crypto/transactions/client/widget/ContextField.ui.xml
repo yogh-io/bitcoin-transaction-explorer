@@ -9,6 +9,8 @@
   	display: inline-block;
   	background-color: rgba(255, 255, 255, 0);
   	border-top: 3px solid transparent;
+  	border-bottom: 3px solid transparent;
+  	border-bottom-color: transparent !important;
   	margin-bottom: 15px;
   	transition: background 0.2s ease-out, border-color 0.2s ease-out;
 	cursor: pointer;
@@ -23,7 +25,7 @@
   	background-color: white !important;
   }
   .fieldActive {
-  	background-color: #ddd !important;
+  	border-bottom-color: gray !important;
   }
   </ui:style>
   <g:Label styleName="{style.contextField}" ui:field="field" />
