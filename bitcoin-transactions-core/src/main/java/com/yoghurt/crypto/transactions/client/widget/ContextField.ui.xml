@@ -13,7 +13,10 @@
   	border-bottom-color: transparent !important;
   	margin-bottom: 15px;
   	transition: background 0.2s ease-out, border-color 0.2s ease-out;
-	cursor: pointer;
+  	cursor: pointer;
+  	position: relative;
+	height: 24px;
+	overflow: hidden;
   }
   .contextField:hover {
   	background-color: #eee !important;
@@ -27,6 +30,15 @@
   .fieldActive {
   	border-bottom-color: gray !important;
   }
+  .contextContainer {
+  	position: relative;
+	transition: top 0.55s ease-out;
+  }
+  .noAnimation {
+	transition: none;
+  }
   </ui:style>
-  <g:Label styleName="{style.contextField}" ui:field="field" />
+  <g:FlowPanel styleName="{style.contextField}">
+    <g:FlowPanel styleName="{style.contextContainer}" ui:field="container" />
+  </g:FlowPanel>
 </ui:UiBinder>

@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style.Visibility;
@@ -19,6 +21,8 @@ import com.yoghurt.crypto.transactions.client.util.misc.Color;
 public class ContextFieldSet<T> extends FlowPanel {
   private static final int POPUP_SHOW_DELAY = 50;
   private static final int POPUP_HIDE_DELAY = 70;
+
+  protected ArrayList<ContextField<T>> fields = new ArrayList<ContextField<T>>();
 
   public interface FieldContextFactory<T> {
     Widget getContextWidget(T part);
@@ -111,6 +115,7 @@ public class ContextFieldSet<T> extends FlowPanel {
     }
 
   };
+
   private HandlerRegistration attachRegistration;
 
   public ContextFieldSet(final FieldContextFactory<T> contextFactory) {
@@ -120,6 +125,7 @@ public class ContextFieldSet<T> extends FlowPanel {
   @Override
   public void clear() {
     super.clear();
+    fields.clear();
     clearActivity();
   }
 
@@ -157,6 +163,7 @@ public class ContextFieldSet<T> extends FlowPanel {
     field.getElement().getStyle().setBorderColor(color.getValue());
     field.getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
 
+    fields.add(field);
     return addField(field);
   }
 
