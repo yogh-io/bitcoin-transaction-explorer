@@ -61,6 +61,9 @@ public final class TransactionParseUtil extends TransactionUtil {
     // Create SHA256 digest and feed it the tx bytes
     final byte[] txHash = ComputeUtil.computeDoubleSHA256(txBytes);
 
+    // Convert to LE
+    ArrayUtil.reverse(txHash);
+
     // Set the transaction tx
     transaction.setTransactionId(txHash);
   }

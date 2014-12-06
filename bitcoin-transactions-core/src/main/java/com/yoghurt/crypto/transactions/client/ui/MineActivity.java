@@ -13,11 +13,14 @@ import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService
 import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
 
 public class MineActivity extends LookupActivity<Block, MinePlace> implements MineView.Presenter {
+  private final MineView view;
   private final BlockchainRetrievalServiceAsync service;
 
   @Inject
   public MineActivity(final MineView view, @Assisted final MinePlace place, final BlockchainRetrievalServiceAsync service) {
     super(place);
+
+    this.view = view;
 
     this.service = service;
   }
@@ -55,8 +58,10 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
   }
 
   @Override
-  protected void doDeferredStart(final AcceptsOneWidget panel, final Block info) {
+  protected void doDeferredStart(final AcceptsOneWidget panel, final Block block) {
+    panel.setWidget(view);
 
+    view.setBlock(block);
   }
 
   private Block getBlockFromHex(final String hex) {

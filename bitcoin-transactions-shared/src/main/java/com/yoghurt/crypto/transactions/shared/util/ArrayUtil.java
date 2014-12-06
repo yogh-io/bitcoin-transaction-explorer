@@ -28,4 +28,8 @@ public final class ArrayUtil {
       i++;
     }
   }
+
+  public static byte[] arrayCopy(final byte[] bytes) {
+    return arrayCopy(bytes, 0, bytes.length);
+  }
 }
