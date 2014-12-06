@@ -17,6 +17,7 @@
   	margin: 10px 10px 10px 0px;
   	display: inline-block;
   	width: 85px;
+  	vertical-align: top;
   }
   .widg {
   	display: inline-block;
@@ -28,11 +29,12 @@
   <g:FlowPanel styleName="{style.content}">
     <g:Label styleName="{style.contentHeading}" text="Mining simulator" />
     <g:HTML>
-      <h2>Raw block and coinbase transaction in hex</h2>
+      <h2>Block headers and coinbase</h2>
     </g:HTML>
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
-    <w:LabelledWidget label="Block hash:" labelStyleName="{style.label}">
-      <w:ValueViewer ui:field="blockHashViewer" styleName="{style.widg}" />
-    </w:LabelledWidget>
+    <g:HTML>
+      <h2>Block hash</h2>
+    </g:HTML>
+    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer}" />
   </g:FlowPanel>
 </ui:UiBinder>
