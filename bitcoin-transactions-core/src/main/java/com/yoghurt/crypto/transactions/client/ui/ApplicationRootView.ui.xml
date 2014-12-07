@@ -13,13 +13,16 @@
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
       <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="Blockchain reader" />
-      <g:Label styleName="{res.css.applicationSubTitle}">For developers - Breaking it down to the bone</g:Label>
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}">For developers - Breaking it down to the bone</g:Label>
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
     <g:FlowPanel ui:field="contentPanel" styleName="{res.css.applicationContentContainer}" />
     <g:FlowPanel styleName="{res.css.applicationFooter}">
+      <g:FlowPanel styleName="">
+        <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="V0.1 - Alpha" />
+      </g:FlowPanel>
       <g:FlowPanel styleName="{res.css.applicationInnerFooter}">
-        <g:Label styleName="{res.css.applicationSubTitle}">Donate / contribute</g:Label>
+        <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}">Donate / contribute</g:Label>
       </g:FlowPanel>
     </g:FlowPanel>
   </g:FlowPanel>

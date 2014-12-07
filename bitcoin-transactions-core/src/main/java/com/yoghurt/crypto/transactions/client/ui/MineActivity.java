@@ -9,10 +9,16 @@ import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
+import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 
 public class MineActivity extends LookupActivity<Block, MinePlace> implements MineView.Presenter {
+  private static final long NONCE_DECREMENT = 10;
+
   private final MineView view;
   private final BlockchainRetrievalServiceAsync service;
 
@@ -21,7 +27,6 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
     super(place);
 
     this.view = view;
-
     this.service = service;
   }
 
@@ -61,7 +66,19 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
   protected void doDeferredStart(final AcceptsOneWidget panel, final Block block) {
     panel.setWidget(view);
 
-    view.setBlock(block);
+    final RawBlockContainer rawBlock = new RawBlockContainer();
+    try {
+      BlockEncodeUtil.encodeBlock(block, rawBlock);
+    } catch (final Throwable e) {
+      // Eat.
+    }
+
+    block.setNonce(block.getNonce() - NONCE_DECREMENT);
+    final byte[] blockHash = ComputeUtil.computeDoubleSHA256(rawBlock.values());
+    ArrayUtil.reverse(blockHash);
+    block.setBlockHash(blockHash);
+
+    view.setInformation(block, rawBlock, true || place.getType() == MineDataType.LAST);
   }
 
   private Block getBlockFromHex(final String hex) {

@@ -57,11 +57,10 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
   @Override
   public void setWidget(final IsWidget w) {
-    w.asWidget().addStyleName(R.css().applicationContent());
-
     contentPanel.clear();
 
     if (w != null) {
+      w.asWidget().addStyleName(R.css().applicationContent());
       contentPanel.add(w);
     }
   }
