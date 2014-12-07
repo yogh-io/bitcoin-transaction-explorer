@@ -6,11 +6,27 @@ public class BlockInformation implements Serializable {
   private static final long serialVersionUID = -6695967392021472565L;
 
   private int height;
+  private int numConfirmations;
+  private int numTransactions;
+  private int size;
+  private String nextBlockHash;
 
   public BlockInformation() {}
 
-  public BlockInformation(final int height) {
-    this.height = height;
+  public int getSize() {
+    return size;
+  }
+
+  public void setSize(final int size) {
+    this.size = size;
+  }
+
+  public String getNextBlockHash() {
+    return nextBlockHash;
+  }
+
+  public void setNextBlockHash(final String nextBlockHash) {
+    this.nextBlockHash = nextBlockHash;
   }
 
   public int getHeight() {
@@ -21,4 +37,19 @@ public class BlockInformation implements Serializable {
     this.height = height;
   }
 
+  public void setNumConfirmations(final int numConfirmations) {
+    this.numConfirmations = numConfirmations;
+  }
+
+  public int getNumConfirmations() {
+    return numConfirmations;
+  }
+
+  public int getNumTransactions() {
+    return numTransactions;
+  }
+
+  public void setNumTransactions(final int numTransactions) {
+    this.numTransactions = numTransactions;
+  }
 }

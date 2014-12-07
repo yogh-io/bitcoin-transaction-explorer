@@ -30,6 +30,7 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   private static final String BLOCKR_API_TX_INFO_FORMAT = "http://btc.blockr.io/api/v1/tx/info/%s";
 
   private static final String BLOCKR_API_BLOCK_RAW_FORMAT = "http://btc.blockr.io/api/v1/block/raw/%s";
+  private static final String BLOCKR_API_BLOCK_INFO_FORMAT = "http://btc.blockr.io/api/v1/block/info/%s";
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
@@ -76,11 +77,17 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
       e.printStackTrace();
       return null;
     }
-
   }
 
   @Override
-  public BlockInformation getBlockInformation(final String blockHash) {
-    return null;
+  public BlockInformation getBlockInformation(final String identifier) {
+    try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
+      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier));
+
+      return BlockrApiParser.getBlockInformation(jsonData);
+    } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
+      e.printStackTrace();
+      return null;
+    }
   }
 }
