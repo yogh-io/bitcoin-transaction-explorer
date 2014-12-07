@@ -1,13 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:style>
-  .content {
-  	border-radius: 5px;
-  	padding: 20px;
-  	margin-top: 50px;
-  	background-color: #fff;
-  	box-shadow: 0px 0px 5px #fff;
-  }
   .contentHeading {
   	font-size: 31px;
   	height: 37px;
@@ -25,29 +18,29 @@
   	width: 780px;
   }
   </ui:style>
-  <g:FlowPanel styleName="{style.content}">
+  <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="Transaction Breakdown" />
     <g:HTML>
       <h2>Transaction information</h2>
     </g:HTML>
-    <w:LabelledWidget label="Transaction id:" labelStyleName="{style.label}">
-      <w:ValueViewer ui:field="txIdViewer" styleName="{style.widg}" />
+    <w:LabelledWidget label="Transaction id:">
+      <w:ValueViewer ui:field="txIdViewer" />
     </w:LabelledWidget>
     <g:Label text="Checking existence in the blockchain ..." ui:field="loadPlaceHolder" />
     <g:Label text="This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool." visible="false"
       ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
-      <w:LabelledWidget label="State:" labelStyleName="{style.label}">
-        <w:ValueViewer ui:field="txStateViewer" styleName="{style.widg}" />
+      <w:LabelledWidget label="State:">
+        <w:ValueViewer ui:field="txStateViewer" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="Block height:" labelStyleName="{style.label}">
-        <w:BlockViewer ui:field="txBlockViewer" styleName="{style.widg}" />
+      <w:LabelledWidget label="Block height:">
+        <w:BlockViewer ui:field="txBlockViewer" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="Confirmations:" labelStyleName="{style.label}">
-        <w:ValueViewer ui:field="txConfirmationsViewer" styleName="{style.widg}" />
+      <w:LabelledWidget label="Confirmations:">
+        <w:ValueViewer ui:field="txConfirmationsViewer" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="Time" labelStyleName="{style.label}">
-        <w:ValueViewer ui:field="txTimeViewer" styleName="{style.widg}" />
+      <w:LabelledWidget label="Time">
+        <w:ValueViewer ui:field="txTimeViewer" />
       </w:LabelledWidget>
     </g:FlowPanel>
     <g:HTML>
@@ -61,11 +54,11 @@
     <g:HTML>
       <h2>Miscellaneous information:</h2>
     </g:HTML>
-    <w:LabelledWidget label="Format version:" labelStyleName="{style.label}">
-      <w:ValueViewer ui:field="txVersionViewer" styleName="{style.widg}" />
+    <w:LabelledWidget label="Format version:">
+      <w:ValueViewer ui:field="txVersionViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Lock time:" labelStyleName="{style.label}">
-      <w:ValueViewer ui:field="txLockTimeViewer" styleName="{style.widg}" />
+    <w:LabelledWidget label="Lock time:">
+      <w:ValueViewer ui:field="txLockTimeViewer" />
     </w:LabelledWidget>
     <g:HTML>
       <h2>Raw transaction in hex</h2>

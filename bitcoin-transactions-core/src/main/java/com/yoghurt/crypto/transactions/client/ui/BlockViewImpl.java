@@ -49,11 +49,10 @@ public class BlockViewImpl extends Composite implements BlockView {
   @Override
   public void setBlock(final Block block) {
     blockHashViewer.setValue(Str.toString(Hex.encode(block.getBlockHash())).toUpperCase());
-    versionViewer.setValue(block.getVersion());
 
+    versionViewer.setValue(block.getVersion());
     previousBlockHashViewer.setValue(Str.toString(Hex.encode(block.getPreviousBlockHash())).toUpperCase());
     merkleRootViewer.setValue(Str.toString(Hex.encode(block.getMerkleRoot())).toUpperCase());
-
     timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());

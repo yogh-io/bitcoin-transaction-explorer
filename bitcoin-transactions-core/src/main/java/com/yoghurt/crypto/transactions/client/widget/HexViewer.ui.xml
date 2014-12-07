@@ -4,6 +4,7 @@
   .byteSet {
 	display: inline-block;
 	margin-right: 15px;
+	margin-bottom: 10px;
   }
   </ui:style>
   <g:SimplePanel />

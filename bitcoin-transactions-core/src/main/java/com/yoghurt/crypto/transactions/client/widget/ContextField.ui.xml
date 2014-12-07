@@ -11,7 +11,6 @@
   	border-top: 3px solid transparent;
   	border-bottom: 3px solid transparent;
   	border-bottom-color: transparent !important;
-  	margin-bottom: 15px;
   	transition: background 0.2s ease-out, border-color 0.2s ease-out;
   	cursor: pointer;
   	position: relative;

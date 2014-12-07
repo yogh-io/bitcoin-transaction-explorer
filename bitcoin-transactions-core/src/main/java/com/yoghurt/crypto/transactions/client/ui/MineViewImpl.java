@@ -7,9 +7,16 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
+import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.HashViewer;
+import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
+import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
@@ -24,16 +31,36 @@ public class MineViewImpl extends Composite implements MineView {
 
   private static final MineViewImplUiBinder UI_BINDER = GWT.create(MineViewImplUiBinder.class);
 
+  @UiField(provided = true) ValueViewer versionViewer;
+  @UiField(provided = true) ValueViewer previousBlockHashViewer;
+  @UiField(provided = true) ValueViewer merkleRootViewer;
+  @UiField(provided = true) ValueViewer timestampViewer;
+  @UiField(provided = true) HashViewer bitsViewer;
+  @UiField(provided = true) ValueViewer nonceViewer;
 
   @UiField BlockHexViewer blockHexViewer;
   @UiField HashHexViewer blockHashViewer;
 
   public MineViewImpl() {
+    versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
+    previousBlockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
+    merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
+    timestampViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
+    bitsViewer = new HashViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
+    nonceViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.NONCE));
+
     initWidget(UI_BINDER.createAndBindUi(this));
   }
 
   @Override
   public void setBlock(final Block initialBlock) {
+    versionViewer.setValue(initialBlock.getVersion());
+    previousBlockHashViewer.setValue(Str.toString(Hex.encode(initialBlock.getPreviousBlockHash())).toUpperCase());
+    merkleRootViewer.setValue(Str.toString(Hex.encode(initialBlock.getMerkleRoot())).toUpperCase());
+    timestampViewer.setValue(FormatUtil.formatDateTime(initialBlock.getTimestamp()));
+    bitsViewer.setValue(initialBlock.getBits());
+    nonceViewer.setValue(initialBlock.getNonce());
+
     initialBlock.setNonce(initialBlock.getNonce() - NONCE_DECREMENT);
 
     final RawBlockContainer rawBlock = new RawBlockContainer();
@@ -53,6 +80,8 @@ public class MineViewImpl extends Composite implements MineView {
       @Override
       public boolean execute() {
         long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce());
+
+        nonceViewer.setValue(nonce);
 
         nonce += 1;
 
