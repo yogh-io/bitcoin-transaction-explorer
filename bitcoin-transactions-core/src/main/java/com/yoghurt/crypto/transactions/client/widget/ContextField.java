@@ -32,7 +32,7 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
   /**
    * Needs to correspond to the same value in the UiBinder
    */
-  private static final int ANIMATION_TIME = 450;
+  private static final int ANIMATION_TIME = 200;
 
   @UiField CustomStyle style;
 
