@@ -7,8 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public abstract class LookupActivity<E, P extends Place> extends AbstractActivity {
-
-  private final P place;
+  protected final P place;
 
   public LookupActivity(final P place) {
     this.place = place;

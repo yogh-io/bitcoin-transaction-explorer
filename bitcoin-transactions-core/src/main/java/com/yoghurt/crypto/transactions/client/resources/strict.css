@@ -30,9 +30,9 @@ body {
 	background-color: contentColor;
 	padding: 20px;
 	padding-top: 1px;
-	/*border-bottom-left-radius: 5px;*/
-	/*border-bottom-right-radius: 5px;*/
-	box-shadow: 0px 0px 5px #fff;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	/*box-shadow: 0px 0px 5px #fff;*/
 	height: 140px;
 }
 
@@ -52,13 +52,20 @@ body {
 	cursor: pointer;
 }
 
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
 .applicationSubTitle {
 	font-size: 16px;
 	color: #888;
-	float: right;
 	font-weight: bold;
 	line-height: 41px;
-	margin: 20px 0px;
+	margin: 20px;
 }
 
 .applicationContentContainer {
@@ -70,9 +77,9 @@ body {
 	height: 92px;
 	width: 800px;
 	bottom: 0px;
-	box-shadow: 0px 0px 5px #fff;
-	/*border-top-left-radius: 5px;*/
-	/*border-top-right-radius: 5px;*/
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	/*box-shadow: 0px 0px 5px #fff;*/
 	background-color: contentColor;
 }
 
@@ -82,11 +89,11 @@ body {
 }
 
 .applicationContent {
-  	border-radius: 5px;
   	padding: 20px;
   	margin-top: 50px;
   	background-color: #fff;
-  	box-shadow: 0px 0px 5px #fff;
+  	border-radius: 5px;
+  	/*box-shadow: 0px 0px 5px #fff;*/
 }
 
 .labelledValueFieldLabel {

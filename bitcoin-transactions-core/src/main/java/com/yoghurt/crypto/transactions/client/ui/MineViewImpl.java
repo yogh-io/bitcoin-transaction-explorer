@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
@@ -24,8 +26,7 @@ import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 
 public class MineViewImpl extends Composite implements MineView {
-  private static final int MINING_SIMULATION_DELAY = 600;
-  private static final long NONCE_DECREMENT = 10;
+  private static final int MINING_SIMULATION_DELAY = 500;
 
   interface MineViewImplUiBinder extends UiBinder<Widget, MineViewImpl> {}
 
@@ -53,7 +54,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   @Override
-  public void setBlock(final Block initialBlock) {
+  public void setInformation(final Block initialBlock, final RawBlockContainer rawBlock, final boolean keepUpWithTip) {
     versionViewer.setValue(initialBlock.getVersion());
     previousBlockHashViewer.setValue(Str.toString(Hex.encode(initialBlock.getPreviousBlockHash())).toUpperCase());
     merkleRootViewer.setValue(Str.toString(Hex.encode(initialBlock.getMerkleRoot())).toUpperCase());
@@ -61,31 +62,25 @@ public class MineViewImpl extends Composite implements MineView {
     bitsViewer.setValue(initialBlock.getBits());
     nonceViewer.setValue(initialBlock.getNonce());
 
-    initialBlock.setNonce(initialBlock.getNonce() - NONCE_DECREMENT);
-
-    final RawBlockContainer rawBlock = new RawBlockContainer();
-    try {
-      BlockEncodeUtil.encodeBlock(initialBlock, rawBlock);
-    } catch (final Throwable e) {
-      // Eat.
-    }
-
     final RawBlockContainer viewBlock = rawBlock.copy();
 
-    // Set up the viewblock for display
+    // Set up viewBlock for display
     blockHexViewer.setBlock(viewBlock);
     blockHashViewer.setHash(initialBlock.getBlockHash());
 
     Scheduler.get().scheduleFixedPeriod(new RepeatingCommand() {
       @Override
       public boolean execute() {
-        long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce());
-
+        final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) + 1;
         nonceViewer.setValue(nonce);
-
-        nonce += 1;
-
         rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
+
+        if(keepUpWithTip) {
+          final Date time = new Date();
+          timestampViewer.setValue(FormatUtil.formatDateTime(time));
+          rawBlock.setTimestamp(BlockEncodeUtil.encodeTimestamp(time));
+        }
+
         blockHexViewer.updateBlock(rawBlock);
 
         final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());

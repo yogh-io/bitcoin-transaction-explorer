@@ -31,7 +31,7 @@
   }
   .contextContainer {
   	position: relative;
-	transition: top 0.55s ease-out;
+	transition: top 0.45s ease-out;
   }
   .noAnimation {
 	transition: none;
