@@ -26,7 +26,7 @@ import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 
 public class MineViewImpl extends Composite implements MineView {
-  private static final int MINING_SIMULATION_DELAY = 500;
+  private static final int MINING_SIMULATION_DELAY = 250;
 
   interface MineViewImplUiBinder extends UiBinder<Widget, MineViewImpl> {}
 
