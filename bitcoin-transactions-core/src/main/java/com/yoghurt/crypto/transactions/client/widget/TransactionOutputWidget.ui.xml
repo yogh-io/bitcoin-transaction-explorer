@@ -20,11 +20,11 @@ xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
     <g:HTML>
       <h3 ui:field="outputTitle" />
     </g:HTML>
-    <w:LabelledWidget label="Amount:" labelStyleName="{style.label}">
-      <w:ValueViewer ui:field="amountViewer" styleName="{style.widg}" />
+    <w:LabelledWidget label="Amount:">
+      <w:ValueViewer ui:field="amountViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="PubKeySig:" labelStyleName="{style.label}">
-      <w:ScriptViewer ui:field="signatureScriptViewer" styleName="{style.widg}" />
+    <w:LabelledWidget label="PubKeySig:">
+      <w:ScriptViewer ui:field="signatureScriptViewer" />
     </w:LabelledWidget>
   </g:FlowPanel>
 </ui:UiBinder>

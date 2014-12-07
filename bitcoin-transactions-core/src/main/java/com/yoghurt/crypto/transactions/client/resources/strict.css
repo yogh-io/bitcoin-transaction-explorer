@@ -30,8 +30,8 @@ body {
 	background-color: contentColor;
 	padding: 20px;
 	padding-top: 1px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
+	/*border-bottom-left-radius: 5px;*/
+	/*border-bottom-right-radius: 5px;*/
 	box-shadow: 0px 0px 5px #fff;
 	height: 140px;
 }
@@ -71,12 +71,36 @@ body {
 	width: 800px;
 	bottom: 0px;
 	box-shadow: 0px 0px 5px #fff;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	/*border-top-left-radius: 5px;*/
+	/*border-top-right-radius: 5px;*/
 	background-color: contentColor;
 }
 
 .applicationInnerFooter {
 	margin: 10px 20px;
 	text-align: right;
+}
+
+.applicationContent {
+  	border-radius: 5px;
+  	padding: 20px;
+  	margin-top: 50px;
+  	background-color: #fff;
+  	box-shadow: 0px 0px 5px #fff;
+}
+
+.labelledValueFieldLabel {
+	display: inline-block;
+	width: 85px;
+	vertical-align: top;
+	line-height: 30px;
+}
+
+.labelledValueFieldValue {
+	margin-left: 10px;
+	display: inline-block;
+}
+
+.labelledValueContainer {
+	margin-bottom: 10px;
 }

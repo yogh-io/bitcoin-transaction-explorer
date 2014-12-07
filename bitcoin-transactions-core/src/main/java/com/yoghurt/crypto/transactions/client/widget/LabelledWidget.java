@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.yoghurt.crypto.transactions.client.resources.R;
 
 public class LabelledWidget extends SimplePanel {
   private final FlowPanel container = new FlowPanel();
@@ -13,6 +14,9 @@ public class LabelledWidget extends SimplePanel {
 
   public LabelledWidget() {
     super.setWidget(container);
+
+    label.setStyleName(R.css().labelledValueFieldLabel());
+    container.setStyleName(R.css().labelledValueContainer());
 
     container.add(label);
   }
@@ -27,6 +31,8 @@ public class LabelledWidget extends SimplePanel {
 
   @Override
   public void add(final Widget w) {
+    w.addStyleName(R.css().labelledValueFieldValue());
+
     if(container.getWidgetCount() == 2) {
       container.remove(1);
     }

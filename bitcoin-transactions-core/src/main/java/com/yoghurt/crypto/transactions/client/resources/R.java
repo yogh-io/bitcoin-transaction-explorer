@@ -27,6 +27,14 @@ public final class R {
     String applicationFooter();
 
     String applicationInnerFooter();
+
+    String labelledValueFieldLabel();
+
+    String labelledValueFieldValue();
+
+    String labelledValueContainer();
+
+    String applicationContent();
   }
 
   /**

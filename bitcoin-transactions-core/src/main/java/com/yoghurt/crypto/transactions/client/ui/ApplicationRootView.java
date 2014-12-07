@@ -20,6 +20,7 @@ import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
+import com.yoghurt.crypto.transactions.client.resources.R;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget {
@@ -56,6 +57,8 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
   @Override
   public void setWidget(final IsWidget w) {
+    w.asWidget().addStyleName(R.css().applicationContent());
+
     contentPanel.clear();
 
     if (w != null) {
