@@ -1,12 +1,15 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
+import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
@@ -19,8 +22,46 @@ import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 public class MineActivity extends LookupActivity<Block, MinePlace> implements MineView.Presenter {
   private static final long NONCE_DECREMENT = 10;
 
+  /**
+   * Thirty seconds
+   */
+  private static final int LATEST_BLOCK_POLL_DELAY = 10 * 1000;
+
+  private static final int SHORT_INITIAL_POLL_DELAY = 500;
+
   private final MineView view;
   private final BlockchainRetrievalServiceAsync service;
+
+  private final Timer timer = new Timer() {
+    @Override
+    public void run() {
+      service.getLatestBlockHash(callback);
+    }
+  };
+
+  private String latestBlock;
+
+  private final AsyncCallback<String> callback = new AppAsyncCallback<String>() {
+    @Override
+    public void onSuccess(final String result) {
+      if(result == null) {
+        timer.schedule(LATEST_BLOCK_POLL_DELAY);
+        return;
+      }
+
+      // I have no idea which of the endians this is and this isn't a time in which I like being in a thinking mood
+      final byte[] otherEndianBytes = Hex.decode(result);
+      ArrayUtil.reverse(otherEndianBytes);
+      final String otherEndianResult = Str.toString(Hex.encode(otherEndianBytes));
+
+      if(!otherEndianResult.equals(latestBlock)) {
+        latestBlock = result;
+        view.broadcastLatestBlock(otherEndianResult);
+      }
+
+      timer.schedule(LATEST_BLOCK_POLL_DELAY);
+    }
+  };
 
   @Inject
   public MineActivity(final MineView view, @Assisted final MinePlace place, final BlockchainRetrievalServiceAsync service) {
@@ -39,17 +80,24 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
       }
     };
 
-    switch(place.getType()) {
+    switch (place.getType()) {
     case HEIGHT:
       service.getRawBlockHex(Integer.parseInt(place.getPayload()), morphCallback);
       break;
     case LAST:
-      service.getRawBlockHex(place.getPayload(), morphCallback);
+      service.getRawBlockHex(place.getType().getToken(), morphCallback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));
       return;
     }
+  }
+
+  @Override
+  public void onStop() {
+    timer.cancel();
+
+    super.onStop();
   }
 
   @Override
@@ -64,7 +112,10 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
 
   @Override
   protected void doDeferredStart(final AcceptsOneWidget panel, final Block block) {
+    view.setPresenter(this);
     panel.setWidget(view);
+
+    latestBlock = Str.toString(Hex.encode(block.getBlockHash()));
 
     final RawBlockContainer rawBlock = new RawBlockContainer();
     try {
@@ -75,10 +126,21 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
 
     block.setNonce(block.getNonce() - NONCE_DECREMENT);
     final byte[] blockHash = ComputeUtil.computeDoubleSHA256(rawBlock.values());
-    ArrayUtil.reverse(blockHash);
     block.setBlockHash(blockHash);
 
-    view.setInformation(block, rawBlock, true || place.getType() == MineDataType.LAST);
+    final boolean keepUpWithTip = place.getType() == MineDataType.LAST;
+
+    view.setInformation(block, rawBlock, keepUpWithTip);
+  }
+
+  @Override
+  public void startPoll() {
+    timer.schedule(SHORT_INITIAL_POLL_DELAY);
+  }
+
+  @Override
+  public void pausePoll() {
+
   }
 
   private Block getBlockFromHex(final String hex) {

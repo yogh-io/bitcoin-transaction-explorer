@@ -41,14 +41,16 @@ public final class BlockEncodeUtil {
   }
 
   private static byte[] encodePreviousBlockHash(final Block block) {
-    final byte[] previousBlockHashBytes = block.getPreviousBlockHash();
-    ArrayUtil.reverse(previousBlockHashBytes);
+    return encodePreviousBlockHash(ArrayUtil.arrayCopy(block.getPreviousBlockHash()));
+  }
 
-    return previousBlockHashBytes;
+  public static byte[] encodePreviousBlockHash(final byte[] bytes) {
+    ArrayUtil.reverse(bytes);
+    return bytes;
   }
 
   private static byte[] encodeMerkleRoot(final Block block) {
-    return encodeMerkleRoot(block.getMerkleRoot());
+    return encodeMerkleRoot(ArrayUtil.arrayCopy(block.getMerkleRoot()));
   }
 
   public static byte[] encodeMerkleRoot(final byte[] merkleRootBE) {
@@ -66,7 +68,7 @@ public final class BlockEncodeUtil {
   }
 
   private static byte[] encodeBits(final Block block) {
-    final byte[] bitsBytes = block.getBits();
+    final byte[] bitsBytes = ArrayUtil.arrayCopy(block.getBits());
     ArrayUtil.reverse(bitsBytes);
 
     return bitsBytes;

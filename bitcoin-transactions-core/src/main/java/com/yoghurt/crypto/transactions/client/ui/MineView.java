@@ -6,8 +6,14 @@ import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 
 public interface MineView extends IsWidget {
   public interface Presenter {
+    void startPoll();
 
+    void pausePoll();
   }
 
+  void setPresenter(Presenter presenter);
+
   void setInformation(Block block, RawBlockContainer rawBlock, boolean keepUpWithTip);
+
+  void broadcastLatestBlock(String latestBlock);
 }

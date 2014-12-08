@@ -43,13 +43,17 @@ public class MinePlace extends ApplicationPlace {
     protected MinePlace createPlace(final String[] tokens) {
       final MineDataType type = MineDataType.fromToken(tokens[0]);
 
-      return new MinePlace(type, tokens[1]);
+      return tokens.length == 1 ? new MinePlace(type) : new MinePlace(type, tokens[1]);
     }
 
     @Override
     protected String[] getTokens(final MinePlace place) {
-      return new String[] { place.getType().getToken(), place.getPayload() };
+      return place.payload == null ? new String[] { place.getType().getToken() } : new String[] { place.getType().getToken(), place.getPayload() };
     }
+  }
+
+  public MinePlace(final MineDataType type) {
+    this(type, null);
   }
 
   public MinePlace(final MineDataType type, final int height) {

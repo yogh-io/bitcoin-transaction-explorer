@@ -18,4 +18,6 @@ public interface BlockchainRetrievalService extends RemoteService {
   String getRawBlockHex(String blockHash);
 
   BlockInformation getBlockInformation(String blockHash);
+
+  String getLatestBlockHash();
 }

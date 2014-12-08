@@ -5,8 +5,11 @@ import java.util.Date;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
@@ -42,6 +45,35 @@ public class MineViewImpl extends Composite implements MineView {
   @UiField BlockHexViewer blockHexViewer;
   @UiField HashHexViewer blockHashViewer;
 
+  private final ScheduledCommand defferedHash = new ScheduledCommand() {
+    @Override
+    public void execute() {
+      doHashCycle();
+    }
+  };
+
+  private final RepeatingCommand executeHashCommand = new RepeatingCommand() {
+    @Override
+    public boolean execute() {
+      doHashCycle();
+
+      if(cancel) {
+        cancelled = true;
+      }
+
+      return !cancel;
+    }
+  };
+
+  private RawBlockContainer rawBlock;
+
+  private Presenter presenter;
+
+  private boolean cancel = true;
+  private boolean cancelled = true;
+
+  private boolean keepUpWithTip;
+
   public MineViewImpl() {
     versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
     previousBlockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
@@ -55,6 +87,9 @@ public class MineViewImpl extends Composite implements MineView {
 
   @Override
   public void setInformation(final Block initialBlock, final RawBlockContainer rawBlock, final boolean keepUpWithTip) {
+    this.rawBlock = rawBlock;
+    this.keepUpWithTip = keepUpWithTip;
+
     versionViewer.setValue(initialBlock.getVersion());
     previousBlockHashViewer.setValue(Str.toString(Hex.encode(initialBlock.getPreviousBlockHash())).toUpperCase());
     merkleRootViewer.setValue(Str.toString(Hex.encode(initialBlock.getMerkleRoot())).toUpperCase());
@@ -64,32 +99,95 @@ public class MineViewImpl extends Composite implements MineView {
 
     final RawBlockContainer viewBlock = rawBlock.copy();
 
-    // Set up viewBlock for display
+    // Set up viewBlock for display in hex
     blockHexViewer.setBlock(viewBlock);
     blockHashViewer.setHash(initialBlock.getBlockHash());
 
-    Scheduler.get().scheduleFixedPeriod(new RepeatingCommand() {
-      @Override
-      public boolean execute() {
-        final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) + 1;
-        nonceViewer.setValue(nonce);
-        rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
+    // If we need to stay fly with the latest on the hood, set up the timers
+    if(keepUpWithTip) {
+      startHashExecutor();
+      presenter.startPoll();
+    }
+  }
 
-        if(keepUpWithTip) {
-          final Date time = new Date();
-          timestampViewer.setValue(FormatUtil.formatDateTime(time));
-          rawBlock.setTimestamp(BlockEncodeUtil.encodeTimestamp(time));
-        }
+  private void doSingleCycle() {
+    Scheduler.get().scheduleDeferred(defferedHash);
+  }
 
-        blockHexViewer.updateBlock(rawBlock);
+  private void startHashExecutor() {
+    // If we've indicated to cancel, and we haven't yet cancelled, flip the cancel switch
+    if(cancel && !cancelled) {
+      cancel = false;
+      return;
+    }
 
-        final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());
-        ArrayUtil.reverse(computeDoubleSHA256);
+    // If we haven't indicated to cancel, and we haven't actually cancelled, get the hell out
+    if(!cancel && !cancelled) {
+      return;
+    }
 
-        blockHashViewer.updateHash(computeDoubleSHA256);
+    // Otherwise, reset the cancel values and start
+    cancel = false;
+    cancelled = false;
+    Scheduler.get().scheduleFixedPeriod(executeHashCommand, MINING_SIMULATION_DELAY);
+  }
 
-        return true;
-      }
-    }, MINING_SIMULATION_DELAY);
+  private void cancelHashExecutor() {
+    cancel = true;
+  }
+
+  @UiHandler("cancelButton")
+  public void onCancelClick(final ClickEvent e) {
+    cancelHashExecutor();
+    if(keepUpWithTip) {
+      presenter.pausePoll();
+    }
+  }
+
+  @UiHandler("continueButton")
+  public void onContinueClick(final ClickEvent e) {
+    startHashExecutor();
+    if(keepUpWithTip) {
+      presenter.startPoll();
+    }
+  }
+
+  @UiHandler("singleCycleButton")
+  public void onSingleCycleClick(final ClickEvent e) {
+    doSingleCycle();
+  }
+
+  @Override
+  public void broadcastLatestBlock(final String latestBlock) {
+    rawBlock.setPreviousBlockHash(Hex.decode(latestBlock));
+
+    final byte[] previousBlockHash = BlockEncodeUtil.encodePreviousBlockHash(Hex.decode(latestBlock));
+    previousBlockHashViewer.setValue(previousBlockHash);
+  }
+
+  @Override
+  public void setPresenter(final Presenter presenter) {
+    this.presenter = presenter;
+  }
+
+  private void incrementNonce() {
+    final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) + 1;
+    nonceViewer.setValue(nonce);
+    rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
+  }
+
+  private void doHashCycle() {
+    incrementNonce();
+
+    final Date time = new Date();
+    timestampViewer.setValue(FormatUtil.formatDateTime(time));
+    rawBlock.setTimestamp(BlockEncodeUtil.encodeTimestamp(time));
+
+    blockHexViewer.updateBlock(rawBlock);
+
+    final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());
+    ArrayUtil.reverse(computeDoubleSHA256);
+
+    blockHashViewer.updateHash(computeDoubleSHA256);
   }
 }
