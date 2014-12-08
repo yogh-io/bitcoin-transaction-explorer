@@ -5,14 +5,16 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.http.HttpException;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.yoghurt.crypto.transactions.server.servlets.background.LatestBlockRetriever;
 import com.yoghurt.crypto.transactions.server.servlets.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.servlets.util.json.BlockrApiParser;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
@@ -32,10 +34,20 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   private static final String BLOCKR_API_BLOCK_RAW_FORMAT = "http://btc.blockr.io/api/v1/block/raw/%s";
   private static final String BLOCKR_API_BLOCK_INFO_FORMAT = "http://btc.blockr.io/api/v1/block/info/%s";
 
+  private LatestBlockRetriever blockRetriever;
+
+  @Override
+  public void init(final ServletConfig config) throws ServletException {
+    super.init(config);
+
+    blockRetriever = new LatestBlockRetriever();
+    blockRetriever.start();
+  }
+
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient()) {
-      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid));
+      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid)).getContent();
 
       return BlockrApiParser.getRawTransactionHex(jsonData);
     } catch (URISyntaxException | IOException | HttpException e) {
@@ -46,8 +58,8 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
-    try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_INFO_FORMAT, txid));
+    try (CloseableHttpClient client = HttpClientProxy.buildProxyClient()) {
+      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_INFO_FORMAT, txid)).getContent();
 
       final TransactionInformation transactionInformation = BlockrApiParser.getTransactionInformation(jsonData);
 
@@ -69,8 +81,8 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   }
 
   private static String getRawBlockHexUniversal(final String identifier) {
-    try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_RAW_FORMAT, identifier));
+    try (CloseableHttpClient client = HttpClientProxy.buildProxyClient()) {
+      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_RAW_FORMAT, identifier)).getContent();
 
       return BlockrApiParser.getRawBlockHex(jsonData);
     } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
@@ -81,13 +93,23 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
   @Override
   public BlockInformation getBlockInformation(final String identifier) {
-    try (CloseableHttpClient client = HttpClientBuilder.create().build()) {
-      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier));
+    try (CloseableHttpClient client = HttpClientProxy.buildProxyClient()) {
+      final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier)).getContent();
 
       return BlockrApiParser.getBlockInformation(jsonData);
     } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       return null;
     }
+  }
+
+  @Override
+  public String getLatestBlockHash() {
+    return blockRetriever.getLatestHash();
+  }
+
+  @Override
+  public void destroy() {
+    blockRetriever.stop();
   }
 }

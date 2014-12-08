@@ -3,27 +3,23 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R.ApplicationResource" />
   <ui:style>
   .lookup {
-	border: 1px solid #999;
-	border-radius: 5px;
-	font-size: 2.4em;
-	width: 740px;
-	padding: 10px 9px;
+  	border: 1px solid #999;
+  	border-radius: 5px;
+  	font-size: 2.4em;
+  	width: 740px;
+  	padding: 10px 9px;
   }
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
       <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="Blockchain reader" />
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}">For developers - Breaking it down to the bone</g:Label>
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="For developers - Breaking it down to the bone" />
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
     <g:FlowPanel ui:field="contentPanel" styleName="{res.css.applicationContentContainer}" />
     <g:FlowPanel styleName="{res.css.applicationFooter}">
-      <g:FlowPanel styleName="">
-        <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="V0.1 - Alpha" />
-      </g:FlowPanel>
-      <g:FlowPanel styleName="{res.css.applicationInnerFooter}">
-        <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}">Donate / contribute</g:Label>
-      </g:FlowPanel>
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="V0.1 - Alpha" />
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="Donate / contribute" />
     </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>

@@ -42,7 +42,7 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
 
   @Override
   protected boolean mustPerformLookup(final BlockPlace place) {
-    return place.getType() == BlockDataType.ID || place.getType() == BlockDataType.HEIGHT;
+    return place.getType() == BlockDataType.ID || place.getType() == BlockDataType.HEIGHT || place.getType() == BlockDataType.LAST;
   }
 
   @Override
@@ -78,6 +78,9 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
       break;
     case ID:
       service.getRawBlockHex(place.getPayload(), morphCallback);
+      break;
+    case LAST:
+      service.getRawBlockHex(place.getType().getToken(), morphCallback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));

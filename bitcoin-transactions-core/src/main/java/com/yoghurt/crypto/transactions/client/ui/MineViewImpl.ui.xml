@@ -13,6 +13,15 @@
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="Mining simulator" />
     <g:HTML>
+      <h2>Controls</h2>
+    </g:HTML>
+    <g:FlowPanel>
+      <g:Button ui:field="cancelButton" text="Pause" />
+      <g:Button ui:field="continueButton" text="Continue" /> 
+      <g:Button ui:field="singleCycleButton" text="Run once" /> 
+    
+    </g:FlowPanel>
+    <g:HTML>
       <h2>Mining block headers...</h2>
     </g:HTML>
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />

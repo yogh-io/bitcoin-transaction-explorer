@@ -10,7 +10,9 @@ public class BlockPlace extends ApplicationPlace {
 
     ID("id"),
 
-    HEIGHT("height");
+    HEIGHT("height"),
+
+    LAST("last");
 
     private final String token;
 
@@ -43,13 +45,17 @@ public class BlockPlace extends ApplicationPlace {
     protected BlockPlace createPlace(final String[] tokens) {
       final BlockDataType type = BlockDataType.fromToken(tokens[0]);
 
-      return new BlockPlace(type, tokens[1]);
+      return tokens.length == 1 ? new BlockPlace(type) : new BlockPlace(type, tokens[1]);
     }
 
     @Override
     protected String[] getTokens(final BlockPlace place) {
-      return new String[] { place.getType().getToken(), place.getPayload() };
+      return place.payload == null ? new String[] { place.getType().getToken() } : new String[] { place.getType().getToken(), place.getPayload() };
     }
+  }
+
+  public BlockPlace(final BlockDataType type) {
+    this(type, null);
   }
 
   public BlockPlace(final BlockDataType type, final int height) {
