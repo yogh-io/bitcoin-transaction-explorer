@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
   .contentHeading {
   	font-size: 31px;
@@ -13,34 +14,34 @@
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="Block Breakdown" />
     <g:HTML>
-      <h2>Block information</h2>
+      <h2><ui:text from="{i18n.blockPlaceTitleInformation}" /></h2>
     </g:HTML>
     <w:LabelledWidget label="Block hash:">
       <w:ValueViewer ui:field="blockHashViewer" />
     </w:LabelledWidget>
     <g:HTML>
-      <h2>Block headers</h2>
+      <h2><ui:text from="{i18n.blockPlaceTitleBlockHeaders}" /></h2>
     </g:HTML>
-    <w:LabelledWidget label="Version:">
+    <w:LabelledWidget label="{i18n.blockVersion}">
       <w:ValueViewer ui:field="versionViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Prev block:">
+    <w:LabelledWidget label="{i18n.blockPreviousBlock}">
       <w:ValueViewer ui:field="previousBlockHashViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Merkle root:">
+    <w:LabelledWidget label="{i18n.blockMerkleRoot}">
       <w:ValueViewer ui:field="merkleRootViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Timestamp:">
+    <w:LabelledWidget label="{i18n.blockTime}">
       <w:ValueViewer ui:field="timestampViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Bits:">
+    <w:LabelledWidget label="{i18n.blockBits}">
       <w:HashViewer ui:field="bitsViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Nonce:">
+    <w:LabelledWidget label="{i18n.blockNonce}">
       <w:ValueViewer ui:field="nonceViewer" />
     </w:LabelledWidget>
     <g:HTML>
-      <h2>Raw block in hex</h2>
+      <h2><ui:text from="{i18n.blockPlaceTitleRawHex}" /></h2>
     </g:HTML>
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
   </g:FlowPanel>

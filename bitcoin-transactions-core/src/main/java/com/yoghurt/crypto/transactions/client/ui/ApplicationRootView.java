@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
@@ -42,7 +43,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
     title.setHref("#" + historyMapper.getToken(new StartupPlace()));
 
-    lookupField.getElement().setPropertyString("placeholder", "Insert tx to look up, or insert raw transaction hex");
+    lookupField.getElement().setPropertyString("placeholder", M.messages().applicationLookupFieldPlaceHolder());
     lookupField.setFocus(true);
   }
 

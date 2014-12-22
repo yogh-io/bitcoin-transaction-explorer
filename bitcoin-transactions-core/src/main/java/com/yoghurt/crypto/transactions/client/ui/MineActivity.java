@@ -35,7 +35,7 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
   private final Timer timer = new Timer() {
     @Override
     public void run() {
-      service.getLatestBlockHash(callback);
+      getLatestBlock();
     }
   };
 
@@ -44,6 +44,8 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
   private final AsyncCallback<String> callback = new AppAsyncCallback<String>() {
     @Override
     public void onSuccess(final String result) {
+      retrieving = false;
+
       if(result == null) {
         timer.schedule(LATEST_BLOCK_POLL_DELAY);
         return;
@@ -62,6 +64,8 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
       timer.schedule(LATEST_BLOCK_POLL_DELAY);
     }
   };
+
+  private boolean retrieving;
 
   @Inject
   public MineActivity(final MineView view, @Assisted final MinePlace place, final BlockchainRetrievalServiceAsync service) {
@@ -85,7 +89,7 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
       service.getRawBlockHex(Integer.parseInt(place.getPayload()), morphCallback);
       break;
     case LAST:
-      service.getRawBlockHex(place.getType().getToken(), morphCallback);
+      service.getLastRawBlockHex(morphCallback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));
@@ -140,7 +144,8 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
 
   @Override
   public void pausePoll() {
-
+    retrieving = false;
+    timer.cancel();
   }
 
   private Block getBlockFromHex(final String hex) {
@@ -154,5 +159,15 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
     }
 
     return b;
+  }
+
+  @Override
+  public void getLatestBlock() {
+    if(retrieving) {
+      return;
+    }
+
+    retrieving = true;
+    service.getLatestBlockHash(callback);
   }
 }

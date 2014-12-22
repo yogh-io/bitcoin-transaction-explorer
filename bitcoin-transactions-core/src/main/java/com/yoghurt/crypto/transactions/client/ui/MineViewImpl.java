@@ -45,17 +45,33 @@ public class MineViewImpl extends Composite implements MineView {
   @UiField BlockHexViewer blockHexViewer;
   @UiField HashHexViewer blockHashViewer;
 
-  private final ScheduledCommand defferedHash = new ScheduledCommand() {
+  private final ScheduledCommand defferedTimeHash = new ScheduledCommand() {
     @Override
     public void execute() {
+      synchronizeTimestamp();
       doHashCycle();
+    }
+  };
+
+  private final ScheduledCommand defferedNonceHash = new ScheduledCommand() {
+    @Override
+    public void execute() {
+      incrementNonce();
+      doHashCycle();
+    }
+  };
+
+  private final ScheduledCommand defferedSynchronizedHash = new ScheduledCommand() {
+    @Override
+    public void execute() {
+      doFullHashCycle();
     }
   };
 
   private final RepeatingCommand executeHashCommand = new RepeatingCommand() {
     @Override
     public boolean execute() {
-      doHashCycle();
+      doFullHashCycle();
 
       if(cancel) {
         cancelled = true;
@@ -111,7 +127,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void doSingleCycle() {
-    Scheduler.get().scheduleDeferred(defferedHash);
+    Scheduler.get().scheduleDeferred(defferedSynchronizedHash);
   }
 
   private void startHashExecutor() {
@@ -157,6 +173,21 @@ public class MineViewImpl extends Composite implements MineView {
     doSingleCycle();
   }
 
+  @UiHandler("nonceIncrementButton")
+  public void onNonceIncrementClick(final ClickEvent e) {
+    Scheduler.get().scheduleDeferred(defferedNonceHash);
+  }
+
+  @UiHandler("timeSynchronizeButton")
+  public void onTimeSyncClick(final ClickEvent e) {
+    Scheduler.get().scheduleDeferred(defferedTimeHash);
+  }
+
+  @UiHandler("latestBlockButton")
+  public void onLatestBlockClick(final ClickEvent e) {
+    presenter.getLatestBlock();
+  }
+
   @Override
   public void broadcastLatestBlock(final String latestBlock) {
     rawBlock.setPreviousBlockHash(Hex.decode(latestBlock));
@@ -176,13 +207,20 @@ public class MineViewImpl extends Composite implements MineView {
     rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
   }
 
-  private void doHashCycle() {
-    incrementNonce();
-
+  private void synchronizeTimestamp() {
     final Date time = new Date();
     timestampViewer.setValue(FormatUtil.formatDateTime(time));
     rawBlock.setTimestamp(BlockEncodeUtil.encodeTimestamp(time));
+  }
 
+  private void doFullHashCycle() {
+    incrementNonce();
+    synchronizeTimestamp();
+
+    doHashCycle();
+  }
+
+  private void doHashCycle() {
     blockHexViewer.updateBlock(rawBlock);
 
     final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());
