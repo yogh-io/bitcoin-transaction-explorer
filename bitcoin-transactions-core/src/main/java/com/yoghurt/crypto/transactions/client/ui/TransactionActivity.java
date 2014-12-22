@@ -19,6 +19,8 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
   private final TransactionView view;
   private final BlockchainRetrievalServiceAsync service;
 
+  private boolean transactionHasError;
+
   @Inject
   public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service) {
     super(place);
@@ -30,7 +32,12 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
   protected void doDeferredStart(final AcceptsOneWidget panel, final Transaction transaction) {
     panel.setWidget(view);
 
-    view.setTransaction(transaction);
+    view.setTransaction(transaction, transactionHasError);
+
+    // If an error occurred while parsing, don't bother getting the tx info
+    if(transactionHasError) {
+      return;
+    }
 
     service.getTransactionInformation(Str.toString(Hex.encode(transaction.getTransactionId())), new AppAsyncCallback<TransactionInformation>() {
       @Override
@@ -55,9 +62,9 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
 
     try {
       TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
-    } catch (final IllegalStateException e) {
-      e.printStackTrace();
-      // Eat
+    } catch (final Exception e) {
+      // Could not parse transaction, flag error.
+      transactionHasError = true;
     }
 
     return t;
