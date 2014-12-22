@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
+import java.util.ArrayList;
+
 import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
@@ -23,6 +25,11 @@ public class HashHexViewer extends HexViewer<Byte> {
     for (final byte bite : hash) {
       addFields(bite);
     }
+  }
+
+  @Override
+  protected ArrayList<ContextField<Byte>> findValueFields(final Byte value) {
+    return null;
   }
 
   public void updateHash(final byte[] hash) {
