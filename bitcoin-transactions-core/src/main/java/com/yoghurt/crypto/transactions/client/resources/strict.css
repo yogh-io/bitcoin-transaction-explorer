@@ -96,6 +96,11 @@ body {
   	/*box-shadow: 0px 0px 5px #fff;*/
 }
 
+button {
+	padding: 5px;
+	margin: 10px;
+}
+
 .labelledValueFieldLabel {
 	display: inline-block;
 	width: 85px;

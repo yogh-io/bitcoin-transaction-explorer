@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
   
   </ui:style>
@@ -7,16 +8,16 @@
     <g:HTML>
       <h3 ui:field="inputTitle" />
     </g:HTML>
-    <w:LabelledWidget label="Previous tx:">
+    <w:LabelledWidget label="{i18n.transactionPreviousTransactionId}">
       <w:ValueViewer ui:field="hashViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Index:">
+    <w:LabelledWidget label="{i18n.transactionOutpointIndex}">
       <w:ValueViewer ui:field="indexViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="ScriptSig:">
+    <w:LabelledWidget label="{i18n.transactionScriptSig}">
       <w:ScriptViewer ui:field="signatureScriptViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Sequence:">
+    <w:LabelledWidget label="{i18n.transactionSequence}">
       <w:ValueViewer ui:field="sequenceViewer" />
     </w:LabelledWidget>
   </g:FlowPanel>
