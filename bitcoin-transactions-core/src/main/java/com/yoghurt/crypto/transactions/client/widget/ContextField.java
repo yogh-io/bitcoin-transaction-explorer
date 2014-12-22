@@ -94,10 +94,9 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
 
     container.getElement().getStyle().setTop(-container.getOffsetHeight() + lbl.getOffsetHeight(), Unit.PX);
 
-    if(!cleanupTimer.isRunning()) {
-      // This is gonna suck if there's more than a couple of these running, so thank god Mr Moore invented that law of his
-      cleanupTimer.schedule(CLEAN_UP_DELAY + ANIMATION_TIME);
-    }
+    // This is gonna suck if there's more than a couple of these running, so thank god Mr Moore invented that law of his
+    cleanupTimer.cancel();
+    cleanupTimer.schedule(CLEAN_UP_DELAY + ANIMATION_TIME);
   }
 
   public T getValue() {

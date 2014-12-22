@@ -24,6 +24,8 @@ import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService
 
 @WebServlet("/application/blockchain-retrieve")
 public class BlockchainRetrievalServlet extends RemoteServiceServlet implements BlockchainRetrievalService {
+  private static final String LAST_BLOCK_KEYWORD = "last";
+
   private static final long serialVersionUID = 7984638304207123693L;
 
   private static final String ERROR_TX_FORMAT = "Could not retrieve transaction information: %s";
@@ -78,6 +80,11 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   @Override
   public String getRawBlockHex(final String blockHash) {
     return getRawBlockHexUniversal(blockHash);
+  }
+
+  @Override
+  public String getLastRawBlockHex() {
+    return getRawBlockHexUniversal(LAST_BLOCK_KEYWORD);
   }
 
   private static String getRawBlockHexUniversal(final String identifier) {
