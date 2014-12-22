@@ -36,8 +36,14 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Miscellaneous information")
   String transactionPlaceTitleMiscellaneousInformation();
 
+  @DefaultMessage("Transaction parse error")
+  String transactionPlaceTitleParseError();
+
   @DefaultMessage("Raw transaction in hex")
   String transactionPlaceTitleRawHex();
+
+  @DefaultMessage("An error occurred while parsing the transaction, what you are seeing below is the best we could make out of the data before we stopped understanding it.")
+  String transactionPlaceParseError();
 
   @DefaultMessage("Block information")
   String blockPlaceTitleInformation();

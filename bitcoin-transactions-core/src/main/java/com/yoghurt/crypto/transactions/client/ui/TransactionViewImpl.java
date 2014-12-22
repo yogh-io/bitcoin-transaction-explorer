@@ -29,6 +29,8 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   private static final TransactionViewImplUiBinder UI_BINDER = GWT.create(TransactionViewImplUiBinder.class);
 
+  @UiField FlowPanel errorView;
+
   @UiField(provided = true) ValueViewer txIdViewer;
   @UiField Label loadPlaceHolder;
   @UiField Label notFoundLabel;
@@ -65,7 +67,10 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   }
 
   @Override
-  public void setTransaction(final Transaction transaction) {
+  public void setTransaction(final Transaction transaction, final boolean transactionHasErrors) {
+    errorView.setVisible(transactionHasErrors);
+    loadPlaceHolder.setVisible(!transactionHasErrors);
+
     txIdViewer.setValue(transaction.getTransactionId());
 
     txVersionViewer.setValue(transaction.getVersion());

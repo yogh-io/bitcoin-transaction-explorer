@@ -10,7 +10,7 @@ public interface TransactionView extends IsWidget {
 
   }
 
-  void setTransaction(Transaction transaction);
-
   void setBlockchainInformation(TransactionInformation transactionInformation);
+
+  void setTransaction(Transaction transaction, boolean transactionHasError);
 }
