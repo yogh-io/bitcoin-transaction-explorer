@@ -94,11 +94,13 @@ public final class TransactionEncodeUtil extends TransactionUtil {
 
       if (part.getOperation() == null) {
         container.add(new RawTransactionPart(TransactionPartType.ARBITRARY_DATA, part.getBytes()));
-      } else if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
+      } else {
         container.add(new RawTransactionPart(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
 
-        final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
-        container.add(new RawTransactionPart(pushPartType, part.getBytes()));
+        if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
+          final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
+          container.add(new RawTransactionPart(pushPartType, part.getBytes()));
+        }
       }
     }
   }
