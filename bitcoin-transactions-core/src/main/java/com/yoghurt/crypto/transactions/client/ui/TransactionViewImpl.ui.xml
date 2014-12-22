@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
   .contentHeading {
   	font-size: 31px;
@@ -19,49 +20,48 @@
   }
   </ui:style>
   <g:FlowPanel>
-    <g:Label styleName="{style.contentHeading}" text="Transaction Breakdown" />
+    <g:Label styleName="{style.contentHeading}" text="{i18n.transactionPlaceTitle}" />
     <g:HTML>
-      <h2>Transaction information</h2>
+      <h2><ui:text from="{i18n.transactionPlaceTitleInformation}" /></h2>
     </g:HTML>
-    <w:LabelledWidget label="Transaction id:">
+    <w:LabelledWidget label="{i18n.transactionId}">
       <w:ValueViewer ui:field="txIdViewer" />
     </w:LabelledWidget>
-    <g:Label text="Checking existence in the blockchain ..." ui:field="loadPlaceHolder" />
-    <g:Label text="This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool." visible="false"
-      ui:field="notFoundLabel" />
+    <g:Label text="{i18n.transactionPlaceBlockchainExistenceLoading}" ui:field="loadPlaceHolder" />
+    <g:Label text="{i18n.transactionPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
-      <w:LabelledWidget label="State:">
+      <w:LabelledWidget label="{i18n.transactionState}">
         <w:ValueViewer ui:field="txStateViewer" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="Block height:">
+      <w:LabelledWidget label="{i18n.blockHeight}">
         <w:BlockViewer ui:field="txBlockViewer" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="Confirmations:">
+      <w:LabelledWidget label="{i18n.blockConfirmations}">
         <w:ValueViewer ui:field="txConfirmationsViewer" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="Time">
+      <w:LabelledWidget label="{i18n.transactionTime}">
         <w:ValueViewer ui:field="txTimeViewer" />
       </w:LabelledWidget>
     </g:FlowPanel>
     <g:HTML>
-      <h2>Transaction inputs</h2>
+      <h2><ui:text from="{i18n.transactionPlaceTitleTransactionInputs}" /></h2>
     </g:HTML>
     <g:FlowPanel ui:field="inputContainer" />
     <g:HTML>
-      <h2>Transaction outputs</h2>
+      <h2><ui:text from="{i18n.transactionPlaceTitleTransactionOutputs}" /></h2>
     </g:HTML>
     <g:FlowPanel ui:field="outputContainer" />
     <g:HTML>
-      <h2>Miscellaneous information:</h2>
+      <h2><ui:text from="{i18n.transactionPlaceTitleMiscellaneousInformation}" /></h2>
     </g:HTML>
-    <w:LabelledWidget label="Format version:">
+    <w:LabelledWidget label="{i18n.transactionVersion}">
       <w:ValueViewer ui:field="txVersionViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="Lock time:">
+    <w:LabelledWidget label="{i18n.transactionLockTime}">
       <w:ValueViewer ui:field="txLockTimeViewer" />
     </w:LabelledWidget>
     <g:HTML>
-      <h2>Raw transaction in hex</h2>
+      <h2><ui:text from="{i18n.transactionPlaceTitleRawHex}" /></h2>
     </g:HTML>
     <w:TransactionHexViewer ui:field="txHexViewer" styleName="{style.hexViewer}" />
   </g:FlowPanel>

@@ -9,6 +9,8 @@ public interface MineView extends IsWidget {
     void startPoll();
 
     void pausePoll();
+
+    void getLatestBlock();
   }
 
   void setPresenter(Presenter presenter);

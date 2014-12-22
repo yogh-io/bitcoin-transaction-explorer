@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R.ApplicationResource" />
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
   .lookup {
   	border: 1px solid #999;
@@ -12,14 +13,14 @@
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
-      <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="Blockchain reader" />
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="For developers - Breaking it down to the bone" />
+      <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="{i18n.applicationTitle}" />
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationSubTitle}" />
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
     <g:FlowPanel ui:field="contentPanel" styleName="{res.css.applicationContentContainer}" />
     <g:FlowPanel styleName="{res.css.applicationFooter}">
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="V0.1 - Alpha" />
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="Donate / contribute" />
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="{i18n.applicationVersion}" />
+      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationContributionText}" />
     </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>

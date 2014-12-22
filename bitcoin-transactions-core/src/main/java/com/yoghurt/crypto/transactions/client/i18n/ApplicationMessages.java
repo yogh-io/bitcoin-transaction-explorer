@@ -1,0 +1,119 @@
+package com.yoghurt.crypto.transactions.client.i18n;
+
+import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
+import com.google.gwt.i18n.client.Messages;
+
+@DefaultLocale("EN")
+public interface ApplicationMessages extends Messages {
+
+  @DefaultMessage("Blockchain readers")
+  String applicationTitle();
+
+  @DefaultMessage("For developers - Breaking it down to the bone")
+  String applicationSubTitle();
+
+  @DefaultMessage("Donate / contribute")
+  String applicationVersion();
+
+  @DefaultMessage("Insert anything, press enter")
+  String applicationLookupFieldPlaceHolder();
+
+  @DefaultMessage("Donate / contribute")
+  String applicationContributionText();
+
+  @DefaultMessage("Transaction Breakdown")
+  String transactionPlaceTitle();
+
+  @DefaultMessage("Transaction information")
+  String transactionPlaceTitleInformation();
+
+  @DefaultMessage("Transaction inputs")
+  String transactionPlaceTitleTransactionInputs();
+
+  @DefaultMessage("Transaction outputs")
+  String transactionPlaceTitleTransactionOutputs();
+
+  @DefaultMessage("Miscellaneous information")
+  String transactionPlaceTitleMiscellaneousInformation();
+
+  @DefaultMessage("Raw transaction in hex")
+  String transactionPlaceTitleRawHex();
+
+  @DefaultMessage("Block information")
+  String blockPlaceTitleInformation();
+
+  @DefaultMessage("Block headers")
+  String blockPlaceTitleBlockHeaders();
+
+  @DefaultMessage("Raw block in hex")
+  String blockPlaceTitleRawHex();
+
+  @DefaultMessage("Modify Headers")
+  String minePlaceTitleModifyHeaders();
+
+  @DefaultMessage("Headers to mine")
+  String minePlaceTitleMineHeaders();
+
+  @DefaultMessage("Computed block hash")
+  String minePlaceTitleBlockHash();
+
+  @DefaultMessage("Block headers")
+  String minePlaceTitleBlockHeaders();
+
+  @DefaultMessage("Transaction ID:")
+  String transactionId();
+
+  @DefaultMessage("Previous tx:")
+  String transactionPreviousTransactionId();
+
+  @DefaultMessage("Index:")
+  String transactionOutpointIndex();
+
+  @DefaultMessage("ScriptSig:")
+  String transactionScriptSig();
+
+  @DefaultMessage("Sequence:")
+  String transactionSequence();
+
+  @DefaultMessage("State:")
+  String transactionState();
+
+  @DefaultMessage("Time:")
+  String transactionTime();
+
+  @DefaultMessage("Format version:")
+  String transactionVersion();
+
+  @DefaultMessage("Lock time:")
+  String transactionLockTime();
+
+  @DefaultMessage("Checking existence in the blockchain ...")
+  String transactionPlaceBlockchainExistenceLoading();
+
+  @DefaultMessage("This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool.")
+  String transactionPlaceBlockchainExistenceNotFound();
+
+  @DefaultMessage("Block height:")
+  String blockHeight();
+
+  @DefaultMessage("Confirmations:")
+  String blockConfirmations();
+
+  @DefaultMessage("Version:")
+  String blockVersion();
+
+  @DefaultMessage("Prev block:")
+  String blockPreviousBlock();
+
+  @DefaultMessage("Merkle root:")
+  String blockMerkleRoot();
+
+  @DefaultMessage("Timestamp")
+  String blockTime();
+
+  @DefaultMessage("Bits:")
+  String blockBits();
+
+  @DefaultMessage("Nonce:")
+  String blockNonce();
+}
