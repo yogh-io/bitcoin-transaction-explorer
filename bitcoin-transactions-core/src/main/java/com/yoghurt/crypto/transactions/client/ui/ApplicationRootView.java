@@ -18,10 +18,10 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.i18n.M;
+import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
-import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.resources.R;
+import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget {
@@ -53,7 +53,13 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
       return;
     }
 
-    placeController.goTo(new TransactionPlace(TransactionDataType.ID, lookupField.getText()));
+    final ApplicationPlace place = PlaceTokenParseUtil.parseToken(lookupField.getText());
+    if(place == null) {
+      // Do something, like show a mild error.
+      return;
+    }
+
+    placeController.goTo(place);
   }
 
   @Override
