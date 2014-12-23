@@ -29,35 +29,38 @@ public final class PlaceTokenParseUtil {
   private PlaceTokenParseUtil() {}
 
   public static ApplicationPlace parseToken(final String token) {
-    // Check for keywords first
-    if (MINE_TOKEN.equals(token)) {
+    // Clean up the token first
+    final String cleanToken = token.replace(" ", "");
+
+    // Check for keywords
+    if (MINE_TOKEN.equals(cleanToken)) {
       return new MinePlace(MineDataType.LAST);
     }
-    if (LAST_BLOCK_TOKEN.equals(token)) {
+    if (LAST_BLOCK_TOKEN.equals(cleanToken)) {
       return new BlockPlace(BlockDataType.LAST);
     }
 
     // Check if the token is exactly equal to the length of a hash, meaning this is probably a transaction or block hash
-    if (token.length() == HASH_LENGTH) {
+    if (cleanToken.length() == HASH_LENGTH) {
       // If it starts with a bunch of zeroes, it's probably a block
-      if (token.startsWith(BLOCK_TOKEN_START)) {
-        return new BlockPlace(BlockDataType.ID, token);
+      if (cleanToken.startsWith(BLOCK_TOKEN_START)) {
+        return new BlockPlace(BlockDataType.ID, cleanToken);
       }
     }
 
     // If the token is longer than the hash size, this could be a raw transaction or a raw block, so try and parse it
-    if(token.length() > HASH_LENGTH) {
+    if(cleanToken.length() > HASH_LENGTH) {
       try {
         // If this works out, it's a transaction!
         final Transaction t = new Transaction();
-        TransactionParseUtil.parseTransactionBytes(Hex.decode(token), t);
-        return new TransactionPlace(TransactionDataType.RAW, token);
+        TransactionParseUtil.parseTransactionBytes(Hex.decode(cleanToken), t);
+        return new TransactionPlace(TransactionDataType.RAW, cleanToken);
       } catch (final Exception e1) {
         try {
           // If this works out, it's a block!
           final Block b = new Block();
-          BlockParseUtil.parseBlockBytes(Hex.decode(token), b);
-          return new BlockPlace(BlockDataType.RAW, token);
+          BlockParseUtil.parseBlockBytes(Hex.decode(cleanToken), b);
+          return new BlockPlace(BlockDataType.RAW, cleanToken);
         }catch (final Exception e2) {
           // Eat, this is neither a raw transaction or block
         }
@@ -65,9 +68,9 @@ public final class PlaceTokenParseUtil {
     }
 
     // Check if the token is a number, probably block height if it is
-    if(token.length() <= MAX_BLOCK_HEIGHT_NUMBER_LENGTH) {
+    if(cleanToken.length() <= MAX_BLOCK_HEIGHT_NUMBER_LENGTH) {
       try {
-        final int possibleBlockHeight = Integer.parseInt(token);
+        final int possibleBlockHeight = Integer.parseInt(cleanToken);
         return new BlockPlace(BlockDataType.HEIGHT, possibleBlockHeight);
       } catch (final NumberFormatException e) {
         // Eat, this is probably not a number ;)
