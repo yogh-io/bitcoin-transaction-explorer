@@ -8,6 +8,8 @@ public class MinePlace extends ApplicationPlace {
   public enum MineDataType {
     RAW("raw"),
 
+    ID("id"),
+
     LAST("last"),
 
     HEIGHT("height");

@@ -91,6 +91,9 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
     case LAST:
       service.getLastRawBlockHex(morphCallback);
       break;
+    case ID:
+      service.getRawBlockHex(place.getPayload(), morphCallback);
+      break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));
       return;
@@ -106,7 +109,9 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
 
   @Override
   protected boolean mustPerformLookup(final MinePlace place) {
-    return place.getType() == MineDataType.HEIGHT || place.getType() == MineDataType.LAST;
+    return place.getType() == MineDataType.HEIGHT
+        || place.getType() == MineDataType.LAST
+        || place.getType() == MineDataType.ID;
   }
 
   @Override
