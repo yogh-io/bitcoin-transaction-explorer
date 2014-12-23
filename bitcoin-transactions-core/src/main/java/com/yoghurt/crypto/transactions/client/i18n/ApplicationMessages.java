@@ -122,4 +122,22 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("Nonce:")
   String blockNonce();
+
+  @DefaultMessage("Block depth:")
+  String blockDepth();
+
+  @DefaultMessage("# transactions:")
+  String blockNumTransactions();
+
+  @DefaultMessage("Next block:")
+  String blockNextBlock();
+
+  @DefaultMessage("Size (bytes):")
+  String blockSize();
+
+  @DefaultMessage("Checking existence in the blockchain ...")
+  String blockPlaceBlockchainExistenceLoading();
+
+  @DefaultMessage("This block could not be found in the blockchain.")
+  String blockPlaceBlockchainExistenceNotFound();
 }

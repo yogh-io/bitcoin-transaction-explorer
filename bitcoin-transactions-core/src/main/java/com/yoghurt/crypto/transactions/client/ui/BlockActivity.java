@@ -32,7 +32,7 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
 
     view.setBlock(block);
 
-    service.getBlockInformation(Str.toString(block.getBlockHash()), new AppAsyncCallback<BlockInformation>() {
+    service.getBlockInformation(Str.toString(Hex.encode(block.getBlockHash())), new AppAsyncCallback<BlockInformation>() {
       @Override
       public void onSuccess(final BlockInformation result) {
         view.setBlockInformation(result);

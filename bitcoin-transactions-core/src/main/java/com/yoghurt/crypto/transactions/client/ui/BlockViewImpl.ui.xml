@@ -19,6 +19,25 @@
     <w:LabelledWidget label="Block hash:">
       <w:ValueViewer ui:field="blockHashViewer" />
     </w:LabelledWidget>
+    <g:Label text="{i18n.blockPlaceBlockchainExistenceLoading}" ui:field="loadPlaceHolder" />
+    <g:Label text="{i18n.blockPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
+    <g:FlowPanel ui:field="extraInformationContainer" visible="false">
+      <w:LabelledWidget label="{i18n.blockHeight}">
+        <w:ValueViewer ui:field="heightViewer" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.blockDepth}">
+        <w:ValueViewer ui:field="numConfirmationsViewer" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.blockNumTransactions}">
+        <w:ValueViewer ui:field="numTransactionsViewer" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.blockNextBlock}">
+        <w:ValueViewer ui:field="nextBlockViewer" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.blockSize}">
+        <w:ValueViewer ui:field="sizeViewer" />
+      </w:LabelledWidget>
+    </g:FlowPanel>
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleBlockHeaders}" /></h2>
     </g:HTML>
@@ -35,7 +54,7 @@
       <w:ValueViewer ui:field="timestampViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockBits}">
-      <w:HashViewer ui:field="bitsViewer" />
+      <w:ValueViewer ui:field="bitsViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockNonce}">
       <w:ValueViewer ui:field="nonceViewer" />
