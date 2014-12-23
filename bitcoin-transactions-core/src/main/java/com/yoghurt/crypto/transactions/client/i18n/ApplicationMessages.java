@@ -6,7 +6,7 @@ import com.google.gwt.i18n.client.Messages;
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
 
-  @DefaultMessage("Blockchain readers")
+  @DefaultMessage("Blockchain reader")
   String applicationTitle();
 
   @DefaultMessage("For developers - Breaking it down to the bone")
