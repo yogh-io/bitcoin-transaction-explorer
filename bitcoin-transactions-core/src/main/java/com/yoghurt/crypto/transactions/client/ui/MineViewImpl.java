@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -16,6 +15,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
+import com.yoghurt.crypto.transactions.client.util.RepeatingExecutor;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashViewer;
@@ -48,7 +48,7 @@ public class MineViewImpl extends Composite implements MineView {
   private final ScheduledCommand defferedTimeHash = new ScheduledCommand() {
     @Override
     public void execute() {
-      synchronizeTimestamp();
+      synchronizeTime();
       doHashCycle();
     }
   };
@@ -68,25 +68,18 @@ public class MineViewImpl extends Composite implements MineView {
     }
   };
 
-  private final RepeatingCommand executeHashCommand = new RepeatingCommand() {
+  private final ScheduledCommand executeHashCommand = new ScheduledCommand() {
     @Override
-    public boolean execute() {
+    public void execute() {
       doFullHashCycle();
-
-      if(cancel) {
-        cancelled = true;
-      }
-
-      return !cancel;
     }
   };
+
+  private final RepeatingExecutor executor = new RepeatingExecutor(executeHashCommand);
 
   private RawBlockContainer rawBlock;
 
   private Presenter presenter;
-
-  private boolean cancel = true;
-  private boolean cancelled = true;
 
   private boolean keepUpWithTip;
 
@@ -126,35 +119,9 @@ public class MineViewImpl extends Composite implements MineView {
     }
   }
 
-  private void doSingleCycle() {
-    Scheduler.get().scheduleDeferred(defferedSynchronizedHash);
-  }
-
-  private void startHashExecutor() {
-    // If we've indicated to cancel, and we haven't yet cancelled, flip the cancel switch
-    if(cancel && !cancelled) {
-      cancel = false;
-      return;
-    }
-
-    // If we haven't indicated to cancel, and we haven't actually cancelled, get the hell out
-    if(!cancel && !cancelled) {
-      return;
-    }
-
-    // Otherwise, reset the cancel values and start
-    cancel = false;
-    cancelled = false;
-    Scheduler.get().scheduleFixedPeriod(executeHashCommand, MINING_SIMULATION_DELAY);
-  }
-
-  private void cancelHashExecutor() {
-    cancel = true;
-  }
-
   @UiHandler("cancelButton")
   public void onCancelClick(final ClickEvent e) {
-    cancelHashExecutor();
+    executor.cancel();
     if(keepUpWithTip) {
       presenter.pausePoll();
     }
@@ -163,6 +130,7 @@ public class MineViewImpl extends Composite implements MineView {
   @UiHandler("continueButton")
   public void onContinueClick(final ClickEvent e) {
     startHashExecutor();
+
     if(keepUpWithTip) {
       presenter.startPoll();
     }
@@ -201,13 +169,21 @@ public class MineViewImpl extends Composite implements MineView {
     this.presenter = presenter;
   }
 
+  private void doSingleCycle() {
+    Scheduler.get().scheduleDeferred(defferedSynchronizedHash);
+  }
+
+  private void startHashExecutor() {
+    executor.start(MINING_SIMULATION_DELAY);
+  }
+
   private void incrementNonce() {
     final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) + 1;
     nonceViewer.setValue(nonce);
     rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
   }
 
-  private void synchronizeTimestamp() {
+  private void synchronizeTime() {
     final Date time = new Date();
     timestampViewer.setValue(FormatUtil.formatDateTime(time));
     rawBlock.setTimestamp(BlockEncodeUtil.encodeTimestamp(time));
@@ -215,7 +191,7 @@ public class MineViewImpl extends Composite implements MineView {
 
   private void doFullHashCycle() {
     incrementNonce();
-    synchronizeTimestamp();
+    synchronizeTime();
 
     doHashCycle();
   }
