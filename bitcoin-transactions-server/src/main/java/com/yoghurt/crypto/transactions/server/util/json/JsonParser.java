@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.server.servlets.util.json;
+package com.yoghurt.crypto.transactions.server.util.json;
 
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;

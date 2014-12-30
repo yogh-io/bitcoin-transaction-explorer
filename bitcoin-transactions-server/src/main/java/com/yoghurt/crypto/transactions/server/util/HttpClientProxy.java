@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.server.servlets.util;
+package com.yoghurt.crypto.transactions.server.util;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
