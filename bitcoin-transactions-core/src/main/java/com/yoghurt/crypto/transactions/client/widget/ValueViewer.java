@@ -18,6 +18,12 @@ public class ValueViewer extends ContextFieldSet<String> {
     });
   }
 
+  public ValueViewer(final Color color, final String text) {
+    super(text);
+
+    this.color = color;
+  }
+
   public ValueViewer(final Color color, final FieldContextFactory<String> contextFactory) {
     super(contextFactory);
 

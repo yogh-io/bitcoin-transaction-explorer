@@ -122,6 +122,10 @@ public class ContextFieldSet<T> extends FlowPanel {
     this.contextFactory = contextFactory;
   }
 
+  public ContextFieldSet(final String text) {
+    this(new TextContextFactory<T>(text));
+  }
+
   @Override
   public void clear() {
     super.clear();
