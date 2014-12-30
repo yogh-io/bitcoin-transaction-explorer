@@ -100,6 +100,7 @@ public final class BlockrApiParser {
     info.setNumConfirmations(data.get("confirmations").getIntValue());
     info.setNumTransactions(data.get("nb_txs").getIntValue());
     info.setNextBlockHash(data.get("next_block_hash").getTextValue());
+    info.setSize(data.get("size").asInt());
 
     return info;
 
