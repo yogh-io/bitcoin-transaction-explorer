@@ -63,5 +63,10 @@ public class ApplicationClientModule extends AbstractGinModule {
     public void goToBlock(final int height) {
       goTo(new BlockPlace(BlockDataType.HEIGHT, height));
     }
+
+    @Override
+    public void goToBlock(final String blockHash) {
+      goTo(new BlockPlace(BlockDataType.ID, blockHash));
+    }
   }
 }
