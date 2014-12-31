@@ -24,19 +24,17 @@ import org.apache.http.util.EntityUtils;
  * Wrapper to get remote content and return it as an inputstream simply.
  */
 public class HttpClientProxy {
-  private static final int TIMEOUT = 5;
+  private static final int TIMEOUT = 5 * 1000;
 
-  // TODO not sure if seconds or milliseconds, probably seconds, luckily there's no documentation to find this out so we'll be in the dark until we
-  // google it.
   private final static RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(TIMEOUT).build();
 
   public static HttpEntity getRemoteContent(final HttpClient client, final String url) throws URISyntaxException, ClientProtocolException,
-      IOException, ParseException, HttpException {
+  IOException, ParseException, HttpException {
     return executeRemoteContent(client, new HttpGet(url));
   }
 
   public static HttpEntity postRemoteContent(final HttpClient client, final String url, final String payload) throws ClientProtocolException,
-      IOException, ParseException, HttpException {
+  IOException, ParseException, HttpException {
     final HttpPost httpPost = new HttpPost(url);
     httpPost.setEntity(new StringEntity(payload));
 
@@ -52,7 +50,7 @@ public class HttpClientProxy {
   }
 
   private static HttpEntity executeRemoteContent(final HttpClient client, final HttpUriRequest request) throws ClientProtocolException, IOException,
-      ParseException, HttpException {
+  ParseException, HttpException {
     return executeRemoteContent(client, request, null);
   }
 
