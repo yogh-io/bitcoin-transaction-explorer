@@ -11,17 +11,7 @@ public class BlockchainRetrievalFactory {
     NODE, BLOCKR_API;
   }
 
-  private interface InnerFactory {
-    BlockchainRetrievalHook create();
-  }
-
-
-  private final InnerFactory factory;
-
-  private String host;
-  private int port;
-  private String rpcUser;
-  private String rpcPass;
+  private BlockchainRetrievalHook hook;
 
   public BlockchainRetrievalFactory() {
     Source source;
@@ -34,39 +24,20 @@ public class BlockchainRetrievalFactory {
 
     switch (source) {
     case NODE:
-      host = System.getProperty("yoghurt.crypto.rpc.host");
-      port = Integer.parseInt(System.getProperty("yoghurt.crypto.rpc.port"));
-      rpcUser = System.getProperty("yoghurt.crypto.rpc.user");
-      rpcPass = System.getProperty("yoghurt.crypto.rpc.pass");
-
-      factory = new InnerFactory() {
-        @Override
-        public BlockchainRetrievalHook create() {
-          return createBlockchainInfoHook();
-        }
-      };
+      final String host = System.getProperty("yoghurt.crypto.rpc.host");
+      final int port = Integer.parseInt(System.getProperty("yoghurt.crypto.rpc.port"));
+      final String rpcUser = System.getProperty("yoghurt.crypto.rpc.user");
+      final String rpcPass = System.getProperty("yoghurt.crypto.rpc.pass");
+      hook = new JSONRPCRetriever(host, port, rpcUser, rpcPass);
       break;
     default:
     case BLOCKR_API:
-      factory = new InnerFactory() {
-        @Override
-        public BlockchainRetrievalHook create() {
-          return createBlockrHook();
-        }
-      };
+      hook = new BlockrAPIRetriever();
       break;
     }
   }
 
   public BlockchainRetrievalHook create() {
-    return factory.create();
-  }
-
-  public BlockchainRetrievalHook createBlockrHook() {
-    return new BlockrAPIRetriever();
-  }
-
-  public BlockchainRetrievalHook createBlockchainInfoHook() {
-    return new JSONRPCRetriever(host, port, rpcUser, rpcPass);
+    return hook;
   }
 }
