@@ -5,8 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.yoghurt.crypto.transactions.server.servlets.providers.BlockchainRetrievalHook;
-import com.yoghurt.crypto.transactions.server.servlets.providers.JSONRPCRetriever;
 import com.yoghurt.crypto.transactions.server.servlets.providers.LatestBlockRetriever;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -17,31 +15,7 @@ import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService
 public class BlockchainRetrievalServlet extends RemoteServiceServlet implements BlockchainRetrievalService {
   private static final long serialVersionUID = 7984638304207123693L;
 
-  private static class Retriever {
-    private static String host;
-    private static int port;
-    private static String rpcUser;
-    private static String rpcPass;
-
-    public static BlockchainRetrievalHook create() {
-      return createBlockchainInfoHook();
-    }
-
-    //    public static BlockchainRetrievalHook createBlockrHook() {
-    //      return new BlockrAPIRetriever();
-    //    }
-
-    public static BlockchainRetrievalHook createBlockchainInfoHook() {
-      return new JSONRPCRetriever(host, port, rpcUser, rpcPass);
-    }
-
-    public static void init() {
-      host = System.getProperty("yoghurt.crypto.rpc.host");
-      port = Integer.parseInt(System.getProperty("yoghurt.crypto.rpc.port"));
-      rpcUser = System.getProperty("yoghurt.crypto.rpc.user");
-      rpcPass = System.getProperty("yoghurt.crypto.rpc.pass");
-    }
-  }
+  private static BlockchainRetrievalFactory retriever;
 
   private LatestBlockRetriever latestBlockRetriever;
 
@@ -49,41 +23,41 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   public void init(final ServletConfig config) throws ServletException {
     super.init(config);
 
-    Retriever.init();
+    retriever = new BlockchainRetrievalFactory();
 
-    latestBlockRetriever = new LatestBlockRetriever(Retriever.create());
+    latestBlockRetriever = new LatestBlockRetriever(retriever.create());
     latestBlockRetriever.start();
   }
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
-    return Retriever.create().getRawTransactionHex(txid);
+    return retriever.create().getRawTransactionHex(txid);
   }
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
-    return Retriever.create().getTransactionInformation(txid);
+    return retriever.create().getTransactionInformation(txid);
   }
 
   @Override
   public String getRawBlockHex(final int height) throws ApplicationException {
-    return Retriever.create().getRawBlockFromHeight(height);
+    return retriever.create().getRawBlockFromHeight(height);
   }
 
   @Override
   public String getRawBlockHex(final String blockHash) throws ApplicationException {
-    return Retriever.create().getRawBlockFromHash(blockHash);
+    return retriever.create().getRawBlockFromHash(blockHash);
   }
 
   @Override
   public String getLastRawBlockHex() throws ApplicationException {
-    return Retriever.create().getLastRawBlock();
+    return retriever.create().getLastRawBlock();
   }
 
 
   @Override
   public BlockInformation getBlockInformation(final String identifier) throws ApplicationException {
-    return Retriever.create().getBlockInformation(identifier);
+    return retriever.create().getBlockInformation(identifier);
   }
 
   @Override
