@@ -67,6 +67,10 @@ public class BlockViewImpl extends Composite implements BlockView {
 
   @Override
   public void setBlock(final Block block) {
+    if(block == null) {
+      return;
+    }
+
     blockHashViewer.setValue(block.getBlockHash());
 
     versionViewer.setValue(block.getVersion());
