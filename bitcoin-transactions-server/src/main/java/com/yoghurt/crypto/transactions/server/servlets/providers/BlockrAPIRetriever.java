@@ -43,7 +43,6 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
-
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient()) {
       final InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid)).getContent();
 

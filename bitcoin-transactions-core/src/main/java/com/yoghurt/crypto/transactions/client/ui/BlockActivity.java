@@ -32,6 +32,10 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
 
     view.setBlock(block);
 
+    if(block == null) {
+      return;
+    }
+
     service.getBlockInformation(Str.toString(Hex.encode(block.getBlockHash())), new AppAsyncCallback<BlockInformation>() {
       @Override
       public void onSuccess(final BlockInformation result) {
@@ -51,6 +55,10 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
   }
 
   private Block getBlockFromHex(final String hex) {
+    if (hex == null) {
+      return null;
+    }
+
     final Block b = new Block();
 
     try {
@@ -72,7 +80,7 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
       }
     };
 
-    switch(place.getType()) {
+    switch (place.getType()) {
     case HEIGHT:
       service.getRawBlockHex(Integer.parseInt(place.getPayload()), morphCallback);
       break;

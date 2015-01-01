@@ -1,5 +1,9 @@
 package com.yoghurt.crypto.transactions.server.servlets.providers;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -13,6 +17,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 
+import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
+import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
+import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
@@ -20,6 +27,8 @@ import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationExcept
 public class JSONRPCRetriever implements BlockchainRetrievalHook {
   private static final String JSON_RPC_REALM = "jsonrpc";
   private static final String AUTH_SCHEME = AuthSchemes.BASIC;
+
+  private static final String ERROR_TX_FORMAT = "Could not retrieve transaction information: %s";
 
   private static final String URI_FORMAT = "http://%s:%s";
 
@@ -47,8 +56,17 @@ public class JSONRPCRetriever implements BlockchainRetrievalHook {
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    System.out.println("Getting " + txid);
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy()) {
+      final String payload = JSONRPCEncoder.getRequestString("getrawtransaction", txid);
+
+      final InputStream is = HttpClientProxy.postRemoteContent(client, uri, payload).getContent();
+
+      return JSONRPCParser.getRawTransactionHex(is);
+    } catch (IOException | HttpException e) {
+      e.printStackTrace();
+      throw new ApplicationException(String.format(ERROR_TX_FORMAT, txid));
+    }
   }
 
   @Override
@@ -81,7 +99,7 @@ public class JSONRPCRetriever implements BlockchainRetrievalHook {
     return null;
   }
 
-  private CloseableHttpClient getHttpClientProxy() {
+  private CloseableHttpClient getAuthenticatedHttpClientProxy() {
     return HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
   }
 }

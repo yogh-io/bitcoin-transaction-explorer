@@ -14,7 +14,7 @@ public class JSONRPCEncoder {
     return getRequestString(method, new ArrayList<Object>());
   }
 
-  public static String getRequestString(final String method, final ArrayList<Object> parameters) throws JsonGenerationException, JsonMappingException, IOException {
+  public static String getRequestStringWithParameters(final String method, final ArrayList<Object> parameters) throws JsonGenerationException, JsonMappingException, IOException {
     final JSONRPCRequest req = new JSONRPCRequest(method);
     req.setParams(parameters);
 
@@ -25,5 +25,15 @@ public class JSONRPCEncoder {
     mapper.writeValue(writer, req);
 
     return writer.toString();
+  }
+
+  public static String getRequestString(final String method, final Object ... parameters) throws JsonGenerationException, JsonMappingException, IOException {
+    final ArrayList<Object> parameterLst = new ArrayList<>();
+
+    for(final Object parameter : parameters) {
+      parameterLst.add(parameter);
+    }
+
+    return getRequestStringWithParameters(method, parameterLst);
   }
 }
