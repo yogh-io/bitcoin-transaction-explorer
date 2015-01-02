@@ -11,9 +11,13 @@ public class JSONRPCParser {
 
   private JSONRPCParser() {}
 
-  public static String getRawTransactionHex(final InputStream jsonData) throws JsonProcessingException, IOException {
-    final JsonNode tree = JsonParser.mapper.readTree(jsonData);
+  public static String getResultString(final InputStream is) throws JsonProcessingException, IOException {
+    final JsonNode tree = JsonParser.mapper.readTree(is);
 
     return tree.get("result").getTextValue();
+  }
+
+  public static String getRawBlock(final InputStream jsonData) {
+    return null;
   }
 }

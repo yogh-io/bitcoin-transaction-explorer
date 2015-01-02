@@ -27,10 +27,10 @@ public class JSONRPCEncoder {
     return writer.toString();
   }
 
-  public static String getRequestString(final String method, final Object ... parameters) throws JsonGenerationException, JsonMappingException, IOException {
+  public static String getRequestString(final String method, final Object... parameters) throws JsonGenerationException, JsonMappingException, IOException {
     final ArrayList<Object> parameterLst = new ArrayList<>();
 
-    for(final Object parameter : parameters) {
+    for (final Object parameter : parameters) {
       parameterLst.add(parameter);
     }
 

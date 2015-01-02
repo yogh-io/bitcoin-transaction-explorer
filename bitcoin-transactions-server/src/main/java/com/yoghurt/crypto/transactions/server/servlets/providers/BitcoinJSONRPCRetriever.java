@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
+import org.apache.http.ParseException;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
@@ -24,7 +25,7 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 
-public class JSONRPCRetriever implements BlockchainRetrievalHook {
+public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   private static final String JSON_RPC_REALM = "jsonrpc";
   private static final String AUTH_SCHEME = AuthSchemes.BASIC;
 
@@ -37,7 +38,7 @@ public class JSONRPCRetriever implements BlockchainRetrievalHook {
   private final HttpClientContext localContext;
   private final CredentialsProvider credentialsProvider = new SystemDefaultCredentialsProvider();
 
-  public JSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
+  public BitcoinJSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
     uri = String.format(URI_FORMAT, host, port);
     credentialsProvider.setCredentials(new AuthScope(host, port, JSON_RPC_REALM, AUTH_SCHEME), new UsernamePasswordCredentials(rpcUser, rpcPassword));
 
@@ -49,24 +50,28 @@ public class JSONRPCRetriever implements BlockchainRetrievalHook {
   }
 
   @Override
-  public String getLatestBlockHash() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
-    System.out.println("Getting " + txid);
-    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy()) {
-      final String payload = JSONRPCEncoder.getRequestString("getrawtransaction", txid);
-
-      final InputStream is = HttpClientProxy.postRemoteContent(client, uri, payload).getContent();
-
-      return JSONRPCParser.getRawTransactionHex(is);
+    try {
+      return doSimpleJSONRPCMethod("getrawtransaction", txid);
     } catch (IOException | HttpException e) {
       e.printStackTrace();
       throw new ApplicationException(String.format(ERROR_TX_FORMAT, txid));
     }
+  }
+
+  @Override
+  public String getLastBlockHash() throws ApplicationException {
+    try {
+      return doSimpleJSONRPCMethod("getbestblockhash");
+    } catch (IOException | HttpException e) {
+      e.printStackTrace();
+      throw new ApplicationException(e.getMessage());
+    }
+  }
+
+  @Override
+  public String getLastRawBlock() throws ApplicationException {
+    return getRawBlockFromHash(getLastBlockHash());
   }
 
   @Override
@@ -77,14 +82,28 @@ public class JSONRPCRetriever implements BlockchainRetrievalHook {
 
   @Override
   public String getRawBlockFromHash(final String identifier) throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", getLastBlockHash())) {
+
+      return JSONRPCParser.getRawBlock(jsonData);
+    } catch (IOException | HttpException e) {
+      e.printStackTrace();
+      throw new ApplicationException(e.getMessage());
+    }
   }
 
   @Override
   public String getRawBlockFromHeight(final int height) throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    return getRawBlockFromHash(getBlockHashFromHeight(height));
+  }
+
+  private String getBlockHashFromHeight(final int height) throws ApplicationException {
+    try {
+      return doSimpleJSONRPCMethod("getblockhash", height);
+    } catch (final IOException | HttpException e) {
+      e.printStackTrace();
+      throw new ApplicationException(e.getMessage());
+    }
   }
 
   @Override
@@ -93,10 +112,16 @@ public class JSONRPCRetriever implements BlockchainRetrievalHook {
     return null;
   }
 
-  @Override
-  public String getLastRawBlock() throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+  private String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        InputStream stream = doComplexJSONRPCMethod(client, method, params)) {
+      return JSONRPCParser.getResultString(stream);
+    }
+  }
+
+  private InputStream doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
+    final String payload = JSONRPCEncoder.getRequestString(method, params);
+    return HttpClientProxy.postRemoteContent(client, uri, payload).getContent();
   }
 
   private CloseableHttpClient getAuthenticatedHttpClientProxy() {

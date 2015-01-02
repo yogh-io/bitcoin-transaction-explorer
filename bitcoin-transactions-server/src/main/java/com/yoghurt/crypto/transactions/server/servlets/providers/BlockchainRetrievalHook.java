@@ -6,8 +6,6 @@ import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationExcept
 
 public interface BlockchainRetrievalHook {
 
-  String getLatestBlockHash();
-
   String getRawTransactionHex(String txid) throws ApplicationException;
 
   TransactionInformation getTransactionInformation(String txid) throws ApplicationException;
@@ -17,6 +15,8 @@ public interface BlockchainRetrievalHook {
   String getRawBlockFromHeight(int height) throws ApplicationException;
 
   BlockInformation getBlockInformation(String identifier) throws ApplicationException;
+
+  String getLastBlockHash() throws ApplicationException;
 
   String getLastRawBlock() throws ApplicationException;
 

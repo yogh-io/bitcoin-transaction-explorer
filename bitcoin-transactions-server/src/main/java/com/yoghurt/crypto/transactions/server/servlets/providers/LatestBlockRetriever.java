@@ -5,6 +5,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
+
 public class LatestBlockRetriever {
   private static final long INITIAL_DELAY = 1;
   private static final long BLOCK_RETRIEVE_DELAY = 30;
@@ -16,10 +18,10 @@ public class LatestBlockRetriever {
   private final Runnable command = new Runnable() {
     @Override
     public void run() {
-      final String lastBlockHash = hook.getLatestBlockHash();
-
-      if (lastBlockHash != null) {
-        atomicLastBlockHash.set(lastBlockHash);
+      try {
+        atomicLastBlockHash.set(hook.getLastBlockHash());
+      } catch (final ApplicationException e) {
+        // Ignore
       }
     }
   };
