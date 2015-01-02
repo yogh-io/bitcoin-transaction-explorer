@@ -1,8 +1,8 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
+import com.yoghurt.crypto.transactions.server.servlets.providers.BitcoinJSONRPCRetriever;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockchainRetrievalHook;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockrAPIRetriever;
-import com.yoghurt.crypto.transactions.server.servlets.providers.JSONRPCRetriever;
 
 public class BlockchainRetrievalFactory {
   private static final Source DEFAULT_SOURCE = Source.BLOCKR_API;
@@ -28,7 +28,7 @@ public class BlockchainRetrievalFactory {
       final int port = Integer.parseInt(System.getProperty("yoghurt.crypto.rpc.port"));
       final String rpcUser = System.getProperty("yoghurt.crypto.rpc.user");
       final String rpcPass = System.getProperty("yoghurt.crypto.rpc.pass");
-      hook = new JSONRPCRetriever(host, port, rpcUser, rpcPass);
+      hook = new BitcoinJSONRPCRetriever(host, port, rpcUser, rpcPass);
       break;
     default:
     case BLOCKR_API:
