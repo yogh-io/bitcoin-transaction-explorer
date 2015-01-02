@@ -42,9 +42,11 @@ public final class PlaceTokenParseUtil {
 
     // Check if the token is exactly equal to the length of a hash, meaning this is probably a transaction or block hash
     if (cleanToken.length() == HASH_LENGTH) {
-      // If it starts with a bunch of zeroes, it's probably a block
+      // If it starts with a bunch of zeroes, it's probably a block, otherwise it may be a transaction
       if (cleanToken.startsWith(BLOCK_TOKEN_START)) {
         return new BlockPlace(BlockDataType.ID, cleanToken);
+      } else {
+        return new TransactionPlace(TransactionDataType.ID, cleanToken);
       }
     }
 
