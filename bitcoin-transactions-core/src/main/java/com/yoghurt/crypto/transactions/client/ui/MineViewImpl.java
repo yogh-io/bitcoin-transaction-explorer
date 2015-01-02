@@ -61,13 +61,6 @@ public class MineViewImpl extends Composite implements MineView {
     }
   };
 
-  private final ScheduledCommand defferedSynchronizedHash = new ScheduledCommand() {
-    @Override
-    public void execute() {
-      doFullHashCycle();
-    }
-  };
-
   private final ScheduledCommand executeHashCommand = new ScheduledCommand() {
     @Override
     public void execute() {
@@ -113,16 +106,21 @@ public class MineViewImpl extends Composite implements MineView {
     blockHashViewer.setHash(initialBlock.getBlockHash());
 
     // If we need to stay fly with the latest on the hood, set up the timers
-    if(keepUpWithTip) {
+    if (keepUpWithTip) {
       startHashExecutor();
       presenter.startPoll();
     }
   }
 
+  @Override
+  public void cancel() {
+    executor.cancel();
+  }
+
   @UiHandler("cancelButton")
   public void onCancelClick(final ClickEvent e) {
-    executor.cancel();
-    if(keepUpWithTip) {
+    cancel();
+    if (keepUpWithTip) {
       presenter.pausePoll();
     }
   }
@@ -131,7 +129,7 @@ public class MineViewImpl extends Composite implements MineView {
   public void onContinueClick(final ClickEvent e) {
     startHashExecutor();
 
-    if(keepUpWithTip) {
+    if (keepUpWithTip) {
       presenter.startPoll();
     }
   }
@@ -170,7 +168,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void doSingleCycle() {
-    Scheduler.get().scheduleDeferred(defferedSynchronizedHash);
+    Scheduler.get().scheduleDeferred(executeHashCommand);
   }
 
   private void startHashExecutor() {

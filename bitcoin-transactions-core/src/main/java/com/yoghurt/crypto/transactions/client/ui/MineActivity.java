@@ -103,6 +103,7 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
   @Override
   public void onStop() {
     timer.cancel();
+    view.cancel();
 
     super.onStop();
   }

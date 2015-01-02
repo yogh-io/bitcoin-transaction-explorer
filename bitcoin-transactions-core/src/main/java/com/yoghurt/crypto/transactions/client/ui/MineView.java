@@ -18,4 +18,6 @@ public interface MineView extends IsWidget {
   void setInformation(Block block, RawBlockContainer rawBlock, boolean keepUpWithTip);
 
   void broadcastLatestBlock(String latestBlock);
+
+  void cancel();
 }
