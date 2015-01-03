@@ -34,8 +34,6 @@ public final class R {
 
     String labelledValueContainer();
 
-    String applicationContent();
-
     String left();
 
     String right();

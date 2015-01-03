@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
@@ -20,6 +21,7 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
 
+@Singleton
 public class BlockViewImpl extends Composite implements BlockView {
   interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {}
 
@@ -88,7 +90,7 @@ public class BlockViewImpl extends Composite implements BlockView {
       // Eat.
     }
 
-    blockHexViewer.setBlock(rawTransaction);
+    blockHexViewer.updateBlock(rawTransaction);
   }
 
   @Override

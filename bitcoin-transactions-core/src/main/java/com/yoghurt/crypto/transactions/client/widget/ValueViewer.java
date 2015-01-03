@@ -9,6 +9,8 @@ public class ValueViewer extends ContextFieldSet<String> {
 
   protected String value;
 
+  private boolean animate;
+
   public ValueViewer(final Color color) {
     this(color, new SimpleContextFactory<String>() {
       @Override
@@ -46,14 +48,26 @@ public class ValueViewer extends ContextFieldSet<String> {
     }
   }
 
+  public void setValue(final Object obj) {
+    setValue(String.valueOf(obj));
+  }
+
   public void setValue(final String value) {
     this.value = value;
 
+    if(fields.isEmpty()) {
+      forceSetValue(value);
+    } else {
+      fields.get(0).setContent(value, animate);
+    }
+  }
+
+  private void forceSetValue(final String value) {
     clear();
     addField(value);
   }
 
-  public void setValue(final Object obj) {
-    setValue(String.valueOf(obj));
+  public void setAnimate(final boolean animate) {
+    this.animate = animate;
   }
 }

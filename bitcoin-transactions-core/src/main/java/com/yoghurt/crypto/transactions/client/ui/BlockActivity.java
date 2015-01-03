@@ -88,7 +88,7 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
       service.getRawBlockHex(place.getPayload(), morphCallback);
       break;
     case LAST:
-      service.getRawBlockHex(place.getType().getToken(), morphCallback);
+      service.getLastRawBlockHex(morphCallback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));
