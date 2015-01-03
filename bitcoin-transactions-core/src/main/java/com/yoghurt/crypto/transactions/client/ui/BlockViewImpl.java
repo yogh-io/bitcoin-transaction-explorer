@@ -28,7 +28,6 @@ public class BlockViewImpl extends Composite implements BlockView {
   private static final BlockViewImplUiBinder UI_BINDER = GWT.create(BlockViewImplUiBinder.class);
 
   @UiField FlowPanel extraInformationContainer;
-  @UiField Label loadPlaceHolder;
   @UiField Label notFoundLabel;
 
   @UiField(provided = true) ValueViewer blockHashViewer;
@@ -95,14 +94,12 @@ public class BlockViewImpl extends Composite implements BlockView {
 
   @Override
   public void setBlockInformation(final BlockInformation blockInformation) {
-    loadPlaceHolder.removeFromParent();
+    notFoundLabel.setVisible(blockInformation == null);
+    extraInformationContainer.setVisible(blockInformation != null);
 
     if (blockInformation == null) {
-      notFoundLabel.setVisible(true);
       return;
     }
-
-    extraInformationContainer.setVisible(true);
 
     heightViewer.setValue(blockInformation.getHeight());
     numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
