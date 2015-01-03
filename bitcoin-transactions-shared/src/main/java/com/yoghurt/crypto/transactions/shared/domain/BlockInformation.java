@@ -8,16 +8,16 @@ public class BlockInformation implements Serializable {
   private int height;
   private int numConfirmations;
   private int numTransactions;
-  private int size;
+  private long size;
   private String nextBlockHash;
 
   public BlockInformation() {}
 
-  public int getSize() {
+  public long getSize() {
     return size;
   }
 
-  public void setSize(final int size) {
+  public void setSize(final long size) {
     this.size = size;
   }
 
