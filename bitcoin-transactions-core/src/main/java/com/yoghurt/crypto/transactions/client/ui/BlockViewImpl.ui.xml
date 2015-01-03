@@ -17,47 +17,46 @@
       <h2><ui:text from="{i18n.blockPlaceTitleInformation}" /></h2>
     </g:HTML>
     <w:LabelledWidget label="Block hash:">
-      <w:ValueViewer ui:field="blockHashViewer" />
+      <w:ValueViewer ui:field="blockHashViewer" animate="true" />
     </w:LabelledWidget>
-    <g:Label text="{i18n.blockPlaceBlockchainExistenceLoading}" ui:field="loadPlaceHolder" />
     <g:Label text="{i18n.blockPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="{i18n.blockHeight}">
-        <w:ValueViewer ui:field="heightViewer" />
+        <w:ValueViewer ui:field="heightViewer" animate="true" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockDepth}">
-        <w:ValueViewer ui:field="numConfirmationsViewer" />
+        <w:ValueViewer ui:field="numConfirmationsViewer" animate="true" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockNumTransactions}">
-        <w:ValueViewer ui:field="numTransactionsViewer" />
+        <w:ValueViewer ui:field="numTransactionsViewer" animate="true" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockNextBlock}">
-        <w:ValueViewer ui:field="nextBlockViewer" />
+        <w:ValueViewer ui:field="nextBlockViewer" animate="true" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockSize}">
-        <w:ValueViewer ui:field="sizeViewer" />
+        <w:ValueViewer ui:field="sizeViewer" animate="true" />
       </w:LabelledWidget>
     </g:FlowPanel>
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleBlockHeaders}" /></h2>
     </g:HTML>
     <w:LabelledWidget label="{i18n.blockVersion}">
-      <w:ValueViewer ui:field="versionViewer" />
+      <w:ValueViewer ui:field="versionViewer" animate="true" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockPreviousBlock}">
-      <w:ValueViewer ui:field="previousBlockHashViewer" />
+      <w:ValueViewer ui:field="previousBlockHashViewer" animate="true" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockMerkleRoot}">
-      <w:ValueViewer ui:field="merkleRootViewer" />
+      <w:ValueViewer ui:field="merkleRootViewer" animate="true" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockTime}">
-      <w:ValueViewer ui:field="timestampViewer" />
+      <w:ValueViewer ui:field="timestampViewer" animate="true" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockBits}">
-      <w:ValueViewer ui:field="bitsViewer" />
+      <w:ValueViewer ui:field="bitsViewer" animate="true" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockNonce}">
-      <w:ValueViewer ui:field="nonceViewer" />
+      <w:ValueViewer ui:field="nonceViewer" animate="true" />
     </w:LabelledWidget>
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleRawHex}" /></h2>
