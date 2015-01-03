@@ -81,22 +81,28 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
     setContent(text, true);
   }
 
-  private void setContent(final String text, final boolean animate) {
+  public void setContent(final String text, final boolean animate) {
     // Bug out if the text to display is the same as the current text
-    if(text != null && text.equals(currentText)) {
+    if (text != null && text.equals(currentText)) {
       return;
     }
 
     currentText = text;
 
+    if(!animate) {
+      container.clear();
+    }
+
     final Label lbl = new Label(text);
     container.add(lbl);
 
-    container.getElement().getStyle().setTop(-container.getOffsetHeight() + lbl.getOffsetHeight(), Unit.PX);
+    if(animate) {
+      container.getElement().getStyle().setTop(-container.getOffsetHeight() + lbl.getOffsetHeight(), Unit.PX);
 
-    // This is gonna suck if there's more than a couple of these running, so thank god Mr Moore invented that law of his
-    cleanupTimer.cancel();
-    cleanupTimer.schedule(CLEAN_UP_DELAY + ANIMATION_TIME);
+      // This is gonna suck if there's more than a couple of these running, so thank god Mr Moore invented that law of his
+      cleanupTimer.cancel();
+      cleanupTimer.schedule(CLEAN_UP_DELAY + ANIMATION_TIME);
+    }
   }
 
   public T getValue() {

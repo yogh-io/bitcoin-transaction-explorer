@@ -24,23 +24,28 @@ public class BlockHexViewer extends HexViewer<Entry<BlockPartType, byte[]>> {
   }
 
   public void updateBlock(final RawBlockContainer rawBlock) {
-    for(final Entry<BlockPartType, byte[]> entry : rawBlock.entrySet()) {
+    // If the container is empty, set instead of update
+    if (fieldMap.isEmpty()) {
+      setBlock(rawBlock);
+    }
+
+    for (final Entry<BlockPartType, byte[]> entry : rawBlock.entrySet()) {
       final ArrayList<ContextField<Entry<BlockPartType, byte[]>>> field = findValueFields(entry);
 
       // Field shouldn't be empty, but check for it anyway
-      if(field.isEmpty()) {
+      if (field.isEmpty()) {
         continue;
       }
 
       final byte[] bytesForValue = getBytesForValue(entry);
 
       // If the value is equal, keep going
-      if(Arrays.areEqual(bytesForValue, field.get(0).getValue().getValue())) {
+      if (Arrays.areEqual(bytesForValue, field.get(0).getValue().getValue())) {
         continue;
       }
 
       // Fields should be of equal size, but check for it anyway
-      if(bytesForValue.length != field.size()) {
+      if (bytesForValue.length != field.size()) {
         GWT.log("Size inconsistency");
         // TODO Log and bug out.
         continue;
@@ -48,7 +53,7 @@ public class BlockHexViewer extends HexViewer<Entry<BlockPartType, byte[]>> {
 
       // Change the value for each field
       int i = 0;
-      for(final byte bite : bytesForValue) {
+      for (final byte bite : bytesForValue) {
         final ContextField<Entry<BlockPartType, byte[]>> contextField = field.get(i++);
         contextField.setContent(getHexFromByte(bite));
 
@@ -60,8 +65,8 @@ public class BlockHexViewer extends HexViewer<Entry<BlockPartType, byte[]>> {
 
   @Override
   protected ArrayList<ContextField<Entry<BlockPartType, byte[]>>> findValueFields(final Entry<BlockPartType, byte[]> value) {
-    for(final Entry<Entry<BlockPartType, byte[]>, ArrayList<ContextField<Entry<BlockPartType, byte[]>>>> field : fieldMap) {
-      if(field.getKey().getKey() == value.getKey()) {
+    for (final Entry<Entry<BlockPartType, byte[]>, ArrayList<ContextField<Entry<BlockPartType, byte[]>>>> field : fieldMap) {
+      if (field.getKey().getKey() == value.getKey()) {
         return field.getValue();
       }
     }

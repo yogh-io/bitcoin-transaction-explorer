@@ -18,7 +18,6 @@ import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.RepeatingExecutor;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
-import com.yoghurt.crypto.transactions.client.widget.HashViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
@@ -39,7 +38,7 @@ public class MineViewImpl extends Composite implements MineView {
   @UiField(provided = true) ValueViewer previousBlockHashViewer;
   @UiField(provided = true) ValueViewer merkleRootViewer;
   @UiField(provided = true) ValueViewer timestampViewer;
-  @UiField(provided = true) HashViewer bitsViewer;
+  @UiField(provided = true) ValueViewer bitsViewer;
   @UiField(provided = true) ValueViewer nonceViewer;
 
   @UiField BlockHexViewer blockHexViewer;
@@ -81,7 +80,7 @@ public class MineViewImpl extends Composite implements MineView {
     previousBlockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
     merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
     timestampViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
-    bitsViewer = new HashViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
+    bitsViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
     nonceViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.NONCE));
 
     initWidget(UI_BINDER.createAndBindUi(this));

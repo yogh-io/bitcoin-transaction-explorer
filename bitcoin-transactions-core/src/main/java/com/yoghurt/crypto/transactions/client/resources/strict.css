@@ -69,7 +69,11 @@ body {
 }
 
 .applicationContentContainer {
-	padding-bottom: 140px;
+	margin-bottom: 140px;
+  	margin-top: 50px;
+  	padding: 20px;
+  	background-color: #fff;
+  	border-radius: 5px;
 }
 
 .applicationFooter {
@@ -86,14 +90,6 @@ body {
 .applicationInnerFooter {
 	margin: 10px 20px;
 	text-align: right;
-}
-
-.applicationContent {
-  	padding: 20px;
-  	margin-top: 50px;
-  	background-color: #fff;
-  	border-radius: 5px;
-  	/*box-shadow: 0px 0px 5px #fff;*/
 }
 
 button {

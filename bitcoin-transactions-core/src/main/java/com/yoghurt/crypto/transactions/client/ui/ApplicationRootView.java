@@ -11,8 +11,8 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -20,7 +20,6 @@ import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
-import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
 
 @Singleton
@@ -29,7 +28,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
   private static final ApplicationRootViewUiBinder UI_BINDER = GWT.create(ApplicationRootViewUiBinder.class);
 
-  @UiField FlowPanel contentPanel;
+  @UiField SimplePanel contentPanel;
   @UiField Anchor title;
   @UiField TextBox lookupField;
 
@@ -64,11 +63,10 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
   @Override
   public void setWidget(final IsWidget w) {
-    contentPanel.clear();
-
-    if (w != null) {
-      w.asWidget().addStyleName(R.css().applicationContent());
-      contentPanel.add(w);
+    if(w == null) {
+      return;
     }
+
+    contentPanel.setWidget(w);
   }
 }

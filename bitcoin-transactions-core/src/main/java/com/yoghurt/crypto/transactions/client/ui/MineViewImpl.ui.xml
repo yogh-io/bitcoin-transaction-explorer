@@ -58,7 +58,7 @@
       <w:ValueViewer ui:field="timestampViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockBits}">
-      <w:HashViewer ui:field="bitsViewer" />
+      <w:ValueViewer ui:field="bitsViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockNonce}">
       <w:ValueViewer ui:field="nonceViewer" />
