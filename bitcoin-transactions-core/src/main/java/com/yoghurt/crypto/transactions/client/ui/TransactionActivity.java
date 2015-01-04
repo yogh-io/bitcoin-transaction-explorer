@@ -48,6 +48,13 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
   }
 
   @Override
+  protected void doDeferredError(final AcceptsOneWidget panel, final Throwable caught) {
+    panel.setWidget(view);
+
+    view.setError(place.getHex(), caught);
+  }
+
+  @Override
   protected boolean mustPerformLookup(final TransactionPlace place) {
     return place.getType() == TransactionDataType.ID;
   }

@@ -99,4 +99,9 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
       return;
     }
   }
+
+  @Override
+  protected void doDeferredError(final AcceptsOneWidget panel, final Throwable caught) {
+    // Not supported
+  }
 }
