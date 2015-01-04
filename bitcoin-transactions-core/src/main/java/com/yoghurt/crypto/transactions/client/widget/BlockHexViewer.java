@@ -16,17 +16,13 @@ public class BlockHexViewer extends HexViewer<Entry<BlockPartType, byte[]>> {
   }
 
   public void setBlock(final RawBlockContainer rawBlock) {
-    clear();
-
-    for (final Entry<BlockPartType, byte[]> part : rawBlock.entrySet()) {
-      addFields(part);
-    }
-  }
-
-  public void updateBlock(final RawBlockContainer rawBlock) {
     // If the container is empty, set instead of update
     if (fieldMap.isEmpty()) {
-      setBlock(rawBlock);
+      clear();
+
+      for (final Entry<BlockPartType, byte[]> part : rawBlock.entrySet()) {
+        addFields(part);
+      }
     }
 
     for (final Entry<BlockPartType, byte[]> entry : rawBlock.entrySet()) {

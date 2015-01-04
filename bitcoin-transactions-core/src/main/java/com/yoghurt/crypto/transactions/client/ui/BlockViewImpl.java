@@ -14,6 +14,7 @@ import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
+import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
@@ -30,7 +31,7 @@ public class BlockViewImpl extends Composite implements BlockView {
   @UiField FlowPanel extraInformationContainer;
   @UiField Label notFoundLabel;
 
-  @UiField(provided = true) ValueViewer blockHashViewer;
+  @UiField(provided = true) HashHexViewer blockHashViewer;
 
   @UiField(provided = true) ValueViewer versionViewer;
   @UiField(provided = true) BlockViewer previousBlockHashViewer;
@@ -49,7 +50,7 @@ public class BlockViewImpl extends Composite implements BlockView {
 
   @Inject
   public BlockViewImpl(final BitcoinPlaceRouter router) {
-    blockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
+    blockHashViewer = new HashHexViewer();
     versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
     previousBlockHashViewer = new BlockViewer(router);
     merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
@@ -72,7 +73,7 @@ public class BlockViewImpl extends Composite implements BlockView {
       return;
     }
 
-    blockHashViewer.setValue(block.getBlockHash());
+    blockHashViewer.setHash(block.getBlockHash());
 
     versionViewer.setValue(block.getVersion());
     previousBlockHashViewer.setValue(block.getPreviousBlockHash());
@@ -89,7 +90,7 @@ public class BlockViewImpl extends Composite implements BlockView {
       // Eat.
     }
 
-    blockHexViewer.updateBlock(rawTransaction);
+    blockHexViewer.setBlock(rawTransaction);
   }
 
   @Override

@@ -2,29 +2,21 @@ package com.yoghurt.crypto.transactions.client.widget;
 
 import java.util.ArrayList;
 
-import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
-import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
+import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
 
 
 public class HashHexViewer extends HexViewer<Byte> {
-  private static final Color COLOR = BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH);
+  private final Color color;
 
   public HashHexViewer() {
-    super(new SimpleContextFactory<Byte>() {
-      @Override
-      protected String getTextValue(final Byte value) {
-        return "Block hash";
-      }
-    });
+    this(ColorBuilder.interpret("green"));
   }
 
-  public void setHash(final byte[] hash) {
-    clear();
+  public HashHexViewer(final Color color) {
+    super(null);
 
-    for (final byte bite : hash) {
-      addFields(bite);
-    }
+    this.color = color;
   }
 
   @Override
@@ -32,7 +24,15 @@ public class HashHexViewer extends HexViewer<Byte> {
     return null;
   }
 
-  public void updateHash(final byte[] hash) {
+  public void setHash(final byte[] hash) {
+    if(fieldMap.isEmpty()) {
+      clear();
+
+      for (final byte bite : hash) {
+        addFields(bite);
+      }
+    }
+
     for(int i = 0; i < hash.length; i++) {
       final ContextField<Byte> contextField = fields.get(i);
 
@@ -46,7 +46,7 @@ public class HashHexViewer extends HexViewer<Byte> {
 
   @Override
   protected Color getFieldColor(final Byte value) {
-    return COLOR;
+    return color;
   }
 
   @Override

@@ -17,7 +17,9 @@
       <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationSubTitle}" />
       <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
-    <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContentContainer}" />
+    <g:SimplePanel styleName="{res.css.applicationContentContainer}">
+      <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent}" />
+    </g:SimplePanel>
     <g:FlowPanel styleName="{res.css.applicationFooter}">
       <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="{i18n.applicationVersion}" />
       <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationContributionText}" />
