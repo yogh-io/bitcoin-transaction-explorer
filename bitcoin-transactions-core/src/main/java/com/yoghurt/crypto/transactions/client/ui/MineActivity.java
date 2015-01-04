@@ -144,6 +144,11 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
   }
 
   @Override
+  protected void doDeferredError(final AcceptsOneWidget panel, final Throwable caught) {
+    // Not supported
+  }
+
+  @Override
   public void startPoll() {
     timer.schedule(SHORT_INITIAL_POLL_DELAY);
   }

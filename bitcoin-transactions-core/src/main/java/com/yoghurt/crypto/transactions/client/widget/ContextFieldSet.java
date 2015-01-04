@@ -138,14 +138,6 @@ public class ContextFieldSet<T> extends FlowPanel {
     popupPanel.hide();
   }
 
-  public FieldContextFactory<T> getContextFactory() {
-    return contextFactory;
-  }
-
-  public void setContextFactory(final FieldContextFactory<T> contextFactory) {
-    this.contextFactory = contextFactory;
-  }
-
   public void addField(final T value) {
     addField(value, getFieldColor(value));
   }
@@ -193,6 +185,10 @@ public class ContextFieldSet<T> extends FlowPanel {
 
   // TODO delegate context styling out of here
   private void displayContextPopup(final ContextField<T> field) {
+    if (contextFactory == null) {
+      return;
+    }
+
     // Create a new content widget
     final Widget popupContent = contextFactory.getContextWidget(field.getValue());
 

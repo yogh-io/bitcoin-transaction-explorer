@@ -8,10 +8,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
+import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.LabelledWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
@@ -22,6 +26,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 
 public class TransactionViewImpl extends Composite implements TransactionView {
@@ -30,14 +35,19 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   private static final TransactionViewImplUiBinder UI_BINDER = GWT.create(TransactionViewImplUiBinder.class);
 
   @UiField FlowPanel errorView;
+  @UiField Label transactionFullBlownErrorLabel;
 
-  @UiField(provided = true) ValueViewer txIdViewer;
-  @UiField Label loadPlaceHolder;
+  @UiField FlowPanel fullTransactionInformation;
+
+  @UiField(provided = true) HashHexViewer txIdViewer;
   @UiField Label notFoundLabel;
   @UiField FlowPanel extraInformationContainer;
   @UiField(provided = true) ValueViewer txStateViewer;
+  @UiField LabelledWidget txBlockContainer;
   @UiField(provided = true) BlockViewer txBlockViewer;
+  @UiField LabelledWidget txConfirmationsContainer;
   @UiField(provided = true) ValueViewer txConfirmationsViewer;
+  @UiField LabelledWidget txTimeContainer;
   @UiField(provided = true) ValueViewer txTimeViewer;
 
   @UiField FlowPanel inputContainer;
@@ -54,7 +64,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   public TransactionViewImpl(final BitcoinPlaceRouter router) {
     this.router = router;
 
-    txIdViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH));
+    txIdViewer = new HashHexViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH));
     txVersionViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.VERSION));
     txLockTimeViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
 
@@ -69,9 +79,12 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   @Override
   public void setTransaction(final Transaction transaction, final boolean transactionHasErrors) {
     errorView.setVisible(transactionHasErrors);
-    loadPlaceHolder.setVisible(!transactionHasErrors);
+    fullTransactionInformation.setVisible(true);
+    if(transactionHasErrors) {
+      setErrorText(M.messages().transactionPlaceParseError());
+    }
 
-    txIdViewer.setValue(transaction.getTransactionId());
+    txIdViewer.setHash(transaction.getTransactionId());
 
     txVersionViewer.setValue(transaction.getVersion());
     txLockTimeViewer.setValue(transaction.getLockTime());
@@ -104,18 +117,37 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   @Override
   public void setBlockchainInformation(final TransactionInformation transactionInformation) {
-    loadPlaceHolder.removeFromParent();
+    extraInformationContainer.setVisible(transactionInformation != null);
 
     if (transactionInformation == null) {
       notFoundLabel.setVisible(true);
-      return;
+    } else {
+      txStateViewer.setValue(transactionInformation.getState().name());
+
+      if(transactionInformation.getState() == TransactionState.CONFIRMED) {
+        txBlockContainer.setVisible(true);
+        txBlockViewer.setValue(transactionInformation.getBlockHash());
+        txConfirmationsContainer.setVisible(true);
+        txConfirmationsViewer.setValue(transactionInformation.getConfirmations());
+        txTimeContainer.setVisible(true);
+        txTimeViewer.setValue(FormatUtil.formatDateTime(transactionInformation.getTime()));
+      } else {
+        txTimeContainer.setVisible(false);
+        txConfirmationsContainer.setVisible(false);
+        txBlockContainer.setVisible(false);
+      }
     }
+  }
 
-    extraInformationContainer.setVisible(true);
+  @Override
+  public void setError(final String hash, final Throwable caught) {
+    txIdViewer.setHash(Hex.decode(hash));
+    setErrorText(M.messages().transactionPlaceBlockchainExistenceNotFound());
+    fullTransactionInformation.setVisible(false);
+  }
 
-    txStateViewer.setValue(transactionInformation.getState().name());
-    txBlockViewer.setValue(transactionInformation.getBlockHeight());
-    txConfirmationsViewer.setValue(transactionInformation.getConfirmations());
-    txTimeViewer.setValue(FormatUtil.formatDateTime(transactionInformation.getTime()));
+  private void setErrorText(final String text) {
+    errorView.setVisible(true);
+    transactionFullBlownErrorLabel.setText(text);
   }
 }

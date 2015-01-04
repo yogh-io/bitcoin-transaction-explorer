@@ -20,13 +20,13 @@ public abstract class LookupActivity<E, P extends Place> extends AbstractActivit
     } else {
       doLookup(place, new AsyncCallback<E>() {
         @Override
-        public void onFailure(final Throwable caught) {
-          throw new RuntimeException(caught);
+        public void onSuccess(final E result) {
+          doDeferredStart(panel, result);
         }
 
         @Override
-        public void onSuccess(final E result) {
-          doDeferredStart(panel, result);
+        public void onFailure(final Throwable caught) {
+          doDeferredError(panel, caught);
         }
       });
     }
@@ -59,4 +59,12 @@ public abstract class LookupActivity<E, P extends Place> extends AbstractActivit
    * @param info Information for which content will be created.
    */
   protected abstract void doDeferredStart(final AcceptsOneWidget panel, final E info);
+
+  /**
+   * Defferedly error out because something went wrong.
+   * 
+   * @param panel Panel in which content may live.
+   * @param caught All information we're allowed to have about what may have gone wrong.
+   */
+  protected abstract void doDeferredError(AcceptsOneWidget panel, Throwable caught);
 }
