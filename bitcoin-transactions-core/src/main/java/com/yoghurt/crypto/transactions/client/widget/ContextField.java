@@ -74,7 +74,7 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
     this.value = value;
     initWidget(UI_BINDER.createAndBindUi(this));
 
-    setContent(text, false);
+    setContent(text, true);
   }
 
   public void setContent(final String text) {

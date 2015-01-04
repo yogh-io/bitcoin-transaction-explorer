@@ -19,21 +19,22 @@
   	width: 780px;
   }
   .parseError {
-	background-color: #f00;
+	background-color: #930707;
 	color: white;
 	border-radius: 8px;
+	margin-top: 20px;
 	margin-bottom: 20px;
 	padding: 10px 15px 20px 15px;;
   }
   </ui:style>
   <g:FlowPanel>
+    <g:Label styleName="{style.contentHeading}" text="{i18n.transactionPlaceTitle}" />
     <g:FlowPanel ui:field="errorView" visible="false" styleName="{style.parseError}">
       <g:HTML>
         <h2><ui:text from="{i18n.transactionPlaceTitleError}" /></h2>
       </g:HTML>
       <g:Label ui:field="transactionFullBlownErrorLabel" text="{i18n.transactionPlaceParseError}" />
     </g:FlowPanel>
-    <g:Label styleName="{style.contentHeading}" text="{i18n.transactionPlaceTitle}" />
     <g:HTML>
       <h2><ui:text from="{i18n.transactionPlaceTitleInformation}" /></h2>
     </g:HTML>
