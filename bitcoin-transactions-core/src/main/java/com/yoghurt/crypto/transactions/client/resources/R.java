@@ -24,6 +24,8 @@ public final class R {
 
     String applicationContentContainer();
 
+    String applicationContent();
+
     String applicationFooter();
 
     String applicationInnerFooter();

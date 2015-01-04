@@ -12,7 +12,7 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("For developers - Breaking it down to the bone")
   String applicationSubTitle();
 
-  @DefaultMessage("Donate / contribute")
+  @DefaultMessage("V0.1 - 2015")
   String applicationVersion();
 
   @DefaultMessage("Insert anything, press enter")
@@ -21,11 +21,14 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Donate / contribute")
   String applicationContributionText();
 
-  @DefaultMessage("Transaction Breakdown")
+  @DefaultMessage("Transaction")
   String transactionPlaceTitle();
 
-  @DefaultMessage("Transaction information")
+  @DefaultMessage("Transaction hash")
   String transactionPlaceTitleInformation();
+
+  @DefaultMessage("Presence in blockchain")
+  String transactionPlaceTitleExtraInformation();
 
   @DefaultMessage("Transaction inputs")
   String transactionPlaceTitleTransactionInputs();
@@ -36,8 +39,8 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Miscellaneous information")
   String transactionPlaceTitleMiscellaneousInformation();
 
-  @DefaultMessage("Transaction parse error")
-  String transactionPlaceTitleParseError();
+  @DefaultMessage("Transaction error")
+  String transactionPlaceTitleError();
 
   @DefaultMessage("Raw transaction in hex")
   String transactionPlaceTitleRawHex();
@@ -45,8 +48,14 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("An error occurred while parsing the transaction, what you are seeing below is the best we could make out of the data before we stopped understanding it.")
   String transactionPlaceParseError();
 
-  @DefaultMessage("Block information")
+  @DefaultMessage("Block")
+  String blockPlaceTitle();
+
+  @DefaultMessage("Block hash")
   String blockPlaceTitleInformation();
+
+  @DefaultMessage("Presence in blockchain")
+  String blockPlaceTitleExtraInformation();
 
   @DefaultMessage("Block headers")
   String blockPlaceTitleBlockHeaders();
@@ -101,6 +110,9 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("Block height:")
   String blockHeight();
+
+  @DefaultMessage("Block hash:")
+  String blockHash();
 
   @DefaultMessage("Confirmations:")
   String blockConfirmations();

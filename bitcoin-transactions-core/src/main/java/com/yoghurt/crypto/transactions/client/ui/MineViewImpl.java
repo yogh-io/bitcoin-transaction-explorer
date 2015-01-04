@@ -11,12 +11,16 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.RepeatingExecutor;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
@@ -27,6 +31,7 @@ import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 
+@Singleton
 public class MineViewImpl extends Composite implements MineView {
   private static final int MINING_SIMULATION_DELAY = 250;
 
@@ -35,7 +40,7 @@ public class MineViewImpl extends Composite implements MineView {
   private static final MineViewImplUiBinder UI_BINDER = GWT.create(MineViewImplUiBinder.class);
 
   @UiField(provided = true) ValueViewer versionViewer;
-  @UiField(provided = true) ValueViewer previousBlockHashViewer;
+  @UiField(provided = true) BlockViewer previousBlockHashViewer;
   @UiField(provided = true) ValueViewer merkleRootViewer;
   @UiField(provided = true) ValueViewer timestampViewer;
   @UiField(provided = true) ValueViewer bitsViewer;
@@ -75,9 +80,10 @@ public class MineViewImpl extends Composite implements MineView {
 
   private boolean keepUpWithTip;
 
-  public MineViewImpl() {
+  @Inject
+  public MineViewImpl(final BitcoinPlaceRouter router) {
     versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
-    previousBlockHashViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
+    previousBlockHashViewer = new BlockViewer(router);
     merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
     timestampViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
     bitsViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
@@ -194,11 +200,11 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void doHashCycle() {
-    blockHexViewer.updateBlock(rawBlock);
+    blockHexViewer.setBlock(rawBlock);
 
     final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());
     ArrayUtil.reverse(computeDoubleSHA256);
 
-    blockHashViewer.updateHash(computeDoubleSHA256);
+    blockHashViewer.setHash(computeDoubleSHA256);
   }
 }

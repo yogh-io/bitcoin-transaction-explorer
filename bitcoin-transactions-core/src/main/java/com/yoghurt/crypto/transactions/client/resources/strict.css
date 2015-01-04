@@ -69,8 +69,11 @@ body {
 }
 
 .applicationContentContainer {
-	margin-bottom: 140px;
-  	margin-top: 50px;
+	padding-bottom: 120px;
+  	padding-top: 30px;
+}
+
+.applicationContent {
   	padding: 20px;
   	background-color: #fff;
   	border-radius: 5px;

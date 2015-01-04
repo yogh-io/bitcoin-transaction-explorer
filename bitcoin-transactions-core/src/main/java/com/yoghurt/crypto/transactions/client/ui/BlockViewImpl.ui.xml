@@ -12,13 +12,14 @@
   }
   </ui:style>
   <g:FlowPanel>
-    <g:Label styleName="{style.contentHeading}" text="Block Breakdown" />
+    <g:Label styleName="{style.contentHeading}" text="{i18n.blockPlaceTitle}" />
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleInformation}" /></h2>
     </g:HTML>
-    <w:LabelledWidget label="Block hash:">
-      <w:ValueViewer ui:field="blockHashViewer" animate="true" />
-    </w:LabelledWidget>
+    <w:HashHexViewer ui:field="blockHashViewer" />
+    <g:HTML>
+      <h2><ui:text from="{i18n.blockPlaceTitleExtraInformation}" /></h2>
+    </g:HTML>
     <g:Label text="{i18n.blockPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="{i18n.blockHeight}">
