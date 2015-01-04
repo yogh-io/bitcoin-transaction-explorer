@@ -37,7 +37,7 @@ public class BlockchainRetrievalFactory {
     }
   }
 
-  public BlockchainRetrievalHook create() {
+  public BlockchainRetrievalHook get() {
     return hook;
   }
 }

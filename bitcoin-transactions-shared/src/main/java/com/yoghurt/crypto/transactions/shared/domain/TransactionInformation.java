@@ -7,19 +7,11 @@ public class TransactionInformation implements Serializable {
   private static final long serialVersionUID = -5230934399747974590L;
 
   private TransactionState state;
-  private int blockHeight;
   private Date time;
   private int confirmations;
+  private String blockHash;
 
   public TransactionInformation() {}
-
-  public int getBlockHeight() {
-    return blockHeight;
-  }
-
-  public void setBlockHeight(final int blockHeight) {
-    this.blockHeight = blockHeight;
-  }
 
   public TransactionState getState() {
     return state;
@@ -45,10 +37,16 @@ public class TransactionInformation implements Serializable {
     this.confirmations = confirmations;
   }
 
-  @Override
-  public String toString() {
-    return "TransactionInformation [state=" + state + ", block=" + blockHeight + ", time=" + time + ", confirmations=" + confirmations + "]";
+  public void setBlockHash(final String blockHash) {
+    this.blockHash = blockHash;
   }
 
+  public String getBlockHash() {
+    return blockHash;
+  }
 
+  @Override
+  public String toString() {
+    return "TransactionInformation [state=" + state + ", block=" + blockHash + ", time=" + time + ", confirmations=" + confirmations + "]";
+  }
 }

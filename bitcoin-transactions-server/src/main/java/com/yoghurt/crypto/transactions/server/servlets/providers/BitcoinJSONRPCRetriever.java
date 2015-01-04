@@ -56,7 +56,6 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
     try {
       return doSimpleJSONRPCMethod("getrawtransaction", txid);
     } catch (IOException | HttpException e) {
-      e.printStackTrace();
       throw new ApplicationException(String.format(ERROR_TX_FORMAT, txid));
     }
   }
@@ -78,8 +77,14 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        InputStream jsonData = doComplexJSONRPCMethod(client, "getrawtransaction", txid, 1)) {
+
+      return JSONRPCParser.getTransactionInformation(jsonData);
+    } catch (IOException | HttpException e) {
+      e.printStackTrace();
+      throw new ApplicationException(e.getMessage());
+    }
   }
 
   @Override
@@ -130,6 +135,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   private InputStream doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
     final String payload = JSONRPCEncoder.getRequestString(method, params);
 
+    // Temporary
     System.out.println("> " + payload);
     System.out.println("< " + EntityUtils.toString(HttpClientProxy.postRemoteContent(client, uri, payload)));
 
