@@ -41,7 +41,7 @@ public final class BlockrAPIParser {
 
     final JsonNode data = tree.get("data");
 
-    info.setBlockHeight(data.get("block").getIntValue());
+    //    info.setBlockHeight(data.get("block").getIntValue());
     info.setState(data.get("is_unconfirmed").getBooleanValue() ? TransactionState.UNCONFIRMED : TransactionState.CONFIRMED);
     info.setTime(DATETIME_FORMATTER.parse(data.get("time_utc").getTextValue()));
     info.setConfirmations(data.get("confirmations").getIntValue());
