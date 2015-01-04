@@ -25,39 +25,39 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
     retriever = new BlockchainRetrievalFactory();
 
-    latestBlockRetriever = new LatestBlockRetriever(retriever.create());
+    latestBlockRetriever = new LatestBlockRetriever(retriever.get());
     latestBlockRetriever.start();
   }
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
-    return retriever.create().getRawTransactionHex(txid);
+    return retriever.get().getRawTransactionHex(txid);
   }
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
-    return retriever.create().getTransactionInformation(txid);
+    return retriever.get().getTransactionInformation(txid);
   }
 
   @Override
   public String getRawBlockHex(final int height) throws ApplicationException {
-    return retriever.create().getRawBlockFromHeight(height);
+    return retriever.get().getRawBlockFromHeight(height);
   }
 
   @Override
   public String getRawBlockHex(final String blockHash) throws ApplicationException {
-    return retriever.create().getRawBlockFromHash(blockHash);
+    return retriever.get().getRawBlockFromHash(blockHash);
   }
 
   @Override
   public String getLastRawBlockHex() throws ApplicationException {
-    return retriever.create().getLastRawBlock();
+    return retriever.get().getLastRawBlock();
   }
 
 
   @Override
   public BlockInformation getBlockInformation(final String identifier) throws ApplicationException {
-    return retriever.create().getBlockInformation(identifier);
+    return retriever.get().getBlockInformation(identifier);
   }
 
   @Override

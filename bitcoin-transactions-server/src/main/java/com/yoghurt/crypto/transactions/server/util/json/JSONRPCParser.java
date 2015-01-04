@@ -2,6 +2,7 @@ package com.yoghurt.crypto.transactions.server.util.json;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -9,6 +10,8 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
@@ -89,5 +92,25 @@ public class JSONRPCParser {
     blockInformation.setSize(tree.get("size").getLongValue());
 
     return blockInformation;
+  }
+
+  public static TransactionInformation getTransactionInformation(final InputStream jsonData) throws JsonProcessingException, IOException {
+    final JsonNode tree = getResultNode(jsonData);
+
+    final TransactionInformation transactionInformation = new TransactionInformation();
+
+    final JsonNode confirmationsNode = tree.get("confirmations");
+
+    if(confirmationsNode == null) {
+      transactionInformation.setConfirmations(0);
+      transactionInformation.setState(TransactionState.UNCONFIRMED);
+    } else {
+      transactionInformation.setConfirmations(confirmationsNode.getIntValue());
+      transactionInformation.setState(TransactionState.CONFIRMED);
+      transactionInformation.setTime(new Date(tree.get("time").getLongValue() * 1000));
+      transactionInformation.setBlockHash(tree.get("blockhash").getTextValue());
+    }
+
+    return transactionInformation;
   }
 }
