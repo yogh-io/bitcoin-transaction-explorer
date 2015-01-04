@@ -25,22 +25,26 @@ public class HashHexViewer extends HexViewer<Byte> {
   }
 
   public void setHash(final byte[] hash) {
+    if(hash == null || hash.length == 0) {
+      return;
+    }
+
     if(fieldMap.isEmpty()) {
       clear();
 
       for (final byte bite : hash) {
         addFields(bite);
       }
-    }
+    } else {
+      for(int i = 0; i < hash.length; i++) {
+        final ContextField<Byte> contextField = fields.get(i);
 
-    for(int i = 0; i < hash.length; i++) {
-      final ContextField<Byte> contextField = fields.get(i);
+        if(contextField == null) {
+          continue;
+        }
 
-      if(contextField == null) {
-        continue;
+        contextField.setContent(getHexFromByte(hash[i]));
       }
-
-      contextField.setContent(getHexFromByte(hash[i]));
     }
   }
 

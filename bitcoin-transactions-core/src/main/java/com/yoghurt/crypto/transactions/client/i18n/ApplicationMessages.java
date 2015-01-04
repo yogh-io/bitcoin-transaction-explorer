@@ -39,7 +39,7 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Miscellaneous information")
   String transactionPlaceTitleMiscellaneousInformation();
 
-  @DefaultMessage("Transaction error")
+  @DefaultMessage("Error")
   String transactionPlaceTitleError();
 
   @DefaultMessage("Raw transaction in hex")
