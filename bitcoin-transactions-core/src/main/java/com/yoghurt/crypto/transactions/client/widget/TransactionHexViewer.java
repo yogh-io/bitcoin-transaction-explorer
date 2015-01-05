@@ -1,6 +1,5 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
-import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
@@ -12,16 +11,16 @@ public class TransactionHexViewer extends HexViewer<TransactionPartType> {
     super(new SimpleTransactionContextWidget());
   }
 
-  @Override
-  protected ArrayList<ContextField<Entry<TransactionPartType, byte[]>>> findValueFields(final Entry<TransactionPartType, byte[]> value) {
-    for (final Entry<Entry<TransactionPartType, byte[]>, ArrayList<ContextField<Entry<TransactionPartType, byte[]>>>> field : fieldMap) {
-      if (field.getKey().getKey() == value.getKey()) {
-        return field.getValue();
-      }
-    }
-
-    return null;
-  }
+  //  @Override
+  //  protected ArrayList<ContextField<Entry<TransactionPartType, byte[]>>> findValueFields(final Entry<TransactionPartType, byte[]> value) {
+  //    for (final Entry<Entry<TransactionPartType, byte[]>, ArrayList<ContextField<Entry<TransactionPartType, byte[]>>>> field : fieldMap) {
+  //      if (field.getKey().getKey() == value.getKey()) {
+  //        return field.getValue();
+  //      }
+  //    }
+  //
+  //    return null;
+  //  }
 
   @Override
   protected byte[] getBytesForValue(final Entry<TransactionPartType, byte[]> value) {

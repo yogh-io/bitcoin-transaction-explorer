@@ -1,10 +1,9 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -109,28 +108,26 @@ public class BlockViewImpl extends Composite implements BlockView {
       return;
     }
 
-
-
-    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
-    try {
-      TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
-    } catch (final Throwable e) {
-      e.printStackTrace();
-      // Eat.
-    }
-
-    coinbaseHexViewer.resetContainer(rawTransaction);
-
     // Do this deferredly because resetting the transaction may take up some CPU time.
-    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+    new Timer() {
       @Override
-      public void execute() {
+      public void run() {
+        final RawTransactionContainer rawTransaction = new RawTransactionContainer();
+        try {
+          TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
+        } catch (final Throwable e) {
+          e.printStackTrace();
+          // Eat.
+        }
+
+        coinbaseHexViewer.setContainer(rawTransaction);
+
         heightViewer.setValue(blockInformation.getHeight());
         numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
         numTransactionsViewer.setValue(blockInformation.getNumTransactions());
         nextBlockViewer.setValue(blockInformation.getNextBlockHash());
         sizeViewer.setValue(blockInformation.getSize());
       }
-    });
+    }.schedule(200);
   }
 }

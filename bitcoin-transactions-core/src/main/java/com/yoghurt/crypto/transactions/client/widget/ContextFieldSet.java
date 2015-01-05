@@ -147,17 +147,11 @@ public class ContextFieldSet<T> extends FlowPanel {
   }
 
   public ContextField<T> addField(final T value, final Color color, final String text) {
-    final ContextField<T> field = new ContextField<T>(value, text);
+    final ContextField<T> field = new ContextField<T>(value, color, text);
 
     field.addMouseOverHandler(mouseOverHandler);
     field.addMouseOutHandler(mouseOutHandler);
     field.addClickHandler(mouseClickHandler);
-
-    final Color backgroundColor = color.copy();
-    backgroundColor.setA(0.2);
-
-    field.getElement().getStyle().setBorderColor(color.getValue());
-    field.getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
 
     fields.add(field);
     return addField(field);
@@ -177,6 +171,11 @@ public class ContextFieldSet<T> extends FlowPanel {
     add(field);
 
     return field;
+  }
+
+  protected void removeField(final int counter) {
+    fields.remove(counter);
+    remove(counter);
   }
 
   private void delayedHide() {
