@@ -3,6 +3,7 @@ package com.yoghurt.crypto.transactions.client.ui;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 public interface BlockView extends IsWidget {
 
@@ -12,5 +13,5 @@ public interface BlockView extends IsWidget {
 
   void setBlock(Block transaction);
 
-  void setBlockInformation(BlockInformation transactionInformation);
+  void setBlockInformation(BlockInformation blockInformation, Transaction coinbase);
 }

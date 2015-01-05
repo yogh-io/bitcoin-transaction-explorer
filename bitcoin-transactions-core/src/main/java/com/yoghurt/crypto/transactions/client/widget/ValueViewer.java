@@ -58,7 +58,9 @@ public class ValueViewer extends ContextFieldSet<String> {
     if(fields.isEmpty()) {
       forceSetValue(value);
     } else {
-      fields.get(0).setContent(value, animate);
+      final ContextField<String> contextField = fields.get(0);
+      contextField.setValue(value);
+      contextField.setContent(value, animate);
     }
   }
 

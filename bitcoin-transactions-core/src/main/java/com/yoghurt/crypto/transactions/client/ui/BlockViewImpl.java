@@ -1,6 +1,8 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -15,12 +17,16 @@ import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
+import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 
 @Singleton
 public class BlockViewImpl extends Composite implements BlockView {
@@ -47,6 +53,7 @@ public class BlockViewImpl extends Composite implements BlockView {
   @UiField(provided = true) ValueViewer sizeViewer;
 
   @UiField BlockHexViewer blockHexViewer;
+  @UiField TransactionHexViewer coinbaseHexViewer;
 
   @Inject
   public BlockViewImpl(final BitcoinPlaceRouter router) {
@@ -82,19 +89,19 @@ public class BlockViewImpl extends Composite implements BlockView {
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());
 
-    final RawBlockContainer rawTransaction = new RawBlockContainer();
+    final RawBlockContainer rawBlock = new RawBlockContainer();
     try {
-      BlockEncodeUtil.encodeBlock(block, rawTransaction);
+      BlockEncodeUtil.encodeBlock(block, rawBlock);
     } catch (final Throwable e) {
       e.printStackTrace();
       // Eat.
     }
 
-    blockHexViewer.setBlock(rawTransaction);
+    blockHexViewer.setContainer(rawBlock);
   }
 
   @Override
-  public void setBlockInformation(final BlockInformation blockInformation) {
+  public void setBlockInformation(final BlockInformation blockInformation, final Transaction coinbase) {
     notFoundLabel.setVisible(blockInformation == null);
     extraInformationContainer.setVisible(blockInformation != null);
 
@@ -102,10 +109,28 @@ public class BlockViewImpl extends Composite implements BlockView {
       return;
     }
 
-    heightViewer.setValue(blockInformation.getHeight());
-    numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
-    numTransactionsViewer.setValue(blockInformation.getNumTransactions());
-    nextBlockViewer.setValue(blockInformation.getNextBlockHash());
-    sizeViewer.setValue(blockInformation.getSize());
+
+
+    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
+    try {
+      TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
+    } catch (final Throwable e) {
+      e.printStackTrace();
+      // Eat.
+    }
+
+    coinbaseHexViewer.resetContainer(rawTransaction);
+
+    // Do this deferredly because resetting the transaction may take up some CPU time.
+    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+      @Override
+      public void execute() {
+        heightViewer.setValue(blockInformation.getHeight());
+        numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
+        numTransactionsViewer.setValue(blockInformation.getNumTransactions());
+        nextBlockViewer.setValue(blockInformation.getNextBlockHash());
+        sizeViewer.setValue(blockInformation.getSize());
+      }
+    });
   }
 }
