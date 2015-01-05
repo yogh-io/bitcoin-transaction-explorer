@@ -25,7 +25,7 @@ public class HashHexViewer extends HexViewer<Byte> {
       return;
     }
 
-    if(fieldMap.isEmpty()) {
+    if(fields.isEmpty()) {
       clear();
 
       for (final byte bite : hash) {

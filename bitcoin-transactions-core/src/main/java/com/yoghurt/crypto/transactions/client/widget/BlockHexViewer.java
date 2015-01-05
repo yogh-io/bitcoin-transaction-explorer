@@ -1,6 +1,5 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
-import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
@@ -12,16 +11,16 @@ public class BlockHexViewer extends HexViewer<BlockPartType> {
     super(new SimpleBlockContextWidget());
   }
 
-  @Override
-  protected ArrayList<ContextField<Entry<BlockPartType, byte[]>>> findValueFields(final Entry<BlockPartType, byte[]> value) {
-    for (final Entry<Entry<BlockPartType, byte[]>, ArrayList<ContextField<Entry<BlockPartType, byte[]>>>> field : fieldMap) {
-      if (field.getKey().getKey() == value.getKey()) {
-        return field.getValue();
-      }
-    }
-
-    return null;
-  }
+  //  @Override
+  //  protected ArrayList<ContextField<Entry<BlockPartType, byte[]>>> findValueFields(final Entry<BlockPartType, byte[]> value) {
+  //    for (final Entry<Entry<BlockPartType, byte[]>, ArrayList<ContextField<Entry<BlockPartType, byte[]>>>> field : fieldMap) {
+  //      if (field.getKey().getKey() == value.getKey()) {
+  //        return field.getValue();
+  //      }
+  //    }
+  //
+  //    return null;
+  //  }
 
   @Override
   protected byte[] getBytesForValue(final Entry<BlockPartType, byte[]> value) {

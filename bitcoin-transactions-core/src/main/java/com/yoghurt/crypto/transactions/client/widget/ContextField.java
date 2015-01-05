@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.util.ComputedStyle;
+import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ContextField<T> extends Composite implements HasMouseOutHandlers, HasMouseOverHandlers, HasClickHandlers {
   interface ContextFieldUiBinder extends UiBinder<Widget, ContextField<?>> {}
@@ -70,11 +71,20 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
     String noAnimation();
   }
 
-  public ContextField(final T value, final String text) {
+  public ContextField(final T value, final Color color, final String text) {
     this.value = value;
     initWidget(UI_BINDER.createAndBindUi(this));
 
+    setColor(color);
     setContent(text, true);
+  }
+
+  public void setColor(final Color color) {
+    final Color backgroundColor = color.copy();
+    backgroundColor.setA(0.2);
+
+    getElement().getStyle().setBorderColor(color.getValue());
+    getElement().getStyle().setBackgroundColor(backgroundColor.getValue());
   }
 
   public void setContent(final String text) {
