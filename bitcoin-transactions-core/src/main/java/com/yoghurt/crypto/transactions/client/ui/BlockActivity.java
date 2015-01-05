@@ -11,8 +11,10 @@ import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public class BlockActivity extends LookupActivity<Block, BlockPlace> implements BlockView.Presenter {
   private final BlockView view;
@@ -38,12 +40,14 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
     service.getBlockInformation(Str.toString(Hex.encode(block.getBlockHash())), new AsyncCallback<BlockInformation>() {
       @Override
       public void onSuccess(final BlockInformation result) {
-        view.setBlockInformation(result);
+        final Transaction tx = getTransactionFromHex(result.getRawCoinbaseTransaction());
+
+        view.setBlockInformation(result, tx);
       }
 
       @Override
       public void onFailure(final Throwable caught) {
-        view.setBlockInformation(null);
+        view.setBlockInformation(null, null);
       }
     });
   }
@@ -73,6 +77,23 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
     }
 
     return b;
+  }
+
+  private Transaction getTransactionFromHex(final String hex) {
+    if (hex == null) {
+      return null;
+    }
+
+    final Transaction t = new Transaction();
+
+    try {
+      TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
+    } catch (final IllegalStateException e) {
+      e.printStackTrace();
+      // Eat
+    }
+
+    return t;
   }
 
   @Override

@@ -112,7 +112,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
       // Eat.
     }
 
-    txHexViewer.setTransaction(rawTransaction);
+    txHexViewer.resetContainer(rawTransaction);
   }
 
   @Override

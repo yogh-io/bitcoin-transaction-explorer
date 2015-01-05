@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
-import java.util.ArrayList;
+import java.util.AbstractMap;
+import java.util.Map.Entry;
 
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
@@ -19,11 +20,6 @@ public class HashHexViewer extends HexViewer<Byte> {
     this.color = color;
   }
 
-  @Override
-  protected ArrayList<ContextField<Byte>> findValueFields(final Byte value) {
-    return null;
-  }
-
   public void setHash(final byte[] hash) {
     if(hash == null || hash.length == 0) {
       return;
@@ -33,11 +29,11 @@ public class HashHexViewer extends HexViewer<Byte> {
       clear();
 
       for (final byte bite : hash) {
-        addFields(bite);
+        addFields(new AbstractMap.SimpleEntry<Byte, byte[]>(new Byte(bite), new byte[] { bite }));
       }
     } else {
       for(int i = 0; i < hash.length; i++) {
-        final ContextField<Byte> contextField = fields.get(i);
+        final ContextField<Entry<Byte, byte[]>> contextField = fields.get(i);
 
         if(contextField == null) {
           continue;
@@ -49,12 +45,12 @@ public class HashHexViewer extends HexViewer<Byte> {
   }
 
   @Override
-  protected Color getFieldColor(final Byte value) {
+  protected Color getFieldColor(final Entry<Byte, byte[]> value) {
     return color;
   }
 
   @Override
-  protected byte[] getBytesForValue(final Byte value) {
-    return new byte[] { value };
+  protected byte[] getBytesForValue(final Entry<Byte, byte[]> value) {
+    return value.getValue();
   }
 }

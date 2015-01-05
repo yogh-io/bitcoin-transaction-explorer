@@ -91,6 +91,9 @@ public class JSONRPCParser {
     // Set the byte size
     blockInformation.setSize(tree.get("size").getLongValue());
 
+    // Set the raw coinbase transaction to its txid (this is a work-around, see TODO in BitcoinJSONRPCRetriever)
+    blockInformation.setRawCoinbaseTransaction(tree.get("tx").get(0).getTextValue());
+
     return blockInformation;
   }
 

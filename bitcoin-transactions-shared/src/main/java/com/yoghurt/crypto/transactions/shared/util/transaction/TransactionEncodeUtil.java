@@ -1,7 +1,6 @@
 package com.yoghurt.crypto.transactions.shared.util.transaction;
 
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionPart;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
@@ -22,22 +21,22 @@ public final class TransactionEncodeUtil extends TransactionUtil {
 
   public static RawTransactionContainer encodeTransaction(final Transaction transaction, final RawTransactionContainer container) {
     // Encode the version
-    container.add(encodeVersion(transaction));
+    container.put(TransactionPartType.VERSION, encodeVersion(transaction));
 
     // Encode the input length
-    container.add(encodeNumInputs(transaction));
+    container.put(TransactionPartType.INPUT_SIZE, encodeNumInputs(transaction));
 
     // Encode the inputs
     encodeTransactionInputs(transaction, container);
 
     // Encode the output length
-    container.add(encodeNumOutputs(transaction));
+    container.put(TransactionPartType.OUTPUT_SIZE, encodeNumOutputs(transaction));
 
     // Encode the outputs
     encodeTransactionOutputs(transaction, container);
 
     // Encode the lock time
-    container.add(encodeLockTime(transaction));
+    container.put(TransactionPartType.LOCK_TIME, encodeLockTime(transaction));
 
     return container;
   }
@@ -57,32 +56,32 @@ public final class TransactionEncodeUtil extends TransactionUtil {
   private static void encodeInput(final TransactionInput input, final RawTransactionContainer container) {
     // Encode the outpoint hash
     final byte[] outpointHash = input.getOutPoint().getReferenceTransaction();
-    container.add(new RawTransactionPart(TransactionPartType.TRANSACTION_HASH, outpointHash));
+    container.put(TransactionPartType.TRANSACTION_HASH, outpointHash);
 
     // Encode the outpoint index
     final byte[] indexBytes = NumberEncodeUtil.encodeUint32(input.getOutPoint().getIndex());
-    container.add(new RawTransactionPart(TransactionPartType.INPUT_OUTPOINT_INDEX, indexBytes));
+    container.put(TransactionPartType.INPUT_OUTPOINT_INDEX, indexBytes);
 
     // Encode the signature length
     final byte[] scriptSizeBytes = encodeVariableInteger(input.getScriptSize());
-    container.add(new RawTransactionPart(TransactionPartType.INPUT_SCRIPT_LENGTH, scriptSizeBytes));
+    container.put(TransactionPartType.INPUT_SCRIPT_LENGTH, scriptSizeBytes);
 
     // Encode the signature script
     encodeScript(input, container, ScriptType.SCRIPT_SIG);
 
     // Encode the sequence bytes
     final byte[] sequenceBytes = NumberEncodeUtil.encodeUint32(input.getTransactionSequence());
-    container.add(new RawTransactionPart(TransactionPartType.INPUT_SEQUENCE, sequenceBytes));
+    container.put(TransactionPartType.INPUT_SEQUENCE, sequenceBytes);
   }
 
   private static void encodeOutput(final TransactionOutput output, final RawTransactionContainer container) {
     // Encode the output value
     final byte[] outputValueBytes = NumberEncodeUtil.encodeUint64(output.getTransactionValue());
-    container.add(new RawTransactionPart(TransactionPartType.OUTPUT_VALUE, outputValueBytes));
+    container.put(TransactionPartType.OUTPUT_VALUE, outputValueBytes);
 
     // Encode the output script length
     final byte[] scriptSizeBytes = encodeVariableInteger(output.getScriptSize());
-    container.add(new RawTransactionPart(TransactionPartType.OUTPUT_SCRIPT_LENGTH, scriptSizeBytes));
+    container.put(TransactionPartType.OUTPUT_SCRIPT_LENGTH, scriptSizeBytes);
 
     // Encode the output script
     encodeScript(output, container, ScriptType.SCRIPT_PUB_KEY);
@@ -93,36 +92,35 @@ public final class TransactionEncodeUtil extends TransactionUtil {
       final TransactionPartType partType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.OP_CODE);
 
       if (part.getOperation() == null) {
-        container.add(new RawTransactionPart(TransactionPartType.ARBITRARY_DATA, part.getBytes()));
+        container.put(TransactionPartType.ARBITRARY_DATA, part.getBytes());
       } else {
-        container.add(new RawTransactionPart(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) }));
+        container.put(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) });
 
         if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
           final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
-          container.add(new RawTransactionPart(pushPartType, part.getBytes()));
+          container.put(pushPartType, part.getBytes());
         }
       }
     }
   }
 
-  private static RawTransactionPart encodeLockTime(final Transaction transaction) {
-    final byte[] lockTimeBytes = NumberEncodeUtil.encodeUint32(transaction.getLockTime());
-    return new RawTransactionPart(TransactionPartType.LOCK_TIME, lockTimeBytes);
+  private static byte[] encodeLockTime(final Transaction transaction) {
+    return NumberEncodeUtil.encodeUint32(transaction.getLockTime());
   }
 
-  private static RawTransactionPart encodeNumOutputs(final Transaction transaction) {
-    return new RawTransactionPart(TransactionPartType.OUTPUT_SIZE, encodeVariableInteger(transaction.getOutputSize()));
+  private static byte[] encodeNumOutputs(final Transaction transaction) {
+    return encodeVariableInteger(transaction.getOutputSize());
   }
 
-  private static RawTransactionPart encodeNumInputs(final Transaction transaction) {
-    return new RawTransactionPart(TransactionPartType.INPUT_SIZE, encodeVariableInteger(transaction.getInputSize()));
+  private static byte[] encodeNumInputs(final Transaction transaction) {
+    return encodeVariableInteger(transaction.getInputSize());
   }
 
   private static byte[] encodeVariableInteger(final VariableLengthInteger varInt) {
     return varInt.getBytes();
   }
 
-  private static RawTransactionPart encodeVersion(final Transaction t) {
-    return new RawTransactionPart(TransactionPartType.VERSION, NumberEncodeUtil.encodeUint32(t.getVersion()));
+  private static byte[] encodeVersion(final Transaction t) {
+    return NumberEncodeUtil.encodeUint32(t.getVersion());
   }
 }

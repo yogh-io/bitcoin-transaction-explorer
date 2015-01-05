@@ -11,6 +11,9 @@ public class BlockInformation implements Serializable {
   private long size;
   private String nextBlockHash;
 
+  private String rawCoinbaseTransaction;
+  private TransactionInformation coinbaseInformation;
+
   public BlockInformation() {}
 
   public long getSize() {
@@ -51,5 +54,21 @@ public class BlockInformation implements Serializable {
 
   public void setNumTransactions(final int numTransactions) {
     this.numTransactions = numTransactions;
+  }
+
+  public String getRawCoinbaseTransaction() {
+    return rawCoinbaseTransaction;
+  }
+
+  public void setRawCoinbaseTransaction(final String rawCoinbaseTransaction) {
+    this.rawCoinbaseTransaction = rawCoinbaseTransaction;
+  }
+
+  public TransactionInformation getCoinbaseInformation() {
+    return coinbaseInformation;
+  }
+
+  public void setCoinbaseInformation(final TransactionInformation coinbaseInformation) {
+    this.coinbaseInformation = coinbaseInformation;
   }
 }

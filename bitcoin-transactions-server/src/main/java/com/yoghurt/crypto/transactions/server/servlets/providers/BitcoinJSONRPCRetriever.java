@@ -35,6 +35,9 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   private static final String URI_FORMAT = "http://%s:%s";
 
+  private static final String GENESIS_COINBASE_TXID = "4A5E1E4BAAB89F3A32518A88C31BC87F618F76673E2CC77AB2127B7AFDEDA33B";
+  private static final String GENESIS_COINBASE_RAW = "01000000010000000000000000000000000000000000000000000000000000000000000000FFFFFFFF4D04FFFF001D0104455468652054696D65732030332F4A616E2F32303039204368616E63656C6C6F72206F6E206272696E6B206F66207365636F6E64206261696C6F757420666F722062616E6B73FFFFFFFF0100F2052A01000000434104678AFDB0FE5548271967F1A67130B7105CD6A828E03909A67962E0EA1F61DEB649F6BC3F4CEF38C4F35504E51EC112DE5C384DF7BA0B8D578A4C702B6BF11D5FAC00000000";
+
   private final String uri;
 
   private final HttpClientContext localContext;
@@ -53,6 +56,12 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
+    // Work-around for special case: genesis block coinbase
+    // If RPC isn't gonna return this, I'm gonna fucking do it for it.
+    if(GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
+      return GENESIS_COINBASE_RAW;
+    }
+
     try {
       return doSimpleJSONRPCMethod("getrawtransaction", txid);
     } catch (IOException | HttpException e) {
@@ -77,6 +86,10 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
+    if(GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
+      return null;
+    }
+
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
         InputStream jsonData = doComplexJSONRPCMethod(client, "getrawtransaction", txid, 1)) {
 
@@ -118,7 +131,25 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
         InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", identifier)) {
 
-      return JSONRPCParser.getBlockInformation(jsonData);
+      final BlockInformation blockInformation = JSONRPCParser.getBlockInformation(jsonData);
+
+      // FIXME/TODO Refactor the below so we don't need to do 3 RPC calls, 2 of which are duplicate.
+      // Also refactor in a way that BlockInformation's rawCoinbaseTransaction is not abused by setting
+      // the coinbase txid in it, instead of the raw hex which it is meant for
+
+      // Extract the coinbase tx id
+      final String coinbaseTxid = blockInformation.getRawCoinbaseTransaction();
+
+      // Retrieve raw coinbase tx and its blockchain information
+      final String rawTransactionHex = getRawTransactionHex(coinbaseTxid);
+      final TransactionInformation ti = getTransactionInformation(coinbaseTxid);
+
+      // Stick it in the block info
+      blockInformation.setCoinbaseInformation(ti);
+      blockInformation.setRawCoinbaseTransaction(rawTransactionHex);
+
+      // Return the result
+      return blockInformation;
     } catch (IOException | HttpException e) {
       e.printStackTrace();
       throw new ApplicationException(e.getMessage());
@@ -126,13 +157,13 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   }
 
   private String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {
-    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
-        InputStream stream = doComplexJSONRPCMethod(client, method, params)) {
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy(); InputStream stream = doComplexJSONRPCMethod(client, method, params)) {
       return JSONRPCParser.getResultString(stream);
     }
   }
 
-  private InputStream doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
+  private InputStream doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params) throws IOException,
+  IllegalStateException, ParseException, HttpException {
     final String payload = JSONRPCEncoder.getRequestString(method, params);
 
     // Temporary

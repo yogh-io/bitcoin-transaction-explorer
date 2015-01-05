@@ -61,7 +61,10 @@ public interface ApplicationMessages extends Messages {
   String blockPlaceTitleBlockHeaders();
 
   @DefaultMessage("Raw block in hex")
-  String blockPlaceTitleRawHex();
+  String blockPlaceTitleRawBlockHex();
+
+  @DefaultMessage("Raw coinbase transaction in hex")
+  String blockPlaceTitleRawCoinbaseHex();
 
   @DefaultMessage("Modify Headers")
   String minePlaceTitleModifyHeaders();

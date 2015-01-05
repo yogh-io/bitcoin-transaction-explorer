@@ -60,8 +60,12 @@
       <w:ValueViewer ui:field="nonceViewer" animate="true" />
     </w:LabelledWidget>
     <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleRawHex}" /></h2>
+      <h2><ui:text from="{i18n.blockPlaceTitleRawBlockHex}" /></h2>
     </g:HTML>
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
+    <g:HTML>
+      <h2><ui:text from="{i18n.blockPlaceTitleRawCoinbaseHex}" /></h2>
+    </g:HTML>
+    <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer}" />
   </g:FlowPanel>
 </ui:UiBinder>
