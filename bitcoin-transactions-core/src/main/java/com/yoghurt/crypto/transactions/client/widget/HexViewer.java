@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -34,12 +35,16 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
     UI_BINDER.createAndBindUi(this);
   }
 
+  public void setContainerMap(final Map<T, byte[]> container) {
+    setContainer(container.entrySet());
+  }
+
   /**
    * Set the container for this hex viewer.
    */
-  public void setContainer(final Map<T, byte[]> container) {
+  public void setContainer(final Collection<Entry<T, byte[]>> container) {
     int counter = 0;
-    for (final Entry<T, byte[]> entry : container.entrySet()) {
+    for (final Entry<T, byte[]> entry : container) {
       final byte[] bytesForValue = getBytesForValue(entry);
 
       final Color typeColor = getFieldColor(entry);

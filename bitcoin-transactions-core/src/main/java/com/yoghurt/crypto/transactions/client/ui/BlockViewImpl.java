@@ -94,7 +94,7 @@ public class BlockViewImpl extends Composite implements BlockView {
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());
 
-    blockHexViewer.setContainer(rawBlock);
+    blockHexViewer.setContainerMap(rawBlock);
     notFoundLabel.setVisible(blockInformation == null);
     extraInformationContainer.setVisible(blockInformation != null);
 

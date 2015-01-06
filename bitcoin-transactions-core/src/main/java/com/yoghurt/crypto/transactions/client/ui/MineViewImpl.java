@@ -107,7 +107,7 @@ public class MineViewImpl extends Composite implements MineView {
     final RawBlockContainer viewBlock = rawBlock.copy();
 
     // Set up viewBlock for display in hex
-    blockHexViewer.setContainer(viewBlock);
+    blockHexViewer.setContainerMap(viewBlock);
     blockHashViewer.setHash(initialBlock.getBlockHash());
 
     // If we need to stay fly with the latest on the hood, set up the timers
@@ -200,7 +200,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void doHashCycle() {
-    blockHexViewer.setContainer(rawBlock);
+    blockHexViewer.setContainerMap(rawBlock);
 
     final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());
     ArrayUtil.reverse(computeDoubleSHA256);

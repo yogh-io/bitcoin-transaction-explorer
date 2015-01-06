@@ -1,7 +1,9 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
-public class RawTransactionPart {
-  private TransactionPartType type;
+import java.util.Map.Entry;
+
+public class RawTransactionPart implements Entry<TransactionPartType, byte[]>{
+  private final TransactionPartType type;
   private byte[] bytes;
 
   public RawTransactionPart(final TransactionPartType type, final byte[] bytes) {
@@ -9,19 +11,18 @@ public class RawTransactionPart {
     this.bytes = bytes;
   }
 
-  public TransactionPartType getType() {
+  @Override
+  public TransactionPartType getKey() {
     return type;
   }
 
-  public void setType(final TransactionPartType type) {
-    this.type = type;
-  }
-
-  public byte[] getBytes() {
+  @Override
+  public byte[] getValue() {
     return bytes;
   }
 
-  public void setBytes(final byte[] bytes) {
-    this.bytes = bytes;
+  @Override
+  public byte[] setValue(final byte[] value) {
+    return this.bytes = value;
   }
 }
