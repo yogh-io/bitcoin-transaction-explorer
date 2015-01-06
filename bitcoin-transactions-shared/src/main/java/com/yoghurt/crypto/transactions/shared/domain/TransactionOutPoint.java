@@ -22,7 +22,7 @@ public class TransactionOutPoint {
 
   public boolean isCoinbase() {
     for (int i = 0; i < referenceTransaction.length; i++) {
-      if (referenceTransaction[0] != 0) {
+      if (referenceTransaction[i] != 0) {
         return false;
       }
     }

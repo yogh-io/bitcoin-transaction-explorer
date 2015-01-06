@@ -25,7 +25,7 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
     case TRANSACTION_HASH:
       return "Previous transaction hash";
     case INPUT_OUTPOINT_INDEX:
-      return "Previous output index: " + new VariableLengthInteger(value.getValue()).getValue();
+      return "Previous output index: " + NumberParseUtil.parseUint32(value.getValue());
     case OUTPUT_SCRIPT_LENGTH:
       return "Output script length: " + new VariableLengthInteger(value.getValue()).getValue() + " byte";
     case INPUT_SCRIPT_LENGTH:
