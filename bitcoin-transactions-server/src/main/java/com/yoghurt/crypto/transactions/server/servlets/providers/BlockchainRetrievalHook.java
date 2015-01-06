@@ -10,14 +10,11 @@ public interface BlockchainRetrievalHook {
 
   TransactionInformation getTransactionInformation(String txid) throws ApplicationException;
 
-  String getRawBlockFromHash(String identifier) throws ApplicationException;
+  BlockInformation getBlockInformationFromHash(String identifier) throws ApplicationException;
 
-  String getRawBlockFromHeight(int height) throws ApplicationException;
+  BlockInformation getBlockInformationFromHeight(int height) throws ApplicationException;
 
-  BlockInformation getBlockInformation(String identifier) throws ApplicationException;
+  BlockInformation getBlockInformationLast() throws ApplicationException;
 
   String getLastBlockHash() throws ApplicationException;
-
-  String getLastRawBlock() throws ApplicationException;
-
 }

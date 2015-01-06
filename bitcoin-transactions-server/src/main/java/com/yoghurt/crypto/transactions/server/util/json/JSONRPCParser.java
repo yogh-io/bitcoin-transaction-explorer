@@ -26,9 +26,14 @@ public class JSONRPCParser {
     return tree.get("result").getTextValue();
   }
 
-  public static String getRawBlock(final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
+  private static JsonNode getResultNode(final InputStream jsonData) throws JsonProcessingException, IOException {
+    return JsonParser.mapper.readTree(jsonData).get("result");
+  }
+
+  public static BlockInformation getBlockInformation(final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
     final JsonNode tree = getResultNode(jsonData);
 
+    // Create a builder to assemble the block headers
     final StringBuilder builder = new StringBuilder();
 
     // Version
@@ -63,17 +68,12 @@ public class JSONRPCParser {
     // Nonce
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("nonce").getLongValue())));
 
-    return builder.toString();
-  }
 
-  private static JsonNode getResultNode(final InputStream jsonData) throws JsonProcessingException, IOException {
-    return JsonParser.mapper.readTree(jsonData).get("result");
-  }
-
-  public static BlockInformation getBlockInformation(final InputStream jsonData) throws JsonProcessingException, IOException {
-    final JsonNode tree = getResultNode(jsonData);
-
+    // Create a BlockInformation object to store the block information in
     final BlockInformation blockInformation = new BlockInformation();
+
+    // Set the raw block headers
+    blockInformation.setRawBlockHeaders(builder.toString());
 
     // Set the height
     blockInformation.setHeight(tree.get("height").getIntValue());

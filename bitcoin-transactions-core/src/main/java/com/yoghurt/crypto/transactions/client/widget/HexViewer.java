@@ -36,10 +36,6 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
 
   /**
    * Set the container for this hex viewer.
-   * 
-   * WARNING: Unsafe for containers that are not the exact same length (!)
-   * 
-   * FIXME Fix the above.
    */
   public void setContainer(final Map<T, byte[]> container) {
     int counter = 0;
@@ -54,10 +50,8 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
         final String hex = getHexFromByte(bite);
 
         if(counter >= fields.size()) {
-          GWT.log("adding " + counter);
           addField(entry, typeColor, hex);
         } else {
-          GWT.log("replac " + counter);
           final ContextField<Entry<T, byte[]>> contextField = fields.get(counter);
           contextField.setValue(entry);
           contextField.setColor(typeColor);
@@ -70,11 +64,8 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
 
     // Reverse remove the remainder
     for(int i = fields.size() - 1;i >= counter; i--) {
-      GWT.log("Removing " + i + " / " + fields.size());
       removeField(i);
     }
-
-    GWT.log("All done!");
   }
 
   public void addFields(final Entry<T, byte[]> value) {
