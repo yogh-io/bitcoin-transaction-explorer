@@ -11,7 +11,5 @@ public interface BlockView extends IsWidget {
 
   }
 
-  void setBlock(Block transaction);
-
-  void setBlockInformation(BlockInformation blockInformation, Transaction coinbase);
+  void setBlock(Block transaction, BlockInformation blockInformation, Transaction tx);
 }

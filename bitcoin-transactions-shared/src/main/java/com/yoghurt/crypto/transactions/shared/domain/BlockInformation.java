@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class BlockInformation implements Serializable {
   private static final long serialVersionUID = -6695967392021472565L;
 
+  private String rawBlockHeaders;
+
   private int height;
   private int numConfirmations;
   private int numTransactions;
@@ -15,6 +17,14 @@ public class BlockInformation implements Serializable {
   private TransactionInformation coinbaseInformation;
 
   public BlockInformation() {}
+
+  public String getRawBlockHeaders() {
+    return rawBlockHeaders;
+  }
+
+  public void setRawBlockHeaders(final String rawBlockHeaders) {
+    this.rawBlockHeaders = rawBlockHeaders;
+  }
 
   public long getSize() {
     return size;

@@ -40,24 +40,18 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   }
 
   @Override
-  public String getRawBlockHex(final int height) throws ApplicationException {
-    return retriever.get().getRawBlockFromHeight(height);
+  public BlockInformation getBlockInformationFromHash(final String identifier) throws ApplicationException {
+    return retriever.get().getBlockInformationFromHash(identifier);
   }
 
   @Override
-  public String getRawBlockHex(final String blockHash) throws ApplicationException {
-    return retriever.get().getRawBlockFromHash(blockHash);
+  public BlockInformation getBlockInformationFromHeight(final int height) throws ApplicationException {
+    return retriever.get().getBlockInformationFromHeight(height);
   }
 
   @Override
-  public String getLastRawBlockHex() throws ApplicationException {
-    return retriever.get().getLastRawBlock();
-  }
-
-
-  @Override
-  public BlockInformation getBlockInformation(final String identifier) throws ApplicationException {
-    return retriever.get().getBlockInformation(identifier);
+  public BlockInformation getBlockInformationLast() throws ApplicationException {
+    return retriever.get().getBlockInformationLast();
   }
 
   @Override

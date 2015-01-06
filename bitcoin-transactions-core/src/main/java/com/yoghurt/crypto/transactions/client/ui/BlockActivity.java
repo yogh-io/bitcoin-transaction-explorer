@@ -7,16 +7,16 @@ import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
-import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
-import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
-public class BlockActivity extends LookupActivity<Block, BlockPlace> implements BlockView.Presenter {
+public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> implements BlockView.Presenter {
   private final BlockView view;
   private final BlockchainRetrievalServiceAsync service;
 
@@ -28,38 +28,27 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
   }
 
   @Override
-  protected void doDeferredStart(final AcceptsOneWidget panel, final Block block) {
+  protected void doDeferredStart(final AcceptsOneWidget panel, final BlockInformation blockInformation) {
     panel.setWidget(view);
 
-    view.setBlock(block);
-
-    if(block == null) {
+    if(blockInformation == null) {
       return;
     }
 
-    service.getBlockInformation(Str.toString(Hex.encode(block.getBlockHash())), new AsyncCallback<BlockInformation>() {
-      @Override
-      public void onSuccess(final BlockInformation result) {
-        final Transaction tx = getTransactionFromHex(result.getRawCoinbaseTransaction());
+    final Transaction tx = getTransactionFromHex(blockInformation.getRawCoinbaseTransaction());
+    final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
 
-        view.setBlockInformation(result, tx);
-      }
-
-      @Override
-      public void onFailure(final Throwable caught) {
-        view.setBlockInformation(null, null);
-      }
-    });
+    view.setBlock(block, blockInformation, tx);
   }
 
   @Override
   protected boolean mustPerformLookup(final BlockPlace place) {
-    return place.getType() == BlockDataType.ID || place.getType() == BlockDataType.HEIGHT || place.getType() == BlockDataType.LAST;
+    return true;
   }
 
   @Override
-  protected Block createInfo(final BlockPlace place) {
-    return place.getType() == BlockDataType.RAW ? getBlockFromHex(place.getPayload()) : null;
+  protected BlockInformation createInfo(final BlockPlace place) {
+    return null;
   }
 
   private Block getBlockFromHex(final String hex) {
@@ -97,23 +86,22 @@ public class BlockActivity extends LookupActivity<Block, BlockPlace> implements 
   }
 
   @Override
-  protected void doLookup(final BlockPlace place, final AsyncCallback<Block> callback) {
-    final MorphCallback<String, Block> morphCallback = new MorphCallback<String, Block>(callback) {
-      @Override
-      protected Block morphResult(final String result) {
-        return getBlockFromHex(result);
-      }
-    };
-
+  protected void doLookup(final BlockPlace place, final AsyncCallback<BlockInformation> callback) {
     switch (place.getType()) {
     case HEIGHT:
-      service.getRawBlockHex(Integer.parseInt(place.getPayload()), morphCallback);
+      service.getBlockInformationFromHeight(Integer.parseInt(place.getPayload()), callback);
       break;
     case ID:
-      service.getRawBlockHex(place.getPayload(), morphCallback);
+      service.getBlockInformationFromHash(place.getPayload(), callback);
       break;
     case LAST:
-      service.getLastRawBlockHex(morphCallback);
+      service.getBlockInformationLast(callback);
+      break;
+    case RAW:
+      final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(Hex.decode(place.getPayload()));
+      ArrayUtil.reverse(computeDoubleSHA256);
+      final String blockHash = Str.toString(Hex.encode(computeDoubleSHA256));
+      service.getBlockInformationFromHash(blockHash, callback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));

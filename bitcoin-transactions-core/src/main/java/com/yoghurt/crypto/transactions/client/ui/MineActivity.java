@@ -12,6 +12,7 @@ import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
@@ -77,22 +78,22 @@ public class MineActivity extends LookupActivity<Block, MinePlace> implements Mi
 
   @Override
   protected void doLookup(final MinePlace place, final AsyncCallback<Block> callback) {
-    final MorphCallback<String, Block> morphCallback = new MorphCallback<String, Block>(callback) {
+    final MorphCallback<BlockInformation, Block> morphCallback = new MorphCallback<BlockInformation, Block>(callback) {
       @Override
-      protected Block morphResult(final String result) {
-        return getBlockFromHex(result);
+      protected Block morphResult(final BlockInformation result) {
+        return getBlockFromHex(result.getRawBlockHeaders());
       }
     };
 
     switch (place.getType()) {
     case HEIGHT:
-      service.getRawBlockHex(Integer.parseInt(place.getPayload()), morphCallback);
-      break;
-    case LAST:
-      service.getLastRawBlockHex(morphCallback);
+      service.getBlockInformationFromHeight(Integer.parseInt(place.getPayload()), morphCallback);
       break;
     case ID:
-      service.getRawBlockHex(place.getPayload(), morphCallback);
+      service.getBlockInformationFromHash(place.getPayload(), morphCallback);
+      break;
+    case LAST:
+      service.getBlockInformationLast(morphCallback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));

@@ -80,11 +80,6 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   }
 
   @Override
-  public String getLastRawBlock() throws ApplicationException {
-    return getRawBlockFromHash(getLastBlockHash());
-  }
-
-  @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
     if(GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
       return null;
@@ -101,20 +96,8 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   }
 
   @Override
-  public String getRawBlockFromHash(final String identifier) throws ApplicationException {
-    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
-        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", identifier)) {
-
-      return JSONRPCParser.getRawBlock(jsonData);
-    } catch (IOException | HttpException | DecoderException e) {
-      e.printStackTrace();
-      throw new ApplicationException(e.getMessage());
-    }
-  }
-
-  @Override
-  public String getRawBlockFromHeight(final int height) throws ApplicationException {
-    return getRawBlockFromHash(getBlockHashFromHeight(height));
+  public BlockInformation getBlockInformationFromHeight(final int height) throws ApplicationException {
+    return getBlockInformationFromHash(getBlockHashFromHeight(height));
   }
 
   private String getBlockHashFromHeight(final int height) throws ApplicationException {
@@ -127,7 +110,12 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   }
 
   @Override
-  public BlockInformation getBlockInformation(final String identifier) throws ApplicationException {
+  public BlockInformation getBlockInformationLast() throws ApplicationException {
+    return getBlockInformationFromHash(getLastBlockHash());
+  }
+
+  @Override
+  public BlockInformation getBlockInformationFromHash(final String identifier) throws ApplicationException {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
         InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", identifier)) {
 
@@ -150,7 +138,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
       // Return the result
       return blockInformation;
-    } catch (IOException | HttpException e) {
+    } catch (IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       throw new ApplicationException(e.getMessage());
     }

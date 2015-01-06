@@ -65,7 +65,6 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     }
   }
 
-  @Override
   public BlockInformation getBlockInformation(final String identifier) {
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient();
         InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier)).getContent()) {
@@ -77,17 +76,14 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     }
   }
 
-  @Override
   public String getLastRawBlock() {
     return getRawBlock(LAST_BLOCK_KEYWORD);
   }
 
-  @Override
   public String getRawBlockFromHash(final String hash) {
     return getRawBlock(String.valueOf(hash));
   }
 
-  @Override
   public String getRawBlockFromHeight(final int height) {
     return getRawBlock(String.valueOf(height));
   }
@@ -101,5 +97,23 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
       e.printStackTrace();
       return null;
     }
+  }
+
+  @Override
+  public BlockInformation getBlockInformationFromHash(final String identifier) throws ApplicationException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public BlockInformation getBlockInformationFromHeight(final int height) throws ApplicationException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public BlockInformation getBlockInformationLast() throws ApplicationException {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

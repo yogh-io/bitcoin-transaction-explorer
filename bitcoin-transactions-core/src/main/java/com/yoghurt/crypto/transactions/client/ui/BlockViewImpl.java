@@ -3,7 +3,6 @@ package com.yoghurt.crypto.transactions.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -74,9 +73,16 @@ public class BlockViewImpl extends Composite implements BlockView {
   }
 
   @Override
-  public void setBlock(final Block block) {
-    if(block == null) {
-      return;
+  public void setBlock(final Block block, final BlockInformation blockInformation, final Transaction coinbase) {
+    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
+    final RawBlockContainer rawBlock = new RawBlockContainer();
+
+    try {
+      BlockEncodeUtil.encodeBlock(block, rawBlock);
+      TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
+    } catch (final Throwable e) {
+      e.printStackTrace();
+      // Eat.
     }
 
     blockHashViewer.setHash(block.getBlockHash());
@@ -88,46 +94,16 @@ public class BlockViewImpl extends Composite implements BlockView {
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());
 
-    final RawBlockContainer rawBlock = new RawBlockContainer();
-    try {
-      BlockEncodeUtil.encodeBlock(block, rawBlock);
-    } catch (final Throwable e) {
-      e.printStackTrace();
-      // Eat.
-    }
-
     blockHexViewer.setContainer(rawBlock);
-  }
-
-  @Override
-  public void setBlockInformation(final BlockInformation blockInformation, final Transaction coinbase) {
     notFoundLabel.setVisible(blockInformation == null);
     extraInformationContainer.setVisible(blockInformation != null);
 
-    if (blockInformation == null) {
-      return;
-    }
+    coinbaseHexViewer.setContainer(rawTransaction);
 
-    // Do this deferredly because resetting the transaction may take up some CPU time.
-    new Timer() {
-      @Override
-      public void run() {
-        final RawTransactionContainer rawTransaction = new RawTransactionContainer();
-        try {
-          TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
-        } catch (final Throwable e) {
-          e.printStackTrace();
-          // Eat.
-        }
-
-        coinbaseHexViewer.setContainer(rawTransaction);
-
-        heightViewer.setValue(blockInformation.getHeight());
-        numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
-        numTransactionsViewer.setValue(blockInformation.getNumTransactions());
-        nextBlockViewer.setValue(blockInformation.getNextBlockHash());
-        sizeViewer.setValue(blockInformation.getSize());
-      }
-    }.schedule(200);
+    heightViewer.setValue(blockInformation.getHeight());
+    numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
+    numTransactionsViewer.setValue(blockInformation.getNumTransactions());
+    nextBlockViewer.setValue(blockInformation.getNextBlockHash());
+    sizeViewer.setValue(blockInformation.getSize());
   }
 }

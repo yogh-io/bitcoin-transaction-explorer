@@ -13,13 +13,11 @@ public interface BlockchainRetrievalService extends RemoteService {
 
   TransactionInformation getTransactionInformation(String txid) throws ApplicationException;
 
-  String getRawBlockHex(int height) throws ApplicationException;
+  BlockInformation getBlockInformationFromHash(String blockHash) throws ApplicationException;
 
-  String getRawBlockHex(String blockHash) throws ApplicationException;
+  BlockInformation getBlockInformationFromHeight(int height) throws ApplicationException;
 
-  String getLastRawBlockHex() throws ApplicationException;
-
-  BlockInformation getBlockInformation(String blockHash) throws ApplicationException;
+  BlockInformation getBlockInformationLast() throws ApplicationException;
 
   String getLatestBlockHash();
 }
