@@ -12,7 +12,6 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
-import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.LabelledWidget;
@@ -25,7 +24,6 @@ import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 
@@ -34,29 +32,35 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   private static final TransactionViewImplUiBinder UI_BINDER = GWT.create(TransactionViewImplUiBinder.class);
 
+  // Widgets relating to showing which content (error/info)
   @UiField FlowPanel errorView;
   @UiField Label transactionFullBlownErrorLabel;
-
   @UiField FlowPanel fullTransactionInformation;
-
-  @UiField(provided = true) HashHexViewer txIdViewer;
   @UiField Label notFoundLabel;
+
+  // General information
+  @UiField HashHexViewer txIdViewer;
+
+  // Widgets related to extra (blockchain information)
   @UiField FlowPanel extraInformationContainer;
-  @UiField(provided = true) ValueViewer txStateViewer;
+  @UiField ValueViewer txStateViewer;
   @UiField LabelledWidget txBlockContainer;
   @UiField(provided = true) BlockViewer txBlockViewer;
   @UiField LabelledWidget txConfirmationsContainer;
-  @UiField(provided = true) ValueViewer txConfirmationsViewer;
+  @UiField ValueViewer txConfirmationsViewer;
   @UiField LabelledWidget txTimeContainer;
-  @UiField(provided = true) ValueViewer txTimeViewer;
+  @UiField ValueViewer txTimeViewer;
 
+  // Input/output containers
   @UiField FlowPanel inputContainer;
   @UiField FlowPanel outputContainer;
 
-  @UiField TransactionHexViewer txHexViewer;
+  // Misc info
+  @UiField ValueViewer txVersionViewer;
+  @UiField ValueViewer txLockTimeViewer;
 
-  @UiField(provided = true) ValueViewer txVersionViewer;
-  @UiField(provided = true) ValueViewer txLockTimeViewer;
+  // Raw hex
+  @UiField TransactionHexViewer txHexViewer;
 
   private final BitcoinPlaceRouter router;
 
@@ -64,14 +68,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   public TransactionViewImpl(final BitcoinPlaceRouter router) {
     this.router = router;
 
-    txIdViewer = new HashHexViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH));
-    txVersionViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.VERSION));
-    txLockTimeViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-
-    txStateViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
     txBlockViewer = new BlockViewer(router);
-    txConfirmationsViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
-    txTimeViewer = new ValueViewer(TransactionPartColorPicker.getFieldColor(TransactionPartType.LOCK_TIME));
 
     initWidget(UI_BINDER.createAndBindUi(this));
   }
@@ -80,7 +77,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   public void setTransaction(final Transaction transaction, final boolean transactionHasErrors) {
     errorView.setVisible(transactionHasErrors);
     fullTransactionInformation.setVisible(true);
-    if(transactionHasErrors) {
+    if (transactionHasErrors) {
       setErrorText(M.messages().transactionPlaceParseError());
     }
 
@@ -124,7 +121,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     } else {
       txStateViewer.setValue(transactionInformation.getState().name());
 
-      if(transactionInformation.getState() == TransactionState.CONFIRMED) {
+      if (transactionInformation.getState() == TransactionState.CONFIRMED) {
         txBlockContainer.setVisible(true);
         txBlockViewer.setValue(transactionInformation.getBlockHash());
         txConfirmationsContainer.setVisible(true);

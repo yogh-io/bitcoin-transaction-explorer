@@ -1,7 +1,7 @@
 package com.yoghurt.crypto.transactions.client.util;
 
+import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
-import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
 import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 
 public class BlockPartColorPicker {
@@ -10,23 +10,23 @@ public class BlockPartColorPicker {
 
     switch (type) {
     case PREV_BLOCK_HASH:
-      color = ColorBuilder.interpret("green");
+      color = R.color().blockHash();
       break;
     case MERKLE_ROOT:
-      color = ColorBuilder.interpret("cornflowerblue");
+      color = R.color().blockMerkleRoot();
       break;
     case TIMESTAMP:
-      color = ColorBuilder.interpret("red");
+      color = R.color().blockTime();
       break;
     case BITS:
-      color = ColorBuilder.interpret("cyan");
+      color = R.color().blockBits();
       break;
     case NONCE:
-      color = ColorBuilder.interpret("lightgreen");
+      color = R.color().blockNonce();
       break;
     case VERSION:
     default:
-      color = ColorBuilder.interpret("grey");
+      color = R.color().blockVersion();
       break;
     }
 

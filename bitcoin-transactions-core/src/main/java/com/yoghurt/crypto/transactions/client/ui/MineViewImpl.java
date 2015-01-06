@@ -16,7 +16,6 @@ import com.google.inject.Singleton;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
-import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.RepeatingExecutor;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
@@ -24,7 +23,6 @@ import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
@@ -39,12 +37,12 @@ public class MineViewImpl extends Composite implements MineView {
 
   private static final MineViewImplUiBinder UI_BINDER = GWT.create(MineViewImplUiBinder.class);
 
-  @UiField(provided = true) ValueViewer versionViewer;
+  @UiField ValueViewer versionViewer;
   @UiField(provided = true) BlockViewer previousBlockHashViewer;
-  @UiField(provided = true) ValueViewer merkleRootViewer;
-  @UiField(provided = true) ValueViewer timestampViewer;
-  @UiField(provided = true) ValueViewer bitsViewer;
-  @UiField(provided = true) ValueViewer nonceViewer;
+  @UiField ValueViewer merkleRootViewer;
+  @UiField ValueViewer timestampViewer;
+  @UiField ValueViewer bitsViewer;
+  @UiField ValueViewer nonceViewer;
 
   @UiField BlockHexViewer blockHexViewer;
   @UiField HashHexViewer blockHashViewer;
@@ -82,12 +80,7 @@ public class MineViewImpl extends Composite implements MineView {
 
   @Inject
   public MineViewImpl(final BitcoinPlaceRouter router) {
-    versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
     previousBlockHashViewer = new BlockViewer(router);
-    merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
-    timestampViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
-    bitsViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
-    nonceViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.NONCE));
 
     initWidget(UI_BINDER.createAndBindUi(this));
   }

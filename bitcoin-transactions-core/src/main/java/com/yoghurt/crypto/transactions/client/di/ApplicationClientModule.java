@@ -19,6 +19,8 @@ import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
+import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
+import com.yoghurt.crypto.transactions.client.resources.SimpleColorPicker;
 import com.yoghurt.crypto.transactions.client.ui.BlockView;
 import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.MineView;
@@ -38,6 +40,7 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(BitcoinPlaceRouter.class).to(ApplicationPlaceController.class).in(Singleton.class);
     bind(PlaceHistoryMapper.class).to(ApplicationPlaceHistoryMapper.class).in(Singleton.class);
     bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+    bind(ColorPicker.class).to(SimpleColorPicker.class).in(Singleton.class);
 
     // Binding views
     bind(StartupView.class).to(StartupViewImpl.class).in(Singleton.class);

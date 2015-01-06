@@ -5,11 +5,13 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ValueViewer extends ContextFieldSet<String> {
-  private final Color color;
+  private Color color;
 
   protected String value;
 
   private boolean animate;
+
+  public ValueViewer() {}
 
   public ValueViewer(final Color color) {
     this(color, new SimpleContextFactory<String>() {
@@ -18,6 +20,10 @@ public class ValueViewer extends ContextFieldSet<String> {
         return value;
       }
     });
+  }
+
+  public ValueViewer(final String text) {
+    super(text);
   }
 
   public ValueViewer(final Color color, final String text) {
@@ -71,5 +77,10 @@ public class ValueViewer extends ContextFieldSet<String> {
 
   public void setAnimate(final boolean animate) {
     this.animate = animate;
+  }
+
+
+  public void setColor(final Color color) {
+    this.color = color;
   }
 }

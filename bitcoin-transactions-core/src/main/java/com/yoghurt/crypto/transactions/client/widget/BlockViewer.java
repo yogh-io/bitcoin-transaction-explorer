@@ -3,7 +3,6 @@ package com.yoghurt.crypto.transactions.client.widget;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.yoghurt.crypto.transactions.client.ui.BlockPlaceRouter;
-import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
 
 /**
  * TODO Needs some attention. Because meh.
@@ -13,20 +12,20 @@ public class BlockViewer extends ValueViewer {
     @Override
     public void onClick(final ClickEvent event) {
       if (blockHash != null) {
-        getRouter().goToBlock(blockHash);
+        router.goToBlock(blockHash);
       } else {
-        getRouter().goToBlock(blockHeight);
+        router.goToBlock(blockHeight);
       }
     }
   };
 
-  private BlockPlaceRouter router;
+  private final BlockPlaceRouter router;
 
   private int blockHeight;
   private String blockHash;
 
   public BlockViewer(final BlockPlaceRouter router) {
-    super(ColorBuilder.interpret("darkgreen"), "View this block.");
+    super("View this block.");
 
     this.router = router;
 
@@ -44,13 +43,5 @@ public class BlockViewer extends ValueViewer {
     this.blockHash = blockHash;
 
     super.setValue(blockHash);
-  }
-
-  public BlockPlaceRouter getRouter() {
-    return router;
-  }
-
-  public void setRouter(final BlockPlaceRouter router) {
-    this.router = router;
   }
 }

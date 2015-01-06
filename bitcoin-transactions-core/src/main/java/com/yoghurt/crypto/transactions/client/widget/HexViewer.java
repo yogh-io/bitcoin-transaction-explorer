@@ -29,6 +29,10 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
 
   private ArrayList<ContextField<Entry<T, byte[]>>> activeFields;
 
+  public HexViewer() {
+    this(null);
+  }
+
   public HexViewer(final FieldContextFactory<Entry<T, byte[]>> contextFactory) {
     super(contextFactory);
 
@@ -48,7 +52,6 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
       final byte[] bytesForValue = getBytesForValue(entry);
 
       final Color typeColor = getFieldColor(entry);
-
 
       // Change the value for each field
       for (final byte bite : bytesForValue) {

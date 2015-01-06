@@ -118,6 +118,8 @@ public class ContextFieldSet<T> extends FlowPanel {
 
   private HandlerRegistration attachRegistration;
 
+  public ContextFieldSet() {}
+
   public ContextFieldSet(final FieldContextFactory<T> contextFactory) {
     this.contextFactory = contextFactory;
   }
