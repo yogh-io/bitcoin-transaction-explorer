@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.yoghurt.crypto.transactions.client.di.ApplicationGinjector;
 import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
+import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.ui.ApplicationRootView;
 
@@ -27,11 +28,13 @@ public class Application implements EntryPoint {
 
   @Inject @DefaultPlace Place defaultPlace;
 
+  @Inject private ColorPicker colorPicker;
+
   @Override
   public void onModuleLoad() {
     ApplicationGinjector.INSTANCE.inject(this);
 
-    R.init();
+    R.init(colorPicker);
 
     final ActivityManager appActivityManager = new ActivityManager(actvityMapper, eventBus);
     final PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(placeHistoryMapper);

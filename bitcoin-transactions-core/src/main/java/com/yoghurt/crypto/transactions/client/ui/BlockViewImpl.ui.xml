@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
   .contentHeading {
   	font-size: 31px;
@@ -16,48 +17,52 @@
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleInformation}" /></h2>
     </g:HTML>
-    <w:HashHexViewer ui:field="blockHashViewer" />
+    <w:HashHexViewer ui:field="blockHashViewer" color="{res.color.blockHash}" />
+    <g:HTML>
+      <h2><ui:text from="{i18n.blockPlaceTitleCoinbase}" /></h2>
+    </g:HTML>
+    <w:HashHexViewer ui:field="coinbaseHashViewer" color="{res.color.transactionHash}" />
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleExtraInformation}" /></h2>
     </g:HTML>
     <g:Label text="{i18n.blockPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="{i18n.blockHeight}">
-        <w:ValueViewer ui:field="heightViewer" animate="true" />
+        <w:ValueViewer ui:field="heightViewer" animate="true" color="{res.color.blockHeight}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockDepth}">
-        <w:ValueViewer ui:field="numConfirmationsViewer" animate="true" />
+        <w:ValueViewer ui:field="numConfirmationsViewer" animate="true" color="{res.color.blockConfirmations}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockNumTransactions}">
-        <w:ValueViewer ui:field="numTransactionsViewer" animate="true" />
+        <w:ValueViewer ui:field="numTransactionsViewer" animate="true" color="{res.color.blockNumTransactions}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockNextBlock}">
-        <w:ValueViewer ui:field="nextBlockViewer" animate="true" />
+        <w:BlockViewer ui:field="nextBlockViewer" animate="true" color="{res.color.blockHash}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.blockSize}">
-        <w:ValueViewer ui:field="sizeViewer" animate="true" />
+        <w:ValueViewer ui:field="sizeViewer" animate="true" color="{res.color.blockSize}" />
       </w:LabelledWidget>
     </g:FlowPanel>
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleBlockHeaders}" /></h2>
     </g:HTML>
     <w:LabelledWidget label="{i18n.blockVersion}">
-      <w:ValueViewer ui:field="versionViewer" animate="true" />
+      <w:ValueViewer ui:field="versionViewer" animate="true" color="{res.color.blockVersion}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockPreviousBlock}">
-      <w:ValueViewer ui:field="previousBlockHashViewer" animate="true" />
+      <w:ValueViewer ui:field="previousBlockHashViewer" animate="true" color="{res.color.blockHash}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockMerkleRoot}">
-      <w:ValueViewer ui:field="merkleRootViewer" animate="true" />
+      <w:ValueViewer ui:field="merkleRootViewer" animate="true" color="{res.color.blockMerkleRoot}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockTime}">
-      <w:ValueViewer ui:field="timestampViewer" animate="true" />
+      <w:ValueViewer ui:field="timestampViewer" animate="true" color="{res.color.blockTime}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockBits}">
-      <w:ValueViewer ui:field="bitsViewer" animate="true" />
+      <w:ValueViewer ui:field="bitsViewer" animate="true" color="{res.color.blockBits}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockNonce}">
-      <w:ValueViewer ui:field="nonceViewer" animate="true" />
+      <w:ValueViewer ui:field="nonceViewer" animate="true" color="{res.color.blockNonce}" />
     </w:LabelledWidget>
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleRawBlockHex}" /></h2>

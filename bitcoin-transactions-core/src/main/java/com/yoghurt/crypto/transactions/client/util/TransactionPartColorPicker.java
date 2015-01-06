@@ -1,7 +1,7 @@
 package com.yoghurt.crypto.transactions.client.util;
 
+import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
-import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 
 /**
@@ -13,42 +13,52 @@ public class TransactionPartColorPicker {
 
     switch (type) {
     case TRANSACTION_HASH:
-      color = ColorBuilder.interpret("cornflowerblue");
+      color = R.color().transactionHash();
       break;
     case INPUT_OUTPOINT_INDEX:
-      color = ColorBuilder.interpret("lightblue");
+      color = R.color().transactionInputIndex();
       break;
     case OUTPUT_SCRIPT_LENGTH:
+      color = R.color().transactionPubKeySigLength();
+      break;
     case INPUT_SCRIPT_LENGTH:
-      color = ColorBuilder.interpret("mediumvioletred");
+      color = R.color().transactionScriptSigLength();
       break;
     case INPUT_SEQUENCE:
-      color = ColorBuilder.interpret("lightgreen");
+      color = R.color().transactionInputSequence();
       break;
     case INPUT_SIZE:
+      color = R.color().transactionInputLength();
+      break;
     case OUTPUT_SIZE:
-      color = ColorBuilder.interpret("pink");
+      color = R.color().transactionOutputLength();
       break;
     case OUTPUT_VALUE:
-      color = ColorBuilder.interpret("gold");
+      color = R.color().transactionOutputAmount();
       break;
     case SCRIPT_SIG_OP_CODE:
+      color = R.color().transactionScriptSigOpCode();
+      break;
     case SCRIPT_PUB_KEY_OP_CODE:
-      color = ColorBuilder.interpret("red");
+      color = R.color().transactionScriptSigOpCode();
       break;
     case SCRIPT_SIG_PUSH_DATA:
-      color = ColorBuilder.interpret("cyan");
+      color = R.color().transactionScriptSigPushData();
       break;
     case SCRIPT_PUB_KEY_PUSH_DATA:
-      color = ColorBuilder.interpret("green");
+      color = R.color().transactionPubKeySigPushData();
       break;
     case ARBITRARY_DATA:
-      color = ColorBuilder.interpret("black");
+      color = R.color().transactionArbitraryData();
       break;
     case LOCK_TIME:
+      color = R.color().transactionLockTime();
+      break;
     case VERSION:
+      color = R.color().transactionVersion();
+      break;
     default:
-      color = ColorBuilder.interpret("grey");
+      color = R.color().transactionArbitraryData();
       break;
     }
 

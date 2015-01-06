@@ -1,56 +1,53 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
-import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
 
-
-public class HashHexViewer extends HexViewer<Byte> {
-  private final Color color;
+public class HashHexViewer extends HexViewer<byte[]> {
+  private Color color;
 
   public HashHexViewer() {
-    this(ColorBuilder.interpret("green"));
+    super();
   }
 
   public HashHexViewer(final Color color) {
-    super(null);
+    this(color, null);
+  }
+
+  public HashHexViewer(final Color color, final FieldContextFactory<Entry<byte[], byte[]>> factory) {
+    super(factory);
 
     this.color = color;
   }
 
   public void setHash(final byte[] hash) {
-    if(hash == null || hash.length == 0) {
+    if (hash == null || hash.length == 0 || color == null) {
       return;
     }
 
-    if(fields.isEmpty()) {
-      clear();
+    final ArrayList<Entry<byte[], byte[]>> lst = new ArrayList<Entry<byte[], byte[]>>();
 
-      for (final byte bite : hash) {
-        addFields(new AbstractMap.SimpleEntry<Byte, byte[]>(new Byte(bite), new byte[] { bite }));
-      }
-    } else {
-      for(int i = 0; i < hash.length; i++) {
-        final ContextField<Entry<Byte, byte[]>> contextField = fields.get(i);
-
-        if(contextField == null) {
-          continue;
-        }
-
-        contextField.setContent(getHexFromByte(hash[i]));
-      }
+    for(final byte bite : hash) {
+      lst.add(new AbstractMap.SimpleEntry<byte[], byte[]>(hash, new byte[] { bite }));
     }
+
+    setContainer(lst);
   }
 
   @Override
-  protected Color getFieldColor(final Entry<Byte, byte[]> value) {
+  protected Color getFieldColor(final Entry<byte[], byte[]> value) {
     return color;
   }
 
   @Override
-  protected byte[] getBytesForValue(final Entry<Byte, byte[]> value) {
+  protected byte[] getBytesForValue(final Entry<byte[], byte[]> value) {
     return value.getValue();
+  }
+
+  public void setColor(final Color color) {
+    this.color = color;
   }
 }

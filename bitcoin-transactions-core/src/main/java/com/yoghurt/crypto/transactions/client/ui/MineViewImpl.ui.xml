@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
   .contentHeading {
   	font-size: 31px;
@@ -41,27 +42,27 @@
     <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleBlockHash}" /></h2>
     </g:HTML>
-    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer}" />
+    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer}" color="{res.color.blockHash}"  />
     <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleBlockHeaders}" /></h2>
     </g:HTML>
     <w:LabelledWidget label="{i18n.blockVersion}">
-      <w:ValueViewer ui:field="versionViewer" />
+      <w:ValueViewer ui:field="versionViewer" color="{res.color.blockVersion}"  />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockPreviousBlock}">
-      <w:ValueViewer ui:field="previousBlockHashViewer" />
+      <w:ValueViewer ui:field="previousBlockHashViewer" color="{res.color.blockHash}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockMerkleRoot}">
-      <w:ValueViewer ui:field="merkleRootViewer" />
+      <w:ValueViewer ui:field="merkleRootViewer" color="{res.color.blockMerkleRoot}"  />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockTime}">
-      <w:ValueViewer ui:field="timestampViewer" />
+      <w:ValueViewer ui:field="timestampViewer" color="{res.color.blockTime}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockBits}">
-      <w:ValueViewer ui:field="bitsViewer" />
+      <w:ValueViewer ui:field="bitsViewer" color="{res.color.blockBits}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockNonce}">
-      <w:ValueViewer ui:field="nonceViewer" />
+      <w:ValueViewer ui:field="nonceViewer" color="{res.color.blockNonce}" />
     </w:LabelledWidget>
   </g:FlowPanel>
 </ui:UiBinder>

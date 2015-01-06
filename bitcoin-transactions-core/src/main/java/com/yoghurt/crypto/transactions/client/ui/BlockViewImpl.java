@@ -10,7 +10,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
-import com.yoghurt.crypto.transactions.client.util.BlockPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
@@ -19,7 +18,6 @@ import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
@@ -35,39 +33,29 @@ public class BlockViewImpl extends Composite implements BlockView {
   @UiField FlowPanel extraInformationContainer;
   @UiField Label notFoundLabel;
 
-  @UiField(provided = true) HashHexViewer blockHashViewer;
+  @UiField HashHexViewer blockHashViewer;
+  @UiField HashHexViewer coinbaseHashViewer;
 
-  @UiField(provided = true) ValueViewer versionViewer;
+  @UiField ValueViewer versionViewer;
   @UiField(provided = true) BlockViewer previousBlockHashViewer;
-  @UiField(provided = true) ValueViewer merkleRootViewer;
-  @UiField(provided = true) ValueViewer timestampViewer;
-  @UiField(provided = true) ValueViewer bitsViewer;
-  @UiField(provided = true) ValueViewer nonceViewer;
+  @UiField ValueViewer merkleRootViewer;
+  @UiField ValueViewer timestampViewer;
+  @UiField ValueViewer bitsViewer;
+  @UiField ValueViewer nonceViewer;
 
-  @UiField(provided = true) ValueViewer heightViewer;
-  @UiField(provided = true) ValueViewer numConfirmationsViewer;
-  @UiField(provided = true) ValueViewer numTransactionsViewer;
+  @UiField ValueViewer heightViewer;
+  @UiField ValueViewer numConfirmationsViewer;
+  @UiField ValueViewer numTransactionsViewer;
   @UiField(provided = true) BlockViewer nextBlockViewer;
-  @UiField(provided = true) ValueViewer sizeViewer;
+  @UiField ValueViewer sizeViewer;
 
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
 
   @Inject
   public BlockViewImpl(final BitcoinPlaceRouter router) {
-    blockHashViewer = new HashHexViewer();
-    versionViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
-    previousBlockHashViewer = new BlockViewer(router);
-    merkleRootViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
-    timestampViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
-    bitsViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.BITS));
-    nonceViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.NONCE));
-
-    heightViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.PREV_BLOCK_HASH));
-    numConfirmationsViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.VERSION));
-    numTransactionsViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.MERKLE_ROOT));
     nextBlockViewer = new BlockViewer(router);
-    sizeViewer = new ValueViewer(BlockPartColorPicker.getFieldColor(BlockPartType.TIMESTAMP));
+    previousBlockHashViewer = new BlockViewer(router);
 
     initWidget(UI_BINDER.createAndBindUi(this));
   }
@@ -86,6 +74,7 @@ public class BlockViewImpl extends Composite implements BlockView {
     }
 
     blockHashViewer.setHash(block.getBlockHash());
+    coinbaseHashViewer.setHash(coinbase.getTransactionId());
 
     versionViewer.setValue(block.getVersion());
     previousBlockHashViewer.setValue(block.getPreviousBlockHash());

@@ -54,6 +54,9 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Block hash")
   String blockPlaceTitleInformation();
 
+  @DefaultMessage("Coinbase transaction hash")
+  String blockPlaceTitleCoinbase();
+
   @DefaultMessage("Presence in blockchain")
   String blockPlaceTitleExtraInformation();
 

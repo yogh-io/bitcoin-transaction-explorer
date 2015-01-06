@@ -5,10 +5,12 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
 /**
- * Global resource class, access resources via R.css(). or R.images().
+ * Global resource class, access resources via R.css(). or R.clr().
  */
 public final class R {
   private static final ApplicationResource RESOURCES = GWT.create(ApplicationResource.class);
+
+  private static ColorPicker colorPicker;
 
   /**
    * Application CssResources.
@@ -44,7 +46,9 @@ public final class R {
   /**
    * Ensures css is injected. Should be called as soon as possible on startup.
    */
-  public static void init() {
+  public static void init(final ColorPicker colorPicker) {
+    R.colorPicker = colorPicker;
+
     RESOURCES.css().ensureInjected();
   }
 
@@ -58,5 +62,9 @@ public final class R {
    */
   public static ApplicationCssResource css() {
     return RESOURCES.css();
+  }
+
+  public static ColorPicker color() {
+    return colorPicker;
   }
 }

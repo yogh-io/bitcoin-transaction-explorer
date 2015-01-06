@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
   .contentHeading {
   	font-size: 31px;
@@ -38,7 +39,7 @@
     <g:HTML>
       <h2><ui:text from="{i18n.transactionPlaceTitleInformation}" /></h2>
     </g:HTML>
-    <w:HashHexViewer ui:field="txIdViewer" />
+    <w:HashHexViewer ui:field="txIdViewer" color="{res.color.blockHash}" />
     <g:FlowPanel ui:field="fullTransactionInformation">
       <g:HTML>
         <h2><ui:text from="{i18n.transactionPlaceTitleExtraInformation}" /></h2>
@@ -46,16 +47,16 @@
       <g:Label text="{i18n.transactionPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
       <g:FlowPanel ui:field="extraInformationContainer" visible="false">
         <w:LabelledWidget label="{i18n.transactionState}">
-          <w:ValueViewer ui:field="txStateViewer" />
+          <w:ValueViewer ui:field="txStateViewer" color="{res.color.transactionConfirmedState}" />
         </w:LabelledWidget>
         <w:LabelledWidget ui:field="txBlockContainer" label="{i18n.blockHash}">
-          <w:BlockViewer ui:field="txBlockViewer" />
+          <w:BlockViewer ui:field="txBlockViewer" color="{res.color.blockHash}" />
         </w:LabelledWidget>
         <w:LabelledWidget ui:field="txConfirmationsContainer" label="{i18n.blockConfirmations}">
-          <w:ValueViewer ui:field="txConfirmationsViewer" />
+          <w:ValueViewer ui:field="txConfirmationsViewer" color="{res.color.transactionConfirmations}" />
         </w:LabelledWidget>
         <w:LabelledWidget ui:field="txTimeContainer" label="{i18n.transactionTime}">
-          <w:ValueViewer ui:field="txTimeViewer" />
+          <w:ValueViewer ui:field="txTimeViewer" color="{res.color.transactionTime}" />
         </w:LabelledWidget>
       </g:FlowPanel>
       <g:HTML>
@@ -70,10 +71,10 @@
         <h2><ui:text from="{i18n.transactionPlaceTitleMiscellaneousInformation}" /></h2>
       </g:HTML>
       <w:LabelledWidget label="{i18n.transactionVersion}">
-        <w:ValueViewer ui:field="txVersionViewer" />
+        <w:ValueViewer ui:field="txVersionViewer" color="{res.color.transactionVersion}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.transactionLockTime}">
-        <w:ValueViewer ui:field="txLockTimeViewer" />
+        <w:ValueViewer ui:field="txLockTimeViewer" color="{res.color.transactionLockTime}" />
       </w:LabelledWidget>
       <g:HTML>
         <h2><ui:text from="{i18n.transactionPlaceTitleRawHex}" /></h2>
