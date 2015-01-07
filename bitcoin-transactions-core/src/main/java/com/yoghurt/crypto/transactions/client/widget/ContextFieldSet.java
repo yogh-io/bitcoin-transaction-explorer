@@ -54,7 +54,6 @@ public class ContextFieldSet<T> extends FlowPanel {
     @SuppressWarnings("unchecked")
     @Override
     public void onMouseOver(final MouseOverEvent event) {
-
       popupHideTimer.cancel();
 
       if (popupShowTimer != null) {

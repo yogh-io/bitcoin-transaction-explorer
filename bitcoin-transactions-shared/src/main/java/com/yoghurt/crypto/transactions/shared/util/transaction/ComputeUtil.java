@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.shared.util.transaction;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -30,6 +31,9 @@ public class ComputeUtil {
   public static byte[] computeDoubleSHA256(final Collection<byte[]> bytes) {
     return computeSHA256(computeSHA256(bytes));
   }
+  public static byte[] computeDoubleSHA256(final byte[] ... bytes) {
+    return computeSHA256(computeSHA256(bytes));
+  }
 
   public static byte[] computeSHA256(final byte[] bytes) {
     final SHA256 digest = new SHA256();
@@ -46,5 +50,34 @@ public class ComputeUtil {
     }
 
     return digest.finish();
+  }
+
+  public static byte[] computeSHA256(final byte[] ... bytesSet) {
+    final SHA256 digest = new SHA256();
+
+    for (final byte[] bytes : bytesSet) {
+      digest.feed(bytes);
+    }
+
+    return digest.finish();
+  }
+
+  @Deprecated
+  public static byte[] computeMerkleRoot(final byte[] tx) {
+    return computeDoubleSHA256(tx, tx);
+  }
+
+  /**
+   * TODO Test and support >1 tx
+   */
+  @Deprecated
+  public static byte[] computeMerkleRoot(final ArrayList<byte[]> txs) {
+    if(txs.size() > 1) {
+      throw new IllegalStateException(">1 tx merkleroot not implemented.");
+    }
+
+    final byte[] bs = txs.get(0);
+
+    return computeDoubleSHA256(bs, bs);
   }
 }
