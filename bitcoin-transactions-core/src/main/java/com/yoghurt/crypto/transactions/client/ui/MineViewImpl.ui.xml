@@ -40,6 +40,10 @@
     </g:HTML>
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
     <g:HTML>
+      <h2><ui:text from="{i18n.minePlaceTitleCoinbase}" /></h2>
+    </g:HTML>
+    <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer}" />
+    <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleBlockHash}" /></h2>
     </g:HTML>
     <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer}" color="{res.color.blockHash}"  />

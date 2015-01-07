@@ -75,6 +75,9 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Headers to mine")
   String minePlaceTitleMineHeaders();
 
+  @DefaultMessage("Coinbase transaction")
+  String minePlaceTitleCoinbase();
+
   @DefaultMessage("Computed block hash")
   String minePlaceTitleBlockHash();
 

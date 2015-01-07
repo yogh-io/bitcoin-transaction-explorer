@@ -47,6 +47,7 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
    * Set the container for this hex viewer.
    */
   public void setContainer(final Collection<Entry<T, byte[]>> container) {
+    boolean quickAdd = false;
     int counter = 0;
     for (final Entry<T, byte[]> entry : container) {
       final byte[] bytesForValue = getBytesForValue(entry);
@@ -57,8 +58,9 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
       for (final byte bite : bytesForValue) {
         final String hex = getHexFromByte(bite);
 
-        if(counter >= fields.size()) {
+        if(quickAdd || counter >= fields.size()) {
           addField(entry, typeColor, hex);
+          quickAdd = true;
         } else {
           final ContextField<Entry<T, byte[]>> contextField = fields.get(counter);
           contextField.setValue(entry);
