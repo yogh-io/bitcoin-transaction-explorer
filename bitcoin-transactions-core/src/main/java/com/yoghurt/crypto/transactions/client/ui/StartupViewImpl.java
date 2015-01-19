@@ -18,12 +18,18 @@ public class StartupViewImpl extends Composite implements StartupView {
     initWidget(UI_BINDER.createAndBindUi(this));
   }
 
+  @Override
   public void setPresenter(final Presenter presenter) {
     this.presenter = presenter;
   }
 
-  @UiHandler("test")
-  void onTestClick(final ClickEvent e) {
-    presenter.goToTest();
+  @UiHandler("firstEver")
+  void onFirstEverClick(final ClickEvent e) {
+    presenter.goToFirstEver();
+  }
+
+  @UiHandler("p2pkh")
+  void onP2pkhClick(final ClickEvent e) {
+    presenter.goToP2pkh();
   }
 }
