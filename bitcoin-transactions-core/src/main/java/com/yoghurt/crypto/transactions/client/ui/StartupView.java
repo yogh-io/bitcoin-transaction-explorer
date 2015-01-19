@@ -5,7 +5,9 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface StartupView extends IsWidget {
   public interface Presenter {
 
-    void goToTest();
+    void goToP2pkh();
+
+    void goToFirstEver();
 
   }
 

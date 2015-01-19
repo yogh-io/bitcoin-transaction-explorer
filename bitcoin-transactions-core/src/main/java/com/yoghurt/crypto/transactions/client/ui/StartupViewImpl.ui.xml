@@ -11,14 +11,20 @@
 	height: 37px;
 	font-weight: bold;
   }
-  .test:hover {
+  .link {
 	text-decoration: underline;
+	margin-bottom: 9px;
+  }
+  .link:hover {
 	color: rgb(250, 143, 8);
 	cursor: pointer;
   }
   </ui:style>
   <g:FlowPanel styleName="{style.content}">
-    <g:Label styleName="{style.contentHeading}" text="Meh." />
-    <g:Label styleName="{style.test}" text="Test transaction hex" ui:field="test" />
+      <g:HTML>
+        <h2>Sample transactions</h2>
+      </g:HTML>
+    <g:Label styleName="{style.link}" text="First transaction ever on the blockchain" ui:field="firstEver" />
+    <g:Label styleName="{style.link}" text="Simple pay-to-pubkey-hash" ui:field="p2pkh" />
   </g:FlowPanel>
 </ui:UiBinder>
