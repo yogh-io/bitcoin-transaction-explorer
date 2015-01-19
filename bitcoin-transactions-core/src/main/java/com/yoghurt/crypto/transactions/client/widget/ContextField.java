@@ -24,16 +24,17 @@ import com.yoghurt.crypto.transactions.client.util.ComputedStyle;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ContextField<T> extends Composite implements HasMouseOutHandlers, HasMouseOverHandlers, HasClickHandlers {
+  private static final int FIELD_HEIGHT = 24;
+
   interface ContextFieldUiBinder extends UiBinder<Widget, ContextField<?>> {}
 
   private static final ContextFieldUiBinder UI_BINDER = GWT.create(ContextFieldUiBinder.class);
-
-  private static final int CLEAN_UP_DELAY = 5;
 
   /**
    * Needs to correspond to the same value in the UiBinder
    */
   private static final int ANIMATION_TIME = 200;
+  private static final int CLEAN_UP_DELAY = 5 + ANIMATION_TIME;
 
   @UiField CustomStyle style;
 
@@ -50,9 +51,9 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
       container.addStyleName(style.noAnimation());
 
       // Remove all but the last widget
-      final Widget widg = container.getWidget(container.getWidgetCount() - 1);
-      container.clear();
-      container.add(widg);
+      while(container.getWidgetCount() > 1) {
+        container.remove(0);
+      }
 
       // Reset the 'top' attribute to 0, and enforce the DOM change
       container.getElement().getStyle().setTop(0, Unit.PX);
@@ -76,7 +77,7 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
     initWidget(UI_BINDER.createAndBindUi(this));
 
     setColor(color);
-    setContent(text, true);
+    setContent(text, false);
   }
 
   public void setColor(final Color color) {
@@ -97,8 +98,6 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
       return;
     }
 
-    currentText = text;
-
     if(!animate) {
       container.clear();
     }
@@ -107,12 +106,16 @@ public class ContextField<T> extends Composite implements HasMouseOutHandlers, H
     container.add(lbl);
 
     if(animate) {
-      container.getElement().getStyle().setTop(-container.getOffsetHeight() + lbl.getOffsetHeight(), Unit.PX);
+      container.getElement().getStyle().setTop(- (container.getWidgetCount() - 1) * FIELD_HEIGHT, Unit.PX);
 
       // This is gonna suck if there's more than a couple of these running, so thank god Mr Moore invented that law of his
       cleanupTimer.cancel();
-      cleanupTimer.schedule(CLEAN_UP_DELAY + ANIMATION_TIME);
+      cleanupTimer.schedule(CLEAN_UP_DELAY);
+    } else {
+      container.getElement().getStyle().setTop(0, Unit.PX);
     }
+
+    currentText = text;
   }
 
   public T getValue() {
