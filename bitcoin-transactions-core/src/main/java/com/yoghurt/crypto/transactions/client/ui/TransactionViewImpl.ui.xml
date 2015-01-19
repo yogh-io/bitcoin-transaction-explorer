@@ -39,7 +39,7 @@
     <g:HTML>
       <h2><ui:text from="{i18n.transactionPlaceTitleInformation}" /></h2>
     </g:HTML>
-    <w:HashHexViewer ui:field="txIdViewer" color="{res.color.blockHash}" />
+    <w:HashHexViewer ui:field="txIdViewer" color="{res.color.transactionHash}" />
     <g:FlowPanel ui:field="fullTransactionInformation">
       <g:HTML>
         <h2><ui:text from="{i18n.transactionPlaceTitleExtraInformation}" /></h2>
