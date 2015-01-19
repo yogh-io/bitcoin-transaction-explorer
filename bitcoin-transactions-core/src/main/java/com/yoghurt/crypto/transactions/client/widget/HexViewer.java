@@ -122,17 +122,9 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
     }
   }
 
-  //  protected ArrayList<ContextField<Entry<T, byte[]>>> findValueFields(final Entry<T, byte[]> value) {
-  //    for (final Entry<Entry<T, byte[]>, ArrayList<ContextField<Entry<T, byte[]>>>> entry : fieldMap) {
-  //      if (entry.getKey() == value) {
-  //        return entry.getValue();
-  //      }
-  //    }
-  //
-  //    return null;
-  //  }
-
-  protected abstract byte[] getBytesForValue(final Entry<T, byte[]> value);
+  protected byte[] getBytesForValue(final Entry<T, byte[]> entry) {
+    return entry.getValue();
+  }
 
   @Override
   protected ContextField<Entry<T, byte[]>> addField(final ContextField<Entry<T, byte[]>> field) {
