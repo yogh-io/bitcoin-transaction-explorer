@@ -33,6 +33,7 @@ public class ScriptViewer extends ContextFieldSet<ScriptPart> {
   }
 
   public void setScript(final ArrayList<ScriptPart> instructions) {
+    clear();
     for (final ScriptPart instruction : instructions) {
       addField(instruction);
     }

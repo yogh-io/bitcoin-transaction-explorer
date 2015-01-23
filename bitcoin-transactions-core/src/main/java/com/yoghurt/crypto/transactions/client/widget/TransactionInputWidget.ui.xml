@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
   
   </ui:style>
@@ -12,13 +13,14 @@
       <w:ValueViewer ui:field="hashViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.transactionOutpointIndex}">
-      <w:ValueViewer ui:field="indexViewer" />
+      <w:ValueViewer ui:field="indexViewer" color="{res.color.transactionInputIndex}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.transactionScriptSig}">
       <w:ScriptViewer ui:field="signatureScriptViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.transactionSequence}">
-      <w:ValueViewer ui:field="sequenceViewer" />
+      <w:ValueViewer ui:field="sequenceViewer" color="{res.color.transactionInputSequence}" />
     </w:LabelledWidget>
+    <g:Label ui:field="scriptViewField" text="{i18n.transactionScriptViewer}" styleName="{res.css.link}" />
   </g:FlowPanel>
 </ui:UiBinder>

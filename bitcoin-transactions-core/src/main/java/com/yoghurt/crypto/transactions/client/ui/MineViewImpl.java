@@ -212,10 +212,7 @@ public class MineViewImpl extends Composite implements MineView {
 
     coinbaseHexViewer.setContainer(coinbase);
 
-    GWT.log(Str.toString(Hex.encode(coinbase.getBytes())));
-
     final byte[] computeMerkleRoot = ComputeUtil.computeMerkleRoot(coinbase.getBytes());
-    GWT.log(Str.toString(Hex.encode(computeMerkleRoot)));
     rawBlock.setMerkleRoot(computeMerkleRoot);
   }
 

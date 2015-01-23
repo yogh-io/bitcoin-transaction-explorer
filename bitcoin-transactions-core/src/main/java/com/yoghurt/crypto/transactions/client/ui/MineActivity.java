@@ -37,11 +37,9 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
    * Thirty seconds
    */
   private static final int LATEST_BLOCK_POLL_DELAY = 10 * 1000;
-
   private static final int SHORT_INITIAL_POLL_DELAY = 500;
 
   private final MineView view;
-  private final BlockchainRetrievalServiceAsync service;
 
   private final Timer timer = new Timer() {
     @Override
@@ -80,10 +78,8 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
 
   @Inject
   public MineActivity(final MineView view, @Assisted final MinePlace place, final BlockchainRetrievalServiceAsync service) {
-    super(place);
-
+    super(place, service);
     this.view = view;
-    this.service = service;
   }
 
   @Override

@@ -1,0 +1,41 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
+  <ui:style>
+  .contentHeading {
+  	font-size: 31px;
+  	height: 37px;
+  	font-weight: bold;
+  }
+  .hexViewer {
+  	width: 780px;
+  }
+  .inline {
+  	display: inline-block;
+  }
+  </ui:style>
+  <g:FlowPanel>
+    <g:Label styleName="{style.contentHeading}" text="{i18n.scriptPlaceTitleScriptViewer}" />
+    <g:FlowPanel ui:field="fullTransactionInformation">
+      <g:HTML>
+        <h2><ui:text from="{i18n.scriptPlaceTitleOutpointViewer}" /></h2>
+      </g:HTML>
+      <w:LabelledWidget label="{i18n.scriptPlaceOutpointHash}">
+        <w:ValueViewer ui:field="hashViewer" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.transactionOutpointIndex}">
+        <w:ValueViewer ui:field="indexViewer" color="{res.color.transactionInputIndex}" />
+      </w:LabelledWidget>
+    </g:FlowPanel>
+    <g:HTML>
+      <h2><ui:text from="{i18n.scriptPlaceTitleScripts}" /></h2>
+    </g:HTML>
+    <w:LabelledWidget label="{i18n.transactionPubKeySig}">
+      <w:ScriptViewer ui:field="pubKeySigViewer" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.transactionScriptSig}">
+      <w:ScriptViewer ui:field="scriptSigViewer" />
+    </w:LabelledWidget>
+  </g:FlowPanel>
+</ui:UiBinder>

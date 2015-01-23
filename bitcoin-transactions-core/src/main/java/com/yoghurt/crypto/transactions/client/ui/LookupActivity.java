@@ -5,12 +5,20 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.shared.domain.Block;
+import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public abstract class LookupActivity<E, P extends Place> extends AbstractActivity {
   protected final P place;
+  protected final BlockchainRetrievalServiceAsync service;
 
-  public LookupActivity(final P place) {
+  public LookupActivity(final P place, final BlockchainRetrievalServiceAsync service) {
     this.place = place;
+    this.service = service;
   }
 
   @Override
@@ -30,6 +38,32 @@ public abstract class LookupActivity<E, P extends Place> extends AbstractActivit
         }
       });
     }
+  }
+
+  protected Block getBlockFromHex(final String hex) {
+    return getBlockFromHex(new Block(), hex);
+  }
+
+  protected Transaction getTransactionFromHex(final String hex) {
+    return getTransactionFromHex(new Transaction(), hex);
+  }
+
+  protected Block getBlockFromHex(final Block b, final String hex) {
+    if (hex == null) {
+      return null;
+    }
+
+    BlockParseUtil.parseBlockBytes(Hex.decode(hex), b);
+    return b;
+  }
+
+  protected Transaction getTransactionFromHex(final Transaction t, final String hex) {
+    if (hex == null) {
+      return null;
+    }
+
+    TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
+    return t;
   }
 
   protected abstract void doLookup(final P place, final AsyncCallback<E> callback);

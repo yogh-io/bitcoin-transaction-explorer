@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.client.widget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.yoghurt.crypto.transactions.client.ui.BlockPlaceRouter;
+import com.yoghurt.crypto.transactions.client.place.BlockPlaceRouter;
 
 /**
  * TODO Needs some attention. Because meh.
