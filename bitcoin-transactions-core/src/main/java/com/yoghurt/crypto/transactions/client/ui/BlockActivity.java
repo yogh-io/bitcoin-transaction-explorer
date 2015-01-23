@@ -12,19 +12,15 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
-import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
 import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> implements BlockView.Presenter {
   private final BlockView view;
-  private final BlockchainRetrievalServiceAsync service;
 
   @Inject
   public BlockActivity(final BlockView view, @Assisted final BlockPlace place, final BlockchainRetrievalServiceAsync service) {
-    super(place);
+    super(place, service);
     this.view = view;
-    this.service = service;
   }
 
   @Override
@@ -49,40 +45,6 @@ public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> 
   @Override
   protected BlockInformation createInfo(final BlockPlace place) {
     return null;
-  }
-
-  private Block getBlockFromHex(final String hex) {
-    if (hex == null) {
-      return null;
-    }
-
-    final Block b = new Block();
-
-    try {
-      BlockParseUtil.parseBlockBytes(Hex.decode(hex), b);
-    } catch (final IllegalStateException e) {
-      e.printStackTrace();
-      // Eat
-    }
-
-    return b;
-  }
-
-  private Transaction getTransactionFromHex(final String hex) {
-    if (hex == null) {
-      return null;
-    }
-
-    final Transaction t = new Transaction();
-
-    try {
-      TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
-    } catch (final IllegalStateException e) {
-      e.printStackTrace();
-      // Eat
-    }
-
-    return t;
   }
 
   @Override

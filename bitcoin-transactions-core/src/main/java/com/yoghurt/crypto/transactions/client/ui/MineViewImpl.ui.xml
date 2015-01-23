@@ -16,7 +16,7 @@
   }
   </ui:style>
   <g:FlowPanel>
-    <g:Label styleName="{style.contentHeading}" text="Mining simulator" />
+    <g:Label styleName="{style.contentHeading}" text="{i18n.minePlaceTitleMiningSimulator}" />
     <g:HTML>
       <h2>Controls</h2>
       <h3>Playback</h3>

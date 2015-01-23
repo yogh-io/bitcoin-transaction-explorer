@@ -1,9 +1,6 @@
 package com.yoghurt.crypto.transactions.shared.util.transaction;
 
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
@@ -67,7 +64,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(TransactionPartType.INPUT_SCRIPT_LENGTH, scriptSizeBytes);
 
     // Encode the signature script
-    encodeScript(input, container, ScriptType.SCRIPT_SIG);
+    ScriptEncodeUtil.encodeScript(input, container, ScriptType.SCRIPT_SIG);
 
     // Encode the sequence bytes
     final byte[] sequenceBytes = NumberEncodeUtil.encodeUint32(input.getTransactionSequence());
@@ -84,25 +81,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(TransactionPartType.OUTPUT_SCRIPT_LENGTH, scriptSizeBytes);
 
     // Encode the output script
-    encodeScript(output, container, ScriptType.SCRIPT_PUB_KEY);
-  }
-
-  private static void encodeScript(final ScriptEntity script, final RawTransactionContainer container, final ScriptType type) {
-    for (final ScriptPart part : script.getInstructions()) {
-      final TransactionPartType partType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.OP_CODE);
-
-      if (part.getOperation() == null) {
-        container.add(TransactionPartType.ARBITRARY_DATA, part.getBytes());
-      } else {
-        System.out.println(part.getOperation() + " > " + part.getBytes());
-        container.add(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) });
-
-        if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
-          final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
-          container.add(pushPartType, part.getBytes());
-        }
-      }
-    }
+    ScriptEncodeUtil.encodeScript(output, container, ScriptType.SCRIPT_PUB_KEY);
   }
 
   private static byte[] encodeLockTime(final Transaction transaction) {

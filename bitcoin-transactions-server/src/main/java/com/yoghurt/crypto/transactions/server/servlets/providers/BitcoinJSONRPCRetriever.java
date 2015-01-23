@@ -91,7 +91,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
       return JSONRPCParser.getTransactionInformation(jsonData);
     } catch (IOException | HttpException e) {
       e.printStackTrace();
-      throw new ApplicationException(e.getMessage());
+      return null;
     }
   }
 

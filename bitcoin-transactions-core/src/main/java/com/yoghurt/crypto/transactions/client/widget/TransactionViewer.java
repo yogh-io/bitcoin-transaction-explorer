@@ -2,9 +2,8 @@ package com.yoghurt.crypto.transactions.client.widget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.yoghurt.crypto.transactions.client.ui.TransactionPlaceRouter;
-import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.client.place.TransactionPlaceRouter;
+import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 
 public class TransactionViewer extends ValueViewer {
@@ -26,7 +25,7 @@ public class TransactionViewer extends ValueViewer {
   }
 
   public TransactionViewer(final TransactionPlaceRouter placeController, final boolean reverse, final boolean coinbase) {
-    super(TransactionPartColorPicker.getFieldColor(TransactionPartType.TRANSACTION_HASH), new SimpleContextFactory<String>() {
+    super(R.color().transactionHash(), new SimpleContextFactory<String>() {
       @Override
       protected String getTextValue(final String value) {
         if(coinbase) {

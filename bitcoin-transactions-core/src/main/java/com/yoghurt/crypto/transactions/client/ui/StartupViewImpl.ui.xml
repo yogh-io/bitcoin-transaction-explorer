@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
   .content {
   	border-radius: 5px;
@@ -11,20 +12,12 @@
 	height: 37px;
 	font-weight: bold;
   }
-  .link {
-	text-decoration: underline;
-	margin-bottom: 9px;
-  }
-  .link:hover {
-	color: rgb(250, 143, 8);
-	cursor: pointer;
-  }
   </ui:style>
   <g:FlowPanel styleName="{style.content}">
       <g:HTML>
         <h2>Sample transactions</h2>
       </g:HTML>
-    <g:Label styleName="{style.link}" text="First transaction ever on the blockchain" ui:field="firstEver" />
-    <g:Label styleName="{style.link}" text="Simple pay-to-pubkey-hash" ui:field="p2pkh" />
+    <g:Label styleName="{res.css.link}" text="First transaction ever on the blockchain" ui:field="firstEver" />
+    <g:Label styleName="{res.css.link}" text="Simple pay-to-pubkey-hash" ui:field="p2pkh" />
   </g:FlowPanel>
 </ui:UiBinder>

@@ -13,19 +13,16 @@ import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements TransactionView.Presenter {
   private final TransactionView view;
-  private final BlockchainRetrievalServiceAsync service;
 
   private boolean transactionHasError;
 
   @Inject
   public TransactionActivity(final TransactionView view, @Assisted final TransactionPlace place, final BlockchainRetrievalServiceAsync service) {
-    super(place);
+    super(place, service);
     this.view = view;
-    this.service = service;
   }
 
   @Override
@@ -64,11 +61,12 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
     return getTransactionFromHex(place.getHex());
   }
 
-  private Transaction getTransactionFromHex(final String hex) {
+  @Override
+  protected Transaction getTransactionFromHex(final String hex) {
     final Transaction t = new Transaction();
 
     try {
-      TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
+      super.getTransactionFromHex(t, hex);
     } catch (final Exception e) {
       // Could not parse transaction, flag error.
       transactionHasError = true;

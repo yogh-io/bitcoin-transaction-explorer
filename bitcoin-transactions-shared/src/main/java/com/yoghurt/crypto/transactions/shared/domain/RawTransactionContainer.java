@@ -32,6 +32,11 @@ public class RawTransactionContainer extends ArrayList<Entry<TransactionPartType
     return bytes;
   }
 
+  /**
+   * Find the first occurrence of the given part type, disregards subsequent existence.
+   * @param type Part type to find
+   * @return The entry found, or null if none.
+   */
   @Deprecated
   public Entry<TransactionPartType, byte[]> find(final TransactionPartType type) {
     for (final Entry<TransactionPartType, byte[]> part : this) {

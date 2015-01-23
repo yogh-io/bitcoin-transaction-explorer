@@ -16,6 +16,7 @@ import com.yoghurt.crypto.transactions.client.place.ApplicationPlaceHistoryMappe
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
 import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
+import com.yoghurt.crypto.transactions.client.place.ScriptPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
@@ -25,6 +26,8 @@ import com.yoghurt.crypto.transactions.client.ui.BlockView;
 import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.MineView;
 import com.yoghurt.crypto.transactions.client.ui.MineViewImpl;
+import com.yoghurt.crypto.transactions.client.ui.ScriptView;
+import com.yoghurt.crypto.transactions.client.ui.ScriptViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.StartupView;
 import com.yoghurt.crypto.transactions.client.ui.StartupViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.TransactionView;
@@ -47,6 +50,7 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(TransactionView.class).to(TransactionViewImpl.class);
     bind(BlockView.class).to(BlockViewImpl.class);
     bind(MineView.class).to(MineViewImpl.class);
+    bind(ScriptView.class).to(ScriptViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }
@@ -70,6 +74,11 @@ public class ApplicationClientModule extends AbstractGinModule {
     @Override
     public void goToBlock(final String blockHash) {
       goTo(new BlockPlace(BlockDataType.ID, blockHash));
+    }
+
+    @Override
+    public void goToScript(final String transactionHash, final int outputIndex, final String scriptSig) {
+      goTo(new ScriptPlace(transactionHash, outputIndex, scriptSig));
     }
   }
 }

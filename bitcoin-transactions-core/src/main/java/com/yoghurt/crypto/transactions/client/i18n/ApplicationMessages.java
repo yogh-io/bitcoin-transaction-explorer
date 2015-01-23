@@ -69,6 +69,9 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Raw coinbase transaction in hex")
   String blockPlaceTitleRawCoinbaseHex();
 
+  @DefaultMessage("Mining simulator")
+  String minePlaceTitleMiningSimulator();
+
   @DefaultMessage("Modify Headers")
   String minePlaceTitleModifyHeaders();
 
@@ -95,6 +98,12 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("ScriptSig:")
   String transactionScriptSig();
+
+  @DefaultMessage("PubKeySig:")
+  String transactionPubKeySig();
+
+  @DefaultMessage("View in script viewer")
+  String transactionScriptViewer();
 
   @DefaultMessage("Sequence:")
   String transactionSequence();
@@ -161,4 +170,16 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("This block could not be found in the blockchain.")
   String blockPlaceBlockchainExistenceNotFound();
+
+  @DefaultMessage("Script viewer")
+  String scriptPlaceTitleScriptViewer();
+
+  @DefaultMessage("Outpoint information")
+  String scriptPlaceTitleOutpointViewer();
+
+  @DefaultMessage("Tx hash:")
+  String scriptPlaceOutpointHash();
+
+  @DefaultMessage("Scripts")
+  String scriptPlaceTitleScripts();
 }

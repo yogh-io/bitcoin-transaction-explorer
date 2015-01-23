@@ -12,7 +12,6 @@ public final class ScriptParseUtil {
   public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final boolean isCoinbase) {
     int pointer = initialPointer;
 
-
     // Parse the number of bytes in the script
     pointer = parseScriptSize(entity, pointer, bytes);
 
@@ -24,6 +23,14 @@ public final class ScriptParseUtil {
     }
 
     return pointer;
+  }
+
+  public static ScriptEntity parseScript(final byte[] scriptBytes) {
+    final ScriptEntity entity = new ScriptEntity();
+
+    parseScriptBytes(entity, 0, scriptBytes, scriptBytes.length);
+
+    return entity;
   }
 
   private static int parseCoinbaseScriptBytes(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final long value) {
