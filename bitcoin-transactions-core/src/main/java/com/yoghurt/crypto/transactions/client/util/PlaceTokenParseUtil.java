@@ -8,10 +8,10 @@ import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
+import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public final class PlaceTokenParseUtil {
   private static final String MINE_TOKEN = "mine";

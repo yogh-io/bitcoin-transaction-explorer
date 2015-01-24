@@ -47,9 +47,12 @@ public class TransactionViewer extends ValueViewer {
   @Override
   public void setValue(final byte[] hash) {
     if (reverse) {
-      ArrayUtil.reverse(hash);
-    }
+      final byte[] hashCopy = ArrayUtil.arrayCopy(hash);
+      ArrayUtil.reverse(hashCopy);
 
-    super.setValue(hash);
+      super.setValue(hash);
+    } else {
+      super.setValue(hash);
+    }
   }
 }

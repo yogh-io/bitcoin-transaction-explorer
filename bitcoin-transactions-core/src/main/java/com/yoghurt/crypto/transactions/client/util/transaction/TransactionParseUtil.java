@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.util.transaction;
+package com.yoghurt.crypto.transactions.client.util.transaction;
 
 import java.util.ArrayList;
 

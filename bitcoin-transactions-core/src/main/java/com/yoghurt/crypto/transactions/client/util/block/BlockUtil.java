@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.util.block;
+package com.yoghurt.crypto.transactions.client.util.block;
 
 public class BlockUtil {
   protected static final int BLOCK_VERSION_FIELD_SIZE = 4;
