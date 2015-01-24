@@ -6,10 +6,10 @@ import com.google.gwt.i18n.client.Messages;
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
 
-  @DefaultMessage("Blockchain reader")
+  @DefaultMessage("Node reader")
   String applicationTitle();
 
-  @DefaultMessage("For developers - Breaking it down to the bone")
+  @DefaultMessage("Breaking it down to the bone")
   String applicationSubTitle();
 
   @DefaultMessage("V0.1 - 2015")
@@ -182,4 +182,10 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("Scripts")
   String scriptPlaceTitleScripts();
+
+  @DefaultMessage("ScriptSig in raw hex")
+  String scriptPlaceScriptSigRawHex();
+
+  @DefaultMessage("PubKeySig in raw hex")
+  String scriptPlacePubKeySigRawHex();
 }

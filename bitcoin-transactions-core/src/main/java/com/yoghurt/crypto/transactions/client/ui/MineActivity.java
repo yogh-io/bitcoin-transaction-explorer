@@ -13,6 +13,11 @@ import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
+import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
@@ -21,11 +26,6 @@ import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 /**
  * TODO GET RID OF HISTORICAL SIMULATION AND USE GETWORK/GETBLOCKTEMPLATE TYPE OF CONSTRUCT

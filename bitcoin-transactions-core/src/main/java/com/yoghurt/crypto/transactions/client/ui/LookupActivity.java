@@ -6,11 +6,11 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
-import com.yoghurt.crypto.transactions.shared.util.block.BlockParseUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 public abstract class LookupActivity<E, P extends Place> extends AbstractActivity {
   protected final P place;
