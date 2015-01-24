@@ -1,12 +1,12 @@
-package com.yoghurt.crypto.transactions.client.util;
+package com.yoghurt.crypto.transactions.client.util.transaction;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionParseUtil;
 
 
 public class TransactionParseUtilTest {

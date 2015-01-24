@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.util.block;
+package com.yoghurt.crypto.transactions.client.util.block;
 
 import java.util.Date;
 

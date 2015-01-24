@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.util.transaction;
+package com.yoghurt.crypto.transactions.client.util.transaction;
 
 public class TransactionUtil {
   protected static final int TRANSACTION_VERSION_FIELD_SIZE = 4;

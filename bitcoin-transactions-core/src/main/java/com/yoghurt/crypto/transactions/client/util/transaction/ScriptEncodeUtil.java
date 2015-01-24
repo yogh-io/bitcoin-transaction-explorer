@@ -1,5 +1,6 @@
-package com.yoghurt.crypto.transactions.shared.util.transaction;
+package com.yoghurt.crypto.transactions.client.util.transaction;
 
+import com.google.gwt.core.client.GWT;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
@@ -16,19 +17,23 @@ public final class ScriptEncodeUtil {
 
     int pointer = 0;
     for (final ScriptPart part : script.getInstructions()) {
+      GWT.log(pointer + "");
       final byte[] partBytes = part.getBytes();
 
       if (part.getOperation() == null) {
         System.arraycopy(partBytes, 0, bytes, pointer, partBytes.length);
+        GWT.log(pointer + " (arbit.)");
         pointer += partBytes.length;
       } else {
         System.arraycopy(new byte[] { ScriptOperationUtil.getOperationOpCode(part) }, 0, bytes, pointer, 1);
         pointer++;
+        GWT.log(pointer + " (op)");
         if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
           System.arraycopy(partBytes, 0, bytes, pointer, partBytes.length);
+          pointer += partBytes.length;
+          GWT.log(pointer + "(data)");
         }
       }
-
     }
 
     return bytes;

@@ -1,7 +1,9 @@
-package com.yoghurt.crypto.transactions.shared.util.transaction;
+package com.yoghurt.crypto.transactions.client.util.transaction;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import com.yoghurt.crypto.transactions.client.util.SHA256;
 
 /**
  * FIXME Using external library imported into this project because there's no maven support for it May want to move to a library that does exist on
