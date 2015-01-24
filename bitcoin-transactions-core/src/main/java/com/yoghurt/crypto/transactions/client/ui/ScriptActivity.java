@@ -8,13 +8,13 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace.ScriptDataType;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
+import com.yoghurt.crypto.transactions.client.util.transaction.ScriptParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
-import com.yoghurt.crypto.transactions.shared.util.transaction.ScriptParseUtil;
 
 public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlace> implements BlockView.Presenter {
   private final ScriptView view;

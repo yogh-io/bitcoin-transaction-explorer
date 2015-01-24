@@ -12,6 +12,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.LabelledWidget;
@@ -25,7 +26,6 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 
 public class TransactionViewImpl extends Composite implements TransactionView {
   interface TransactionViewImplUiBinder extends UiBinder<Widget, TransactionViewImpl> {}

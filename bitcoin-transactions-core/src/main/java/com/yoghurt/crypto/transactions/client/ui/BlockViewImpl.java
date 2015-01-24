@@ -11,6 +11,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
+import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
@@ -21,8 +23,6 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.util.block.BlockEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.util.transaction.TransactionEncodeUtil;
 
 @Singleton
 public class BlockViewImpl extends Composite implements BlockView {
