@@ -87,27 +87,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>ide</id>
-      <build>
-        <finalName>crypto</finalName>
-        <directory>war/WEB-INF</directory>
-        <plugins>
-          <plugin>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-              <webResources>
-                <!-- include the GWT generated files -->
-                <resource>
-                  <directory>../bitcoin-transactions-core/war</directory>
-                </resource>
-              </webResources>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
