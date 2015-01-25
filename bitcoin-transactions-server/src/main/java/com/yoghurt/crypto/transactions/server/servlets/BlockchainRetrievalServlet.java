@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
+import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +25,11 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   public void init(final ServletConfig config) throws ServletException {
     super.init(config);
 
-    retriever = new BlockchainRetrievalFactory();
+    try {
+      retriever = new BlockchainRetrievalFactory();
+    } catch (final IOException e) {
+      e.printStackTrace();
+    }
 
     latestBlockRetriever = new LatestBlockRetriever(retriever.get());
     latestBlockRetriever.start();
