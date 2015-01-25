@@ -8,6 +8,8 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace.ScriptDataType;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
+import com.yoghurt.crypto.transactions.client.util.script.StackMachine;
+import com.yoghurt.crypto.transactions.client.util.script.StackMachineFactory;
 import com.yoghurt.crypto.transactions.client.util.transaction.ScriptParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
@@ -29,7 +31,9 @@ public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlac
   protected void doDeferredStart(final AcceptsOneWidget panel, final ScriptInformation scriptInformation) {
     panel.setWidget(view);
 
-    view.setScript(scriptInformation);
+    final StackMachine machine = StackMachineFactory.createStackMachine(scriptInformation);
+
+    view.setScript(scriptInformation, machine);
   }
 
   @Override

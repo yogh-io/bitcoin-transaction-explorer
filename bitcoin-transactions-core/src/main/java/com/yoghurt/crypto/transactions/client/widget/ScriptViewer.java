@@ -1,6 +1,6 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
@@ -14,7 +14,7 @@ import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 
 public class ScriptViewer extends ContextFieldSet<ScriptPart> {
-  private static final int HASH_ELLIPSIS = 20;
+  private static final int HASH_ELLIPSIS = 16;
   private final ScriptType type;
 
   public ScriptViewer(final ScriptType type, final boolean isCoinbase) {
@@ -32,7 +32,7 @@ public class ScriptViewer extends ContextFieldSet<ScriptPart> {
     this.type = type;
   }
 
-  public void setScript(final ArrayList<ScriptPart> instructions) {
+  public void setScript(final Collection<ScriptPart> instructions) {
     clear();
     for (final ScriptPart instruction : instructions) {
       addField(instruction);

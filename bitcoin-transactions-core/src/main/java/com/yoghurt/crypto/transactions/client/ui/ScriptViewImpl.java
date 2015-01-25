@@ -4,11 +4,14 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.util.script.StackState;
 import com.yoghurt.crypto.transactions.client.util.transaction.ScriptEncodeUtil;
+import com.yoghurt.crypto.transactions.client.widget.ScriptExecutionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
@@ -29,6 +32,8 @@ public class ScriptViewImpl extends Composite implements ScriptView {
   @UiField ScriptHexViewer pubKeySigHexViewer;
   @UiField ScriptHexViewer scriptSigHexViewer;
 
+  @UiField FlowPanel scriptExecutionContainer;
+
   @UiField(provided = true) ScriptViewer scriptSigViewer;
   @UiField(provided = true) ScriptViewer pubKeySigViewer;
 
@@ -42,7 +47,7 @@ public class ScriptViewImpl extends Composite implements ScriptView {
   }
 
   @Override
-  public void setScript(final ScriptInformation information) {
+  public void setScript(final ScriptInformation information, final Iterable<StackState> scriptSteps) {
     hashViewer.setValue(information.getOutpoint().getReferenceTransaction());
     indexViewer.setValue(information.getOutpoint().getIndex());
 
@@ -57,5 +62,12 @@ public class ScriptViewImpl extends Composite implements ScriptView {
 
     pubKeySigHexViewer.setContainer(rawPubKeySigContainer);
     scriptSigHexViewer.setContainer(rawScriptSigContainer);
+
+    scriptExecutionContainer.clear();
+    for(final StackState state : scriptSteps) {
+      final ScriptExecutionViewer scriptViewer = new ScriptExecutionViewer();
+      scriptViewer.setScript(state.getScript());
+      scriptExecutionContainer.add(scriptViewer);
+    }
   }
 }

@@ -2,14 +2,14 @@ package com.yoghurt.crypto.transactions.shared.domain;
 
 public class ScriptPart {
   private final byte[] bytes;
-  private final Operation opcode;
+  private final Operation operation;
 
-  public ScriptPart(final Operation opcode) {
-    this(opcode, null);
+  public ScriptPart(final Operation operation) {
+    this(operation, null);
   }
 
-  public ScriptPart(final Operation opcode, final byte[] bytes) {
-    this.opcode = opcode;
+  public ScriptPart(final Operation operation, final byte[] bytes) {
+    this.operation = operation;
     this.bytes = bytes;
   }
 
@@ -18,6 +18,6 @@ public class ScriptPart {
   }
 
   public Operation getOperation() {
-    return opcode;
+    return operation;
   }
 }

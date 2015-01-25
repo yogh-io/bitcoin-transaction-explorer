@@ -188,4 +188,7 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("PubKeySig in raw hex")
   String scriptPlacePubKeySigRawHex();
+
+  @DefaultMessage("Script execution, step-by-step")
+  String scriptPlaceStepByStep();
 }
