@@ -6,7 +6,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>bitcoin-transactions-core</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>Bitcoin transaction explorer Core</name>
 
   <dependencies>
@@ -56,6 +56,9 @@
       <resource>
         <directory>/bitcoin-transactions-core/war/WEB-INF/classes</directory>
       </resource>
+      <resource>
+        <directory>${project.build.directory}/generated-sources/gwt</directory>      
+      </resource>
     </resources>
     <plugins>
       <plugin>
@@ -66,10 +69,9 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>gwt-maven-plugin</artifactId>
+        <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <extraJvmArgs>-Xmx1024m -Xms1024m</extraJvmArgs>
+          <source>1.6</source>
         </configuration>
       </plugin>
       <plugin>
@@ -79,30 +81,6 @@
           <packagingIncludes>WEB-INF/deploy/**/*,application/**/*</packagingIncludes>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>aerius-ide</id>
-      <build>
-        <directory>war/WEB-INF</directory>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>gwt-maven-plugin</artifactId>
-            <configuration>
-              <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
