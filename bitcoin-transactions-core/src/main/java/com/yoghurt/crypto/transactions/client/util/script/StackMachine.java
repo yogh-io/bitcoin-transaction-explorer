@@ -37,8 +37,8 @@ public class StackMachine implements Iterable<StackState>, Iterator<StackState> 
     final StackState state = new StackState();
     state.setScript(script);
 
-    final ScriptPart pop = script.pop();
-    state.setOperation(pop.getOperation());
+    final ScriptExecutionPart pop = script.pop();
+    state.setOperation(pop);
 
     if(ScriptOperationUtil.isDataPushOperation(pop.getOperation())) {
       stack.push(new StackObject(pop.getBytes()));

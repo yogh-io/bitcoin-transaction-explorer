@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
 xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
   .label {
@@ -21,10 +22,10 @@ xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
     <g:HTML>
       <h3 ui:field="outputTitle" />
     </g:HTML>
-    <w:LabelledWidget label="Amount:">
+    <w:LabelledWidget label="{i18n.transactionAmount}">
       <w:ValueViewer ui:field="amountViewer" color="{res.color.transactionOutputAmount}" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="PubKeySig:">
+    <w:LabelledWidget label="{i18n.transactionScriptPubKey}">
       <w:ScriptViewer ui:field="signatureScriptViewer" />
     </w:LabelledWidget>
   </g:FlowPanel>

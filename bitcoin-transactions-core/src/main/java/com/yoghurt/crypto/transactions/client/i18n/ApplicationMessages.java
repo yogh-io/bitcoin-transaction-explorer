@@ -99,14 +99,17 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("ScriptSig:")
   String transactionScriptSig();
 
-  @DefaultMessage("PubKeySig:")
-  String transactionPubKeySig();
+  @DefaultMessage("ScriptPubKey:")
+  String transactionScriptPubKey();
 
   @DefaultMessage("View in script viewer")
   String transactionScriptViewer();
 
   @DefaultMessage("Sequence:")
   String transactionSequence();
+
+  @DefaultMessage("Amount:")
+  String transactionAmount();
 
   @DefaultMessage("State:")
   String transactionState();
@@ -186,9 +189,21 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("ScriptSig in raw hex")
   String scriptPlaceScriptSigRawHex();
 
-  @DefaultMessage("PubKeySig in raw hex")
-  String scriptPlacePubKeySigRawHex();
+  @DefaultMessage("ScriptPubKey in raw hex")
+  String scriptPlaceScriptPubKeyRawHex();
 
   @DefaultMessage("Script execution, step-by-step")
   String scriptPlaceStepByStep();
+
+  @DefaultMessage("Operation:")
+  String scriptOperation();
+
+  @DefaultMessage("Result:")
+  String scriptResult();
+
+  @DefaultMessage("Remaining:")
+  String scriptRemainingScript();
+
+  @DefaultMessage("Execution step {0}")
+  String scriptExecutionStep(int idx);
 }
