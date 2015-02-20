@@ -11,8 +11,8 @@ import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.script.StackState;
 import com.yoghurt.crypto.transactions.client.util.transaction.ScriptEncodeUtil;
-import com.yoghurt.crypto.transactions.client.widget.ScriptExecutionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.ScriptStateViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
@@ -64,10 +64,12 @@ public class ScriptViewImpl extends Composite implements ScriptView {
     scriptSigHexViewer.setContainer(rawScriptSigContainer);
 
     scriptExecutionContainer.clear();
+
+    int counter = 1;
     for(final StackState state : scriptSteps) {
-      final ScriptExecutionViewer scriptViewer = new ScriptExecutionViewer();
-      scriptViewer.setScript(state.getScript());
+      final ScriptStateViewer scriptViewer = new ScriptStateViewer(state, counter);
       scriptExecutionContainer.add(scriptViewer);
+      counter++;
     }
   }
 }

@@ -2,14 +2,13 @@ package com.yoghurt.crypto.transactions.client.util.script;
 
 import java.util.Deque;
 
-import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptExecutionPart;
 import com.yoghurt.crypto.transactions.shared.domain.StackObject;
 
 public class StackState {
   private Deque<StackObject> stack;
   private Deque<ScriptExecutionPart> script;
-  private Operation operation;
+  private ScriptExecutionPart scriptExecutionPart;
 
   public Deque<StackObject> getStack() {
     return stack;
@@ -27,11 +26,11 @@ public class StackState {
     this.script = script;
   }
 
-  public Operation getOperation() {
-    return operation;
+  public ScriptExecutionPart getOperation() {
+    return scriptExecutionPart;
   }
 
-  public void setOperation(final Operation operation) {
-    this.operation = operation;
+  public void setOperation(final ScriptExecutionPart scriptExecutionPart) {
+    this.scriptExecutionPart = scriptExecutionPart;
   }
 }
