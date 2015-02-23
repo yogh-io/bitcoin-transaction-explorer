@@ -41,9 +41,9 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
     case SCRIPT_PUB_KEY_OP_CODE:
       final Operation pubKeySigOp = ScriptOperationUtil.getOperation(value.getValue()[0] & 0xFF);
       if (ScriptOperationUtil.isDataPushOperation(pubKeySigOp)) {
-        return "PubKeySig operation: " + pubKeySigOp.name() + " (" + (value.getValue()[0] & 0xFF) + " byte)";
+        return "ScriptPubKey operation: " + pubKeySigOp.name() + " (" + (value.getValue()[0] & 0xFF) + " byte)";
       } else {
-        return "PubKeySig operation: " + pubKeySigOp.name();
+        return "ScriptPubKey operation: " + pubKeySigOp.name();
       }
     case SCRIPT_SIG_OP_CODE:
       final Operation scriptSigOp = ScriptOperationUtil.getOperation(value.getValue()[0] & 0xFF);
@@ -53,7 +53,7 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
         return "ScriptSig operation: " + scriptSigOp.name();
       }
     case SCRIPT_PUB_KEY_PUSH_DATA:
-      return "PubKeySig data";
+      return "ScriptPubKey data";
     case SCRIPT_SIG_PUSH_DATA:
       return "ScriptSig data";
     case LOCK_TIME:
@@ -61,7 +61,7 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
     case VERSION:
       return "Transaction version";
     case ARBITRARY_DATA:
-      return "Arbitrary coinbase data";
+      return "Coinbase input script";
     default:
       return "Unknown transaction part";
     }
