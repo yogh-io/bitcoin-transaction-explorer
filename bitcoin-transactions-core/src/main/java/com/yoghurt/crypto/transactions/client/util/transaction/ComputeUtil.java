@@ -3,6 +3,9 @@ package com.yoghurt.crypto.transactions.client.util.transaction;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.google.gwt.core.shared.GWT;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.SHA256;
 
 /**
@@ -66,7 +69,7 @@ public class ComputeUtil {
 
   @Deprecated
   public static byte[] computeMerkleRoot(final byte[] tx) {
-    return computeDoubleSHA256(tx, tx);
+    return computeDoubleSHA256(tx);
   }
 
   /**
@@ -80,6 +83,8 @@ public class ComputeUtil {
 
     final byte[] bs = txs.get(0);
 
-    return computeDoubleSHA256(bs, bs);
+    GWT.log("Que: " + Str.toString(Hex.encode(computeDoubleSHA256(bs))));
+
+    return computeDoubleSHA256(bs);
   }
 }

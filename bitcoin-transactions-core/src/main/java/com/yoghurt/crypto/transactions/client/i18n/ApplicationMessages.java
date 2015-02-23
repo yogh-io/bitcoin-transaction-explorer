@@ -6,7 +6,7 @@ import com.google.gwt.i18n.client.Messages;
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
 
-  @DefaultMessage("Node reader")
+  @DefaultMessage("Mining simulator")
   String applicationTitle();
 
   @DefaultMessage("Breaking it down to the bone")

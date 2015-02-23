@@ -13,9 +13,8 @@
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
-      <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="{i18n.applicationTitle}" />
+      <g:Label styleName="{res.css.applicationTitle}" ui:field="title" text="{i18n.applicationTitle}" />
       <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationSubTitle}" />
-      <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
     </g:FlowPanel>
     <g:SimplePanel styleName="{res.css.applicationContentContainer}">
       <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent}" />
