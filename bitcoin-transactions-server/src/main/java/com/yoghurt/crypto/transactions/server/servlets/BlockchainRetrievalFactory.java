@@ -19,7 +19,7 @@ public class BlockchainRetrievalFactory {
   public BlockchainRetrievalFactory() throws IOException {
     final Properties props = new Properties();
 
-    final String propFileName = BlockchainRetrievalProperties.class.getName().replace(".", "/") + ".properties";
+    final String propFileName = BlockchainRetrievalProperties.class.getSimpleName().replace(".", "/") + ".properties";
 
     props.load(getClass().getClassLoader().getResourceAsStream(propFileName));
 
