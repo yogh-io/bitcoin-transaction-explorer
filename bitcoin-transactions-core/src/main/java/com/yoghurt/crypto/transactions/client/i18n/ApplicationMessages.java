@@ -12,7 +12,7 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Breaking it down to the bone")
   String applicationSubTitle();
 
-  @DefaultMessage("V0.1 - 2015")
+  @DefaultMessage("Mining Simulator - Sneak preview - 2015")
   String applicationVersion();
 
   @DefaultMessage("Insert anything, press enter")
