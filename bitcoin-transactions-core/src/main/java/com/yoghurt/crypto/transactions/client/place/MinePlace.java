@@ -1,18 +1,13 @@
 package com.yoghurt.crypto.transactions.client.place;
 
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.Prefix;
 
-public class MinePlace extends ApplicationPlace {
+public class MinePlace extends Place {
   private static final String PREFIX = "mine";
 
   public enum MineDataType {
-    RAW("raw"),
-
-    ID("id"),
-
-    LAST("last"),
-
-    HEIGHT("height");
+    RAW("raw");
 
     private final String token;
 
@@ -52,6 +47,10 @@ public class MinePlace extends ApplicationPlace {
     protected String[] getTokens(final MinePlace place) {
       return place.payload == null ? new String[] { place.getType().getToken() } : new String[] { place.getType().getToken(), place.getPayload() };
     }
+  }
+
+  public MinePlace() {
+    this(MineDataType.RAW, "0100000000000000000000000000000000000000000000000000000000000000000000003BA3EDFD7A7B12B27AC72C3E67768F617FC81BC3888A51323A9FB8AA4B1E5E4A29AB5F49FFFF001D1DAC2B7C");
   }
 
   public MinePlace(final MineDataType type) {

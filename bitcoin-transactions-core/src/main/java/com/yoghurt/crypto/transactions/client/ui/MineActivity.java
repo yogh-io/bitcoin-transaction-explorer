@@ -2,17 +2,12 @@ package com.yoghurt.crypto.transactions.client.ui;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.shared.GWT;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
-import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
-import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
-import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
@@ -23,113 +18,35 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
-import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 /**
  * TODO GET RID OF HISTORICAL SIMULATION AND USE GETWORK/GETBLOCKTEMPLATE TYPE OF CONSTRUCT
  */
-public class MineActivity extends LookupActivity<BlockInformation, MinePlace> implements MineView.Presenter {
-  private static final String SEAN_OUTPOST_HASH_160 = "01000000010000000000000000000000000000000000000000000000000000000000000000FFFFFFFF0487654321FFFFFFFF0100F90295000000001976A9144bf3effbe53e9630f332b9c5979d7ddbcdea22ac88AC00000000";
-
-  /**
-   * Thirty seconds
-   */
-  private static final int LATEST_BLOCK_POLL_DELAY = 10 * 1000;
-  private static final int SHORT_INITIAL_POLL_DELAY = 500;
+public class MineActivity extends AbstractActivity implements MineView.Presenter {
+  private static final String GENESIS_COINBASE = "01000000010000000000000000000000000000000000000000000000000000000000000000FFFFFFFF4D04FFFF001D0104455468652054696D65732030332F4A616E2F32303039204368616E63656C6C6F72206F6E206272696E6B206F66207365636F6E64206261696C6F757420666F722062616E6B73FFFFFFFF0100F2052A01000000434104678AFDB0FE5548271967F1A67130B7105CD6A828E03909A67962E0EA1F61DEB649F6BC3F4CEF38C4F35504E51EC112DE5C384DF7BA0B8D578A4C702B6BF11D5FAC00000000";
 
   private final MineView view;
 
-  private final Timer timer = new Timer() {
-    @Override
-    public void run() {
-      getLatestBlock();
-    }
-  };
+  private final MinePlace place;
 
-  private String latestBlock;
-
-  private final AsyncCallback<String> callback = new AppAsyncCallback<String>() {
-    @Override
-    public void onSuccess(final String result) {
-      retrieving = false;
-
-      if (result == null) {
-        timer.schedule(LATEST_BLOCK_POLL_DELAY);
-        return;
-      }
-
-      // I have no idea which of the endians this is and this isn't a time in which I like being in a thinking mood
-      final byte[] otherEndianBytes = Hex.decode(result);
-      ArrayUtil.reverse(otherEndianBytes);
-      final String otherEndianResult = Str.toString(Hex.encode(otherEndianBytes));
-
-      if (!otherEndianResult.equals(latestBlock)) {
-        latestBlock = result;
-        view.broadcastLatestBlock(otherEndianResult);
-      }
-
-      timer.schedule(LATEST_BLOCK_POLL_DELAY);
-    }
-  };
-
-  private boolean retrieving;
-
-  @Inject
-  public MineActivity(final MineView view, @Assisted final MinePlace place, final BlockchainRetrievalServiceAsync service) {
-    super(place, service);
+  public MineActivity(final MineView view, final MinePlace place) {
     this.view = view;
-  }
-
-  @Override
-  protected void doLookup(final MinePlace place, final AsyncCallback<BlockInformation> callback) {
-    switch (place.getType()) {
-    case HEIGHT:
-      service.getBlockInformationFromHeight(Integer.parseInt(place.getPayload()), callback);
-      break;
-    case ID:
-      service.getBlockInformationFromHash(place.getPayload(), callback);
-      break;
-    case LAST:
-      service.getBlockInformationLast(new MorphCallback<BlockInformation, BlockInformation>(callback) {
-        @Override
-        protected BlockInformation morphResult(final BlockInformation result) {
-          result.setRawCoinbaseTransaction(SEAN_OUTPOST_HASH_160);
-          return result;
-        }
-      });
-      break;
-    default:
-      callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));
-      return;
-    }
+    this.place = place;
   }
 
   @Override
   public void onStop() {
-    timer.cancel();
     view.cancel();
 
     super.onStop();
   }
 
   @Override
-  protected boolean mustPerformLookup(final MinePlace place) {
-    return place.getType() == MineDataType.HEIGHT || place.getType() == MineDataType.LAST || place.getType() == MineDataType.ID;
-  }
-
-  @Override
-  protected BlockInformation createInfo(final MinePlace place) {
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     final BlockInformation blockInformation = new BlockInformation();
     blockInformation.setRawBlockHeaders(place.getPayload());
+    blockInformation.setRawCoinbaseTransaction(GENESIS_COINBASE);
 
-    return blockInformation;
-  }
-
-  @Override
-  protected void doDeferredStart(final AcceptsOneWidget panel, final BlockInformation blockInformation) {
-    view.setPresenter(this);
     panel.setWidget(view);
 
     Block block;
@@ -138,12 +55,9 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
       block = BlockParseUtil.parseBlockBytes(Hex.decode(blockInformation.getRawBlockHeaders()));
       coinbase = TransactionParseUtil.parseTransactionBytes(Hex.decode(blockInformation.getRawCoinbaseTransaction()));
     } catch (final Throwable e) {
-      // TODO Throw error
+      GWT.log(e.getMessage());
       return;
     }
-
-    // Store this block's hash
-    latestBlock = Str.toString(Hex.encode(block.getBlockHash()));
 
     final RawBlockContainer rawBlock = new RawBlockContainer();
     final RawTransactionContainer rawTransaction = new RawTransactionContainer();
@@ -151,61 +65,17 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
       BlockEncodeUtil.encodeBlock(block, rawBlock);
       TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
     } catch (final Throwable e) {
-      // TODO Throw error
+      GWT.log(e.getMessage());
       return;
     }
 
-    // Set the previous block hash to last/current block hash
-    final byte[] blockHash = ComputeUtil.computeDoubleSHA256(rawBlock.values());
-    block.setPreviousBlockHash(blockHash);
-    rawBlock.setPreviousBlockHash(blockHash);
+    // Set the merkle root to the coinbase tx only
+    final ArrayList<byte[]> txs = new ArrayList<byte[]>();
+    txs.add(rawTransaction.getBytes());
+    final byte[] merkleRoot = ComputeUtil.computeMerkleRoot(txs);
+    block.setMerkleRoot(merkleRoot);
+    rawBlock.setMerkleRoot(merkleRoot);
 
-    final boolean customMiningSession = isCustomMiningPlace();
-
-    // If this is a custom mining session (which includes custom coinbase), do some special stuff
-    if(customMiningSession) {
-      // Reset the nonce
-      block.setNonce(0);
-      rawBlock.setNonce(NumberEncodeUtil.encodeUint32(0));
-
-      // Set the merkle root to the coinbase tx only
-      final ArrayList<byte[]> txs = new ArrayList<byte[]>();
-      txs.add(rawTransaction.getBytes());
-      final byte[] merkleRoot = ComputeUtil.computeMerkleRoot(txs);
-      block.setMerkleRoot(merkleRoot);
-      rawBlock.setMerkleRoot(merkleRoot);
-    }
-
-    view.setInformation(block, rawBlock, rawTransaction, customMiningSession);
-  }
-
-  private boolean isCustomMiningPlace() {
-    return place.getType() == MineDataType.LAST || place.getType() == MineDataType.RAW;
-  }
-
-  @Override
-  protected void doDeferredError(final AcceptsOneWidget panel, final Throwable caught) {
-    // Not supported
-  }
-
-  @Override
-  public void startPoll() {
-    timer.schedule(SHORT_INITIAL_POLL_DELAY);
-  }
-
-  @Override
-  public void pausePoll() {
-    retrieving = false;
-    timer.cancel();
-  }
-
-  @Override
-  public void getLatestBlock() {
-    if (retrieving) {
-      return;
-    }
-
-    retrieving = true;
-    service.getLatestBlockHash(callback);
+    view.setInformation(block, rawBlock, rawTransaction);
   }
 }

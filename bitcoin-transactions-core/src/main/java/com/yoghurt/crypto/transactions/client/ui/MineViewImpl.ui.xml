@@ -14,26 +14,31 @@
   .inline {
   	display: inline-block;
   }
+  .button {
+	width: 120px;
+  }
   </ui:style>
   <g:FlowPanel>
-    <g:Label styleName="{style.contentHeading}" text="{i18n.minePlaceTitleMiningSimulator}" />
     <g:HTML>
       <h2>Controls</h2>
       <h3>Playback</h3>
     </g:HTML>
     <g:FlowPanel>
-      <g:Button ui:field="cancelButton" text="Pause" />
-      <g:Button ui:field="continueButton" text="Continue" />
-      <g:Button ui:field="singleCycleButton" text="Run once" />
+      <g:Button styleName="{style.button}" ui:field="cancelButton" text="Pause" />
+      <g:Button styleName="{style.button}" ui:field="continueButton" text="Continue" />
+      <g:Button styleName="{style.button}" ui:field="singleCycleButton" text="Run once" />
     </g:FlowPanel>
     <g:HTML>
       <h3><ui:text from="{i18n.minePlaceTitleModifyHeaders}" /></h3>
     </g:HTML>
     <g:FlowPanel>
-      <g:Button ui:field="nonceIncrementButton" text="Increment nonce" />
-      <g:Button ui:field="extraNonceIncrementButton" text="Increment extraNonce" />
-      <g:Button ui:field="timeSynchronizeButton" text="Synchronize time" />
-      <g:Button ui:field="latestBlockButton" text="Get latest block" />
+      <g:Button styleName="{style.button}" ui:field="nonceIncrementButton" text="nonce ++" />
+      <g:Button styleName="{style.button}" ui:field="nonceDecrementButton" text="nonce --" />
+      <g:HTML><br /></g:HTML>
+      <g:Button styleName="{style.button}" ui:field="extraNonceIncrementButton" text="extraNonce ++" />
+      <g:Button styleName="{style.button}" ui:field="extraNonceDecrementButton" text="extraNonce --" />
+      <g:HTML><br /></g:HTML>
+      <g:Button styleName="{style.button}" ui:field="timeSynchronizeButton" text="Synchronize time" />
     </g:FlowPanel>
     <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleMineHeaders}" /></h2>
