@@ -1,0 +1,2 @@
+serviceClass: com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService
+path: CA686A4487C104DFB607ECFBC2FAC5BD.gwt.rpc
