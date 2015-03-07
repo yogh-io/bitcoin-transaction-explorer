@@ -41,7 +41,6 @@ public final class BlockrApiParser {
 
     final JsonNode data = tree.get("data");
 
-    //    info.setBlockHeight(data.get("block").getIntValue());
     info.setState(data.get("is_unconfirmed").getBooleanValue() ? TransactionState.UNCONFIRMED : TransactionState.CONFIRMED);
     info.setTime(DATETIME_FORMATTER.parse(data.get("time_utc").getTextValue()));
     info.setConfirmations(data.get("confirmations").getIntValue());
@@ -118,5 +117,21 @@ public final class BlockrApiParser {
     if(!STATUS_SUCCESS.equals(tree.get("status").getTextValue())) {
       throw new IllegalStateException("JSON response does not indicate success.");
     }
+  }
+
+  public static String getBlockHashFromTransaction(final InputStream jsonData) throws JsonProcessingException, IOException {
+    final JsonNode tree = JsonParser.mapper.readTree(jsonData);
+
+    checkSuccess(tree);
+
+    return tree.get("data").get("tx").get("blockhash").getTextValue();
+  }
+
+  public static String getCoinbaseTransaction(final InputStream jsonData) throws JsonProcessingException, IOException {
+    final JsonNode tree = JsonParser.mapper.readTree(jsonData);
+
+    checkSuccess(tree);
+
+    return tree.get("data").get("tx").get(0).getTextValue();
   }
 }
