@@ -1,52 +1,45 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import com.yoghurt.crypto.transactions.server.servlets.providers.BitcoinJSONRPCRetriever;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockchainRetrievalHook;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockrAPIRetriever;
+import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
 
 public class BlockchainRetrievalFactory {
-  private static final Source DEFAULT_SOURCE = Source.BLOCKR_API;
-
-  public enum Source {
-    NODE, BLOCKR_API;
-  }
-
   private BlockchainRetrievalHook hook;
 
-  public BlockchainRetrievalFactory() throws IOException {
-    final Properties props = new Properties();
+  private static BlockchainRetrievalFactory instance;
 
-    final String propFileName = BlockchainRetrievalProperties.class.getSimpleName().replace(".", "/") + ".properties";
-
-    props.load(getClass().getClassLoader().getResourceAsStream(propFileName));
-
-    Source source;
-    try {
-      source = Source.valueOf(props.getProperty("yoghurt.crypto.source"));
-    } catch (final NullPointerException e) {
-      System.out.println("Warning: No blockchain source explicitly selected, falling back to: " + DEFAULT_SOURCE.name());
-      source = DEFAULT_SOURCE;
+  public static BlockchainRetrievalFactory create() {
+    if(instance == null) {
+      instance = new BlockchainRetrievalFactory();
     }
 
-    switch (source) {
+    return instance;
+  }
+
+  public static BlockchainRetrievalHook get() {
+    return create().hook;
+  }
+
+  public static void set(final RetrievalHookConfig config) {
+    BlockchainRetrievalHook hook;
+
+    switch (config.getBlockchainSource()) {
     case NODE:
-      final String host = props.getProperty("yoghurt.crypto.rpc.host");
-      final int port = Integer.parseInt(props.getProperty("yoghurt.crypto.rpc.port"));
-      final String rpcUser = props.getProperty("yoghurt.crypto.rpc.user");
-      final String rpcPass = props.getProperty("yoghurt.crypto.rpc.pass");
-      hook = new BitcoinJSONRPCRetriever(host, port, rpcUser, rpcPass);
+      hook = new BitcoinJSONRPCRetriever((BitcoinCoreNodeConfig) config);
       break;
     default:
     case BLOCKR_API:
       hook = new BlockrAPIRetriever();
       break;
     }
+
+    set(hook);
   }
 
-  public BlockchainRetrievalHook get() {
-    return hook;
+  private static void set(final BlockchainRetrievalHook hook) {
+    create().hook = hook;
   }
 }

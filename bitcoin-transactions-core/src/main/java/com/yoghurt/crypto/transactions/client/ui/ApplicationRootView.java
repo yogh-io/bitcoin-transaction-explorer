@@ -21,6 +21,7 @@ import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
+import com.yoghurt.crypto.transactions.client.util.StyleUtil;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget {
@@ -42,7 +43,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
     title.setHref("#" + historyMapper.getToken(new StartupPlace()));
 
-    lookupField.getElement().setPropertyString("placeholder", M.messages().applicationLookupFieldPlaceHolder());
+    StyleUtil.setPlaceHolder(lookupField, M.messages().applicationLookupFieldPlaceHolder());
     lookupField.setFocus(true);
   }
 
@@ -53,7 +54,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
     }
 
     final ApplicationPlace place = PlaceTokenParseUtil.parseToken(lookupField.getText());
-    if(place == null) {
+    if (place == null) {
       // Do something, like show a mild error.
       return;
     }
@@ -63,7 +64,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
   @Override
   public void setWidget(final IsWidget w) {
-    if(w == null) {
+    if (w == null) {
       return;
     }
 

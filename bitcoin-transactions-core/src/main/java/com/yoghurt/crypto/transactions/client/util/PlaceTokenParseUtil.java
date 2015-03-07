@@ -4,6 +4,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
+import com.yoghurt.crypto.transactions.client.place.ConfigPlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
@@ -16,6 +17,7 @@ import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 public final class PlaceTokenParseUtil {
   private static final String MINE_TOKEN = "mine";
   private static final String LAST_BLOCK_TOKEN = "last";
+  private static final String CONFIG_TOKEN = "config";
 
   // Bunch of zeroes every valid block starts with
   private static final String BLOCK_TOKEN_START = "0000000000";
@@ -38,6 +40,10 @@ public final class PlaceTokenParseUtil {
     }
     if (LAST_BLOCK_TOKEN.equals(cleanToken)) {
       return new BlockPlace(BlockDataType.LAST);
+    }
+
+    if(CONFIG_TOKEN.equals(cleanToken)) {
+      return new ConfigPlace();
     }
 
     // Check if the token is exactly equal to the length of a hash, meaning this is probably a transaction or block hash

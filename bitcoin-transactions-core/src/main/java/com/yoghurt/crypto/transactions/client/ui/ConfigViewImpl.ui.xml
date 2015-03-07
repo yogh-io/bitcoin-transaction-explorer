@@ -1,0 +1,46 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
+  <ui:style>
+  .contentHeading {
+  	font-size: 31px;
+  	height: 37px;
+  	font-weight: bold;
+  	margin-bottom: 15px;
+  }
+  .textBox {
+  	margin-bottom: 15px;
+  }
+  .explainText {
+  	margin: 10px 0px;
+  	color: #6289DD;
+  }
+  .button {
+	margin-left: 0px;
+  }
+  </ui:style>
+  <g:FlowPanel>
+    <g:Label styleName="{style.contentHeading}" text="{i18n.configPlaceTitle}" />
+    <g:DeckPanel ui:field="switchPanel">
+      <g:FlowPanel>
+        <g:HTML hTML="{i18n.configPlaceCreatePasswordText}" styleName="{style.explainText}" />
+        <g:PasswordTextBox styleName="{res.css.textBox} {style.textBox}" ui:field="createPassword" />
+        <g:PasswordTextBox styleName="{res.css.textBox} {style.textBox}" ui:field="createPasswordRepeat" />
+        <g:Button ui:field="submitNewPassword" text="{i18n.configPasswordConfirm}" />
+      </g:FlowPanel>
+      <g:FlowPanel>
+        <g:HTML hTML="{i18n.configPlaceInputPasswordText}" styleName="{style.explainText}" />
+        <g:PasswordTextBox styleName="{res.css.textBox} {style.textBox}" ui:field="password" />
+        <g:Button ui:field="login" text="{i18n.configPasswordLogin}" />
+      </g:FlowPanel>
+      <g:FlowPanel>
+        <w:LabelledWidget label="{i18n.configBlockchainHook}">
+          <g:ListBox ui:field="connectorListBox" />
+        </w:LabelledWidget>
+        <g:SimplePanel ui:field="configEditorContainer" />
+        <g:Button ui:field="saveConfig" styleName="{style.button}" text="{i18n.configSubmitSettings}" />
+      </g:FlowPanel>
+    </g:DeckPanel>
+  </g:FlowPanel>
+</ui:UiBinder>

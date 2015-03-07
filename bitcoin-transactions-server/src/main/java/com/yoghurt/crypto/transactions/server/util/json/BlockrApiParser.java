@@ -17,12 +17,12 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
-public final class BlockrAPIParser {
+public final class BlockrApiParser {
   private static final String STATUS_SUCCESS = "success";
   private static final DateFormat DATETIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
   private static final int BLOCK_LENGTH_HEX = 160;
 
-  private BlockrAPIParser() {}
+  private BlockrApiParser() {}
 
   public static String getRawTransactionHex(final InputStream jsonData) throws JsonProcessingException, IOException {
     final JsonNode tree = JsonParser.mapper.readTree(jsonData);

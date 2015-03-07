@@ -38,6 +38,8 @@ public final class R {
 
     String labelledValueContainer();
 
+    String textBox();
+
     String link();
 
     String left();

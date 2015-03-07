@@ -25,6 +25,7 @@ import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 
 public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
@@ -43,7 +44,11 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   private final HttpClientContext localContext;
   private final CredentialsProvider credentialsProvider = new SystemDefaultCredentialsProvider();
 
-  public BitcoinJSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
+  public BitcoinJSONRPCRetriever(final BitcoinCoreNodeConfig config) {
+    this(config.getHost(), Integer.parseInt(config.getPort()), config.getRpcUser(), config.getRpcPass());
+  }
+
+  private BitcoinJSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
     uri = String.format(URI_FORMAT, host, port);
     credentialsProvider.setCredentials(new AuthScope(host, port, JSON_RPC_REALM, AUTH_SCHEME), new UsernamePasswordCredentials(rpcUser, rpcPassword));
 
