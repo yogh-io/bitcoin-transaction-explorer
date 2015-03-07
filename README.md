@@ -72,25 +72,11 @@ The whole copy-into-an-archive thing is currently more like a bug than anything 
 
 # Configuration
 
-- In the war file, find
+- Navigate to the web application
 
-> \WEB-INF\classes
+- Enter 'config' in the search field, hit enter
 
-- Create a file called
-
-> BlockchainRetrievalProperties.properties
-
-- These should be its contents, set the values as appropriate for your node
-
-> yoghurt.crypto.rpc.host=
-
-> yoghurt.crypto.rpc.port=
-
-> yoghurt.crypto.rpc.user=
-
-> yoghurt.crypto.rpc.pass=
-
-> yoghurt.crypto.source=NODE
+- You'll figure it out from there
 
 # Implementation
 
