@@ -69,10 +69,26 @@ public class MineViewImpl extends Composite implements MineView {
     }
   };
 
+  private final ScheduledCommand defferedNonceDecrementHash = new ScheduledCommand() {
+    @Override
+    public void execute() {
+      decrementNonce();
+      doHashCycle();
+    }
+  };
+
   private final ScheduledCommand defferedExtraNonceHash = new ScheduledCommand() {
     @Override
     public void execute() {
       incrementExtraNonce();
+      doHashCycle();
+    }
+  };
+
+  private final ScheduledCommand defferedExtraNonceDecrementHash = new ScheduledCommand() {
+    @Override
+    public void execute() {
+      decrementExtraNonce();
       doHashCycle();
     }
   };
@@ -161,9 +177,19 @@ public class MineViewImpl extends Composite implements MineView {
     Scheduler.get().scheduleDeferred(defferedNonceHash);
   }
 
+  @UiHandler("nonceDecrementButton")
+  public void onNonceDecrementClick(final ClickEvent e) {
+    Scheduler.get().scheduleDeferred(defferedNonceDecrementHash);
+  }
+
   @UiHandler("extraNonceIncrementButton")
   public void onExtraNonceIncrementClick(final ClickEvent e) {
     Scheduler.get().scheduleDeferred(defferedExtraNonceHash);
+  }
+
+  @UiHandler("extraNonceDecrementButton")
+  public void onExtraNonceDecrementClick(final ClickEvent e) {
+    Scheduler.get().scheduleDeferred(defferedExtraNonceDecrementHash);
   }
 
   @UiHandler("timeSynchronizeButton")
@@ -171,10 +197,10 @@ public class MineViewImpl extends Composite implements MineView {
     Scheduler.get().scheduleDeferred(defferedTimeHash);
   }
 
-  @UiHandler("latestBlockButton")
-  public void onLatestBlockClick(final ClickEvent e) {
-    presenter.getLatestBlock();
-  }
+  //  @UiHandler("latestBlockButton")
+  //  public void onLatestBlockClick(final ClickEvent e) {
+  //    presenter.getLatestBlock();
+  //  }
 
   @Override
   public void broadcastLatestBlock(final String latestBlock) {
@@ -203,17 +229,66 @@ public class MineViewImpl extends Composite implements MineView {
     rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
   }
 
+  private void decrementNonce() {
+    final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) - 1;
+    nonceViewer.setValue(nonce);
+    rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
+  }
+
   private void incrementExtraNonce() {
     final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.ARBITRARY_DATA);
 
-    final long extraNonce = NumberParseUtil.parseUint32(find.getValue()) + 1;
+    final byte[] value = find.getValue();
 
-    find.setValue(NumberEncodeUtil.encodeUint32(extraNonce));
+    // Let's just take the last 4 bytes
+    final byte[] nonceBytes = new byte[4];
+
+    // Get the last four bytes
+    System.arraycopy(value, value.length - 4, nonceBytes, 0, 4);
+
+    // Increment the sucker
+    final long nonce = NumberParseUtil.parseUint32(nonceBytes) + 1;
+
+    final byte[] encodedNonceBytes = NumberEncodeUtil.encodeUint32(nonce);
+
+    // Stick the encoded result back in
+    System.arraycopy(encodedNonceBytes, 0, value, value.length - 4, 4);
+
+    find.setValue(value);
 
     coinbaseHexViewer.setContainer(coinbase);
 
     final byte[] computeMerkleRoot = ComputeUtil.computeMerkleRoot(coinbase.getBytes());
     rawBlock.setMerkleRoot(computeMerkleRoot);
+    merkleRootViewer.setValue(computeMerkleRoot);
+  }
+
+  private void decrementExtraNonce() {
+    final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.ARBITRARY_DATA);
+
+    final byte[] value = find.getValue();
+
+    // Let's just take the last 4 bytes
+    final byte[] nonceBytes = new byte[4];
+
+    // Get the last four bytes
+    System.arraycopy(value, value.length - 4, nonceBytes, 0, 4);
+
+    // Increment the sucker
+    final long nonce = NumberParseUtil.parseUint32(nonceBytes) - 1;
+
+    final byte[] encodedNonceBytes = NumberEncodeUtil.encodeUint32(nonce);
+
+    // Stick the encoded result back in
+    System.arraycopy(encodedNonceBytes, 0, value, value.length - 4, 4);
+
+    find.setValue(value);
+
+    coinbaseHexViewer.setContainer(coinbase);
+
+    final byte[] computeMerkleRoot = ComputeUtil.computeMerkleRoot(coinbase.getBytes());
+    rawBlock.setMerkleRoot(computeMerkleRoot);
+    merkleRootViewer.setValue(computeMerkleRoot);
   }
 
   private void synchronizeTime() {

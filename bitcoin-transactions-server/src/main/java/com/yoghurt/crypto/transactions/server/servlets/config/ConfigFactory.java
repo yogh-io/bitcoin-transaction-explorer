@@ -32,15 +32,14 @@ public class ConfigFactory {
   public static ConfigPropertiesRetriever create(final Properties props) {
     final String type = (String) props.get(ConfigPropertiesRetriever.SOURCE_TYPE_KEY);
 
-    final BlockchainSource source = BlockchainSource.valueOf(type);
+    final BlockchainSource source = type == null ? BlockchainSource.BLOCKR_API : BlockchainSource.valueOf(type);
 
     switch(source) {
-    case BLOCKR_API:
-      return new BlockrConfigRetriever(props);
     case NODE:
       return new BitcoinNodeConfigRetriever(props);
+    case BLOCKR_API:
     default:
-      throw new IllegalArgumentException();
+      return new BlockrConfigRetriever(props);
     }
   }
 }
