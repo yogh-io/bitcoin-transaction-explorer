@@ -81,4 +81,11 @@ public class BlockInformation implements Serializable {
   public void setCoinbaseInformation(final TransactionInformation coinbaseInformation) {
     this.coinbaseInformation = coinbaseInformation;
   }
+
+  @Override
+  public String toString() {
+    return "BlockInformation [rawBlockHeaders=" + rawBlockHeaders + ", height=" + height + ", numConfirmations=" + numConfirmations
+        + ", numTransactions=" + numTransactions + ", size=" + size + ", nextBlockHash=" + nextBlockHash + ", rawCoinbaseTransaction="
+        + rawCoinbaseTransaction + ", coinbaseInformation=" + coinbaseInformation + "]";
+  }
 }

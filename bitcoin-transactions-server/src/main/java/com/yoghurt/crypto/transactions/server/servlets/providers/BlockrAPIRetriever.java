@@ -55,21 +55,39 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
-    try (CloseableHttpClient client = HttpClientProxy.buildProxyClient();
-        InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_INFO_FORMAT, txid)).getContent()) {
+    try (final CloseableHttpClient client = HttpClientProxy.buildProxyClient();
+        final InputStream jsonDataInfo = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_INFO_FORMAT, txid)).getContent();
+        final InputStream jsonDataRaw = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid)).getContent()) {
 
-      return BlockrApiParser.getTransactionInformation(jsonData);
+      final TransactionInformation transactionInformation = BlockrApiParser.getTransactionInformation(jsonDataInfo);
+
+      // We need to do another call just for the block hash
+      final String hash = BlockrApiParser.getBlockHashFromTransaction(jsonDataRaw);
+      transactionInformation.setBlockHash(hash);
+
+      return transactionInformation;
     } catch (ParseException | URISyntaxException | IOException | HttpException e) {
       e.printStackTrace();
       return null;
     }
   }
 
-  public BlockInformation getBlockInformation(final String identifier) {
+  public BlockInformation getBlockInformation(final String identifier) throws ApplicationException {
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient();
-        InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier)).getContent()) {
+        InputStream jsonDataInfo = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier)).getContent();
+        InputStream jsonDataRaw = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_RAW_FORMAT, identifier)).getContent()) {
 
-      return BlockrApiParser.getBlockInformation(jsonData);
+      final BlockInformation blockInformation = BlockrApiParser.getBlockInformation(jsonDataInfo);
+      blockInformation.setRawBlockHeaders(getRawBlock(identifier));
+
+      final String coinbaseTransactionHash = BlockrApiParser.getCoinbaseTransaction(jsonDataRaw);
+
+      final String rawCoinbase = getRawTransactionHex(coinbaseTransactionHash);
+      final TransactionInformation coinbaseInformation = getTransactionInformation(coinbaseTransactionHash);
+      blockInformation.setRawCoinbaseTransaction(rawCoinbase);
+      blockInformation.setCoinbaseInformation(coinbaseInformation);
+
+      return blockInformation;
     } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       return null;
@@ -101,19 +119,16 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
 
   @Override
   public BlockInformation getBlockInformationFromHash(final String identifier) throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    return getBlockInformation(identifier);
   }
 
   @Override
   public BlockInformation getBlockInformationFromHeight(final int height) throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    return getBlockInformation(String.valueOf(height));
   }
 
   @Override
   public BlockInformation getBlockInformationLast() throws ApplicationException {
-    // TODO Auto-generated method stub
-    return null;
+    return getBlockInformationFromHash(LAST_BLOCK_KEYWORD);
   }
 }
