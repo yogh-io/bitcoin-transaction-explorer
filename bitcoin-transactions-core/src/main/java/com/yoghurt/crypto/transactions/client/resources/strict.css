@@ -95,6 +95,14 @@ body {
 	text-align: right;
 }
 
+.textBox {
+ 	border: 1px solid #999;
+ 	border-radius: 5px;
+ 	font-size: 2.4em;
+ 	width: 740px;
+ 	padding: 10px 9px;
+}
+
 .link {
 	text-decoration: underline;
 	margin-bottom: 9px;
@@ -111,17 +119,16 @@ button {
 }
 
 .labelledValueFieldLabel {
-	display: inline-block;
-	width: 85px;
+	min-width: 85px;
 	vertical-align: top;
 	line-height: 30px;
 }
 
 .labelledValueFieldValue {
 	margin-left: 10px;
-	display: inline-block;
 }
 
 .labelledValueContainer {
 	margin-bottom: 10px;
+	display: flex;
 }

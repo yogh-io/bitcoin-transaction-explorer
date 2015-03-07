@@ -81,6 +81,9 @@
               <includes>
                 <include>web.xml</include>
               </includes>
+              <excludes>
+                <exclude>application.nocache.js</exclude>
+              </excludes>
               <targetPath>WEB-INF</targetPath>
               <filtering>true</filtering>
             </webResource>

@@ -24,6 +24,8 @@ import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.SimpleColorPicker;
 import com.yoghurt.crypto.transactions.client.ui.BlockView;
 import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
+import com.yoghurt.crypto.transactions.client.ui.ConfigView;
+import com.yoghurt.crypto.transactions.client.ui.ConfigViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.MineView;
 import com.yoghurt.crypto.transactions.client.ui.MineViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.ScriptView;
@@ -51,6 +53,7 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(BlockView.class).to(BlockViewImpl.class);
     bind(MineView.class).to(MineViewImpl.class);
     bind(ScriptView.class).to(ScriptViewImpl.class);
+    bind(ConfigView.class).to(ConfigViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }

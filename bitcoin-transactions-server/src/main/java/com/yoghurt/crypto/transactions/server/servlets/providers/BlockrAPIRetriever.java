@@ -11,7 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
-import com.yoghurt.crypto.transactions.server.util.json.BlockrAPIParser;
+import com.yoghurt.crypto.transactions.server.util.json.BlockrApiParser;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
@@ -34,7 +34,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     try (CloseableHttpClient client = HttpClientBuilder.create().build();
         InputStream jsonData = HttpClientProxy.getRemoteContent(client, BLOCKR_API_LATEST_BLOCK).getContent()) {
 
-      return BlockrAPIParser.getBlockHash(jsonData);
+      return BlockrApiParser.getBlockHash(jsonData);
     } catch (URISyntaxException | IOException | HttpException e) {
       e.printStackTrace();
     }
@@ -46,7 +46,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
   public String getRawTransactionHex(final String txid) throws ApplicationException {
     try (final CloseableHttpClient client = HttpClientProxy.buildProxyClient();
         InputStream stream = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid)).getContent()) {
-      return BlockrAPIParser.getRawTransactionHex(stream);
+      return BlockrApiParser.getRawTransactionHex(stream);
     } catch (URISyntaxException | IOException | HttpException e) {
       e.printStackTrace();
       throw new ApplicationException(String.format(ERROR_TX_FORMAT, txid));
@@ -58,7 +58,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient();
         InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_INFO_FORMAT, txid)).getContent()) {
 
-      return BlockrAPIParser.getTransactionInformation(jsonData);
+      return BlockrApiParser.getTransactionInformation(jsonData);
     } catch (ParseException | URISyntaxException | IOException | HttpException e) {
       e.printStackTrace();
       return null;
@@ -69,7 +69,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient();
         InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_INFO_FORMAT, identifier)).getContent()) {
 
-      return BlockrAPIParser.getBlockInformation(jsonData);
+      return BlockrApiParser.getBlockInformation(jsonData);
     } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       return null;
@@ -92,7 +92,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     try (CloseableHttpClient client = HttpClientProxy.buildProxyClient();
         InputStream jsonData = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_BLOCK_RAW_FORMAT, identifier)).getContent()) {
 
-      return BlockrAPIParser.getRawBlockHex(jsonData);
+      return BlockrApiParser.getRawBlockHex(jsonData);
     } catch (ParseException | URISyntaxException | IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       return null;

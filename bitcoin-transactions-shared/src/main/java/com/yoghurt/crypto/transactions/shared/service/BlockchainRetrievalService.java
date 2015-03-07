@@ -19,5 +19,5 @@ public interface BlockchainRetrievalService extends RemoteService {
 
   BlockInformation getBlockInformationLast() throws ApplicationException;
 
-  String getLatestBlockHash();
+  String getLatestBlockHash() throws ApplicationException;
 }

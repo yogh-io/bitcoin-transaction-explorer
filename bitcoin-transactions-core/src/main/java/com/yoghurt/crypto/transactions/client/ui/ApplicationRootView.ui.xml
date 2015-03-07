@@ -3,19 +3,12 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
-  .lookup {
-  	border: 1px solid #999;
-  	border-radius: 5px;
-  	font-size: 2.4em;
-  	width: 740px;
-  	padding: 10px 9px;
-  }
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
       <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="{i18n.applicationTitle}" />
       <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationSubTitle}" />
-      <g:TextBox ui:field="lookupField" styleName="{style.lookup}" />
+      <g:TextBox ui:field="lookupField" styleName="{res.css.textBox}" />
     </g:FlowPanel>
     <g:SimplePanel styleName="{res.css.applicationContentContainer}">
       <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent}" />

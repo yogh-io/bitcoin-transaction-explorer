@@ -2,6 +2,7 @@ package com.yoghurt.crypto.transactions.client.i18n;
 
 import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
 import com.google.gwt.i18n.client.Messages;
+import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
@@ -206,4 +207,54 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("Execution step {0}")
   String scriptExecutionStep(int idx);
+
+  @DefaultMessage("Configuration")
+  String configPlaceTitle();
+
+  @DefaultMessage("You haven''t set up a password for the application yet. Please insert a password and remember it, you''ll need it for any subsequent modifications to the configuration (although you''d typically only configure it once).<br><br>If you''ve forgotten your password you''ll need to reset (remove) it manually, its hash is stored in the file ''yoghurt.conf''.<br/><br/>The server will never store your plain-text password, it will be hashed on the client and then sent in clear text over the wire.")
+  String configPlaceCreatePasswordText();
+
+  @DefaultMessage("Password")
+  String configPasswordPlaceHolder();
+
+  @DefaultMessage("Password confirmation")
+  String configPasswordRepeatPlaceHolder();
+
+  @DefaultMessage("Set password")
+  String configPasswordConfirm();
+
+  @DefaultMessage("Log in.")
+  String configPasswordLogin();
+
+  @DefaultMessage("Insert your password.")
+  String configPlaceInputPasswordText();
+
+  @DefaultMessage("Connector:")
+  String configBlockchainHook();
+
+  @DefaultMessage("Save settings")
+  String configSubmitSettings();
+
+
+  @DefaultMessage("Unknown (not supported)")
+  @AlternateMessage({
+    "NODE", "Bitcoin Core Node",
+    "BLOCKR_API", "BLOCKR API"
+  })
+  String configConnectorOption(@Select BlockchainSource source);
+
+  @DefaultMessage("No further config needed, press save to continue.")
+  String configBlockrConfigNote();
+
+  @DefaultMessage("Host (probably localhost)")
+  String configNodeHost();
+
+  @DefaultMessage("Port (probably 8332)")
+  String configNodePort();
+
+  @DefaultMessage("RPC Username")
+  String configNodeRpcUser();
+
+  @DefaultMessage("RPC Password")
+  String configNodeRpcPass();
 }
