@@ -54,17 +54,13 @@ Anyway, if you have a proper .war file of this project (see below), simply deplo
 
 # How to build it
 
-This project's maven configuration could be categorized as sub-par, how to build and run it is therefore a little more convoluted than it could have been. It goes like this:
-
 - [clone the repository]
 
 - > mvn install
 
-- find \target\war\work\com.yoghurt.crypto\bitcoin-transactions-core\application
+- Find the .war file in /bitcoin-transactions-server/target/
 
-- copy application.nocache.js _into_ \target\bitcoin-transactions-server-0.1.war\application
-
-- deploy the .war file to a J2EE web container (jetty, tomcat)
+- deploy the (extracted) .war file to a J2EE web container (jetty, tomcat, etc.)
 
 - done
 
