@@ -4,7 +4,7 @@ Simple and pure block explorer you can run on top of a full node.
 
 This block explorer patches into your Bitcoin Core node's JSON-RPC interface to retrieve transaction and block information.
 
-It runs as a simple web application you can run on any J2EE Web Container (Jetty, Tomcat, etc.), point it toward your node and you're good to go.
+It runs as a simple web application you can run on any J2EE Web Container (Jetty, Tomcat, etc.), point it toward your node and you're good to go. (Note: it also supports running on top of Blockr's API and maybe some others later on)
 
 This block explorer remains pure to the blockchain, this means it is not dependent on any source of data other than the blockchain. Bitcoin amount values will not be displayed in fiat, transaction or block receive times do not exist.
 
@@ -74,7 +74,7 @@ Anyway, if you have a proper .war file of this project (see below), simply deplo
 
 # Implementation
 
-The web application is a GWT (Google Web Toolkit) roject that's patched into, essentially, a JSON-RPC proxy for a Bitcoin Core node.
+The web application is a GWT (Google Web Toolkit) roject that's patched into, essentially, a JSON-RPC proxy for a Bitcoin Core node. The proxy can be configured to reach out to Blockr's API (and others) if you aren't running a node, although it's always nice to use your own node instead.
 
 The proxy will only request the node's getblock, getblockhash, getbestblockhash and getrawtransaction methods. It'll basically only request (or construct) raw transaction and block data which will be interpreted them locally on the client (in the browser).
 
