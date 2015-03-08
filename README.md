@@ -24,7 +24,7 @@ Displays all available transaction information. Like in the block viewer, displa
 
 #### Universal search
 
-Input anything, transaction ID, block height, block hash, raw blocks, raw transactions, and this explorer will 
+Input anything, transaction ID, block height, block hash, raw blocks, raw transactions, and this explorer will figure out what you mean and display what's appropriate.
 
 #### Mining simulator
 
@@ -74,7 +74,7 @@ Anyway, if you have a proper .war file of this project (see below), simply deplo
 
 # Implementation
 
-The web application is a GWT (Google Web Toolkit) roject that's patched into, essentially, a JSON-RPC proxy for a Bitcoin Core node. The proxy can be configured to reach out to Blockr's API (and others) if you aren't running a node, although it's always nice to use your own node instead.
+The web application is a GWT (Google Web Toolkit) project that's patched into, essentially, a JSON-RPC proxy for a Bitcoin Core node. The proxy can be configured to reach out to Blockr's API (and others) if you aren't running a node, although it's always nice to use your own node instead.
 
 The proxy will only request the node's getblock, getblockhash, getbestblockhash and getrawtransaction methods. It'll basically only request (or construct) raw transaction and block data which will be interpreted them locally on the client (in the browser).
 
