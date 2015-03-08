@@ -64,8 +64,6 @@ Anyway, if you have a proper .war file of this project (see below), simply deplo
 
 - done
 
-The whole copy-into-an-archive thing is currently more like a bug than anything else, will be worked out at some point.
-
 # Configuration
 
 - Navigate to the web application
