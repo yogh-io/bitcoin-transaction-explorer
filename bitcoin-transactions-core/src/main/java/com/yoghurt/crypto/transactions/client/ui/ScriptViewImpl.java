@@ -60,8 +60,8 @@ public class ScriptViewImpl extends Composite implements ScriptView {
     final RawTransactionContainer rawScriptSigContainer = new RawTransactionContainer();
     ScriptEncodeUtil.encodeScript(information.getScriptSig(), rawScriptSigContainer, ScriptType.SCRIPT_SIG);
 
-    pubKeySigHexViewer.setContainer(rawPubKeySigContainer);
-    scriptSigHexViewer.setContainer(rawScriptSigContainer);
+    pubKeySigHexViewer.setValue(rawPubKeySigContainer);
+    scriptSigHexViewer.setValue(rawScriptSigContainer);
 
     scriptExecutionContainer.clear();
 

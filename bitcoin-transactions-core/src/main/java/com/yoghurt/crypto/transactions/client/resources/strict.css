@@ -46,18 +46,8 @@ body {
 	text-decoration: none;
 }
 
-.applicationTitle:hover {
-	text-decoration: underline;
-	color: rgb(250, 143, 8);
-	cursor: pointer;
-}
-
-.left {
-	float: left;
-}
-
-.right {
-	float: right;
+.alignRight {
+	text-align: right;
 }
 
 .applicationSubTitle {
@@ -104,13 +94,14 @@ body {
 }
 
 .link {
-	text-decoration: underline;
+	text-decoration: none;
 	margin-bottom: 9px;
 }
 
 .link:hover {
 	color: rgb(250, 143, 8);
 	cursor: pointer;
+	text-decoration: underline;
 }
 
 button {
@@ -131,4 +122,20 @@ button {
 .labelledValueContainer {
 	margin-bottom: 10px;
 	display: flex;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex > * {
+	min-width: 0;
+}
+
+.grow {
+	flex-grow: 1;
+}
+
+.panel {
+	flex-items: column;
 }

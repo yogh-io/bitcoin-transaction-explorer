@@ -133,8 +133,8 @@ public class MineViewImpl extends Composite implements MineView {
     final RawBlockContainer viewBlock = rawBlock.copy();
 
     // Set up viewBlock for display in hex
-    blockHexViewer.setContainerMap(viewBlock);
-    coinbaseHexViewer.setContainer(coinbase);
+    blockHexViewer.setValue(viewBlock.entrySet());
+    coinbaseHexViewer.setValue(coinbase);
     blockHashViewer.setHash(initialBlock.getBlockHash());
 
     // If we need to stay fly with the latest on the hood, set up the timers
@@ -236,7 +236,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void incrementExtraNonce() {
-    final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.ARBITRARY_DATA);
+    final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.COINBASE_SCRIPT_SIG);
 
     final byte[] value = find.getValue();
 
@@ -256,7 +256,7 @@ public class MineViewImpl extends Composite implements MineView {
 
     find.setValue(value);
 
-    coinbaseHexViewer.setContainer(coinbase);
+    coinbaseHexViewer.setValue(coinbase);
 
     final byte[] computeMerkleRoot = ComputeUtil.computeMerkleRoot(coinbase.getBytes());
     rawBlock.setMerkleRoot(computeMerkleRoot);
@@ -264,7 +264,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void decrementExtraNonce() {
-    final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.ARBITRARY_DATA);
+    final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.COINBASE_SCRIPT_SIG);
 
     final byte[] value = find.getValue();
 
@@ -284,7 +284,7 @@ public class MineViewImpl extends Composite implements MineView {
 
     find.setValue(value);
 
-    coinbaseHexViewer.setContainer(coinbase);
+    coinbaseHexViewer.setValue(coinbase);
 
     final byte[] computeMerkleRoot = ComputeUtil.computeMerkleRoot(coinbase.getBytes());
     rawBlock.setMerkleRoot(computeMerkleRoot);
@@ -305,7 +305,7 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void doHashCycle() {
-    blockHexViewer.setContainerMap(rawBlock);
+    blockHexViewer.setValue(rawBlock.entrySet());
 
     final byte[] computeDoubleSHA256 = ComputeUtil.computeDoubleSHA256(rawBlock.values());
     ArrayUtil.reverse(computeDoubleSHA256);

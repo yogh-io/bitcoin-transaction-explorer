@@ -22,7 +22,7 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
 
   private String getTextForPart(final Entry<TransactionPartType, byte[]> value) {
     switch (value.getKey()) {
-    case TRANSACTION_HASH:
+    case INPUT_PREVIOUS_TRANSACTION_HASH:
       return "Previous transaction hash";
     case INPUT_OUTPOINT_INDEX:
       return "Previous output index: " + NumberParseUtil.parseUint32(value.getValue());
@@ -60,7 +60,7 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
       return "Transaction lock time";
     case VERSION:
       return "Transaction version";
-    case ARBITRARY_DATA:
+    case COINBASE_SCRIPT_SIG:
       return "Coinbase input script";
     default:
       return "Unknown transaction part";

@@ -8,9 +8,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 
@@ -31,10 +29,7 @@ public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> 
       return;
     }
 
-    final Transaction tx = getTransactionFromHex(blockInformation.getRawCoinbaseTransaction());
-    final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
-
-    view.setBlock(block, blockInformation, tx);
+    view.setBlock(blockInformation);
   }
 
   @Override

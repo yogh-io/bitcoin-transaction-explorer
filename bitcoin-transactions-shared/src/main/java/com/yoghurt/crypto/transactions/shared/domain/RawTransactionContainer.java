@@ -34,6 +34,8 @@ public class RawTransactionContainer extends ArrayList<Entry<TransactionPartType
 
   /**
    * Find the first occurrence of the given part type, disregards subsequent existence.
+   * 
+   * @deprecated Don't want this in here. Solve by getting it out of here, or preferably by holding an index (ie. switch to hashmap type of deal which allows for duplicates and maintains order)
    * @param type Part type to find
    * @return The entry found, or null if none.
    */

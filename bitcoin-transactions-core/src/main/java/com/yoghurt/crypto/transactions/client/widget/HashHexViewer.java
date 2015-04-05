@@ -34,7 +34,7 @@ public class HashHexViewer extends HexViewer<byte[]> {
       lst.add(new AbstractMap.SimpleEntry<byte[], byte[]>(hash, new byte[] { bite }));
     }
 
-    setContainer(lst);
+    setValue(lst);
   }
 
   @Override

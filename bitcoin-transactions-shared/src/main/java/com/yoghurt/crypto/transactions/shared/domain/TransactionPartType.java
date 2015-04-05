@@ -5,7 +5,7 @@ public enum TransactionPartType {
 
   INPUT_SIZE,
 
-  TRANSACTION_HASH,
+  INPUT_PREVIOUS_TRANSACTION_HASH,
 
   INPUT_OUTPOINT_INDEX,
 
@@ -29,5 +29,8 @@ public enum TransactionPartType {
 
   SCRIPT_PUB_KEY_PUSH_DATA,
 
-  ARBITRARY_DATA;
+  /**
+   * We'll be special-casing the coinbase input scriptsig because it cannot be interpreted as usual.
+   */
+  COINBASE_SCRIPT_SIG;
 }

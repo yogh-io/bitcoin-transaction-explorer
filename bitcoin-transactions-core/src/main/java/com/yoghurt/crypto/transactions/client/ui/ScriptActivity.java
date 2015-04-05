@@ -8,6 +8,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace.ScriptDataType;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
+import com.yoghurt.crypto.transactions.client.util.ParseUtil;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachine;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachineFactory;
 import com.yoghurt.crypto.transactions.client.util.transaction.ScriptParseUtil;
@@ -65,7 +66,7 @@ public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlac
       @Override
       protected ScriptInformation morphResult(final String result) {
         // Parse the outpoint transaction in full
-        final Transaction tx = getTransactionFromHex(result);
+        final Transaction tx = ParseUtil.getTransactionFromHex(result);
 
         // Parse the ScriptSig from the place
         final ScriptEntity scriptSig = ScriptParseUtil.parseScript(Hex.decode(place.getScriptSig()));

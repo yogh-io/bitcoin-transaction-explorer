@@ -12,7 +12,7 @@ public class TransactionPartColorPicker {
     Color color;
 
     switch (type) {
-    case TRANSACTION_HASH:
+    case INPUT_PREVIOUS_TRANSACTION_HASH:
       color = R.color().transactionHash();
       break;
     case INPUT_OUTPOINT_INDEX:
@@ -48,7 +48,7 @@ public class TransactionPartColorPicker {
     case SCRIPT_PUB_KEY_PUSH_DATA:
       color = R.color().transactionPubKeySigPushData();
       break;
-    case ARBITRARY_DATA:
+    case COINBASE_SCRIPT_SIG:
       color = R.color().transactionArbitraryData();
       break;
     case LOCK_TIME:
