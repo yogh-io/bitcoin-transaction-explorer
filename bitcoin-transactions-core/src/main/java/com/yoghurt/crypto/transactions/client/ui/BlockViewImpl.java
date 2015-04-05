@@ -3,7 +3,6 @@ package com.yoghurt.crypto.transactions.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -25,7 +24,7 @@ import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 @Singleton
-public class BlockViewImpl extends Composite implements BlockView {
+public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {}
 
   private static final BlockViewImplUiBinder UI_BINDER = GWT.create(BlockViewImplUiBinder.class);
@@ -61,7 +60,11 @@ public class BlockViewImpl extends Composite implements BlockView {
   }
 
   @Override
-  public void setBlock(final Block block, final BlockInformation blockInformation, final Transaction coinbase) {
+  public void setBlock(final BlockInformation blockInformation) {
+    final Transaction coinbase = getTransactionFromHex(blockInformation.getRawCoinbaseTransaction());
+    final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
+
+
     final RawTransactionContainer rawTransaction = new RawTransactionContainer();
     final RawBlockContainer rawBlock = new RawBlockContainer();
 
@@ -83,11 +86,11 @@ public class BlockViewImpl extends Composite implements BlockView {
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());
 
-    blockHexViewer.setContainerMap(rawBlock);
+    blockHexViewer.setValue(rawBlock.entrySet());
     notFoundLabel.setVisible(blockInformation == null);
     extraInformationContainer.setVisible(blockInformation != null);
 
-    coinbaseHexViewer.setContainer(rawTransaction);
+    coinbaseHexViewer.setValue(rawTransaction);
 
     heightViewer.setValue(blockInformation.getHeight());
     numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());

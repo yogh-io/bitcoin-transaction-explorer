@@ -16,6 +16,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public class ContextFieldSet<T> extends FlowPanel {
@@ -121,6 +122,8 @@ public class ContextFieldSet<T> extends FlowPanel {
 
   public ContextFieldSet(final FieldContextFactory<T> contextFactory) {
     this.contextFactory = contextFactory;
+
+    setStyleName(R.css().flex());
   }
 
   public ContextFieldSet(final String text) {

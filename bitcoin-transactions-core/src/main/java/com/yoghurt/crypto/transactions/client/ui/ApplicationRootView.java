@@ -19,6 +19,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
+import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
 import com.yoghurt.crypto.transactions.client.util.StyleUtil;
@@ -30,7 +31,8 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
   private static final ApplicationRootViewUiBinder UI_BINDER = GWT.create(ApplicationRootViewUiBinder.class);
 
   @UiField SimplePanel contentPanel;
-  @UiField Anchor title;
+  @UiField Anchor titleLink;
+  @UiField Anchor contributeLink;
   @UiField TextBox lookupField;
 
   private final PlaceController placeController;
@@ -41,7 +43,8 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
 
     initWidget(UI_BINDER.createAndBindUi(this));
 
-    title.setHref("#" + historyMapper.getToken(new StartupPlace()));
+    titleLink.setHref("#" + historyMapper.getToken(new StartupPlace()));
+    contributeLink.setHref("#" + historyMapper.getToken(new ContributePlace()));
 
     StyleUtil.setPlaceHolder(lookupField, M.messages().applicationLookupFieldPlaceHolder());
     lookupField.setFocus(true);

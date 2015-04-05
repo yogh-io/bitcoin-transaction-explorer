@@ -42,9 +42,13 @@ public final class R {
 
     String link();
 
-    String left();
+    String alignRight();
 
-    String right();
+    String flex();
+
+    String grow();
+
+    String panel();
   }
 
   /**

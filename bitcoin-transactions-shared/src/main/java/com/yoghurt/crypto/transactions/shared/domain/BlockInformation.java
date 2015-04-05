@@ -6,6 +6,7 @@ public class BlockInformation implements Serializable {
   private static final long serialVersionUID = -6695967392021472565L;
 
   private String rawBlockHeaders;
+  private String rawCoinbaseTransaction;
 
   private int height;
   private int numConfirmations;
@@ -13,7 +14,6 @@ public class BlockInformation implements Serializable {
   private long size;
   private String nextBlockHash;
 
-  private String rawCoinbaseTransaction;
   private TransactionInformation coinbaseInformation;
 
   public BlockInformation() {}

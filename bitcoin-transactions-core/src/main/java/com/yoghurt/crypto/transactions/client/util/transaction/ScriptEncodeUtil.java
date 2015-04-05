@@ -44,7 +44,7 @@ public final class ScriptEncodeUtil {
       final TransactionPartType partType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.OP_CODE);
 
       if (part.getOperation() == null) {
-        container.add(TransactionPartType.ARBITRARY_DATA, part.getBytes());
+        container.add(TransactionPartType.COINBASE_SCRIPT_SIG, part.getBytes());
       } else {
         container.add(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) });
 

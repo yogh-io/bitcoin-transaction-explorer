@@ -10,6 +10,7 @@
   }
   .hexViewer {
   	width: 780px;
+  	flex-wrap: wrap;
   }
   </ui:style>
   <g:FlowPanel>
@@ -67,10 +68,10 @@
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleRawBlockHex}" /></h2>
     </g:HTML>
-    <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
+    <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <g:HTML>
       <h2><ui:text from="{i18n.blockPlaceTitleRawCoinbaseHex}" /></h2>
     </g:HTML>
-    <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer}" />
+    <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
   </g:FlowPanel>
 </ui:UiBinder>

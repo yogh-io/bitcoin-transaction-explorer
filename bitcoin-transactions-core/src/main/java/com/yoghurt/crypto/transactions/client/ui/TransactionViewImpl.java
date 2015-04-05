@@ -105,11 +105,10 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     try {
       TransactionEncodeUtil.encodeTransaction(transaction, rawTransaction);
     } catch (final Throwable e) {
-      e.printStackTrace();
       // Eat.
     }
 
-    txHexViewer.setContainer(rawTransaction);
+    txHexViewer.setValue(rawTransaction);
   }
 
   @Override

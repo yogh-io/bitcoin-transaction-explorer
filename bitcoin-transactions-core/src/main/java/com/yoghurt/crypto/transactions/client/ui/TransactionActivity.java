@@ -10,6 +10,7 @@ import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
+import com.yoghurt.crypto.transactions.client.util.ParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
@@ -58,21 +59,7 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
 
   @Override
   protected Transaction createInfo(final TransactionPlace place) {
-    return getTransactionFromHex(place.getHex());
-  }
-
-  @Override
-  protected Transaction getTransactionFromHex(final String hex) {
-    final Transaction t = new Transaction();
-
-    try {
-      super.getTransactionFromHex(t, hex);
-    } catch (final Exception e) {
-      // Could not parse transaction, flag error.
-      transactionHasError = true;
-    }
-
-    return t;
+    return ParseUtil.getTransactionFromHex(place.getHex());
   }
 
   @Override
@@ -80,7 +67,7 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
     service.getRawTransactionHex(place.getHex(), new MorphCallback<String, Transaction>(callback) {
       @Override
       protected Transaction morphResult(final String result) {
-        return getTransactionFromHex(result);
+        return ParseUtil.getTransactionFromHex(result);
       }
     });
   }

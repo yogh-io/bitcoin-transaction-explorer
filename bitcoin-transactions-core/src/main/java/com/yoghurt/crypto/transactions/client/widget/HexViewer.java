@@ -2,7 +2,6 @@ package com.yoghurt.crypto.transactions.client.widget;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import com.google.gwt.core.client.GWT;
@@ -12,6 +11,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 
 public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
@@ -39,14 +39,10 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
     UI_BINDER.createAndBindUi(this);
   }
 
-  public void setContainerMap(final Map<T, byte[]> container) {
-    setContainer(container.entrySet());
-  }
-
   /**
    * Set the container for this hex viewer.
    */
-  public void setContainer(final Collection<Entry<T, byte[]>> container) {
+  public void setValue(final Collection<Entry<T, byte[]>> container) {
     boolean quickAdd = false;
     int counter = 0;
     for (final Entry<T, byte[]> entry : container) {
@@ -131,6 +127,7 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
     if (byteSetContainer == null) {
       byteSetContainer = new FlowPanel();
       byteSetContainer.setStyleName(style.byteSet());
+      byteSetContainer.addStyleName(R.css().flex());
       add(byteSetContainer);
     }
 

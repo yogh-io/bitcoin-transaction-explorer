@@ -10,9 +10,7 @@
   }
   .hexViewer {
   	width: 780px;
-  }
-  .inline {
-  	display: inline-block;
+  	flex-wrap: wrap;
   }
   .button {
 	width: 120px;
@@ -20,27 +18,6 @@
   </ui:style>
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.minePlaceTitleMiningSimulator}" />
-    <g:HTML>
-      <h2>Controls</h2>
-      <h3>Playback</h3>
-    </g:HTML>
-    <g:FlowPanel>
-      <g:Button styleName="{style.button}" ui:field="continueButton" text="Start" />
-      <g:Button styleName="{style.button}" ui:field="cancelButton" text="Pause" />
-      <g:Button styleName="{style.button}" ui:field="singleCycleButton" text="Run once" />
-    </g:FlowPanel>
-    <g:HTML>
-      <h3><ui:text from="{i18n.minePlaceTitleModifyHeaders}" /></h3>
-    </g:HTML>
-    <g:FlowPanel>
-      <g:Button styleName="{style.button}" ui:field="nonceDecrementButton" text="nonce --" />
-      <g:Button styleName="{style.button}" ui:field="nonceIncrementButton" text="nonce ++" />
-      <g:HTML><br /></g:HTML>
-      <g:Button styleName="{style.button}" ui:field="extraNonceDecrementButton" text="extraNonce --" />
-      <g:Button styleName="{style.button}" ui:field="extraNonceIncrementButton" text="extraNonce ++" />
-      <g:HTML><br /></g:HTML>
-      <g:Button styleName="{style.button}" ui:field="timeSynchronizeButton" text="Synchronize time" />
-    </g:FlowPanel>
     <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleBlockHeaders}" /></h2>
     </g:HTML>
@@ -63,16 +40,37 @@
       <w:ValueViewer ui:field="nonceViewer" color="{res.color.blockNonce}" />
     </w:LabelledWidget>
     <g:HTML>
+      <h2>Controls</h2>
+      <h3>Playback</h3>
+    </g:HTML>
+    <g:FlowPanel>
+      <g:Button styleName="{style.button}" ui:field="continueButton" text="Start" />
+      <g:Button styleName="{style.button}" ui:field="cancelButton" text="Pause" />
+      <g:Button styleName="{style.button}" ui:field="singleCycleButton" text="Run once" />
+    </g:FlowPanel>
+    <g:HTML>
+      <h3><ui:text from="{i18n.minePlaceTitleModifyHeaders}" /></h3>
+    </g:HTML>
+    <g:FlowPanel>
+      <g:Button styleName="{style.button}" ui:field="nonceDecrementButton" text="nonce --" />
+      <g:Button styleName="{style.button}" ui:field="nonceIncrementButton" text="nonce ++" />
+      <g:HTML><br /></g:HTML>
+      <g:Button styleName="{style.button}" ui:field="extraNonceDecrementButton" text="extraNonce --" />
+      <g:Button styleName="{style.button}" ui:field="extraNonceIncrementButton" text="extraNonce ++" />
+      <g:HTML><br /></g:HTML>
+      <g:Button styleName="{style.button}" ui:field="timeSynchronizeButton" text="Synchronize time" />
+    </g:FlowPanel>
+    <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleMineHeaders}" /></h2>
     </g:HTML>
-    <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer}" />
+    <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleCoinbase}" /></h2>
     </g:HTML>
-    <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer}" />
+    <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <g:HTML>
       <h2><ui:text from="{i18n.minePlaceTitleBlockHash}" /></h2>
     </g:HTML>
-    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer}" color="{res.color.blockHash}"  />
+    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer} {res.css.flex}" color="{res.color.blockHash}"  />
   </g:FlowPanel>
 </ui:UiBinder>

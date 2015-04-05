@@ -7,13 +7,13 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
 
-  @DefaultMessage("Node reader")
+  @DefaultMessage("Bit-by-bit blockchain reader")
   String applicationTitle();
 
-  @DefaultMessage("Breaking it down to the bone")
+  @DefaultMessage("B3 is drilling it down to the bone.")
   String applicationSubTitle();
 
-  @DefaultMessage("Mining Simulator - Sneak preview - 2015")
+  @DefaultMessage("v0.1 - alpha - april 2015")
   String applicationVersion();
 
   @DefaultMessage("Insert anything, press enter")
@@ -64,7 +64,7 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Block headers")
   String blockPlaceTitleBlockHeaders();
 
-  @DefaultMessage("Raw block in hex")
+  @DefaultMessage("Raw block headers in hex")
   String blockPlaceTitleRawBlockHex();
 
   @DefaultMessage("Raw coinbase transaction in hex")
@@ -76,7 +76,7 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Modify Headers")
   String minePlaceTitleModifyHeaders();
 
-  @DefaultMessage("Headers to mine")
+  @DefaultMessage("Raw headers in hex")
   String minePlaceTitleMineHeaders();
 
   @DefaultMessage("Coinbase transaction")

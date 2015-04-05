@@ -3,19 +3,22 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
+  
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
-      <g:Anchor styleName="{res.css.applicationTitle}" ui:field="title" text="{i18n.applicationTitle}" />
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationSubTitle}" />
+      <g:FlowPanel styleName="{res.css.flex}">
+        <g:Anchor styleName="{res.css.applicationTitle} {res.css.grow} {res.css.link}" ui:field="titleLink" text="{i18n.applicationTitle}" />
+        <g:Label styleName="{res.css.applicationSubTitle} {res.css.alignRight}" text="{i18n.applicationSubTitle}" />
+      </g:FlowPanel>
       <g:TextBox ui:field="lookupField" styleName="{res.css.textBox}" />
     </g:FlowPanel>
     <g:SimplePanel styleName="{res.css.applicationContentContainer}">
       <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent}" />
     </g:SimplePanel>
-    <g:FlowPanel styleName="{res.css.applicationFooter}">
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.left}" text="{i18n.applicationVersion}" />
-      <g:Label styleName="{res.css.applicationSubTitle} {res.css.right}" text="{i18n.applicationContributionText}" />
+    <g:FlowPanel styleName="{res.css.applicationFooter} {res.css.flex}">
+      <g:Label styleName="{res.css.applicationSubTitle}" text="{i18n.applicationVersion}" />
+      <g:Anchor styleName="{res.css.applicationSubTitle} {res.css.grow} {res.css.alignRight} {res.css.link}" ui:field="contributeLink" text="{i18n.applicationContributionText}" />
     </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>
