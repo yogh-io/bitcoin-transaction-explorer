@@ -137,7 +137,6 @@ public final class TransactionParseUtil extends TransactionUtil {
     final TransactionOutPoint outPoint = new TransactionOutPoint();
 
     final byte[] prevHash = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_INPUT_OUTPOINT_SIZE);
-    ArrayUtil.reverse(prevHash);
     outPoint.setReferenceTransaction(prevHash);
 
     outPoint.setIndex(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_OUTPOINT_INDEX_SIZE)));
