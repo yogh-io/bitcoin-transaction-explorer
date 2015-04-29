@@ -30,6 +30,10 @@ Input anything, transaction ID, block height, block hash, raw blocks, raw transa
 
 Constructs a raw block which, if valid, would be accepted by the whole of the network. Visualizes what happens when you're mining, increases the nonce/extranonce, updates the timestamp and computes the block hash. Allows you to control the whole thing.
 
+A sneak-preview client-only version of this is available at http://jornc.github.io/bitcoin-transaction-explorer/
+
+This preview also includes the block and transaction hex viewers with contextual information for each field.
+
 #### Script viewer (Under construction)
 
 Visualizes bitcoin script interpretation in a step-by-step basis.
