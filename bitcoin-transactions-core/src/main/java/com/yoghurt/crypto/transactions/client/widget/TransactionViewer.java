@@ -50,7 +50,7 @@ public class TransactionViewer extends ValueViewer {
       final byte[] hashCopy = ArrayUtil.arrayCopy(hash);
       ArrayUtil.reverse(hashCopy);
 
-      super.setValue(hash);
+      super.setValue(hashCopy);
     } else {
       super.setValue(hash);
     }
