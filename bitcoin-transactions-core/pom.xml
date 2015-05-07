@@ -65,7 +65,8 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
-          <extraJvmArgs>-Xmx1024m -Xms1024m</extraJvmArgs>
+          <extraJvmArgs>-Xmx1024m -Xms1024m -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs>
+	  <localWorkers>1</localWorkers>
         </configuration>
       </plugin>
       <plugin>
