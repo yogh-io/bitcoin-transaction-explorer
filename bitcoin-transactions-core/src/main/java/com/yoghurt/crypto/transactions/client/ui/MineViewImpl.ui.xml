@@ -3,32 +3,30 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  .contentHeading {
-  	font-size: 31px;
-  	height: 37px;
-  	font-weight: bold;
-  }
-  .hexViewer {
-  	width: 780px;
-  	flex-wrap: wrap;
-  }
-  .button {
-	width: 120px;
-  }
+    .contentHeading {
+    font-size: 31px;
+    height: 37px;
+    font-weight: bold;
+    }
+    .hexViewer {
+    width: 780px;
+    flex-wrap: wrap;
+    }
+    .button {
+    width: 120px;
+    }
   </ui:style>
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.minePlaceTitleMiningSimulator}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.minePlaceTitleBlockHeaders}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.minePlaceTitleBlockHeaders}" />
     <w:LabelledWidget label="{i18n.blockVersion}">
-      <w:ValueViewer ui:field="versionViewer" color="{res.color.blockVersion}"  />
+      <w:ValueViewer ui:field="versionViewer" color="{res.color.blockVersion}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockPreviousBlock}">
       <w:ValueViewer ui:field="previousBlockHashViewer" color="{res.color.blockHash}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockMerkleRoot}">
-      <w:ValueViewer ui:field="merkleRootViewer" color="{res.color.blockMerkleRoot}"  />
+      <w:ValueViewer ui:field="merkleRootViewer" color="{res.color.blockMerkleRoot}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockTime}">
       <w:ValueViewer ui:field="timestampViewer" color="{res.color.blockTime}" />
@@ -39,18 +37,14 @@
     <w:LabelledWidget label="{i18n.blockNonce}">
       <w:ValueViewer ui:field="nonceViewer" color="{res.color.blockNonce}" />
     </w:LabelledWidget>
-    <g:HTML>
-      <h2>Controls</h2>
-      <h3>Playback</h3>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="Controls" />
+    <w:HeadingWidget n="3" text="Playback" />
     <g:FlowPanel>
       <g:Button styleName="{style.button}" ui:field="continueButton" text="Start" />
       <g:Button styleName="{style.button}" ui:field="cancelButton" text="Pause" />
       <g:Button styleName="{style.button}" ui:field="singleCycleButton" text="Run once" />
     </g:FlowPanel>
-    <g:HTML>
-      <h3><ui:text from="{i18n.minePlaceTitleModifyHeaders}" /></h3>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.minePlaceTitleModifyHeaders}" />
     <g:FlowPanel>
       <g:Button styleName="{style.button}" ui:field="nonceDecrementButton" text="nonce --" />
       <g:Button styleName="{style.button}" ui:field="nonceIncrementButton" text="nonce ++" />
@@ -58,17 +52,11 @@
       <g:Button styleName="{style.button}" ui:field="extraNonceIncrementButton" text="extraNonce ++" />
       <g:Button styleName="{style.button}" ui:field="timeSynchronizeButton" text="Synchronize time" />
     </g:FlowPanel>
-    <g:HTML>
-      <h2><ui:text from="{i18n.minePlaceTitleMineHeaders}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.minePlaceTitleMineHeaders}" />
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.minePlaceTitleCoinbase}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.minePlaceTitleCoinbase}" />
     <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.minePlaceTitleBlockHash}" /></h2>
-    </g:HTML>
-    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer} {res.css.flex}" color="{res.color.blockHash}"  />
+    <w:HeadingWidget n="2" text="{i18n.minePlaceTitleBlockHash}" />
+    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer} {res.css.flex}" color="{res.color.blockHash}" />
   </g:FlowPanel>
 </ui:UiBinder>

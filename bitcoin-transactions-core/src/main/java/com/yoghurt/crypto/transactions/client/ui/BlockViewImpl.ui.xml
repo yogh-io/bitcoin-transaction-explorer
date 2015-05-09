@@ -3,29 +3,23 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  .contentHeading {
-  	font-size: 31px;
-  	height: 37px;
-  	font-weight: bold;
-  }
-  .hexViewer {
-  	width: 780px;
-  	flex-wrap: wrap;
-  }
+    .contentHeading {
+    font-size: 31px;
+    height: 37px;
+    font-weight: bold;
+    }
+    .hexViewer {
+    width: 780px;
+    flex-wrap: wrap;
+    }
   </ui:style>
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.blockPlaceTitle}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleInformation}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="blockHashViewer" color="{res.color.blockHash}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleCoinbase}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleCoinbase}" />
     <w:HashHexViewer ui:field="coinbaseHashViewer" color="{res.color.transactionHash}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleExtraInformation}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleExtraInformation}" />
     <g:Label text="{i18n.blockPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="{i18n.blockHeight}">
@@ -44,9 +38,7 @@
         <w:ValueViewer ui:field="sizeViewer" animate="true" color="{res.color.blockSize}" />
       </w:LabelledWidget>
     </g:FlowPanel>
-    <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleBlockHeaders}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleBlockHeaders}" />
     <w:LabelledWidget label="{i18n.blockVersion}">
       <w:ValueViewer ui:field="versionViewer" animate="true" color="{res.color.blockVersion}" />
     </w:LabelledWidget>
@@ -65,13 +57,9 @@
     <w:LabelledWidget label="{i18n.blockNonce}">
       <w:ValueViewer ui:field="nonceViewer" animate="true" color="{res.color.blockNonce}" />
     </w:LabelledWidget>
-    <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleRawBlockHex}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleRawBlockHex}" />
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.blockPlaceTitleRawCoinbaseHex}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleRawCoinbaseHex}" />
     <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
   </g:FlowPanel>
 </ui:UiBinder>

@@ -3,25 +3,23 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  .contentHeading {
-  	font-size: 31px;
-  	height: 37px;
-  	font-weight: bold;
-  }
-  .hexViewer {
-  	width: 780px;
-  	flex-wrap: wrap;
-  }
-  .inline {
-  	display: inline-block;
-  }
+    .contentHeading {
+    font-size: 31px;
+    height: 37px;
+    font-weight: bold;
+    }
+    .hexViewer {
+    width: 780px;
+    flex-wrap: wrap;
+    }
+    .inline {
+    display: inline-block;
+    }
   </ui:style>
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.scriptPlaceTitleScriptViewer}" />
     <g:FlowPanel ui:field="fullTransactionInformation">
-      <g:HTML>
-        <h2><ui:text from="{i18n.scriptPlaceTitleOutpointViewer}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.scriptPlaceTitleOutpointViewer}" />
       <w:LabelledWidget label="{i18n.scriptPlaceOutpointHash}">
         <w:ValueViewer ui:field="hashViewer" />
       </w:LabelledWidget>
@@ -29,26 +27,18 @@
         <w:ValueViewer ui:field="indexViewer" color="{res.color.transactionInputIndex}" />
       </w:LabelledWidget>
     </g:FlowPanel>
-    <g:HTML>
-      <h2><ui:text from="{i18n.scriptPlaceTitleScripts}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.scriptPlaceTitleScripts}" />
     <w:LabelledWidget label="{i18n.transactionScriptPubKey}">
       <w:ScriptViewer ui:field="pubKeySigViewer" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.transactionScriptSig}">
       <w:ScriptViewer ui:field="scriptSigViewer" />
     </w:LabelledWidget>
-    <g:HTML>
-      <h2><ui:text from="{i18n.scriptPlaceStepByStep}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.scriptPlaceStepByStep}" />
     <g:FlowPanel ui:field="scriptExecutionContainer" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.scriptPlaceScriptPubKeyRawHex}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.scriptPlaceScriptPubKeyRawHex}" />
     <w:ScriptHexViewer ui:field="pubKeySigHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <g:HTML>
-      <h2><ui:text from="{i18n.scriptPlaceScriptSigRawHex}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.scriptPlaceScriptSigRawHex}" />
     <w:ScriptHexViewer ui:field="scriptSigHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
   </g:FlowPanel>
 </ui:UiBinder>

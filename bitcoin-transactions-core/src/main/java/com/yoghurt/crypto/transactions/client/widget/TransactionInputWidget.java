@@ -1,7 +1,6 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -24,7 +23,7 @@ public class TransactionInputWidget extends Composite {
 
   private static final TransactionInputWidgetUiBinder UI_BINDER = GWT.create(TransactionInputWidgetUiBinder.class);
 
-  @UiField HeadingElement inputTitle;
+  @UiField HeadingWidget inputTitle;
   @UiField(provided = true) TransactionViewer hashViewer;
   @UiField(provided = true) ScriptViewer signatureScriptViewer;
   @UiField ValueViewer indexViewer;
@@ -43,7 +42,7 @@ public class TransactionInputWidget extends Composite {
 
     initWidget(UI_BINDER.createAndBindUi(this));
 
-    inputTitle.setInnerText("Input #" + input.getInputIndex());
+    inputTitle.setText("Input #" + input.getInputIndex());
     hashViewer.setValue(input.getOutPoint().getReferenceTransaction());
     signatureScriptViewer.setScript(input.getInstructions());
     indexViewer.setValue(String.valueOf(input.getOutPoint().getIndex()));
