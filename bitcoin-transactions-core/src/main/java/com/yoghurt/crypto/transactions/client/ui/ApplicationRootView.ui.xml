@@ -3,7 +3,7 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:style>
-  
+
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">

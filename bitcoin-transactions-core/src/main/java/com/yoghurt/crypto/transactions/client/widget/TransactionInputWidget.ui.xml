@@ -3,12 +3,10 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  
+
   </ui:style>
   <g:FlowPanel>
-    <g:HTML>
-      <h3 ui:field="inputTitle" />
-    </g:HTML>
+    <w:HeadingWidget n="3" ui:field="inputTitle" />
     <w:LabelledWidget label="{i18n.transactionPreviousTransactionId}">
       <w:ValueViewer ui:field="hashViewer" />
     </w:LabelledWidget>

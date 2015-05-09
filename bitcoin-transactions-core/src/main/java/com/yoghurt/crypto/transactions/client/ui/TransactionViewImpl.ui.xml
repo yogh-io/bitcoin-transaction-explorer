@@ -3,40 +3,34 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  .contentHeading {
-  	font-size: 31px;
-  	height: 37px;
-  	font-weight: bold;
-  }
-  .hexViewer {
-  	width: 780px;
-  	flex-wrap: wrap;
-  }
-  .parseError {
-	background-color: #930707;
-	color: white;
-	border-radius: 8px;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	padding: 10px 15px 20px 15px;;
-  }
+    .contentHeading {
+    font-size: 31px;
+    height: 37px;
+    font-weight: bold;
+    }
+    .hexViewer {
+    width: 780px;
+    flex-wrap: wrap;
+    }
+    .parseError {
+    background-color: #930707;
+    color: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 15px 20px 15px;;
+    }
   </ui:style>
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.transactionPlaceTitle}" />
     <g:FlowPanel ui:field="errorView" visible="false" styleName="{style.parseError}">
-      <g:HTML>
-        <h2><ui:text from="{i18n.transactionPlaceTitleError}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleError}" />
       <g:Label ui:field="transactionFullBlownErrorLabel" text="{i18n.transactionPlaceParseError}" />
     </g:FlowPanel>
-    <g:HTML>
-      <h2><ui:text from="{i18n.transactionPlaceTitleInformation}" /></h2>
-    </g:HTML>
+    <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="txIdViewer" color="{res.color.transactionHash}" />
     <g:FlowPanel ui:field="fullTransactionInformation">
-      <g:HTML>
-        <h2><ui:text from="{i18n.transactionPlaceTitleExtraInformation}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleExtraInformation}" />
       <g:Label text="{i18n.transactionPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
       <g:FlowPanel ui:field="extraInformationContainer" visible="false">
         <w:LabelledWidget label="{i18n.transactionState}">
@@ -52,26 +46,18 @@
           <w:ValueViewer ui:field="txTimeViewer" color="{res.color.transactionTime}" />
         </w:LabelledWidget>
       </g:FlowPanel>
-      <g:HTML>
-        <h2><ui:text from="{i18n.transactionPlaceTitleTransactionInputs}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleTransactionInputs}" />
       <g:FlowPanel ui:field="inputContainer" />
-      <g:HTML>
-        <h2><ui:text from="{i18n.transactionPlaceTitleTransactionOutputs}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleTransactionOutputs}" />
       <g:FlowPanel ui:field="outputContainer" />
-      <g:HTML>
-        <h2><ui:text from="{i18n.transactionPlaceTitleMiscellaneousInformation}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleMiscellaneousInformation}" />
       <w:LabelledWidget label="{i18n.transactionVersion}">
         <w:ValueViewer ui:field="txVersionViewer" color="{res.color.transactionVersion}" />
       </w:LabelledWidget>
       <w:LabelledWidget label="{i18n.transactionLockTime}">
         <w:ValueViewer ui:field="txLockTimeViewer" color="{res.color.transactionLockTime}" />
       </w:LabelledWidget>
-      <g:HTML>
-        <h2><ui:text from="{i18n.transactionPlaceTitleRawHex}" /></h2>
-      </g:HTML>
+      <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleRawHex}" />
       <w:TransactionHexViewer ui:field="txHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     </g:FlowPanel>
   </g:FlowPanel>
