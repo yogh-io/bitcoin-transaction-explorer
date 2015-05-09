@@ -54,10 +54,8 @@
     <g:FlowPanel>
       <g:Button styleName="{style.button}" ui:field="nonceDecrementButton" text="nonce --" />
       <g:Button styleName="{style.button}" ui:field="nonceIncrementButton" text="nonce ++" />
-      <g:HTML><br /></g:HTML>
       <g:Button styleName="{style.button}" ui:field="extraNonceDecrementButton" text="extraNonce --" />
       <g:Button styleName="{style.button}" ui:field="extraNonceIncrementButton" text="extraNonce ++" />
-      <g:HTML><br /></g:HTML>
       <g:Button styleName="{style.button}" ui:field="timeSynchronizeButton" text="Synchronize time" />
     </g:FlowPanel>
     <g:HTML>
