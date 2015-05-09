@@ -8,8 +8,8 @@
   <g:FlowPanel styleName="{res.css.applicationMainPanel}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel}">
       <g:FlowPanel styleName="{res.css.flex}">
-        <g:Anchor styleName="{res.css.applicationTitle} {res.css.grow} {res.css.link}" ui:field="titleLink" text="{i18n.applicationTitle}" />
-        <g:Label styleName="{res.css.applicationSubTitle} {res.css.alignRight}" text="{i18n.applicationSubTitle}" />
+        <g:Anchor styleName="{res.css.applicationTitle} {res.css.grow} {res.css.link}" ui:field="applicationTitle" />
+        <g:Label styleName="{res.css.applicationSubTitle} {res.css.alignRight}" ui:field="applicationSubTitle" />
       </g:FlowPanel>
       <g:TextBox ui:field="lookupField" styleName="{res.css.textBox}" />
     </g:FlowPanel>

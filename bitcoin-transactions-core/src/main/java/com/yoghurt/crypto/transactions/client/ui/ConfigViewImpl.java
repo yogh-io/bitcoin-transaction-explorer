@@ -20,7 +20,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.StyleUtil;
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
-import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.AbstractAdministratedApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
 
 public class ConfigViewImpl extends Composite implements ConfigView {
   private static final BlockchainSource[] compatibleSources = BlockchainSource.values();
@@ -40,6 +41,11 @@ public class ConfigViewImpl extends Composite implements ConfigView {
   @UiField ListBox connectorListBox;
   @UiField SimplePanel configEditorContainer;
 
+  @UiField TextBox applicationTitle;
+  @UiField TextBox applicationSubtitle;
+
+  @UiField TextBox donationAddress;
+
   private Presenter presenter;
 
   @SuppressWarnings("rawtypes")
@@ -56,6 +62,10 @@ public class ConfigViewImpl extends Composite implements ConfigView {
     StyleUtil.setPlaceHolder(createPassword, M.messages().configPasswordPlaceHolder());
     StyleUtil.setPlaceHolder(password, M.messages().configPasswordPlaceHolder());
     StyleUtil.setPlaceHolder(createPasswordRepeat, M.messages().configPasswordRepeatPlaceHolder());
+
+    StyleUtil.setPlaceHolder(applicationTitle, M.messages().configTitlePlaceHolder());
+    StyleUtil.setPlaceHolder(applicationSubtitle, M.messages().configSubTitlePlaceHolder());
+    StyleUtil.setPlaceHolder(donationAddress, M.messages().configContributeAddressPlaceHolder());
   }
 
   @Override
@@ -118,24 +128,29 @@ public class ConfigViewImpl extends Composite implements ConfigView {
   }
 
   @Override
-  public HandlerRegistration addValueChangeHandler(final ValueChangeHandler<RetrievalHookConfig> handler) {
-    // TODO Auto-generated method stub
+  public HandlerRegistration addValueChangeHandler(final ValueChangeHandler<AdministratedApplicationConfig> handler) {
+    // No-op
     return null;
   }
 
   @Override
-  public RetrievalHookConfig getValue() {
-    return (RetrievalHookConfig) currentEditor.getValue();
+  public AbstractAdministratedApplicationConfig getValue() {
+    final AbstractAdministratedApplicationConfig appConfig = (AbstractAdministratedApplicationConfig) currentEditor.getValue();
+
+    appConfig.setApplicationTitle(applicationTitle.getText());
+    appConfig.setApplicationSubTitle(applicationSubtitle.getText());
+
+    return appConfig;
   }
 
   @Override
-  public void setValue(final RetrievalHookConfig value) {
+  public void setValue(final AdministratedApplicationConfig value) {
     setValue(value, false);
   }
 
   @SuppressWarnings("unchecked")
   @Override
-  public void setValue(final RetrievalHookConfig value, final boolean fireEvents) {
+  public void setValue(final AdministratedApplicationConfig value, final boolean fireEvents) {
     for (int i = 0; i < connectorListBox.getItemCount(); i++) {
       if(connectorListBox.getValue(i).equals(value.getBlockchainSource().name())) {
         connectorListBox.setSelectedIndex(i);
@@ -145,5 +160,8 @@ public class ConfigViewImpl extends Composite implements ConfigView {
     }
 
     currentEditor.setValue(value);
+
+    applicationTitle.setText(value.getApplicationTitle());
+    applicationSubtitle.setText(value.getApplicationSubTitle());
   }
 }

@@ -10,7 +10,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.yoghurt.crypto.transactions.server.servlets.config.AuthenticatedConfigProvider;
 import com.yoghurt.crypto.transactions.server.servlets.config.ConfigFactory;
 import com.yoghurt.crypto.transactions.server.servlets.config.ConfigFactory.ConfigPropertiesRetriever;
-import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.service.ConfigService;
 
@@ -37,7 +38,7 @@ public class ConfigServlet extends RemoteServiceServlet implements ConfigService
   }
 
   @Override
-  public void setBlockchainHookConfig(final String passwordHashed, final RetrievalHookConfig config) throws ApplicationException {
+  public void setApplicationConfig(final String passwordHashed, final AdministratedApplicationConfig config) throws ApplicationException {
     final ConfigPropertiesRetriever retriever = ConfigFactory.create(config);
 
     try {
@@ -54,13 +55,13 @@ public class ConfigServlet extends RemoteServiceServlet implements ConfigService
   }
 
   @Override
-  public RetrievalHookConfig attemptAutoConfig(final String passwordHashed, final RetrievalHookConfig config) throws ApplicationException {
+  public AdministratedApplicationConfig attemptAutoConfig(final String passwordHashed, final AdministratedApplicationConfig config) throws ApplicationException {
     final ConfigPropertiesRetriever retriever = ConfigFactory.create(config);
 
     // TODO Try/catch this and report if we can't auto-configure.
     retriever.attemptAutoFillProperties();
 
-    return retriever.getConfig();
+    return retriever.getSystemConfig();
   }
 
   @Override
@@ -78,7 +79,7 @@ public class ConfigServlet extends RemoteServiceServlet implements ConfigService
   }
 
   @Override
-  public RetrievalHookConfig getCurrentConfig(final String passwordHashed) throws ApplicationException {
+  public AdministratedApplicationConfig getCurrentConfig(final String passwordHashed) throws ApplicationException {
     if(!configProvider.isAuthentic(passwordHashed)) {
       throw new ApplicationException();
     }
@@ -93,6 +94,21 @@ public class ConfigServlet extends RemoteServiceServlet implements ConfigService
 
     final ConfigPropertiesRetriever retriever = ConfigFactory.create(props);
 
-    return retriever.getConfig();
+    return retriever.getSystemConfig();
+  }
+
+  @Override
+  public UserApplicationConfig getApplicationConfig() throws ApplicationException {
+    final Properties props;
+    try {
+      props = configProvider.getProperties();
+    } catch (final IOException e) {
+      e.printStackTrace();
+      throw new ApplicationException();
+    }
+
+    final ConfigPropertiesRetriever retriever = ConfigFactory.create(props);
+
+    return retriever.getApplicationConfig();
   }
 }

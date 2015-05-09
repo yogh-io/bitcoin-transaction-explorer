@@ -4,6 +4,6 @@ import java.io.Serializable;
 
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 
-public interface RetrievalHookConfig extends Serializable {
+public interface AdministratedApplicationConfig extends ApplicationContextBase, Serializable {
   BlockchainSource getBlockchainSource();
 }

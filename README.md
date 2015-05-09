@@ -52,9 +52,18 @@ See above.
 
 # How to run it
 
-The fully built project isn't currently hosted anywhere.
+This project is currently hosted on top of the following 2 nodes:
 
-Anyway, if you have a proper .war file of this project (see below), simply deploying it into any J2EE web container will suffice.
+http://srv1.yogh.nl
+http://srv2.yogh.nl
+
+The former will closely follow the master branch, and will likely not always be as stable / contain bugs, but contain the latest changes.
+
+The latter remains conservative and lags at stable releases.
+
+You can run it yourself (encouraged! let me know!) if you have a fully built .war file of this project (see below), simply deploying it into any J2EE web container will suffice.
+
+If you don't have a full node you can connect to Blockr (which is default if unconfigured), if you do the node needs to be fully indexed (txindex=1) and act as a JSON-RPC server (server=1).
 
 # How to build it
 
@@ -80,6 +89,6 @@ Anyway, if you have a proper .war file of this project (see below), simply deplo
 
 The web application is a GWT (Google Web Toolkit) project that's patched into, essentially, a JSON-RPC proxy for a Bitcoin Core node. The proxy can be configured to reach out to Blockr's API (and others) if you aren't running a node, although it's always nice to use your own node instead.
 
-The proxy will only request the node's getblock, getblockhash, getbestblockhash and getrawtransaction methods. It'll basically only request (or construct) raw transaction and block data which will be interpreted them locally on the client (in the browser).
+The proxy will only request the node's getblock, getblockhash, getbestblockhash and getrawtransaction methods. It constructs (if needed) and forwards raw transaction and block data which will be interpreted locally on the client (in the browser).
 
 It'll run in any J2EE web container when built as a .war file.

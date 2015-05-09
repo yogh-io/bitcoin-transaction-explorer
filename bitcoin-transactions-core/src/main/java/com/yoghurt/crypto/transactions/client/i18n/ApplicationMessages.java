@@ -7,12 +7,6 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
 
-  @DefaultMessage("Bit-by-bit blockchain reader")
-  String applicationTitle();
-
-  @DefaultMessage("B3 is drilling it down to the bone.")
-  String applicationSubTitle();
-
   @DefaultMessage("v0.1 - alpha - april 2015")
   String applicationVersion();
 
@@ -235,6 +229,11 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Save settings")
   String configSubmitSettings();
 
+  @DefaultMessage("General settings")
+  String configMiscellaneousSettingsTitle();
+
+  @DefaultMessage("Blockchain source settings")
+  String configBlockchainHookTitle();
 
   @DefaultMessage("Unknown (not supported)")
   @AlternateMessage({
@@ -257,4 +256,19 @@ public interface ApplicationMessages extends Messages {
 
   @DefaultMessage("RPC Password")
   String configNodeRpcPass();
+
+  @DefaultMessage("Application title")
+  String configTitlePlaceHolder();
+
+  @DefaultMessage("Application subtitle")
+  String configSubTitlePlaceHolder();
+
+  @DefaultMessage("Donation address")
+  String configContributeAddressPlaceHolder();
+
+  @DefaultMessage("Application texts")
+  String configTitles();
+
+  @DefaultMessage("Node contribution")
+  String configContribution();
 }

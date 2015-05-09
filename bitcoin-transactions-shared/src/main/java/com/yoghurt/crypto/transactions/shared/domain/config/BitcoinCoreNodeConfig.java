@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.shared.domain.config;
 
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 
-public class BitcoinCoreNodeConfig extends AbstractRetrievalHookConfig {
+public class BitcoinCoreNodeConfig extends AbstractAdministratedApplicationConfig {
   private static final long serialVersionUID = -9111194393899530619L;
 
   private String host;

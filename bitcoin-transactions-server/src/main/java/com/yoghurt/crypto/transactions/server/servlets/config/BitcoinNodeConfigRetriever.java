@@ -15,7 +15,7 @@ public class BitcoinNodeConfigRetriever extends AbstractConfigRetriever<BitcoinC
   }
 
   public BitcoinNodeConfigRetriever(final Properties props) {
-    this(new BitcoinCoreNodeConfig());
+    super(props, new BitcoinCoreNodeConfig());
 
     config.setHost(props.getProperty(HOST_KEY));
     config.setPort(props.getProperty(PORT_KEY));

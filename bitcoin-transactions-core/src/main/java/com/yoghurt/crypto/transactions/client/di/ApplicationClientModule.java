@@ -7,9 +7,11 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.inject.Inject;
+import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.yoghurt.crypto.transactions.client.ApplicationConfigProvider;
 import com.yoghurt.crypto.transactions.client.place.ApplicationActivityMapper;
 import com.yoghurt.crypto.transactions.client.place.ApplicationActivityMapper.ActivityFactory;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlaceHistoryMapper;
@@ -36,6 +38,7 @@ import com.yoghurt.crypto.transactions.client.ui.StartupView;
 import com.yoghurt.crypto.transactions.client.ui.StartupViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.TransactionView;
 import com.yoghurt.crypto.transactions.client.ui.TransactionViewImpl;
+import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 
 public class ApplicationClientModule extends AbstractGinModule {
   @Override
@@ -59,6 +62,11 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(ContributeView.class).to(ContributeViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
+  }
+
+  @Provides
+  public UserApplicationConfig getUserApplicationConfig(final ApplicationConfigProvider provider) {
+    return provider.getApplicationConfig();
   }
 
   public static class ApplicationPlaceController extends PlaceController implements BitcoinPlaceRouter {

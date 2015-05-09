@@ -2,9 +2,9 @@ package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
 
-public interface ConfigView extends IsWidget, HasValue<RetrievalHookConfig> {
+public interface ConfigView extends IsWidget, HasValue<AdministratedApplicationConfig> {
 
   public interface Presenter {
 

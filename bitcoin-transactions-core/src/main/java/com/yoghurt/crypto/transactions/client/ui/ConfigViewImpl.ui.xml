@@ -34,13 +34,20 @@
         <g:PasswordTextBox styleName="{res.css.textBox} {style.textBox}" ui:field="password" />
         <g:Button ui:field="login" text="{i18n.configPasswordLogin}" />
       </g:FlowPanel>
-      <g:FlowPanel>
+      <g:HTMLPanel>
+      	<h2><ui:text from="{i18n.configBlockchainHookTitle}" /></h2>
         <w:LabelledWidget label="{i18n.configBlockchainHook}">
           <g:ListBox ui:field="connectorListBox" />
         </w:LabelledWidget>
         <g:SimplePanel ui:field="configEditorContainer" />
+        <h2><ui:text from="{i18n.configMiscellaneousSettingsTitle}" /></h2>
+        <h3><ui:text from="{i18n.configTitles}" /></h3>
+        <g:TextBox ui:field="applicationTitle" styleName="{res.css.textBox} {style.textBox}" />
+        <g:TextBox ui:field="applicationSubtitle" styleName="{res.css.textBox} {style.textBox}" />
+        <h3><ui:text from="{i18n.configContribution}" /></h3>
+        <g:TextBox ui:field="donationAddress" styleName="{res.css.textBox} {style.textBox}" />
         <g:Button ui:field="saveConfig" styleName="{style.button}" text="{i18n.configSubmitSettings}" />
-      </g:FlowPanel>
+      </g:HTMLPanel>
     </g:DeckPanel>
   </g:FlowPanel>
 </ui:UiBinder>

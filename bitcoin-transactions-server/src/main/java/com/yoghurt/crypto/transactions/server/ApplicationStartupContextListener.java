@@ -30,7 +30,7 @@ public class ApplicationStartupContextListener implements ServletContextListener
 
     final ConfigPropertiesRetriever retriever = ConfigFactory.create(props);
 
-    BlockchainRetrievalFactory.set(retriever.getConfig());
+    BlockchainRetrievalFactory.set(retriever.getSystemConfig());
   }
 
   @Override
