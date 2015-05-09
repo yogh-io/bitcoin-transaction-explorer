@@ -95,7 +95,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     heightViewer.setValue(blockInformation.getHeight());
     numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
     numTransactionsViewer.setValue(blockInformation.getNumTransactions());
-    nextBlockViewer.setValue(blockInformation.getNextBlockHash());
+    nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
     sizeViewer.setValue(blockInformation.getSize());
   }
 }
