@@ -4,7 +4,7 @@ import com.yoghurt.crypto.transactions.server.servlets.providers.BitcoinJSONRPCR
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockchainRetrievalHook;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockrAPIRetriever;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
-import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
 
 public class BlockchainRetrievalFactory {
   private BlockchainRetrievalHook hook;
@@ -23,7 +23,7 @@ public class BlockchainRetrievalFactory {
     return create().hook;
   }
 
-  public static void set(final RetrievalHookConfig config) {
+  public static void set(final AdministratedApplicationConfig config) {
     BlockchainRetrievalHook hook;
 
     switch (config.getBlockchainSource()) {

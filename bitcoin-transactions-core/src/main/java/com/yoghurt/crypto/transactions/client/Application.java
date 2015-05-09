@@ -15,8 +15,13 @@ import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
 import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.ui.ApplicationRootView;
+import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
+import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.service.ConfigServiceAsync;
 
 public class Application implements EntryPoint {
+
+  @Inject @DefaultPlace Place defaultPlace;
 
   @Inject private EventBus eventBus;
 
@@ -26,9 +31,15 @@ public class Application implements EntryPoint {
 
   @Inject private PlaceHistoryMapper placeHistoryMapper;
 
-  @Inject @DefaultPlace Place defaultPlace;
-
   @Inject private ColorPicker colorPicker;
+
+  @Inject private ApplicationConfigProvider configProvider;
+
+  @Inject private ConfigServiceAsync configService;
+
+  private ActivityManager appActivityManager;
+
+  private PlaceHistoryHandler historyHandler;
 
   @Override
   public void onModuleLoad() {
@@ -36,9 +47,20 @@ public class Application implements EntryPoint {
 
     R.init(colorPicker);
 
-    final ActivityManager appActivityManager = new ActivityManager(actvityMapper, eventBus);
-    final PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(placeHistoryMapper);
+    appActivityManager = new ActivityManager(actvityMapper, eventBus);
+    historyHandler = new PlaceHistoryHandler(placeHistoryMapper);
 
+    configService.getApplicationConfig(new AppAsyncCallback<UserApplicationConfig>() {
+      @Override
+      public void onSuccess(final UserApplicationConfig result) {
+        configProvider.setApplicationConfig(result);
+
+        onFinishedLoading();
+      }
+    });
+  }
+
+  public void onFinishedLoading() {
     final ApplicationRootView appDisplay = ApplicationGinjector.INSTANCE.getApplicationRootView();
     appActivityManager.setDisplay(appDisplay);
 

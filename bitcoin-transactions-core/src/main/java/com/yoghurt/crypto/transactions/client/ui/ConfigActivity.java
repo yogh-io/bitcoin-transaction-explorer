@@ -10,7 +10,7 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
 import com.yoghurt.crypto.transactions.shared.service.ConfigServiceAsync;
 
 public class ConfigActivity extends AbstractActivity implements ConfigView.Presenter {
@@ -61,10 +61,10 @@ public class ConfigActivity extends AbstractActivity implements ConfigView.Prese
       @Override
       public void onSuccess(final Boolean result) {
         if(result) {
-          service.getCurrentConfig(hashedPassword, new AppAsyncCallback<RetrievalHookConfig>() {
+          service.getCurrentConfig(hashedPassword, new AppAsyncCallback<AdministratedApplicationConfig>() {
 
             @Override
-            public void onSuccess(final RetrievalHookConfig config) {
+            public void onSuccess(final AdministratedApplicationConfig config) {
               view.setAuthentic(result);
               view.setValue(config);
             }
@@ -78,10 +78,10 @@ public class ConfigActivity extends AbstractActivity implements ConfigView.Prese
     return Str.toString(Hex.encode(ComputeUtil.computeSHA256((SALT + password).getBytes())));
   }
 
-  public void autoConfig(final RetrievalHookConfig config) {
-    service.attemptAutoConfig(hashedPassword, config, new AppAsyncCallback<RetrievalHookConfig>() {
+  public void autoConfig(final AdministratedApplicationConfig config) {
+    service.attemptAutoConfig(hashedPassword, config, new AppAsyncCallback<AdministratedApplicationConfig>() {
       @Override
-      public void onSuccess(final RetrievalHookConfig result) {
+      public void onSuccess(final AdministratedApplicationConfig result) {
         view.setValue(result);
       }
     });
@@ -89,7 +89,7 @@ public class ConfigActivity extends AbstractActivity implements ConfigView.Prese
 
   @Override
   public void saveConfig() {
-    service.setBlockchainHookConfig(hashedPassword, view.getValue(), new AppAsyncCallback<Void>() {
+    service.setApplicationConfig(hashedPassword, view.getValue(), new AppAsyncCallback<Void>() {
       @Override
       public void onSuccess(final Void result) {
         placeController.goTo(new StartupPlace());

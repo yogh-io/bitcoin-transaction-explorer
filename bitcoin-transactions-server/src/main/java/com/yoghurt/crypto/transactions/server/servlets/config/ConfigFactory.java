@@ -3,25 +3,30 @@ package com.yoghurt.crypto.transactions.server.servlets.config;
 import java.util.Properties;
 
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
+import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.BlockrRetrievalHookConfig;
-import com.yoghurt.crypto.transactions.shared.domain.config.RetrievalHookConfig;
 
 public class ConfigFactory {
   public interface ConfigPropertiesRetriever {
     public static final String SOURCE_TYPE_KEY = "com.yoghurt.crypto.source";
+    public static final String APPLICATION_TITLE_KEY = "com.yoghurt.crypto.title";
+    public static final String APPLICATION_SUBTITLE_KEY = "com.yoghurt.crypto.subtitle";
 
     public Properties getProperties();
 
     public void attemptAutoFillProperties();
 
-    public RetrievalHookConfig getConfig();
+    public AdministratedApplicationConfig getSystemConfig();
+
+    public UserApplicationConfig getApplicationConfig();
   }
 
-  public static ConfigPropertiesRetriever create(final RetrievalHookConfig config) {
+  public static ConfigPropertiesRetriever create(final AdministratedApplicationConfig config) {
     switch(config.getBlockchainSource()) {
     case BLOCKR_API:
-      return new BlockrConfigRetriever((BlockrRetrievalHookConfig)config);
+      return new BlockrConfigRetriever((BlockrRetrievalHookConfig) config);
     case NODE:
       return new BitcoinNodeConfigRetriever((BitcoinCoreNodeConfig) config);
     default:
