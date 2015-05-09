@@ -10,6 +10,7 @@
   }
   .hexViewer {
   	width: 780px;
+  	flex-wrap: wrap;
   }
   .inline {
   	display: inline-block;
@@ -44,10 +45,10 @@
     <g:HTML>
       <h2><ui:text from="{i18n.scriptPlaceScriptPubKeyRawHex}" /></h2>
     </g:HTML>
-    <w:ScriptHexViewer ui:field="pubKeySigHexViewer" styleName="{style.hexViewer}" />
+    <w:ScriptHexViewer ui:field="pubKeySigHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <g:HTML>
       <h2><ui:text from="{i18n.scriptPlaceScriptSigRawHex}" /></h2>
     </g:HTML>
-    <w:ScriptHexViewer ui:field="scriptSigHexViewer" styleName="{style.hexViewer}" />
+    <w:ScriptHexViewer ui:field="scriptSigHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
   </g:FlowPanel>
 </ui:UiBinder>
