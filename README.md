@@ -54,8 +54,9 @@ See above.
 
 This project is currently hosted on top of the following 2 nodes:
 
-http://srv1.yogh.nl
-http://srv2.yogh.nl
+http://srv1.yogh.io
+
+http://srv2.yogh.io
 
 The former will closely follow the master branch, and will likely not always be as stable / contain bugs, but contain the latest changes.
 
