@@ -16,6 +16,12 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Donate / contribute")
   String applicationContributionText();
 
+  @DefaultMessage("General navigation")
+  String startupGeneral();
+
+  @DefaultMessage("Last block")
+  String startupLastBlock();
+
   @DefaultMessage("Transaction")
   String transactionPlaceTitle();
 

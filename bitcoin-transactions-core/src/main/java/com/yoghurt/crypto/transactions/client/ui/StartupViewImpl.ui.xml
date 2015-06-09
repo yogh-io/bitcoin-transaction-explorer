@@ -1,5 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:w="urn:import:com.yoghurt.crypto.widget" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
     .content {
@@ -12,10 +13,58 @@
     height: 37px;
     font-weight: bold;
     }
+    .linkPanel {
+    flex-wrap: wrap;
+    align-items: center;
+    height: 170px;
+    }
+    .blockLink {
+    width: 140px;
+    height: 140px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    color: white;
+    padding: 5px;
+    font-size: 18px;
+    border: 0px solid white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: border 0.25s ease-out;
+    }
+    .blockLink:hover {
+    border: 10px solid transparent;
+    }
+    .blockLink:active {
+    border-color: black;
+    }
+    .red {
+    background-color: red;
+    }
+    .red:hover {
+    border-color: darkred;
+    }
+    .blue {
+    background-color: blue;
+    }
+    .blue:hover {
+    border-color: darkblue;
+    }
+    .green {
+    background-color: green;
+    }
+    .green:hover {
+    border-color: darkgreen;
+    }
   </ui:style>
   <g:FlowPanel styleName="{style.content}">
-    <w:HeadingWidget n="2" />
-    <g:Label styleName="{res.css.link}" text="First transaction ever on the blockchain" ui:field="firstEver" />
-    <g:Label styleName="{res.css.link}" text="Simple pay-to-pubkey-hash" ui:field="p2pkh" />
+    <w:HeadingWidget n="2" text="{i18n.startupGeneral}" />
+    <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
+      <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
+      <g:Label styleName="{style.blockLink} {style.blue}" text="Mining simulator" />
+      <g:Label styleName="{style.blockLink} {style.green}" text="Contribute" ui:field="p2pkh" />
+    </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>
