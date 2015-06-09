@@ -58,13 +58,29 @@
     .green:hover {
     border-color: darkgreen;
     }
+    .dance {
+    margin-bottom: 10px;
+    display: block;
+    }
   </ui:style>
   <g:FlowPanel styleName="{style.content}">
     <w:HeadingWidget n="2" text="{i18n.startupGeneral}" />
+    <g:InlineHTML hTML="This is an initial hacky and dirty patch/fork of Yoghurt's open source block explorer you can run on top of any node. This version runs on top of the alphad Sidechain Elements sidechain node. Hardly anything works. This deployment will keep up close with the GitHub's head over on:" styleName="{style.dance}" />
+    <g:Anchor text="https://github.com/JornC/bitcoin-transaction-explorer/tree/elements" href="https://github.com/JornC/bitcoin-transaction-explorer/tree/elements" styleName="{style.dance}" />
+    <g:InlineHTML hTML="The original version of this block explorer (which is also unfinished) runs over on:" styleName="{style.dance}" />
+    <g:Anchor text="http://yogh.io" href="http://yogh.io" styleName="{style.dance}" />
+    <g:Label text="Please bare with the bugs. I quite literally have no idea what I'm doing or how to interpret anything on these sidechains. I'm in the dark just as much as anyone else. Hope someone enjoys it though." styleName="{style.dance}" />
+    <g:InlineHTML hTML="Cheers, /u/yoghurt114" styleName="{style.dance}" />
+    
+    <g:Label text="Oh right, how to use this explorer: type 'last' in the lookup box above and you'll go to the last block, a block height works aswell. It'll lookup transaction id's, aswell as raw transactions and raw blocks. Just stick it in the lookup box above and it'll try and fetch it for you." styleName="{style.dance}" />
+    <g:Label text="Note that I've tested precisely nothing. Literally the only thing I did was 'fix' anything incompatible with sidechains' alphad/elements by commenting away the code that caused an error." styleName="{style.dance}" />
+    
+    <!-- 
     <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
       <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
       <g:Label styleName="{style.blockLink} {style.blue}" text="Mining simulator" />
       <g:Label styleName="{style.blockLink} {style.green}" text="Contribute" ui:field="p2pkh" />
     </g:FlowPanel>
+     -->
   </g:FlowPanel>
 </ui:UiBinder>
