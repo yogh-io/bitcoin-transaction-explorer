@@ -49,7 +49,7 @@ public final class TransactionParseUtil extends TransactionUtil {
     // TODO This will not working in the future because it'd be possible that a massive byte array which doesn't
     // represent a single transaction is passed (such as blocks)
     if(pointer != bytes.length) {
-      throw new IllegalStateException("Raw transaction bytes not fully consumed");
+      //      throw new IllegalStateException("Raw transaction bytes not fully consumed");
     }
 
     return transaction;

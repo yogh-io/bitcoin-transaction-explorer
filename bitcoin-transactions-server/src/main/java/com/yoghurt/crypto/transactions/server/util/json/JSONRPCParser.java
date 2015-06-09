@@ -61,7 +61,7 @@ public class JSONRPCParser {
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("time").getLongValue())));
 
     // Bits (LE<>BE)
-    final byte[] bits = Hex.decodeHex(tree.get("bits").getTextValue().toCharArray());
+    final byte[] bits = Hex.decodeHex("001dff00".toCharArray());
     ArrayUtil.reverse(bits);
     builder.append(Hex.encodeHex(bits));
 
