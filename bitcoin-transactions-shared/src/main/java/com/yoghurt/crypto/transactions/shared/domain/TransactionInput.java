@@ -33,4 +33,11 @@ public class TransactionInput extends ScriptEntity  {
   public boolean isCoinbase() {
     return outPoint != null && outPoint.isCoinbase();
   }
+
+  @Override
+  public String toString() {
+    return "TransactionInput [outPoint=" + outPoint + "\ninputIndex=" + inputIndex + "\ntransactionSequence=" + transactionSequence + "]";
+  }
+
+
 }

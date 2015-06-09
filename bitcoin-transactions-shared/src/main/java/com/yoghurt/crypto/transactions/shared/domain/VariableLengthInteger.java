@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
+import java.util.Arrays;
+
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 
@@ -16,6 +18,8 @@ public final class VariableLengthInteger {
 
   public VariableLengthInteger(final byte[] bytes, final int pointer) {
     final int lengthByte = bytes[pointer] & 0xFF;
+
+    System.out.println("VarInt size: " + lengthByte);
 
     if (lengthByte <= 252) {
       value = lengthByte;
@@ -49,4 +53,11 @@ public final class VariableLengthInteger {
   public byte[] getBytes() {
     return bytes;
   }
+
+  @Override
+  public String toString() {
+    return "VariableLengthInteger [value=" + value + "\nbyteSize=" + byteSize + "\nbytes=" + Arrays.toString(bytes) + "]";
+  }
+
+
 }

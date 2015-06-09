@@ -5,6 +5,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 
@@ -23,7 +24,7 @@ public class TransactionOutputWidget extends Composite {
     initWidget(UI_BINDER.createAndBindUi(this));
 
     outputTitle.setText("Output #" + output.getOutputIndex());
-    amountViewer.setValue(output.getTransactionValue() / 100000000d + " BTC");
+    amountViewer.setValue(Hex.encode(output.getTransactionValue()));
     signatureScriptViewer.setScript(output.getInstructions());
   }
 }

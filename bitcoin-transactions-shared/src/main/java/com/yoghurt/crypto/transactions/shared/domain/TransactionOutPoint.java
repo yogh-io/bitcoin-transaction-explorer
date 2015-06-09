@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
+import java.util.Arrays;
+
 public class TransactionOutPoint {
   private long index;
   private byte[] referenceTransaction;
@@ -29,4 +31,11 @@ public class TransactionOutPoint {
 
     return true;
   }
+
+  @Override
+  public String toString() {
+    return "TransactionOutPoint [index=" + index + "\nreferenceTransaction=" + Arrays.toString(referenceTransaction) + "]";
+  }
+
+
 }

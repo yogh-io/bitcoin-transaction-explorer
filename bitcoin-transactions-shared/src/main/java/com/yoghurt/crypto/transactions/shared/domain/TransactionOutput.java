@@ -2,15 +2,15 @@ package com.yoghurt.crypto.transactions.shared.domain;
 
 
 public class TransactionOutput extends ScriptEntity {
-  private long transactionValue;
+  private byte[] serValue;
   private int outputIndex;
 
-  public long getTransactionValue() {
-    return transactionValue;
+  public byte[] getTransactionValue() {
+    return serValue;
   }
 
-  public void setTransactionValue(final long transactionValue) {
-    this.transactionValue = transactionValue;
+  public void setTransactionValue(final byte[] serValue) {
+    this.serValue = serValue;
   }
 
   public int getOutputIndex() {

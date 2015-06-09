@@ -7,7 +7,6 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 public final class TransactionEncodeUtil extends TransactionUtil {
@@ -74,7 +73,7 @@ public final class TransactionEncodeUtil extends TransactionUtil {
 
   private static void encodeOutput(final TransactionOutput output, final RawTransactionContainer container) {
     // Encode the output value
-    final byte[] outputValueBytes = NumberEncodeUtil.encodeUint64(output.getTransactionValue());
+    final byte[] outputValueBytes = output.getTransactionValue();
     container.add(TransactionPartType.OUTPUT_VALUE, outputValueBytes);
 
     // Encode the output script length
