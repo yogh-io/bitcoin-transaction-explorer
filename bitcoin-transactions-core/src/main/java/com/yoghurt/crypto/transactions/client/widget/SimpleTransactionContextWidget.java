@@ -35,11 +35,11 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
     case INPUT_SIZE:
       return "Number of inputs: " + new VariableLengthInteger(value.getValue()).getValue();
     case FEE:
-      return "Explicit transaction fee: " + NumberParseUtil.parseLong(value.getValue());
+      return "Explicit transaction fee: " + NumberParseUtil.parseLong(value.getValue()) + " BTC";
     case OUTPUT_SIZE:
       return "Number of outputs: " + new VariableLengthInteger(value.getValue()).getValue();
     case OUTPUT_VALUE:
-      return "Output value: " + NumberParseUtil.parseLong(value.getValue()) / 100000000d + " BTC";
+      return "Confidential output value";
     case SCRIPT_PUB_KEY_OP_CODE:
       final Operation pubKeySigOp = ScriptOperationUtil.getOperation(value.getValue()[0] & 0xFF);
       if (ScriptOperationUtil.isDataPushOperation(pubKeySigOp)) {

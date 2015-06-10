@@ -40,6 +40,8 @@ public class JSONRPCParser {
     System.out.println(bitsLength.getValue());
     System.out.println(rawBlockString);
 
+
+
     return rawBlockString.substring(bitsStart, (int) (bitsStart + (bitsLength.getByteSize() * 2) + (bitsLength.getValue() * 2)));
   }
 
@@ -63,6 +65,7 @@ public class JSONRPCParser {
     } else {
       prevBlockHash = Hex.decodeHex(prevBlockHashNode.getTextValue().toCharArray());
     }
+
     ArrayUtil.reverse(prevBlockHash);
     builder.append(Hex.encodeHex(prevBlockHash));
 
