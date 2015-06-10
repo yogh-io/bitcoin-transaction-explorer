@@ -44,6 +44,13 @@ public final class ScriptOperationUtil {
       case PUSH_DATA:
         return TransactionPartType.SCRIPT_SIG_PUSH_DATA;
       }
+    case FEDERATED_BLOCKSIGNING:
+      switch (partType) {
+      case OP_CODE:
+        return TransactionPartType.FEDERATED_SIG_OP_CODE;
+      case PUSH_DATA:
+        return TransactionPartType.FEDERATED_SIG_PUSH_DATA;
+      }
     }
 
     return null;

@@ -30,9 +30,6 @@ public final class BlockEncodeUtil {
     // Encode bits
     container.setBits(encodeBits(block));
 
-    // Encode nonce
-    container.setNonce(encodeNonce(block));
-
     return container;
   }
 
@@ -71,13 +68,5 @@ public final class BlockEncodeUtil {
     final byte[] bitsBytes = ArrayUtil.arrayCopy(block.getBits());
 
     return bitsBytes;
-  }
-
-  private static byte[] encodeNonce(final Block block) {
-    return encodeNonce(block.getNonce());
-  }
-
-  public static byte[] encodeNonce(final long nonce) {
-    return NumberEncodeUtil.encodeUint32(nonce);
   }
 }

@@ -37,11 +37,6 @@ public class JSONRPCParser {
     final int bitsStart = (4 + 32 + 32 + 4) * 2;
     final VariableLengthInteger bitsLength = new VariableLengthInteger(Hex.decodeHex(rawBlockString.substring(bitsStart, bitsStart + 8).toCharArray()));
 
-    System.out.println(bitsLength.getValue());
-    System.out.println(rawBlockString);
-
-
-
     return rawBlockString.substring(bitsStart, (int) (bitsStart + (bitsLength.getByteSize() * 2) + (bitsLength.getValue() * 2)));
   }
 
@@ -78,9 +73,6 @@ public class JSONRPCParser {
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("time").getLongValue())));
 
     // Skip the bits value, it'll be retrieved later (it's in verbose form here)
-
-    // Nonce
-    builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("nonce").getLongValue())));
 
     // Create a BlockInformation object to store the block information in
     final BlockInformation blockInformation = new BlockInformation();

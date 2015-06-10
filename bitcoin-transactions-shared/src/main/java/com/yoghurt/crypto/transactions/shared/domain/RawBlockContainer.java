@@ -47,14 +47,6 @@ public class RawBlockContainer extends LinkedHashMap<BlockPartType, byte[]> {
     put(BlockPartType.BITS, bits);
   }
 
-  public byte[] getNonce() {
-    return get(BlockPartType.NONCE);
-  }
-
-  public void setNonce(final byte[] nonce) {
-    put(BlockPartType.NONCE, nonce);
-  }
-
   /**
    * Hate doing this.. FIXME Refactor out of here
    */
@@ -65,7 +57,6 @@ public class RawBlockContainer extends LinkedHashMap<BlockPartType, byte[]> {
     container.setMerkleRoot(ArrayUtil.arrayCopy(getMerkleRoot()));
     container.setTimestamp(ArrayUtil.arrayCopy(getTimestamp()));
     container.setBits(ArrayUtil.arrayCopy(getBits()));
-    container.setNonce(ArrayUtil.arrayCopy(getNonce()));
     return container;
   }
 }

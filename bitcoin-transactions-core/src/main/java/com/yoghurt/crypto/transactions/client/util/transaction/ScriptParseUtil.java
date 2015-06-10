@@ -68,14 +68,16 @@ public final class ScriptParseUtil {
     final int opcode = bytes[pointer] & 0xFF;
 
     if(ScriptOperationUtil.isDataPushOperation(opcode)) {
-      // TODO Implement OP_PUSHDATA1/2/4 and OP_2-OP_16
-      if(opcode > 75) {
-        throw new UnsupportedOperationException();
+      // TODO Implement OP_PUSHDATA1/2/4
+      if(opcode >= 82) {
+        script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA, new byte[] { (byte) (opcode - 80) }));
+        pointer = pointer + 1;
+      } else if(opcode > 79) {
+        throw new UnsupportedOperationException("Unsupported opcode: " + opcode);
+      } else {
+        pointer = pointer + 1;
+        script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + opcode)));
       }
-
-      pointer = pointer + 1;
-
-      script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + opcode)));
     } else {
       script.addInstruction(new ScriptPart(ScriptOperationUtil.getOperation(opcode)));
       pointer = pointer + 1;

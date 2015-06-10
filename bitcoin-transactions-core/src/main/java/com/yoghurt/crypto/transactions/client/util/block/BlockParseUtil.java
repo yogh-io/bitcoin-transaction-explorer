@@ -37,9 +37,6 @@ public final class BlockParseUtil extends BlockUtil {
     // Parse the bits field
     pointer = parseBits(block, pointer, bytes);
 
-    // Parse the nonce
-    pointer = parseNonce(block, pointer, bytes);
-
     // Compute the block hash
     computeBlockHash(block, initialPointer, pointer, bytes);
 
@@ -99,12 +96,6 @@ public final class BlockParseUtil extends BlockUtil {
   private static int parseTimestamp(final Block block, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
     block.setTimestamp(new Date(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_TIMESTAMP_FIELD_SIZE)) * MS_TO_S));
-    return pointer;
-  }
-
-  private static int parseNonce(final Block block, final int initialPointer, final byte[] bytes) {
-    int pointer = initialPointer;
-    block.setNonce(NumberParseUtil.parseUint32(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_NONCE_FIELD_SIZE)));
     return pointer;
   }
 }

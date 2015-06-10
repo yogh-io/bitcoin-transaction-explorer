@@ -28,8 +28,6 @@ public class SimpleBlockContextWidget implements FieldContextFactory<Entry<Block
       return "Timestamp";
     case BITS:
       return "Bits value / federated consensus blocksigning";
-    case NONCE:
-      return "Nonce";
     default:
       return "Unknown block part.";
     }

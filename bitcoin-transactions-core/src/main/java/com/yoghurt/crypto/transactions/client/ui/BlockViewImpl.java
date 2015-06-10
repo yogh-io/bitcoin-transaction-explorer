@@ -11,17 +11,22 @@ import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.ScriptParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.ScriptViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
+import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 
 @Singleton
 public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
@@ -39,8 +44,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField(provided = true) BlockViewer previousBlockHashViewer;
   @UiField ValueViewer merkleRootViewer;
   @UiField ValueViewer timestampViewer;
-  @UiField ValueViewer bitsViewer;
-  @UiField ValueViewer nonceViewer;
+  @UiField(provided = true) ScriptViewer bitsViewer;
 
   @UiField ValueViewer heightViewer;
   @UiField ValueViewer numConfirmationsViewer;
@@ -55,6 +59,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   public BlockViewImpl(final BitcoinPlaceRouter router) {
     nextBlockViewer = new BlockViewer(router);
     previousBlockHashViewer = new BlockViewer(router);
+    bitsViewer = new ScriptViewer(ScriptType.FEDERATED_BLOCKSIGNING, false);
 
     initWidget(UI_BINDER.createAndBindUi(this));
   }
@@ -63,7 +68,6 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   public void setBlock(final BlockInformation blockInformation) {
     final Transaction coinbase = getTransactionFromHex(blockInformation.getRawCoinbaseTransaction());
     final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
-
 
     final RawTransactionContainer rawTransaction = new RawTransactionContainer();
     final RawBlockContainer rawBlock = new RawBlockContainer();
@@ -83,8 +87,11 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     previousBlockHashViewer.setValue(block.getPreviousBlockHash());
     merkleRootViewer.setValue(block.getMerkleRoot());
     timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));
-    bitsViewer.setValue(block.getBits());
-    nonceViewer.setValue(block.getNonce());
+
+    final byte[] arrayCopy = ArrayUtil.arrayCopy(block.getBits(), 1, block.getBits().length);
+
+    final ScriptEntity parseScript = ScriptParseUtil.parseScript(arrayCopy);
+    bitsViewer.setScript(parseScript.getInstructions());
 
     blockHexViewer.setValue(rawBlock.entrySet());
     notFoundLabel.setVisible(blockInformation == null);
@@ -95,7 +102,9 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     heightViewer.setValue(blockInformation.getHeight());
     numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
     numTransactionsViewer.setValue(blockInformation.getNumTransactions());
-    nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
+    if(blockInformation.getNextBlockHash() != null) {
+      nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
+    }
     sizeViewer.setValue(blockInformation.getSize());
   }
 }

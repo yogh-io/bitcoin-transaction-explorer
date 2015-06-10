@@ -64,12 +64,4 @@ public class Block implements Serializable {
   public void setBits(final byte[] bits) {
     this.bits = bits;
   }
-
-  public long getNonce() {
-    return nonce;
-  }
-
-  public void setNonce(final long nonce) {
-    this.nonce = nonce;
-  }
 }

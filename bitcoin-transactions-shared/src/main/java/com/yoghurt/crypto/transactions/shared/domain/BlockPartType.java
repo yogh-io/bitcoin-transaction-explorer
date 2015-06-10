@@ -9,7 +9,5 @@ public enum BlockPartType {
 
   TIMESTAMP,
 
-  BITS,
-
-  NONCE
+  BITS
 }

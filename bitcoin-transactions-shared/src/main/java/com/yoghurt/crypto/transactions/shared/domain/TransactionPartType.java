@@ -37,5 +37,9 @@ public enum TransactionPartType {
   /**
    * Explicit fee
    */
-  FEE;
+  FEE,
+
+  FEDERATED_SIG_PUSH_DATA,
+
+  FEDERATED_SIG_OP_CODE;
 }

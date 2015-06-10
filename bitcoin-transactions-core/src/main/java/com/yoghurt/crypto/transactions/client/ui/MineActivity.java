@@ -25,7 +25,6 @@ import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
-import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 /**
  * TODO GET RID OF HISTORICAL SIMULATION AND USE GETWORK/GETBLOCKTEMPLATE TYPE OF CONSTRUCT
@@ -164,10 +163,6 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
 
     // If this is a custom mining session (which includes custom coinbase), do some special stuff
     if(customMiningSession) {
-      // Reset the nonce
-      block.setNonce(0);
-      rawBlock.setNonce(NumberEncodeUtil.encodeUint32(0));
-
       // Set the merkle root to the coinbase tx only
       final ArrayList<byte[]> txs = new ArrayList<byte[]>();
       txs.add(rawTransaction.getBytes());

@@ -21,9 +21,6 @@ public class BlockPartColorPicker {
     case BITS:
       color = R.color().blockBits();
       break;
-    case NONCE:
-      color = R.color().blockNonce();
-      break;
     case VERSION:
     default:
       color = R.color().blockVersion();

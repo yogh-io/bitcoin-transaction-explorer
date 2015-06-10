@@ -64,7 +64,6 @@ public class MineViewImpl extends Composite implements MineView {
   private final ScheduledCommand defferedNonceHash = new ScheduledCommand() {
     @Override
     public void execute() {
-      incrementNonce();
       doHashCycle();
     }
   };
@@ -72,7 +71,6 @@ public class MineViewImpl extends Composite implements MineView {
   private final ScheduledCommand defferedNonceDecrementHash = new ScheduledCommand() {
     @Override
     public void execute() {
-      decrementNonce();
       doHashCycle();
     }
   };
@@ -128,7 +126,6 @@ public class MineViewImpl extends Composite implements MineView {
     merkleRootViewer.setValue(Str.toString(Hex.encode(initialBlock.getMerkleRoot())).toUpperCase());
     timestampViewer.setValue(FormatUtil.formatDateTime(initialBlock.getTimestamp()));
     bitsViewer.setValue(initialBlock.getBits());
-    nonceViewer.setValue(initialBlock.getNonce());
 
     final RawBlockContainer viewBlock = rawBlock.copy();
 
@@ -223,18 +220,6 @@ public class MineViewImpl extends Composite implements MineView {
     executor.start(MINING_SIMULATION_DELAY);
   }
 
-  private void incrementNonce() {
-    final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) + 1;
-    nonceViewer.setValue(nonce);
-    rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
-  }
-
-  private void decrementNonce() {
-    final long nonce = NumberParseUtil.parseUint32(rawBlock.getNonce()) - 1;
-    nonceViewer.setValue(nonce);
-    rawBlock.setNonce(BlockEncodeUtil.encodeNonce(nonce));
-  }
-
   private void incrementExtraNonce() {
     final Entry<TransactionPartType, byte[]> find = coinbase.find(TransactionPartType.COINBASE_SCRIPT_SIG);
 
@@ -298,7 +283,6 @@ public class MineViewImpl extends Composite implements MineView {
   }
 
   private void doFullHashCycle() {
-    incrementNonce();
     synchronizeTime();
 
     doHashCycle();
