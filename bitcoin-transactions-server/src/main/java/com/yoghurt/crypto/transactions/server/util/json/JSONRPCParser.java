@@ -12,6 +12,7 @@ import org.codehaus.jackson.JsonProcessingException;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
+import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
@@ -30,6 +31,18 @@ public class JSONRPCParser {
     return JsonParser.mapper.readTree(jsonData).get("result");
   }
 
+  public static String getBitsValue(InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
+    final String rawBlockString = getResultString(jsonData);
+
+    final int bitsStart = (4 + 32 + 32 + 4) * 2;
+    final VariableLengthInteger bitsLength = new VariableLengthInteger(Hex.decodeHex(rawBlockString.substring(bitsStart, bitsStart + 8).toCharArray()));
+
+    System.out.println(bitsLength.getValue());
+    System.out.println(rawBlockString);
+
+    return rawBlockString.substring(bitsStart, (int) (bitsStart + (bitsLength.getByteSize() * 2) + (bitsLength.getValue() * 2)));
+  }
+
   public static BlockInformation getBlockInformation(final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
     final JsonNode tree = getResultNode(jsonData);
 
@@ -38,6 +51,7 @@ public class JSONRPCParser {
 
     // Version
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("version").getLongValue())));
+
 
     // Prev block hash (LE<>BE)
     final JsonNode prevBlockHashNode = tree.get("previousblockhash");
@@ -60,10 +74,7 @@ public class JSONRPCParser {
     // Timestamp
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("time").getLongValue())));
 
-    // Bits (LE<>BE)
-    final byte[] bits = Hex.decodeHex("001dff00".toCharArray());
-    ArrayUtil.reverse(bits);
-    builder.append(Hex.encodeHex(bits));
+    // Skip the bits value, it'll be retrieved later (it's in verbose form here)
 
     // Nonce
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("nonce").getLongValue())));
@@ -90,7 +101,8 @@ public class JSONRPCParser {
     // Set the byte size
     blockInformation.setSize(tree.get("size").getLongValue());
 
-    // Set the raw coinbase transaction to its txid (this is a work-around, see TODO in BitcoinJSONRPCRetriever)
+    // Set the raw coinbase transaction to its txid (this is a work-around, see
+    // TODO in BitcoinJSONRPCRetriever)
     blockInformation.setRawCoinbaseTransaction(tree.get("tx").get(0).getTextValue());
 
     return blockInformation;
@@ -103,7 +115,7 @@ public class JSONRPCParser {
 
     final JsonNode confirmationsNode = tree.get("confirmations");
 
-    if(confirmationsNode == null) {
+    if (confirmationsNode == null) {
       transactionInformation.setConfirmations(0);
       transactionInformation.setState(TransactionState.UNCONFIRMED);
     } else {

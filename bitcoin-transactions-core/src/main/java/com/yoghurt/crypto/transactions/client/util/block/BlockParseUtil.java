@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
+import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 
@@ -87,8 +88,9 @@ public final class BlockParseUtil extends BlockUtil {
   private static int parseBits(final Block block, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
 
-    final byte[] bitsBytes = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + BLOCK_BITS_FIELD_SIZE);
-    ArrayUtil.reverse(bitsBytes);
+    final VariableLengthInteger bitsSize = new VariableLengthInteger(bytes, initialPointer);
+
+    final byte[] bitsBytes = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + (int) bitsSize.getValue() + bitsSize.getByteSize());
 
     block.setBits(bitsBytes);
     return pointer;

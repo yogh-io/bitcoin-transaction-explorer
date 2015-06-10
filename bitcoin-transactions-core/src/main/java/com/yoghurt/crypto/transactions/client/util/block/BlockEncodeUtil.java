@@ -69,7 +69,6 @@ public final class BlockEncodeUtil {
 
   private static byte[] encodeBits(final Block block) {
     final byte[] bitsBytes = ArrayUtil.arrayCopy(block.getBits());
-    ArrayUtil.reverse(bitsBytes);
 
     return bitsBytes;
   }

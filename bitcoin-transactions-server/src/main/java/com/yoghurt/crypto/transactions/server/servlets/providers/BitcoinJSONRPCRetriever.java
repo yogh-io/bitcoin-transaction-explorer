@@ -122,7 +122,8 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   @Override
   public BlockInformation getBlockInformationFromHash(final String identifier) throws ApplicationException {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
-        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", identifier)) {
+        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", identifier);
+        InputStream jsonRawData = doComplexJSONRPCMethod(client, "getblock", identifier, false)) {
 
       final BlockInformation blockInformation = JSONRPCParser.getBlockInformation(jsonData);
 
@@ -132,6 +133,19 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
       // Extract the coinbase tx id
       final String coinbaseTxid = blockInformation.getRawCoinbaseTransaction();
+
+      // Oh how disregarding anything neat can bring such joy in times of great distress. This is absolutely dreadful to do, yet no fucks will be given today.
+      final String bitsString = JSONRPCParser.getBitsValue(jsonRawData);
+      System.out.println(bitsString);
+      final int bitsStart = (4 + 32 + 32 + 4) * 2;
+
+      System.out.println(blockInformation.getRawBlockHeaders());
+
+      final StringBuilder bldr = new StringBuilder(blockInformation.getRawBlockHeaders());
+      bldr.insert(bitsStart, bitsString);
+      blockInformation.setRawBlockHeaders(bldr.toString());
+
+      System.out.println(blockInformation.getRawBlockHeaders());
 
       // Retrieve raw coinbase tx and its blockchain information
       final String rawTransactionHex = getRawTransactionHex(coinbaseTxid);

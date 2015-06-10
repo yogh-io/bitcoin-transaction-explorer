@@ -19,8 +19,6 @@ public final class VariableLengthInteger {
   public VariableLengthInteger(final byte[] bytes, final int pointer) {
     final int lengthByte = bytes[pointer] & 0xFF;
 
-    System.out.println("VarInt size: " + lengthByte);
-
     if (lengthByte <= 252) {
       value = lengthByte;
       byteSize = 1;
