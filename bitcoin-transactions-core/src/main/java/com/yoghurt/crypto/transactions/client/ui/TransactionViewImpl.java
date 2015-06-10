@@ -57,6 +57,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   // Misc info
   @UiField ValueViewer txVersionViewer;
+  @UiField ValueViewer txFeeViewer;
   @UiField ValueViewer txLockTimeViewer;
 
   // Raw hex
@@ -84,6 +85,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     txIdViewer.setHash(transaction.getTransactionId());
 
     txVersionViewer.setValue(transaction.getVersion());
+    txFeeViewer.setValue(transaction.getFee() / 100000000d);
     txLockTimeViewer.setValue(transaction.getLockTime());
 
     if (transaction.getInputs() != null) {

@@ -57,6 +57,9 @@
       <w:LabelledWidget label="{i18n.transactionLockTime}">
         <w:ValueViewer ui:field="txLockTimeViewer" color="{res.color.transactionLockTime}" />
       </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.transactionFee}">
+        <w:ValueViewer ui:field="txFeeViewer" color="{res.color.transactionFee}" />
+      </w:LabelledWidget>
       <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleRawHex}" />
       <w:TransactionHexViewer ui:field="txHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     </g:FlowPanel>

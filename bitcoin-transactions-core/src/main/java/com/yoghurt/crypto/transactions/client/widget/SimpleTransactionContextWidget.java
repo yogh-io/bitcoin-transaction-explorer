@@ -34,6 +34,8 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
       return "Input sequence number";
     case INPUT_SIZE:
       return "Number of inputs: " + new VariableLengthInteger(value.getValue()).getValue();
+    case FEE:
+      return "Explicit transaction fee: " + NumberParseUtil.parseLong(value.getValue());
     case OUTPUT_SIZE:
       return "Number of outputs: " + new VariableLengthInteger(value.getValue()).getValue();
     case OUTPUT_VALUE:

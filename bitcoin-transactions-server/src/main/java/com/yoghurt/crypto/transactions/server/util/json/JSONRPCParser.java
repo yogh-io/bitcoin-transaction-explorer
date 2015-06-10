@@ -68,7 +68,6 @@ public class JSONRPCParser {
     // Nonce
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("nonce").getLongValue())));
 
-
     // Create a BlockInformation object to store the block information in
     final BlockInformation blockInformation = new BlockInformation();
 

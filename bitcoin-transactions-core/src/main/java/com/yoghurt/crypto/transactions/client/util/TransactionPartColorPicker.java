@@ -33,6 +33,9 @@ public class TransactionPartColorPicker {
     case OUTPUT_SIZE:
       color = R.color().transactionOutputLength();
       break;
+    case FEE:
+      color = R.color().transactionFee();
+      break;
     case OUTPUT_VALUE:
       color = R.color().transactionOutputAmount();
       break;

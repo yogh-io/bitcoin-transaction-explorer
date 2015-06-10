@@ -48,7 +48,8 @@ public class TransactionInputWidget extends Composite {
     indexViewer.setValue(String.valueOf(input.getOutPoint().getIndex()));
     sequenceViewer.setValue(Str.toString(Hex.encode(NumberEncodeUtil.encodeUint32(input.getTransactionSequence()))).toUpperCase());
 
-    scriptViewField.setVisible(false || !input.isCoinbase());
+    // Set it to invisible, always
+    scriptViewField.setVisible(true || !input.isCoinbase());
   }
 
   @UiHandler("scriptViewField")

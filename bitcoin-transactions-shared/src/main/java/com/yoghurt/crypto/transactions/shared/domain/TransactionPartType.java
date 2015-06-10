@@ -32,5 +32,10 @@ public enum TransactionPartType {
   /**
    * We'll be special-casing the coinbase input scriptsig because it cannot be interpreted as usual.
    */
-  COINBASE_SCRIPT_SIG;
+  COINBASE_SCRIPT_SIG,
+
+  /**
+   * Explicit fee
+   */
+  FEE;
 }

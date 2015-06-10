@@ -121,6 +121,9 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Format version:")
   String transactionVersion();
 
+  @DefaultMessage("Tx fee:")
+  String transactionFee();
+
   @DefaultMessage("Lock time:")
   String transactionLockTime();
 

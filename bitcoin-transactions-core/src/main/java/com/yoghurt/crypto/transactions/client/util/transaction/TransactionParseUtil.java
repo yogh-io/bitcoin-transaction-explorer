@@ -30,8 +30,6 @@ public final class TransactionParseUtil extends TransactionUtil {
     // Parse the transaction input size
     pointer = parseTransactionInputSize(transaction, pointer, bytes);
 
-    System.out.println("Input size: " + transaction.getInputSize().getValue());
-
     // Parse the transaction inputs
     pointer = parseTransactionInputs(transaction, pointer, bytes);
 
@@ -58,7 +56,6 @@ public final class TransactionParseUtil extends TransactionUtil {
     // script -> pushdata (21 hex, 33 dec, pubkey) + data
     // locktime
 
-    // #tx:id:fc8127dccd7760ea4e4c505e60fb217b4758f9bf9f3d988785e28b8f127ef51f
     // for: 01000000 01 aa870c02ccb208914aba524f7543d3ea0afc9bce4738e0fb0c34f7f1311de5ce 00000000 64
     // 412f6ad09b15a39cb3e28a34fe33688cbae9b1d2dc7ab39d746dab234ebc6d5f959b12f0ff1c3fd3391ad8bdb27edb8696141e67cd400e3a3b5da4654d1b73deb501210332af36fa5d949df148af14a376a6c20625b26c57a6e25e56dd05327b3dc7caae
     // ffffffff
@@ -87,14 +84,11 @@ public final class TransactionParseUtil extends TransactionUtil {
     // locktime
     // ...
 
+    // Parse the explicit transaction fee
     pointer = parseTransactionFee(transaction, pointer, bytes);
-
-
 
     // Parse the transaction output size
     pointer = parseTransactionOutputSize(transaction, pointer, bytes);
-
-    System.out.println("Output size: " + transaction.getOutputSize().getValue());
 
     // Parse the transaction outputs
     pointer = parseTransactionOutputs(transaction, pointer, bytes);
@@ -182,7 +176,6 @@ public final class TransactionParseUtil extends TransactionUtil {
       outputs.add(output);
 
       // Parse the transaction value
-      System.out.println("parsing tx output " + i);
       if(transaction.isCoinbase()) {
         output.setTransactionValue(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + COINBASE_OUTPUT_VALUE_SIZE));
       } else {
@@ -219,7 +212,7 @@ public final class TransactionParseUtil extends TransactionUtil {
 
   private static int parseTransactionFee(final Transaction transaction, final int initialPointer, final byte[] bytes) {
     int pointer = initialPointer;
-    NumberParseUtil.parseLong(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_FEE_VALUE_SIZE));
+    transaction.setFee(NumberParseUtil.parseLong(ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + TRANSACTION_FEE_VALUE_SIZE)));
     return pointer;
   }
 

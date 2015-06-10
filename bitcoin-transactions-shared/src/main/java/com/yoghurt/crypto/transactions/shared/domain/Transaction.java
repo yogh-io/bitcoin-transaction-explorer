@@ -15,6 +15,8 @@ public class Transaction {
   private VariableLengthInteger outputSize;
   private ArrayList<TransactionOutput> outputs;
 
+  private long fee;
+
   public byte[] getTransactionId() {
     return txId;
   }
@@ -80,5 +82,11 @@ public class Transaction {
     return "Transaction [txId=" + Arrays.toString(txId) + "\nversion=" + version + "\nlockTime=" + lockTime + "\ninputSize=" + inputSize + "\ninputs=" + inputs + "\noutputSize=" + outputSize + "\noutputs=" + outputs + "]";
   }
 
+  public long getFee() {
+    return fee;
+  }
 
+  public void setFee(final long fee) {
+    this.fee = fee;
+  }
 }

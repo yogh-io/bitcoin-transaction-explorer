@@ -26,6 +26,9 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     // Encode the inputs
     encodeTransactionInputs(transaction, container);
 
+    // Encode the explicit fee
+    container.add(TransactionPartType.FEE, encodeTransactionFee(transaction));
+
     // Encode the output length
     container.add(TransactionPartType.OUTPUT_SIZE, encodeNumOutputs(transaction));
 
@@ -36,6 +39,10 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     container.add(TransactionPartType.LOCK_TIME, encodeLockTime(transaction));
 
     return container;
+  }
+
+  private static byte[] encodeTransactionFee(final Transaction transaction) {
+    return NumberEncodeUtil.encodeUint64(transaction.getFee());
   }
 
   private static void encodeTransactionInputs(final Transaction transaction, final RawTransactionContainer container) {
