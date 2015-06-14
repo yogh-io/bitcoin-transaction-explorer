@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
@@ -16,6 +17,7 @@ import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
@@ -48,11 +50,17 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField(provided = true) BlockViewer nextBlockViewer;
   @UiField ValueViewer sizeViewer;
 
+  @UiField FlowPanel transactionPanel;
+
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
 
+  private final BitcoinPlaceRouter router;
+
   @Inject
   public BlockViewImpl(final BitcoinPlaceRouter router) {
+    this.router = router;
+
     nextBlockViewer = new BlockViewer(router);
     previousBlockHashViewer = new BlockViewer(router);
 
@@ -97,5 +105,15 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     numTransactionsViewer.setValue(blockInformation.getNumTransactions());
     nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
     sizeViewer.setValue(blockInformation.getSize());
+
+    transactionPanel.clear();
+    if(blockInformation.getTransactions() != null) {
+      for(final String txid : blockInformation.getTransactions()) {
+        final TransactionViewer hashViewer = new TransactionViewer(router, false, false);
+        transactionPanel.add(hashViewer);
+
+        hashViewer.setValue(Hex.decode(txid));
+      }
+    }
   }
 }

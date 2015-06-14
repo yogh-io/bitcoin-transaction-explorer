@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class BlockInformation implements Serializable {
   private static final long serialVersionUID = -6695967392021472565L;
@@ -15,6 +16,8 @@ public class BlockInformation implements Serializable {
   private String nextBlockHash;
 
   private TransactionInformation coinbaseInformation;
+
+  private ArrayList<String> transactions;
 
   public BlockInformation() {}
 
@@ -80,6 +83,14 @@ public class BlockInformation implements Serializable {
 
   public void setCoinbaseInformation(final TransactionInformation coinbaseInformation) {
     this.coinbaseInformation = coinbaseInformation;
+  }
+
+  public void setTransactions(ArrayList<String> transactions) {
+    this.transactions = transactions;
+  }
+
+  public ArrayList<String> getTransactions() {
+    return transactions;
   }
 
   @Override

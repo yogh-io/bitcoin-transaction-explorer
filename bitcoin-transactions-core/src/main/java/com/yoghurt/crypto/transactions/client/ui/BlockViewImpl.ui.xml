@@ -12,6 +12,9 @@
     width: 780px;
     flex-wrap: wrap;
     }
+    .transactionList > * {
+      margin-bottom: 10px;
+    }
   </ui:style>
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.blockPlaceTitle}" />
@@ -61,5 +64,7 @@
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleRawCoinbaseHex}" />
     <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleTransactionList}" />
+    <g:FlowPanel ui:field="transactionPanel" styleName="{style.transactionList}" />
   </g:FlowPanel>
 </ui:UiBinder>

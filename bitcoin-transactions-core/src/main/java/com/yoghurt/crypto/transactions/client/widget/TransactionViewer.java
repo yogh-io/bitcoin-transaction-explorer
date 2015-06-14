@@ -10,10 +10,10 @@ public class TransactionViewer extends ValueViewer {
   private final ClickHandler mouseClickHandler = new ClickHandler() {
     @Override
     public void onClick(final ClickEvent event) {
-      placeController.goToTransaction(value);
+      presenter.goToTransaction(value);
     }
   };
-  private final TransactionPlaceRouter placeController;
+  private final TransactionPlaceRouter presenter;
 
   /**
    * Flag indicating whether or not the value is LE or BE, if it's BE, will convert to LE
@@ -24,7 +24,7 @@ public class TransactionViewer extends ValueViewer {
     this(presenter, true, coinbase);
   }
 
-  public TransactionViewer(final TransactionPlaceRouter placeController, final boolean reverse, final boolean coinbase) {
+  public TransactionViewer(final TransactionPlaceRouter presenter, final boolean reverse, final boolean coinbase) {
     super(R.color().transactionHash(), new SimpleContextFactory<String>() {
       @Override
       protected String getTextValue(final String value) {
@@ -36,7 +36,7 @@ public class TransactionViewer extends ValueViewer {
       }
     });
 
-    this.placeController = placeController;
+    this.presenter = presenter;
     this.reverse = reverse;
 
     if(!coinbase) {

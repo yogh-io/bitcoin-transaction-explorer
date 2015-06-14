@@ -70,6 +70,9 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Raw coinbase transaction in hex")
   String blockPlaceTitleRawCoinbaseHex();
 
+  @DefaultMessage("Transaction list")
+  String blockPlaceTitleTransactionList();
+
   @DefaultMessage("Mining simulator")
   String minePlaceTitleMiningSimulator();
 

@@ -2,6 +2,7 @@ package com.yoghurt.crypto.transactions.server.util.json;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.commons.codec.DecoderException;
@@ -68,9 +69,17 @@ public class JSONRPCParser {
     // Nonce
     builder.append(Hex.encodeHex(NumberEncodeUtil.encodeUint32(tree.get("nonce").getLongValue())));
 
-
     // Create a BlockInformation object to store the block information in
     final BlockInformation blockInformation = new BlockInformation();
+
+    // Array of txs
+    final ArrayList<String> txs = new ArrayList<>();
+    final JsonNode txNode = tree.get("tx");
+    for (int i = 0; i < txNode.size(); i++) {
+      txs.add(txNode.get(i).getTextValue());
+    }
+
+    blockInformation.setTransactions(txs);
 
     // Set the raw block headers
     blockInformation.setRawBlockHeaders(builder.toString());
@@ -91,7 +100,8 @@ public class JSONRPCParser {
     // Set the byte size
     blockInformation.setSize(tree.get("size").getLongValue());
 
-    // Set the raw coinbase transaction to its txid (this is a work-around, see TODO in BitcoinJSONRPCRetriever)
+    // Set the raw coinbase transaction to its txid (this is a work-around, see
+    // TODO in BitcoinJSONRPCRetriever)
     blockInformation.setRawCoinbaseTransaction(tree.get("tx").get(0).getTextValue());
 
     return blockInformation;
@@ -104,7 +114,7 @@ public class JSONRPCParser {
 
     final JsonNode confirmationsNode = tree.get("confirmations");
 
-    if(confirmationsNode == null) {
+    if (confirmationsNode == null) {
       transactionInformation.setConfirmations(0);
       transactionInformation.setState(TransactionState.UNCONFIRMED);
     } else {
