@@ -22,7 +22,7 @@ public class ScriptViewer extends ContextFieldSet<ScriptPart> {
       @Override
       public String getFieldText(final ScriptPart value) {
         if(isCoinbase) {
-          return "Arbitrary coinbase data including extraNonce and miner notes.";
+          return "Coinbase input data including extraNonce and miner notes.";
         } else {
           return super.getFieldText(value);
         }

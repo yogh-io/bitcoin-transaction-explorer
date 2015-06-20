@@ -143,4 +143,14 @@ public class SimpleColorPicker implements ColorPicker {
   public Color transactionArbitraryData() {
     return ColorBuilder.interpret("black");
   }
+
+  @Override
+  public Color stackData() {
+    return ColorBuilder.interpret("green");
+  }
+
+  @Override
+  public Color stackSingle() {
+    return ColorBuilder.interpret("red");
+  }
 }

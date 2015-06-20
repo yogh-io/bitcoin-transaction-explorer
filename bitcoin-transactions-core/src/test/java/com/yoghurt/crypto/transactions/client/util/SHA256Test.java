@@ -4,6 +4,8 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 
+import com.yoghurt.crypto.transactions.client.util.crypto.SHA256;
+
 public class SHA256Test {
   //  @Test
   //  public void testSHA256() throws DecoderException {

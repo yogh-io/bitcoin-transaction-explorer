@@ -106,6 +106,9 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("ScriptPubKey:")
   String transactionScriptPubKey();
 
+  @DefaultMessage("UTF8 Input:")
+  String transactionCoinbaseInput();
+
   @DefaultMessage("View in script viewer")
   String transactionScriptViewer();
 
@@ -202,11 +205,17 @@ public interface ApplicationMessages extends Messages {
   @DefaultMessage("Operation:")
   String scriptOperation();
 
+  @DefaultMessage("Description:")
+  String scriptOperationDescription();
+
   @DefaultMessage("Result:")
   String scriptResult();
 
   @DefaultMessage("Remaining:")
   String scriptRemainingScript();
+
+  @DefaultMessage("Resulting stack:")
+  String scriptResultStack();
 
   @DefaultMessage("Execution step {0}")
   String scriptExecutionStep(int idx);

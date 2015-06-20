@@ -7,7 +7,7 @@ public class StackObject {
     this.data = data;
   }
 
-  public byte[] getData() {
+  public byte[] getBytes() {
     return data;
   }
 

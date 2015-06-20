@@ -58,4 +58,8 @@ public interface ColorPicker {
   Color transactionInputLength();
 
   Color transactionArbitraryData();
+
+  Color stackData();
+
+  Color stackSingle();
 }

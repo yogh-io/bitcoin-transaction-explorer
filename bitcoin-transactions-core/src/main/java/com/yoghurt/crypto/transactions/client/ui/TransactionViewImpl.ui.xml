@@ -59,6 +59,11 @@
       </w:LabelledWidget>
       <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleRawHex}" />
       <w:TransactionHexViewer ui:field="txHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
+      <g:FlowPanel ui:field="coinbaseInputContainer">
+        <w:LabelledWidget label="{i18n.transactionCoinbaseInput}">
+          <w:ValueViewer ui:field="coinbaseInputViewer" color="{res.color.transactionArbitraryData}" />
+        </w:LabelledWidget>
+      </g:FlowPanel>
     </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>

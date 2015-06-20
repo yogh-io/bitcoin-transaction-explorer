@@ -3,7 +3,8 @@ package com.yoghurt.crypto.transactions.client.util.transaction;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.yoghurt.crypto.transactions.client.util.SHA256;
+import com.yoghurt.crypto.transactions.client.util.crypto.RIPEMD160;
+import com.yoghurt.crypto.transactions.client.util.crypto.SHA256;
 
 /**
  * FIXME Using external library imported into this project because there's no maven support for it May want to move to a library that does exist on
@@ -14,9 +15,9 @@ public class ComputeUtil {
 
   /**
    * Compute the double SHA256 digest out of a collection of bytes
-   * 
+   *
    * @param bytes Bytes to digest
-   * 
+   *
    * @return Doubly hashed input bytes
    */
   public static byte[] computeDoubleSHA256(final byte[] bytes) {
@@ -25,9 +26,9 @@ public class ComputeUtil {
 
   /**
    * Compute the double SHA256 digest out of a collection (of a collection) of bytes
-   * 
+   *
    * @param bytes Collection of bytes to digest
-   * 
+   *
    * @return Doubly hashed input bytes
    */
   public static byte[] computeDoubleSHA256(final Collection<byte[]> bytes) {
@@ -81,5 +82,11 @@ public class ComputeUtil {
     final byte[] bs = txs.get(0);
 
     return computeDoubleSHA256(bs, bs);
+  }
+
+  public static byte[] computeHash160(final byte[] bytes) {
+    final RIPEMD160 digest = new RIPEMD160();
+
+    return digest.digest(computeSHA256(bytes));
   }
 }
