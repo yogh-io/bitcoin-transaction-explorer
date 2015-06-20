@@ -5,14 +5,13 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.yoghurt.crypto.transactions.client.util.transaction.ScriptOperationUtil;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptExecutionPart;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.StackObject;
 
-public class StackMachine implements Iterable<StackState>, Iterator<StackState> {
+public class StackMachine implements Iterable<ExecutionStep>, Iterator<ExecutionStep> {
   private final LinkedList<ScriptExecutionPart> script = new LinkedList<ScriptExecutionPart>();
 
   private final Deque<StackObject> stack = new LinkedList<StackObject>();
@@ -23,7 +22,7 @@ public class StackMachine implements Iterable<StackState>, Iterator<StackState> 
   }
 
   @Override
-  public Iterator<StackState> iterator() {
+  public Iterator<ExecutionStep> iterator() {
     return this;
   }
 
@@ -32,21 +31,29 @@ public class StackMachine implements Iterable<StackState>, Iterator<StackState> 
     return !script.isEmpty();
   }
 
+  /**
+   * TODO All state is lost on the next call to next(), if this is undesired then all state
+   * needs to be copied into the execution step.
+   */
   @Override
-  public StackState next() {
-    final StackState state = new StackState();
-    state.setScript(script);
+  public ExecutionStep next() {
+    // Create object for the current execution step
+    final ExecutionStep executionStep = new ExecutionStep();
 
+    // Take the next instruction from the script, add it as the execution step's operation
     final ScriptExecutionPart pop = script.pop();
-    state.setOperation(pop);
+    executionStep.setOperation(pop);
 
-    if(ScriptOperationUtil.isDataPushOperation(pop.getOperation())) {
-      stack.push(new StackObject(pop.getBytes()));
-    }
+    // Stick the remaining script in the execution step
+    executionStep.setScript(script);
 
-    state.setStack(stack);
+    // Stick the stack in the execution step
+    executionStep.setStack(stack);
 
-    return state;
+    // Execute this step
+    ScriptExecutionUtil.execute(executionStep);
+
+    return executionStep;
   }
 
   @Override

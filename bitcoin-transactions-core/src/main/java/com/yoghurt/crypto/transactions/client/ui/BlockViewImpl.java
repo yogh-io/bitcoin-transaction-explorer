@@ -50,10 +50,12 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField(provided = true) BlockViewer nextBlockViewer;
   @UiField ValueViewer sizeViewer;
 
-  @UiField FlowPanel transactionPanel;
-
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
+
+  @UiField ValueViewer coinbaseInputViewer;
+
+  @UiField FlowPanel transactionPanel;
 
   private final BitcoinPlaceRouter router;
 
@@ -71,7 +73,6 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   public void setBlock(final BlockInformation blockInformation) {
     final Transaction coinbase = getTransactionFromHex(blockInformation.getRawCoinbaseTransaction());
     final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
-
 
     final RawTransactionContainer rawTransaction = new RawTransactionContainer();
     final RawBlockContainer rawBlock = new RawBlockContainer();
@@ -107,8 +108,8 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     sizeViewer.setValue(blockInformation.getSize());
 
     transactionPanel.clear();
-    if(blockInformation.getTransactions() != null) {
-      for(final String txid : blockInformation.getTransactions()) {
+    if (blockInformation.getTransactions() != null) {
+      for (final String txid : blockInformation.getTransactions()) {
         final TransactionViewer hashViewer = new TransactionViewer(router, false, false);
         transactionPanel.add(hashViewer);
 

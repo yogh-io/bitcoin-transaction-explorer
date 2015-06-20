@@ -62,6 +62,9 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   // Raw hex
   @UiField TransactionHexViewer txHexViewer;
 
+  @UiField FlowPanel coinbaseInputContainer;
+  @UiField ValueViewer coinbaseInputViewer;
+
   private final BitcoinPlaceRouter router;
 
   @Inject
@@ -109,6 +112,17 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     }
 
     txHexViewer.setValue(rawTransaction);
+    //
+    //    if(transaction.isCoinbase()) {
+    //      coinbaseInputContainer.setVisible(true);
+    //      try {
+    //        coinbaseInputViewer.setValue(new String(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue(), "UTF8"));
+    //      } catch (final UnsupportedEncodingException e) {
+    //        // Eat, doesn't happen by VM standards.
+    //      }
+    //    } else {
+    //      coinbaseInputContainer.setVisible(true);
+    //    }
   }
 
   @Override

@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.util;
+package com.yoghurt.crypto.transactions.client.util.crypto;
 
 /**
  * Class that performs the SHA-256 digest operation.

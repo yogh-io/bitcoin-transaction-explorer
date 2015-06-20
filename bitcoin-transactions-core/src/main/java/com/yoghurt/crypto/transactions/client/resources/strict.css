@@ -137,5 +137,5 @@ button {
 }
 
 .panel {
-	flex-items: column;
+	flex-direction: column;
 }

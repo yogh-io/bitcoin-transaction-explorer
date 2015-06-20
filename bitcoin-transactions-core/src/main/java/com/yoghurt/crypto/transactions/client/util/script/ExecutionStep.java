@@ -5,10 +5,11 @@ import java.util.Deque;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptExecutionPart;
 import com.yoghurt.crypto.transactions.shared.domain.StackObject;
 
-public class StackState {
+public class ExecutionStep {
   private Deque<StackObject> stack;
   private Deque<ScriptExecutionPart> script;
   private ScriptExecutionPart scriptExecutionPart;
+  private boolean executionError;
 
   public Deque<StackObject> getStack() {
     return stack;
@@ -26,11 +27,19 @@ public class StackState {
     this.script = script;
   }
 
-  public ScriptExecutionPart getOperation() {
+  public ScriptExecutionPart getInstruction() {
     return scriptExecutionPart;
   }
 
   public void setOperation(final ScriptExecutionPart scriptExecutionPart) {
     this.scriptExecutionPart = scriptExecutionPart;
+  }
+
+  public void setExecutionError(final boolean executionError) {
+    this.executionError = executionError;
+  }
+
+  public boolean hasExecutionError() {
+    return executionError;
   }
 }
