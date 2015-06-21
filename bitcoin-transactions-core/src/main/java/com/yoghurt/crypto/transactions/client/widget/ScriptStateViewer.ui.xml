@@ -9,7 +9,7 @@
     color: red;
     font-weight: bold;
     font-size: 16px;
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 10px;
     text-align: center;
   }
@@ -31,9 +31,9 @@
     <w:LabelledWidget label="{i18n.scriptResultStack}">
       <w:StackViewer ui:field="stackViewer" />
     </w:LabelledWidget>
-    <g:Label ui:field="executionError" styleName="{style.error}" text="This step caused an execution error. The transaction this script is a part of is invalid." />
     <w:LabelledWidget label="{i18n.scriptRemainingScript}">
       <w:ScriptExecutionViewer ui:field="scriptExecutionViewer" />
     </w:LabelledWidget>
+    <g:Label ui:field="executionError" styleName="{style.error}" text="This step caused an execution error. The transaction this script is a part of is invalid." />
   </g:FlowPanel>
 </ui:UiBinder>

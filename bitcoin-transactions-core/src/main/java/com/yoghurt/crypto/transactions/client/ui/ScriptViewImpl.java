@@ -5,12 +5,16 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.script.ExecutionStep;
+import com.yoghurt.crypto.transactions.client.util.script.StackMachine;
 import com.yoghurt.crypto.transactions.client.util.transaction.ScriptEncodeUtil;
+import com.yoghurt.crypto.transactions.client.widget.ScriptExecutionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptStateViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptViewer;
@@ -34,12 +38,15 @@ public class ScriptViewImpl extends Composite implements ScriptView {
 
   @UiField FlowPanel scriptExecutionContainer;
 
+  @UiField Label scriptExecutionResult;
+
   @UiField(provided = true) ScriptViewer scriptSigViewer;
   @UiField(provided = true) ScriptViewer pubKeySigViewer;
+  @UiField ScriptExecutionViewer fullScriptViewer;
 
   @Inject
   public ScriptViewImpl(final BitcoinPlaceRouter router) {
-    hashViewer = new TransactionViewer(router, false);
+    hashViewer = new TransactionViewer(router, false, false);
     scriptSigViewer = new ScriptViewer(ScriptType.SCRIPT_SIG, false);
     pubKeySigViewer = new ScriptViewer(ScriptType.SCRIPT_PUB_KEY, false);
 
@@ -47,12 +54,14 @@ public class ScriptViewImpl extends Composite implements ScriptView {
   }
 
   @Override
-  public void setScript(final ScriptInformation information, final Iterable<ExecutionStep> scriptSteps) {
+  public void setScript(final ScriptInformation information, final StackMachine stackMachine) {
     hashViewer.setValue(information.getOutpoint().getReferenceTransaction());
     indexViewer.setValue(information.getOutpoint().getIndex());
 
     pubKeySigViewer.setScript(information.getPubKeySig().getInstructions());
     scriptSigViewer.setScript(information.getScriptSig().getInstructions());
+
+    fullScriptViewer.setScript(stackMachine.getScript());
 
     final RawTransactionContainer rawPubKeySigContainer = new RawTransactionContainer();
     ScriptEncodeUtil.encodeScript(information.getPubKeySig(), rawPubKeySigContainer, ScriptType.SCRIPT_PUB_KEY);
@@ -66,7 +75,7 @@ public class ScriptViewImpl extends Composite implements ScriptView {
     scriptExecutionContainer.clear();
 
     int counter = 1;
-    for(final ExecutionStep state : scriptSteps) {
+    for(final ExecutionStep state : stackMachine) {
       final ScriptStateViewer scriptViewer = new ScriptStateViewer(state, counter);
       scriptExecutionContainer.add(scriptViewer);
 
@@ -75,6 +84,14 @@ public class ScriptViewImpl extends Composite implements ScriptView {
       }
 
       counter++;
+    }
+
+    if(stackMachine.hasExecutionError()) {
+      scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultFailureTriggered());
+    } else if(stackMachine.getStack().isEmpty()) {
+      scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultFailureResult());
+    } else {
+      scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultSuccess());
     }
   }
 }

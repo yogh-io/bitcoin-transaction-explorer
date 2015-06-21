@@ -16,6 +16,8 @@ public class StackMachine implements Iterable<ExecutionStep>, Iterator<Execution
 
   private final Deque<StackObject> stack = new LinkedList<StackObject>();
 
+  private boolean executionError;
+
   public StackMachine(final ScriptInformation scriptInformation) {
     addInstructions(ScriptType.SCRIPT_SIG, scriptInformation.getScriptSig().getInstructions());
     addInstructions(ScriptType.SCRIPT_PUB_KEY, scriptInformation.getPubKeySig().getInstructions());
@@ -53,7 +55,13 @@ public class StackMachine implements Iterable<ExecutionStep>, Iterator<Execution
     // Execute this step
     ScriptExecutionUtil.execute(executionStep);
 
+    setExecutionError(executionStep.hasExecutionError());
+
     return executionStep;
+  }
+
+  private void setExecutionError(final boolean hasExecutionError) {
+    executionError = executionError || hasExecutionError;
   }
 
   @Override
@@ -65,5 +73,17 @@ public class StackMachine implements Iterable<ExecutionStep>, Iterator<Execution
     for (final ScriptPart part : instructions) {
       script.add(new ScriptExecutionPart(origin, part));
     }
+  }
+
+  public LinkedList<ScriptExecutionPart> getScript() {
+    return script;
+  }
+
+  public Deque<StackObject> getStack() {
+    return stack;
+  }
+
+  public boolean hasExecutionError() {
+    return executionError;
   }
 }
