@@ -53,7 +53,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
 
-  @UiField ValueViewer coinbaseInputViewer;
+  //  @UiField ValueViewer coinbaseInputViewer;
 
   @UiField FlowPanel transactionPanel;
 
