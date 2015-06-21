@@ -194,6 +194,18 @@ public interface ApplicationMessages extends Messages {
   @Description("Scripts")
   String scriptPlaceTitleScripts();
 
+  @Description("Execution result")
+  String scriptPlaceExecutionResult();
+
+  @Description("Script execution was succesful.")
+  String scriptPlaceExecutionResultSuccess();
+
+  @Description("Script execution was unsuccesful due to a failure trigger.")
+  String scriptPlaceExecutionResultFailureTriggered();
+
+  @Description("Script execution was succesful but the resulting stack makes the transaction invalid.")
+  String scriptPlaceExecutionResultFailureResult();
+
   @Description("ScriptSig in raw hex")
   String scriptPlaceScriptSigRawHex();
 
@@ -293,4 +305,7 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Script operation description")
   String scriptOperationDescription(@Select Operation operation);
+
+  @Description("Full script:")
+  String scriptPlaceFullScript();
 }

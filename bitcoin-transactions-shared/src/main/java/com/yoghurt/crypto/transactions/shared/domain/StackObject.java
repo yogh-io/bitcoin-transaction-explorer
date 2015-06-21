@@ -1,17 +1,17 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
 public class StackObject {
-  private byte[] data;
+  private byte[] bytes;
 
-  public StackObject(final byte[] data) {
-    this.data = data;
+  public StackObject(final byte[] bytes) {
+    this.bytes = bytes;
   }
 
   public byte[] getBytes() {
-    return data;
+    return bytes;
   }
 
-  public void setData(final byte[] data) {
-    this.data = data;
+  public void setBytes(final byte[] bytes) {
+    this.bytes = bytes;
   }
 }
