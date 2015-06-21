@@ -13,15 +13,19 @@
     margin-bottom: 10px;
     text-align: center;
   }
+  .description {
+    align-items: center;
+  }
+  .container {
+    margin-bottom: 40px;  
+  }
   </ui:style>
-  <g:FlowPanel>
-    <g:HTML>
-      <h3 ui:field="scriptStepTitle" />
-    </g:HTML>
+  <g:FlowPanel styleName="{style.container}">
+    <w:HeadingWidget n="3" ui:field="scriptStepTitle" />
     <w:LabelledWidget label="{i18n.scriptOperation}">
       <w:ScriptExecutionViewer ui:field="operationViewer" />
     </w:LabelledWidget>
-    <w:LabelledWidget label="{i18n.scriptOperationDescription}">
+    <w:LabelledWidget label="{i18n.scriptOperationDescriptionLabel}" addStyleNames="{style.description}">
       <g:Label ui:field="description" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.scriptResultStack}">

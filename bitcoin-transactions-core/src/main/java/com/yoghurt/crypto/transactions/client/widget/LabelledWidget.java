@@ -3,22 +3,17 @@ package com.yoghurt.crypto.transactions.client.widget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.resources.R;
 
-public class LabelledWidget extends SimplePanel {
-  private final FlowPanel container = new FlowPanel();
-
+public class LabelledWidget extends FlowPanel {
   private final Label label = new Label();
 
   public LabelledWidget() {
-    super.setWidget(container);
-
     label.setStyleName(R.css().labelledValueFieldLabel());
-    container.setStyleName(R.css().labelledValueContainer());
+    addStyleName(R.css().labelledValueContainer());
 
-    container.add(label);
+    add(label);
   }
 
   public void setLabel(final String txt) {
@@ -33,11 +28,11 @@ public class LabelledWidget extends SimplePanel {
   public void add(final Widget w) {
     w.addStyleName(R.css().labelledValueFieldValue());
 
-    if(container.getWidgetCount() == 2) {
-      container.remove(1);
+    if(getWidgetCount() == 2) {
+      remove(1);
     }
 
-    container.add(w);
+    super.add(w);
   }
 
   @Override

@@ -3,290 +3,294 @@ package com.yoghurt.crypto.transactions.client.i18n;
 import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
 import com.google.gwt.i18n.client.Messages;
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
+import com.yoghurt.crypto.transactions.shared.domain.Operation;
 
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
 
-  @DefaultMessage("v0.1 - alpha - april 2015")
+  @Description("v0.1 - alpha - april 2015")
   String applicationVersion();
 
-  @DefaultMessage("Insert anything, press enter")
+  @Description("Insert anything, press enter")
   String applicationLookupFieldPlaceHolder();
 
-  @DefaultMessage("Donate / contribute")
+  @Description("Donate / contribute")
   String applicationContributionText();
 
-  @DefaultMessage("General navigation")
+  @Description("General navigation")
   String startupGeneral();
 
-  @DefaultMessage("Last block")
+  @Description("Last block")
   String startupLastBlock();
 
-  @DefaultMessage("Transaction")
+  @Description("Transaction")
   String transactionPlaceTitle();
 
-  @DefaultMessage("Transaction hash")
+  @Description("Transaction hash")
   String transactionPlaceTitleInformation();
 
-  @DefaultMessage("Presence in blockchain")
+  @Description("Presence in blockchain")
   String transactionPlaceTitleExtraInformation();
 
-  @DefaultMessage("Transaction inputs")
+  @Description("Transaction inputs")
   String transactionPlaceTitleTransactionInputs();
 
-  @DefaultMessage("Transaction outputs")
+  @Description("Transaction outputs")
   String transactionPlaceTitleTransactionOutputs();
 
-  @DefaultMessage("Miscellaneous information")
+  @Description("Miscellaneous information")
   String transactionPlaceTitleMiscellaneousInformation();
 
-  @DefaultMessage("Error")
+  @Description("Error")
   String transactionPlaceTitleError();
 
-  @DefaultMessage("Raw transaction in hex")
+  @Description("Raw transaction in hex")
   String transactionPlaceTitleRawHex();
 
-  @DefaultMessage("An error occurred while parsing the transaction, what you are seeing below is the best we could make out of the data before we stopped understanding it.")
+  @Description("An error occurred while parsing the transaction, what you are seeing below is the best we could make out of the data before we stopped understanding it.")
   String transactionPlaceParseError();
 
-  @DefaultMessage("Block")
+  @Description("Block")
   String blockPlaceTitle();
 
-  @DefaultMessage("Block hash")
+  @Description("Block hash")
   String blockPlaceTitleInformation();
 
-  @DefaultMessage("Coinbase transaction hash")
+  @Description("Coinbase transaction hash")
   String blockPlaceTitleCoinbase();
 
-  @DefaultMessage("Presence in blockchain")
+  @Description("Presence in blockchain")
   String blockPlaceTitleExtraInformation();
 
-  @DefaultMessage("Block headers")
+  @Description("Block headers")
   String blockPlaceTitleBlockHeaders();
 
-  @DefaultMessage("Raw block headers in hex")
+  @Description("Raw block headers in hex")
   String blockPlaceTitleRawBlockHex();
 
-  @DefaultMessage("Raw coinbase transaction in hex")
+  @Description("Raw coinbase transaction in hex")
   String blockPlaceTitleRawCoinbaseHex();
 
-  @DefaultMessage("Transaction list")
+  @Description("Transaction list")
   String blockPlaceTitleTransactionList();
 
-  @DefaultMessage("Mining simulator")
+  @Description("Mining simulator")
   String minePlaceTitleMiningSimulator();
 
-  @DefaultMessage("Modify Headers")
+  @Description("Modify Headers")
   String minePlaceTitleModifyHeaders();
 
-  @DefaultMessage("Raw headers in hex")
+  @Description("Raw headers in hex")
   String minePlaceTitleMineHeaders();
 
-  @DefaultMessage("Coinbase transaction")
+  @Description("Coinbase transaction")
   String minePlaceTitleCoinbase();
 
-  @DefaultMessage("Computed block hash")
+  @Description("Computed block hash")
   String minePlaceTitleBlockHash();
 
-  @DefaultMessage("Block headers")
+  @Description("Block headers")
   String minePlaceTitleBlockHeaders();
 
-  @DefaultMessage("Transaction ID:")
+  @Description("Transaction ID:")
   String transactionId();
 
-  @DefaultMessage("Previous tx:")
+  @Description("Previous tx:")
   String transactionPreviousTransactionId();
 
-  @DefaultMessage("Index:")
+  @Description("Index:")
   String transactionOutpointIndex();
 
-  @DefaultMessage("ScriptSig:")
+  @Description("ScriptSig:")
   String transactionScriptSig();
 
-  @DefaultMessage("ScriptPubKey:")
+  @Description("ScriptPubKey:")
   String transactionScriptPubKey();
 
-  @DefaultMessage("UTF8 Input:")
+  @Description("UTF8 Input:")
   String transactionCoinbaseInput();
 
-  @DefaultMessage("View in script viewer")
+  @Description("View in script viewer")
   String transactionScriptViewer();
 
-  @DefaultMessage("Sequence:")
+  @Description("Sequence:")
   String transactionSequence();
 
-  @DefaultMessage("Amount:")
+  @Description("Amount:")
   String transactionAmount();
 
-  @DefaultMessage("State:")
+  @Description("State:")
   String transactionState();
 
-  @DefaultMessage("Time:")
+  @Description("Time:")
   String transactionTime();
 
-  @DefaultMessage("Format version:")
+  @Description("Format version:")
   String transactionVersion();
 
-  @DefaultMessage("Lock time:")
+  @Description("Lock time:")
   String transactionLockTime();
 
-  @DefaultMessage("Checking existence in the blockchain ...")
+  @Description("Checking existence in the blockchain ...")
   String transactionPlaceBlockchainExistenceLoading();
 
-  @DefaultMessage("This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool.")
+  @Description("This transaction does not exist in the blockchain and could not be found in the unconfirmed transaction pool.")
   String transactionPlaceBlockchainExistenceNotFound();
 
-  @DefaultMessage("Block height:")
+  @Description("Block height:")
   String blockHeight();
 
-  @DefaultMessage("Block hash:")
+  @Description("Block hash:")
   String blockHash();
 
-  @DefaultMessage("Confirmations:")
+  @Description("Confirmations:")
   String blockConfirmations();
 
-  @DefaultMessage("Version:")
+  @Description("Version:")
   String blockVersion();
 
-  @DefaultMessage("Prev block:")
+  @Description("Prev block:")
   String blockPreviousBlock();
 
-  @DefaultMessage("Merkle root:")
+  @Description("Merkle root:")
   String blockMerkleRoot();
 
-  @DefaultMessage("Timestamp")
+  @Description("Timestamp")
   String blockTime();
 
-  @DefaultMessage("Bits:")
+  @Description("Bits:")
   String blockBits();
 
-  @DefaultMessage("Nonce:")
+  @Description("Nonce:")
   String blockNonce();
 
-  @DefaultMessage("Block depth:")
+  @Description("Block depth:")
   String blockDepth();
 
-  @DefaultMessage("# transactions:")
+  @Description("# transactions:")
   String blockNumTransactions();
 
-  @DefaultMessage("Next block:")
+  @Description("Next block:")
   String blockNextBlock();
 
-  @DefaultMessage("Size (bytes):")
+  @Description("Size (bytes):")
   String blockSize();
 
-  @DefaultMessage("Checking existence in the blockchain ...")
+  @Description("Checking existence in the blockchain ...")
   String blockPlaceBlockchainExistenceLoading();
 
-  @DefaultMessage("This block could not be found in the blockchain.")
+  @Description("This block could not be found in the blockchain.")
   String blockPlaceBlockchainExistenceNotFound();
 
-  @DefaultMessage("Script viewer")
+  @Description("Script viewer")
   String scriptPlaceTitleScriptViewer();
 
-  @DefaultMessage("Outpoint information")
+  @Description("Outpoint information")
   String scriptPlaceTitleOutpointViewer();
 
-  @DefaultMessage("Tx hash:")
+  @Description("Tx hash:")
   String scriptPlaceOutpointHash();
 
-  @DefaultMessage("Scripts")
+  @Description("Scripts")
   String scriptPlaceTitleScripts();
 
-  @DefaultMessage("ScriptSig in raw hex")
+  @Description("ScriptSig in raw hex")
   String scriptPlaceScriptSigRawHex();
 
-  @DefaultMessage("ScriptPubKey in raw hex")
+  @Description("ScriptPubKey in raw hex")
   String scriptPlaceScriptPubKeyRawHex();
 
-  @DefaultMessage("Script execution, step-by-step")
+  @Description("Script execution, step-by-step")
   String scriptPlaceStepByStep();
 
-  @DefaultMessage("Operation:")
+  @Description("Operation:")
   String scriptOperation();
 
-  @DefaultMessage("Description:")
-  String scriptOperationDescription();
+  @Description("Description:")
+  String scriptOperationDescriptionLabel();
 
-  @DefaultMessage("Result:")
+  @Description("Result:")
   String scriptResult();
 
-  @DefaultMessage("Remaining:")
+  @Description("Remaining:")
   String scriptRemainingScript();
 
-  @DefaultMessage("Resulting stack:")
+  @Description("Resulting stack:")
   String scriptResultStack();
 
-  @DefaultMessage("Execution step {0}")
+  @Description("Execution step {0}")
   String scriptExecutionStep(int idx);
 
-  @DefaultMessage("Configuration")
+  @Description("Configuration")
   String configPlaceTitle();
 
-  @DefaultMessage("You haven''t set up a password for the application yet. Please insert a password and remember it, you''ll need it for any subsequent modifications to the configuration (although you''d typically only configure it once).<br><br>If you''ve forgotten your password you''ll need to reset (remove) it manually, its hash is stored in the file ''yoghurt.conf''.<br/><br/>The server will never store your plain-text password, it will be hashed on the client and then sent in clear text over the wire.")
+  @Description("You haven''t set up a password for the application yet. Please insert a password and remember it, you''ll need it for any subsequent modifications to the configuration (although you''d typically only configure it once).<br><br>If you''ve forgotten your password you''ll need to reset (remove) it manually, its hash is stored in the file ''yoghurt.conf''.<br/><br/>The server will never store your plain-text password, it will be hashed on the client and then sent in clear text over the wire.")
   String configPlaceCreatePasswordText();
 
-  @DefaultMessage("Password")
+  @Description("Password")
   String configPasswordPlaceHolder();
 
-  @DefaultMessage("Password confirmation")
+  @Description("Password confirmation")
   String configPasswordRepeatPlaceHolder();
 
-  @DefaultMessage("Set password")
+  @Description("Set password")
   String configPasswordConfirm();
 
-  @DefaultMessage("Log in.")
+  @Description("Log in.")
   String configPasswordLogin();
 
-  @DefaultMessage("Insert your password.")
+  @Description("Insert your password.")
   String configPlaceInputPasswordText();
 
-  @DefaultMessage("Connector:")
+  @Description("Connector:")
   String configBlockchainHook();
 
-  @DefaultMessage("Save settings")
+  @Description("Save settings")
   String configSubmitSettings();
 
-  @DefaultMessage("General settings")
+  @Description("General settings")
   String configMiscellaneousSettingsTitle();
 
-  @DefaultMessage("Blockchain source settings")
+  @Description("Blockchain source settings")
   String configBlockchainHookTitle();
 
-  @DefaultMessage("Unknown (not supported)")
+  @Description("Unknown (not supported)")
   @AlternateMessage({
     "NODE", "Bitcoin Core Node",
     "BLOCKR_API", "BLOCKR API"
   })
   String configConnectorOption(@Select BlockchainSource source);
 
-  @DefaultMessage("No further config needed, press save to continue.")
+  @Description("No further config needed, press save to continue.")
   String configBlockrConfigNote();
 
-  @DefaultMessage("Host (probably localhost)")
+  @Description("Host (probably localhost)")
   String configNodeHost();
 
-  @DefaultMessage("Port (probably 8332)")
+  @Description("Port (probably 8332)")
   String configNodePort();
 
-  @DefaultMessage("RPC Username")
+  @Description("RPC Username")
   String configNodeRpcUser();
 
-  @DefaultMessage("RPC Password")
+  @Description("RPC Password")
   String configNodeRpcPass();
 
-  @DefaultMessage("Application title")
+  @Description("Application title")
   String configTitlePlaceHolder();
 
-  @DefaultMessage("Application subtitle")
+  @Description("Application subtitle")
   String configSubTitlePlaceHolder();
 
-  @DefaultMessage("Donation address")
+  @Description("Donation address")
   String configContributeAddressPlaceHolder();
 
-  @DefaultMessage("Application texts")
+  @Description("Application texts")
   String configTitles();
 
-  @DefaultMessage("Node contribution")
+  @Description("Node contribution")
   String configContribution();
+
+  @Description("Script operation description")
+  String scriptOperationDescription(@Select Operation operation);
 }
