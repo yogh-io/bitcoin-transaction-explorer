@@ -54,6 +54,9 @@
         <directory>src/main/java</directory>
       </resource>
       <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
         <directory>/bitcoin-transactions-core/war/WEB-INF/classes</directory>
       </resource>
       <resource>
