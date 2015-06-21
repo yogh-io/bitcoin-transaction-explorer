@@ -9,7 +9,7 @@ import com.yoghurt.crypto.transactions.client.util.transaction.ScriptOperationUt
 import com.yoghurt.crypto.transactions.shared.domain.StackObject;
 
 public final class ScriptExecutionUtil {
-  private static final byte[] FALSE = new byte[] { 0x00 };
+  private static final byte[] FALSE = new byte[] { };
 
   private static final byte[] TRUE = new byte[] { 0x01 };
 

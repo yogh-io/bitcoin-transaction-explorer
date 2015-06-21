@@ -39,7 +39,9 @@ public class StackViewer extends ContextFieldSet<StackObject> {
 
   @Override
   protected ContextField<StackObject> addField(final ContextField<StackObject> field) {
-    field.getElement().getStyle().setMarginBottom(10, Unit.PX);
+    if(fields.size() > 1) {
+      field.getElement().getStyle().setMarginTop(10, Unit.PX);
+    }
 
     return super.addField(field);
   }

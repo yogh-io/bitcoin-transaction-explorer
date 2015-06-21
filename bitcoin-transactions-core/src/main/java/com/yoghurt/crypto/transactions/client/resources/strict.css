@@ -130,6 +130,7 @@ button {
 
 .flex > * {
 	min-width: 0;
+	min-height: 0;
 }
 
 .grow {

@@ -146,11 +146,11 @@ public class SimpleColorPicker implements ColorPicker {
 
   @Override
   public Color stackData() {
-    return ColorBuilder.interpret("green");
+    return ColorBuilder.interpret("teal");
   }
 
   @Override
   public Color stackSingle() {
-    return ColorBuilder.interpret("red");
+    return ColorBuilder.interpret("maroon");
   }
 }

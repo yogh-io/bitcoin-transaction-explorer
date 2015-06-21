@@ -1,7 +1,6 @@
 package com.yoghurt.crypto.transactions.client.widget;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -15,8 +14,9 @@ public class ScriptStateViewer extends Composite {
 
   private static final ScriptStateViewerImplUiBinder UI_BINDER = GWT.create(ScriptStateViewerImplUiBinder.class);
 
-  @UiField HeadingElement scriptStepTitle;
+  @UiField HeadingWidget scriptStepTitle;
   @UiField ScriptExecutionViewer operationViewer;
+  @UiField Label description;
   @UiField ScriptExecutionViewer scriptExecutionViewer;
   @UiField StackViewer stackViewer;
   @UiField Label executionError;
@@ -24,10 +24,12 @@ public class ScriptStateViewer extends Composite {
   public ScriptStateViewer(final ExecutionStep state, final int idx) {
     initWidget(UI_BINDER.createAndBindUi(this));
 
-    scriptStepTitle.setInnerText(M.messages().scriptExecutionStep(idx));
+    scriptStepTitle.setText(M.messages().scriptExecutionStep(idx));
 
     operationViewer.clear();
     operationViewer.addField(state.getInstruction());
+
+    description.setText(M.messages().scriptOperationDescription(state.getInstruction().getOperation()));
 
     scriptExecutionViewer.setScript(state.getScript());
 
