@@ -1,5 +1,8 @@
 package com.yoghurt.crypto.transactions.client.util.transaction;
 
+import com.google.gwt.core.client.GWT;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
@@ -7,7 +10,8 @@ import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 
 public final class ScriptParseUtil {
-  private ScriptParseUtil() {}
+  private ScriptParseUtil() {
+  }
 
   public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final boolean isCoinbase) {
     int pointer = initialPointer;
@@ -16,7 +20,7 @@ public final class ScriptParseUtil {
     pointer = parseScriptSize(entity, pointer, bytes);
 
     // Parse the actual script bytes
-    if(isCoinbase) {
+    if (isCoinbase) {
       pointer = parseCoinbaseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
     } else {
       pointer = parseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
@@ -55,8 +59,7 @@ public final class ScriptParseUtil {
     }
 
     if (pointer != initialPointer + length) {
-      throw new IllegalStateException("More bytes than advertised were consumed in the script. (advertised:" + length + ", actual:"
-          + (pointer - initialPointer) + ")");
+      throw new IllegalStateException("More bytes than advertised were consumed in the script. (advertised:" + length + ", actual:" + (pointer - initialPointer) + ")");
     }
 
     return pointer;
@@ -67,15 +70,33 @@ public final class ScriptParseUtil {
 
     final int opcode = bytes[pointer] & 0xFF;
 
-    if(ScriptOperationUtil.isDataPushOperation(opcode)) {
-      // TODO Implement OP_PUSHDATA1/2/4 and OP_2-OP_16
-      if(opcode > 75) {
-        throw new UnsupportedOperationException();
+    if (ScriptOperationUtil.isDataPushOperation(opcode)) {
+      int size;
+      if (opcode <= 75 || opcode > 79) {
+        // OP_PUSHDATA
+        if (opcode <= 75) {
+          size = opcode;
+          // OP_1 - OP_16
+        } else {
+          size = opcode - 80;
+        }
+
+        pointer = pointer + 1;
+
+        script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + size)));
+      } else {
+        // OP_PUSHDATA1
+        if (opcode == 76) {
+          size = bytes[pointer = pointer + 1];
+          //          pointer = pointer + 1;
+          final byte[] payload = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + size);
+          script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA1, payload));
+        } else {
+          // TODO Support OP_PUSHDATA 1, 2, 4 and OP_1NEGATE
+          GWT.log("Unsupported data push operation: " + opcode + " (" + Str.toString(Hex.encode(new byte[] { (byte) opcode })) + ")");
+          throw new UnsupportedOperationException();
+        }
       }
-
-      pointer = pointer + 1;
-
-      script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + opcode)));
     } else {
       script.addInstruction(new ScriptPart(ScriptOperationUtil.getOperation(opcode)));
       pointer = pointer + 1;
