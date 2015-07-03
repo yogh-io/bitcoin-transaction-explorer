@@ -12,7 +12,7 @@ public final class ScriptEncodeUtil {
   private ScriptEncodeUtil() {}
 
   public static byte[] encodeScript(final ScriptEntity script) {
-    final int scriptSize = (int)script.getScriptSize().getValue();
+    final int scriptSize = (int) script.getScriptSize().getValue();
     final byte[] bytes = new byte[scriptSize];
 
     int pointer = 0;
@@ -29,14 +29,22 @@ public final class ScriptEncodeUtil {
         pointer++;
         GWT.log(pointer + " (op)");
         if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
-          System.arraycopy(partBytes, 0, bytes, pointer, partBytes.length);
-          pointer += partBytes.length;
-          GWT.log(pointer + "(data)");
+          pointer = encodePushDataOperation(part.getOperation().getOpcode(), bytes, partBytes, pointer);
         }
       }
     }
 
     return bytes;
+  }
+
+  private static int encodePushDataOperation(final int opcode, final byte[] bytes, final byte[] partBytes, int pointer) {
+    switch (opcode) {
+    case 76:
+      bytes[pointer = pointer + 1] = (byte) partBytes.length;
+    default:
+      System.arraycopy(partBytes, 0, bytes, pointer, partBytes.length);
+      return pointer + partBytes.length;
+    }
   }
 
   public static void encodeScript(final ScriptEntity script, final RawTransactionContainer container, final ScriptType type) {
@@ -49,8 +57,19 @@ public final class ScriptEncodeUtil {
         container.add(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) });
 
         if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
-          final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
-          container.add(pushPartType, part.getBytes());
+          switch(part.getOperation().getOpcode()) {
+          case 76:
+            final TransactionPartType push1PartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA_EXTRA);
+
+            container.add(push1PartType, new byte[] { (byte) part.getBytes().length });
+
+            final TransactionPartType pushData1PartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
+            container.add(pushData1PartType, part.getBytes());
+            break;
+          default:
+            final TransactionPartType pushPartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA);
+            container.add(pushPartType, part.getBytes());
+          }
         }
       }
     }

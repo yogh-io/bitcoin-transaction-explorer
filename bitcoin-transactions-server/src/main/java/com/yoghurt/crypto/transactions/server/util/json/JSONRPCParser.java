@@ -89,7 +89,7 @@ public class JSONRPCParser {
 
     // Set the next block hash, if any
     final JsonNode nextBlockHashNode = tree.get("nextblockhash");
-    blockInformation.setNextBlockHash(nextBlockHashNode == null ? null : nextBlockHashNode.getTextValue());
+    blockInformation.setNextBlockHash(nextBlockHashNode == null ? "" : nextBlockHashNode.getTextValue());
 
     // Set the number of confirmations
     blockInformation.setNumConfirmations(tree.get("confirmations").getIntValue());

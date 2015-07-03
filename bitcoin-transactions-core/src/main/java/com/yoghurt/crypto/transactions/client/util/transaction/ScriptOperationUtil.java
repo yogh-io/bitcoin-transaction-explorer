@@ -36,6 +36,8 @@ public final class ScriptOperationUtil {
         return TransactionPartType.SCRIPT_PUB_KEY_OP_CODE;
       case PUSH_DATA:
         return TransactionPartType.SCRIPT_PUB_KEY_PUSH_DATA;
+      case PUSH_DATA_EXTRA:
+        return TransactionPartType.SCRIPT_PUB_KEY_PUSH_DATA_EXTRA;
       }
     case SCRIPT_SIG:
       switch (partType) {
@@ -43,6 +45,8 @@ public final class ScriptOperationUtil {
         return TransactionPartType.SCRIPT_SIG_OP_CODE;
       case PUSH_DATA:
         return TransactionPartType.SCRIPT_SIG_PUSH_DATA;
+      case PUSH_DATA_EXTRA:
+        return TransactionPartType.SCRIPT_SIG_PUSH_DATA_EXTRA;
       }
     }
 
@@ -50,14 +54,16 @@ public final class ScriptOperationUtil {
   }
 
   /**
-   * Data push operations are 1-75 or 82-96. And also null (indicating coinbase bullshit input)
+   * Data push operations are 1-75, OP_PUSHDATA1, 2 and 4 (so up to opcode 78), excluding OP0 through 16.
+   *
+   * And also null (indicating coinbase input TODO: remind me why again?)
    */
   public static boolean isDataPushOperation(final Operation op) {
     return op == null || op == Operation.OP_PUSHDATA || isDataPushOperation(op.getOpcode());
   }
 
   public static boolean isDataPushOperation(final int opcode) {
-    return opcode > 0 && 78 >= opcode || opcode > 82 && 96 >= opcode;
+    return opcode >= 1 && 78 >= opcode;
   }
 
   public static byte getOperationOpCode(final ScriptPart part) {

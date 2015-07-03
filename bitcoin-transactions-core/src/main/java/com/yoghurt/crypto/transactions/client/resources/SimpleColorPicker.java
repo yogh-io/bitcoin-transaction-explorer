@@ -130,6 +130,11 @@ public class SimpleColorPicker implements ColorPicker {
   }
 
   @Override
+  public Color transactionPubKeySigPushDataExtra() {
+    return ColorBuilder.interpret("teal");
+  }
+
+  @Override
   public Color transactionVersion() {
     return ColorBuilder.interpret("grey");
   }

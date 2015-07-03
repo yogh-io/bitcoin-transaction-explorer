@@ -37,6 +37,8 @@ public interface ColorPicker {
 
   Color transactionScriptSigPushData();
 
+  Color transactionPubKeySigPushDataExtra();
+
   Color transactionInputSequence();
 
   Color transactionOutputAmount();

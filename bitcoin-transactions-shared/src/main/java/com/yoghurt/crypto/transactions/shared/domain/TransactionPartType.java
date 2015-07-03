@@ -29,6 +29,10 @@ public enum TransactionPartType {
 
   SCRIPT_PUB_KEY_PUSH_DATA,
 
+  SCRIPT_PUB_KEY_PUSH_DATA_EXTRA,
+
+  SCRIPT_SIG_PUSH_DATA_EXTRA,
+
   /**
    * We'll be special-casing the coinbase input scriptsig because it cannot be interpreted as usual.
    */
