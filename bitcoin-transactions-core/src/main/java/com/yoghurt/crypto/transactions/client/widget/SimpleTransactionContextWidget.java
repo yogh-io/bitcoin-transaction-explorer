@@ -40,20 +40,24 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
       return "Output value: " + NumberParseUtil.parseLong(value.getValue()) / 100000000d + " BTC";
     case SCRIPT_PUB_KEY_OP_CODE:
       final Operation pubKeySigOp = ScriptOperationUtil.getOperation(value.getValue()[0] & 0xFF);
-      if (ScriptOperationUtil.isDataPushOperation(pubKeySigOp)) {
+      if (ScriptOperationUtil.isDataPushOperation(pubKeySigOp) && pubKeySigOp.getOpcode() <= 75) {
         return "ScriptPubKey operation: " + pubKeySigOp.name() + " (" + (value.getValue()[0] & 0xFF) + " byte)";
       } else {
         return "ScriptPubKey operation: " + pubKeySigOp.name();
       }
     case SCRIPT_SIG_OP_CODE:
       final Operation scriptSigOp = ScriptOperationUtil.getOperation(value.getValue()[0] & 0xFF);
-      if (ScriptOperationUtil.isDataPushOperation(scriptSigOp)) {
+      if (ScriptOperationUtil.isDataPushOperation(scriptSigOp) && scriptSigOp.getOpcode() <= 75) {
         return "ScriptSig operation: " + scriptSigOp.name() + " (" + (value.getValue()[0] & 0xFF) + " byte)";
       } else {
         return "ScriptSig operation: " + scriptSigOp.name();
       }
     case SCRIPT_PUB_KEY_PUSH_DATA:
       return "ScriptPubKey data";
+    case SCRIPT_SIG_PUSH_DATA_EXTRA:
+      return "OP_PUSHDATA(x) amount (" + (value.getValue()[0] & 0xFF) + " byte)";
+    case SCRIPT_PUB_KEY_PUSH_DATA_EXTRA:
+      return "OP_PUSHDATA(x) amount (" + (value.getValue()[0] & 0xFF) + " byte)";
     case SCRIPT_SIG_PUSH_DATA:
       return "ScriptSig data";
     case LOCK_TIME:

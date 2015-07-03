@@ -45,8 +45,14 @@ public class TransactionPartColorPicker {
     case SCRIPT_SIG_PUSH_DATA:
       color = R.color().transactionScriptSigPushData();
       break;
+    case SCRIPT_SIG_PUSH_DATA_EXTRA:
+      color = R.color().transactionPubKeySigPushDataExtra();
+      break;
     case SCRIPT_PUB_KEY_PUSH_DATA:
       color = R.color().transactionPubKeySigPushData();
+      break;
+    case SCRIPT_PUB_KEY_PUSH_DATA_EXTRA:
+      color = R.color().transactionPubKeySigPushDataExtra();
       break;
     case COINBASE_SCRIPT_SIG:
       color = R.color().transactionArbitraryData();

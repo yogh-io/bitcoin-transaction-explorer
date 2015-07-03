@@ -51,11 +51,21 @@ public final class ScriptExecutionUtil {
       // TODO Do actual checksig
       addTrue(stack);
       break;
-    case OP_EQUALVERIFY:
-      final StackObject objA = stack.poll();
-      final StackObject objB = stack.poll();
+    case OP_EQUAL:
+      final StackObject objEqualA = stack.poll();
+      final StackObject objEqualB = stack.poll();
 
-      if(!Arrays.areEqual(objA.getBytes(), objB.getBytes())) {
+      if(!Arrays.areEqual(objEqualA.getBytes(), objEqualB.getBytes())) {
+        addTrue(stack);
+      } else {
+        addFalse(stack);
+      }
+      break;
+    case OP_EQUALVERIFY:
+      final StackObject objEqualVerifyA = stack.poll();
+      final StackObject objEqualVerifyB = stack.poll();
+
+      if(!Arrays.areEqual(objEqualVerifyA.getBytes(), objEqualVerifyB.getBytes())) {
         addException(step);
       }
       break;
