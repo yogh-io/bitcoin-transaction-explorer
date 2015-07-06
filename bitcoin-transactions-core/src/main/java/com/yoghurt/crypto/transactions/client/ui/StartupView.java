@@ -5,6 +5,12 @@ import com.google.gwt.user.client.ui.IsWidget;
 public interface StartupView extends IsWidget {
   public interface Presenter {
 
+    void onLastBlockClick();
+
+    void onMiningClick();
+
+    void onContributeClick();
+
   }
 
   void setPresenter(Presenter presenter);
