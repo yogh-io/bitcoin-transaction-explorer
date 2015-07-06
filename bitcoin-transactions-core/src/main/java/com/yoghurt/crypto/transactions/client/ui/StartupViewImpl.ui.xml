@@ -63,8 +63,8 @@
     <w:HeadingWidget n="2" text="{i18n.startupGeneral}" />
     <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
       <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
-      <g:Label styleName="{style.blockLink} {style.blue}" text="Mining simulator" />
-      <g:Label styleName="{style.blockLink} {style.green}" text="Contribute" ui:field="p2pkh" />
+      <g:Label styleName="{style.blockLink} {style.blue}" text="Mining simulator" ui:field="mining" />
+      <g:Label styleName="{style.blockLink} {style.green}" text="Contribute" ui:field="contribute" />
     </g:FlowPanel>
   </g:FlowPanel>
 </ui:UiBinder>

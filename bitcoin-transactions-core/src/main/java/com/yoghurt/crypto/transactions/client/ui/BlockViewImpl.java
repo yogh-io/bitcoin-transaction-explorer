@@ -3,6 +3,7 @@ package com.yoghurt.crypto.transactions.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -27,7 +28,8 @@ import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 @Singleton
 public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
-  interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {}
+  interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {
+  }
 
   private static final BlockViewImplUiBinder UI_BINDER = GWT.create(BlockViewImplUiBinder.class);
 
@@ -53,7 +55,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
 
-  //  @UiField ValueViewer coinbaseInputViewer;
+  // @UiField ValueViewer coinbaseInputViewer;
 
   @UiField FlowPanel transactionPanel;
 
@@ -107,14 +109,19 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
     sizeViewer.setValue(blockInformation.getSize());
 
-    transactionPanel.clear();
-    if (blockInformation.getTransactions() != null) {
-      for (final String txid : blockInformation.getTransactions()) {
-        final TransactionViewer hashViewer = new TransactionViewer(router, false, false);
-        transactionPanel.add(hashViewer);
+    new Timer() {
+      @Override
+      public void run() {
+        transactionPanel.clear();
+        if (blockInformation.getTransactions() != null) {
+          for (final String txid : blockInformation.getTransactions()) {
+            final TransactionViewer hashViewer = new TransactionViewer(router, false, false);
+            transactionPanel.add(hashViewer);
 
-        hashViewer.setValue(Hex.decode(txid));
+            hashViewer.setValue(Hex.decode(txid));
+          }
+        }
       }
-    }
+    }.schedule(400);
   }
 }
