@@ -55,7 +55,7 @@ public final class ScriptExecutionUtil {
       final StackObject objEqualA = stack.poll();
       final StackObject objEqualB = stack.poll();
 
-      if(!Arrays.areEqual(objEqualA.getBytes(), objEqualB.getBytes())) {
+      if(Arrays.areEqual(objEqualA.getBytes(), objEqualB.getBytes())) {
         addTrue(stack);
       } else {
         addFalse(stack);
