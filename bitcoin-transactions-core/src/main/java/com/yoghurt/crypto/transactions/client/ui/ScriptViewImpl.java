@@ -88,7 +88,7 @@ public class ScriptViewImpl extends Composite implements ScriptView {
 
     if(stackMachine.hasExecutionError()) {
       scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultFailureTriggered());
-    } else if(stackMachine.getStack().isEmpty()) {
+    } else if(stackMachine.getStack().isEmpty() || stackMachine.getStack().peek().getBytes().length == 0) {
       scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultFailureResult());
     } else {
       scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultSuccess());

@@ -12,6 +12,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
+import com.yoghurt.crypto.transactions.client.util.TextConversionUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
@@ -25,6 +26,7 @@ import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 
 public class TransactionViewImpl extends Composite implements TransactionView {
@@ -112,17 +114,14 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     }
 
     txHexViewer.setValue(rawTransaction);
+
     //
-    //    if(transaction.isCoinbase()) {
-    //      coinbaseInputContainer.setVisible(true);
-    //      try {
-    //        coinbaseInputViewer.setValue(new String(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue(), "UTF8"));
-    //      } catch (final UnsupportedEncodingException e) {
-    //        // Eat, doesn't happen by VM standards.
-    //      }
-    //    } else {
-    //      coinbaseInputContainer.setVisible(true);
-    //    }
+    if(transaction.isCoinbase()) {
+      coinbaseInputContainer.setVisible(true);
+      coinbaseInputViewer.setValue(TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
+    } else {
+      coinbaseInputContainer.setVisible(false);
+    }
   }
 
   @Override

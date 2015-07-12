@@ -82,8 +82,24 @@ public final class ScriptExecutionUtil {
     case OP_FALSE:
       addFalse(stack);
       break;
+    case OP_2:
+    case OP_3:
+    case OP_4:
+    case OP_5:
+    case OP_6:
+    case OP_7:
+    case OP_8:
+    case OP_9:
+    case OP_10:
+    case OP_11:
+    case OP_12:
+    case OP_13:
+    case OP_14:
+    case OP_15:
+    case OP_16:
+      addStackObject(stack, step.getInstruction().getOperation().getOpcode() - 80);
+      break;
     default:
-
     }
   }
 
@@ -97,6 +113,10 @@ public final class ScriptExecutionUtil {
 
   private static void addFalse(final Deque<StackObject> stack) {
     addStackObject(stack, FALSE);
+  }
+
+  private static void addStackObject(final Deque<StackObject> stack, final int value) {
+    addStackObject(stack, new StackObject(new byte[] { (byte) value }));
   }
 
   private static void addStackObject(final Deque<StackObject> stack, final byte[] bytes) {

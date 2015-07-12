@@ -67,7 +67,6 @@ public final class ScriptParseUtil {
   private static int parseOpcode(final int initialPointer, final ScriptEntity script, final byte[] bytes) {
     int pointer = initialPointer;
 
-    GWT.log("Parsing opcode at pointer: " + pointer);
     final int opcode = bytes[pointer] & 0xFF;
 
     if (ScriptOperationUtil.isDataPushOperation(opcode)) {
@@ -83,8 +82,6 @@ public final class ScriptParseUtil {
   private static int parsePushData(final int initialPointer, final int opcode, final ScriptEntity script, final byte[] bytes) {
     int pointer = initialPointer;
 
-    GWT.log("Parsing pushdata.. " + opcode + " > " + ScriptOperationUtil.getOperation(opcode).name());
-
     // Simple 1-byte pushdata notation.
     if (opcode <= 75) {
       pointer++;
@@ -93,7 +90,6 @@ public final class ScriptParseUtil {
       // Switch over remaining options; OP_PUSHDATA1, 2, 4
       switch (opcode) {
       case 76: // OP_PUSHDATA1
-        GWT.log("Parsing pushdata1 size at pointer: " + (pointer + 1));
         final int size = bytes[pointer = pointer + 1] & 0xFF;
 
         pointer++;
