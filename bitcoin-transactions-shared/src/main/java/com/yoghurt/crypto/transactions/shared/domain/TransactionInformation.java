@@ -10,6 +10,7 @@ public class TransactionInformation implements Serializable {
   private Date time;
   private int confirmations;
   private String blockHash;
+  private int fee;
 
   public TransactionInformation() {}
 
@@ -43,6 +44,14 @@ public class TransactionInformation implements Serializable {
 
   public String getBlockHash() {
     return blockHash;
+  }
+
+  public int getFee() {
+    return fee;
+  }
+
+  public void setFee(final int fee) {
+    this.fee = fee;
   }
 
   @Override

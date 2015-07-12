@@ -107,7 +107,7 @@ public interface ApplicationMessages extends Messages {
   @Description("ScriptPubKey:")
   String transactionScriptPubKey();
 
-  @Description("UTF8 Input:")
+  @Description("ASCII interpret:")
   String transactionCoinbaseInput();
 
   @Description("View in script viewer")

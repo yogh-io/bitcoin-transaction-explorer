@@ -17,17 +17,14 @@ public final class ScriptEncodeUtil {
 
     int pointer = 0;
     for (final ScriptPart part : script.getInstructions()) {
-      GWT.log(pointer + "");
       final byte[] partBytes = part.getBytes();
 
       if (part.getOperation() == null) {
         System.arraycopy(partBytes, 0, bytes, pointer, partBytes.length);
-        GWT.log(pointer + " (arbit.)");
         pointer += partBytes.length;
       } else {
         System.arraycopy(new byte[] { ScriptOperationUtil.getOperationOpCode(part) }, 0, bytes, pointer, 1);
         pointer++;
-        GWT.log(pointer + " (op)");
         if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
           pointer = encodePushDataOperation(part.getOperation().getOpcode(), bytes, partBytes, pointer);
         }
@@ -38,6 +35,7 @@ public final class ScriptEncodeUtil {
   }
 
   private static int encodePushDataOperation(final int opcode, final byte[] bytes, final byte[] partBytes, int pointer) {
+    GWT.log("Encoding OP_PUSHDATA");
     switch (opcode) {
     case 76:
       bytes[pointer] = (byte) partBytes.length;
