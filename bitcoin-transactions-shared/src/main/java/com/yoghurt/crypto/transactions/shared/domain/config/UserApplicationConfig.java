@@ -10,6 +10,7 @@ public class UserApplicationConfig implements ApplicationContextBase {
 
   private String applicationTitle;
   private String applicationSubTitle;
+  private String donationAddress;
 
   public UserApplicationConfig() {
   }
@@ -24,16 +25,25 @@ public class UserApplicationConfig implements ApplicationContextBase {
     return applicationSubTitle;
   }
 
-  public void setApplicationTitle(String applicationTitle) {
+  public void setApplicationTitle(final String applicationTitle) {
     this.applicationTitle = applicationTitle;
   }
 
-  public void setApplicationSubTitle(String applicationSubTitle) {
+  public void setApplicationSubTitle(final String applicationSubTitle) {
     this.applicationSubTitle = applicationSubTitle;
   }
 
   @Override
   public String toString() {
     return "UserApplicationConfig [applicationTitle=" + applicationTitle + ", applicationSubTitle=" + applicationSubTitle + "]";
+  }
+
+  public void setDonationAddress(final String donationAddress) {
+    this.donationAddress = donationAddress;
+  }
+
+  @Override
+  public String getDonationAddress() {
+    return donationAddress;
   }
 }

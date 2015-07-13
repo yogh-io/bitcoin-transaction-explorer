@@ -4,15 +4,16 @@ import java.util.Properties;
 
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
-import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.BlockrRetrievalHookConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 
 public class ConfigFactory {
   public interface ConfigPropertiesRetriever {
     public static final String SOURCE_TYPE_KEY = "com.yoghurt.crypto.source";
     public static final String APPLICATION_TITLE_KEY = "com.yoghurt.crypto.title";
     public static final String APPLICATION_SUBTITLE_KEY = "com.yoghurt.crypto.subtitle";
+    public static final String DONATION_ADDRESS_KEY = "com.yoghurt.crypto.donationAddress";
 
     public Properties getProperties();
 
