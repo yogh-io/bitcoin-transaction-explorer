@@ -9,6 +9,7 @@ public abstract class AbstractAdministratedApplicationConfig implements Administ
 
   private String applicationTitle;
   private String applicationSubTitle;
+  private String donationAddress;
 
   public AbstractAdministratedApplicationConfig(final BlockchainSource source) {
     this.setSource(source);
@@ -29,18 +30,27 @@ public abstract class AbstractAdministratedApplicationConfig implements Administ
     return applicationSubTitle;
   }
 
-  public void setApplicationTitle(String applicationTitle) {
+  public void setApplicationTitle(final String applicationTitle) {
     this.applicationTitle = applicationTitle;
   }
 
-  public void setApplicationSubTitle(String applicationSubTitle) {
+  public void setApplicationSubTitle(final String applicationSubTitle) {
     this.applicationSubTitle = applicationSubTitle;
+  }
+
+  @Override
+  public String getDonationAddress() {
+    return donationAddress;
+  }
+
+  public void setDonationAddress(final String donationAddress) {
+    this.donationAddress = donationAddress;
   }
 
   /**
    * Private setter to (really) prevent field from being made final.
    */
-  private void setSource(BlockchainSource source) {
+  private void setSource(final BlockchainSource source) {
     this.source = source;
   }
 
