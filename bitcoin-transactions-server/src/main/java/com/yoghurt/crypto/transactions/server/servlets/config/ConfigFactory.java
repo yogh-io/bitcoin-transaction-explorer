@@ -13,7 +13,8 @@ public class ConfigFactory {
     public static final String SOURCE_TYPE_KEY = "com.yoghurt.crypto.source";
     public static final String APPLICATION_TITLE_KEY = "com.yoghurt.crypto.title";
     public static final String APPLICATION_SUBTITLE_KEY = "com.yoghurt.crypto.subtitle";
-    public static final String DONATION_ADDRESS_KEY = "com.yoghurt.crypto.donationAddress";
+    public static final String HOST_DONATION_ADDRESS_KEY = "com.yoghurt.crypto.hostDonationAddress";
+    public static final String PROJECT_DONATION_ADDRESS_KEY = "com.yoghurt.crypto.projectDonationAddress";
 
     public Properties getProperties();
 

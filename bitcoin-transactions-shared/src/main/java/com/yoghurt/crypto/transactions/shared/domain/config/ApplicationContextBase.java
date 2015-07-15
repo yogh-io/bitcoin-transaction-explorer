@@ -7,5 +7,7 @@ public interface ApplicationContextBase extends Serializable {
 
   String getApplicationSubTitle();
 
-  String getDonationAddress();
+  String getHostDonationAddress();
+
+  String getProjectDonationAddress();
 }

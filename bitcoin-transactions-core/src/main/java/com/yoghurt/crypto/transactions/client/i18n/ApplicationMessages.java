@@ -308,4 +308,16 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Full script:")
   String scriptPlaceFullScript();
+
+  @Description("Contribute to this project")
+  String contributePlaceTitle();
+
+  @Description("Contribute to project text")
+  String contributePlaceText(String donationAddress);
+
+  @Description("Donate to this node")
+  String contributePlaceNodeTitle();
+
+  @Description("Donate to node text")
+  String contributePlaceNodeText(String donationAddress);
 }

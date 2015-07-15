@@ -5,6 +5,7 @@ import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
 import com.yoghurt.crypto.transactions.client.place.ConfigPlace;
+import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
@@ -18,6 +19,7 @@ public final class PlaceTokenParseUtil {
   private static final String MINE_TOKEN = "mine";
   private static final String LAST_BLOCK_TOKEN = "last";
   private static final String CONFIG_TOKEN = "config";
+  private static final String CONTRIBUTE_TOKEN = "contribute";
 
   // Bunch of zeroes every valid block starts with
   private static final String BLOCK_TOKEN_START = "0000000000";
@@ -44,6 +46,10 @@ public final class PlaceTokenParseUtil {
 
     if(CONFIG_TOKEN.equals(cleanToken)) {
       return new ConfigPlace();
+    }
+
+    if(CONTRIBUTE_TOKEN.equals(cleanToken)) {
+      return new ContributePlace();
     }
 
     // Check if the token is exactly equal to the length of a hash, meaning this is probably a transaction or block hash
@@ -79,7 +85,11 @@ public final class PlaceTokenParseUtil {
     if(cleanToken.length() <= MAX_BLOCK_HEIGHT_NUMBER_LENGTH) {
       try {
         final int possibleBlockHeight = Integer.parseInt(cleanToken);
-        return new BlockPlace(BlockDataType.HEIGHT, possibleBlockHeight);
+
+        // Can't be less than 0 though..
+        if(possibleBlockHeight >= 0) {
+          return new BlockPlace(BlockDataType.HEIGHT, possibleBlockHeight);
+        }
       } catch (final NumberFormatException e) {
         // Eat, this is probably not a number ;)
       }
