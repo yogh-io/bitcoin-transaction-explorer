@@ -139,7 +139,7 @@ public class ConfigViewImpl extends Composite implements ConfigView {
 
     appConfig.setApplicationTitle(applicationTitle.getText());
     appConfig.setApplicationSubTitle(applicationSubtitle.getText());
-    appConfig.setDonationAddress(donationAddress.getText());
+    appConfig.setHostDonationAddress(donationAddress.getText());
 
     return appConfig;
   }
@@ -164,6 +164,6 @@ public class ConfigViewImpl extends Composite implements ConfigView {
 
     applicationTitle.setText(value.getApplicationTitle());
     applicationSubtitle.setText(value.getApplicationSubTitle());
-    donationAddress.setText(value.getDonationAddress());
+    donationAddress.setText(value.getHostDonationAddress());
   }
 }

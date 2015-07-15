@@ -19,7 +19,8 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
 
     config.setApplicationTitle(props.getProperty(APPLICATION_TITLE_KEY));
     config.setApplicationSubTitle(props.getProperty(APPLICATION_SUBTITLE_KEY));
-    config.setDonationAddress(props.getProperty(DONATION_ADDRESS_KEY));
+    config.setHostDonationAddress(props.getProperty(HOST_DONATION_ADDRESS_KEY));
+    config.setProjectDonationAddress(props.getProperty(PROJECT_DONATION_ADDRESS_KEY));
   }
 
   @Override
@@ -34,7 +35,7 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
     props.put(SOURCE_TYPE_KEY, config.getBlockchainSource().name());
     props.put(APPLICATION_TITLE_KEY, config.getApplicationTitle());
     props.put(APPLICATION_SUBTITLE_KEY, config.getApplicationSubTitle());
-    props.put(DONATION_ADDRESS_KEY, config.getDonationAddress());
+    props.put(HOST_DONATION_ADDRESS_KEY, config.getHostDonationAddress());
 
     return props;
   }
@@ -50,7 +51,9 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
 
     userConfig.setApplicationTitle(config.getApplicationTitle());
     userConfig.setApplicationSubTitle(config.getApplicationSubTitle());
-    userConfig.setDonationAddress(config.getDonationAddress());
+    userConfig.setHostDonationAddress(config.getHostDonationAddress());
+    userConfig.setProjectDonationAddress(config.getProjectDonationAddress());
+    userConfig.setBlockchainSource(config.getBlockchainSource());
 
     return userConfig;
   }

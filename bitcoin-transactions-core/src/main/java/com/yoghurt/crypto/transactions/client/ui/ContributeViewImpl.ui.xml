@@ -3,7 +3,16 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  
+  .margin {
+    margin-top: 60px;
+  }
   </ui:style>
-  <g:FlowPanel></g:FlowPanel>
+  <g:FlowPanel>
+    <w:HeadingWidget n="2" text="{i18n.contributePlaceTitle}" />
+    <g:HTML ui:field="contributeProjectText" />
+    <w:QRCodeWidget ui:field="contributeProjectQRCode" />
+    <w:HeadingWidget n="2" text="{i18n.contributePlaceNodeTitle}" styleName="{style.margin}" ui:field="contributeNodeTitle" />
+    <g:HTML ui:field="contributeNodeText" />
+    <w:QRCodeWidget ui:field="contributeNodeQRCode" />
+  </g:FlowPanel>
 </ui:UiBinder>

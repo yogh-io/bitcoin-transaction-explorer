@@ -14,7 +14,7 @@ public class ApplicationConfigProvider {
     return applicationConfig;
   }
 
-  public void setApplicationConfig(UserApplicationConfig applicationConfig) {
+  public void setApplicationConfig(final UserApplicationConfig applicationConfig) {
     this.applicationConfig = applicationConfig;
   }
 }

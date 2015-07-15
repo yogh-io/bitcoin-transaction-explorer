@@ -41,7 +41,7 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
   private final PlaceController placeController;
 
   @Inject
-  public ApplicationRootView(final PlaceHistoryMapper historyMapper, final PlaceController placeController, UserApplicationConfig appConfig) {
+  public ApplicationRootView(final PlaceHistoryMapper historyMapper, final PlaceController placeController, final UserApplicationConfig appConfig) {
     this.placeController = placeController;
 
     applicationTitle = new Anchor(appConfig.getApplicationTitle());

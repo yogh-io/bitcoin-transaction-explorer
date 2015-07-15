@@ -9,7 +9,9 @@ public abstract class AbstractAdministratedApplicationConfig implements Administ
 
   private String applicationTitle;
   private String applicationSubTitle;
-  private String donationAddress;
+
+  private String hostDonationAddress;
+  private String projectDonationAddress;
 
   public AbstractAdministratedApplicationConfig(final BlockchainSource source) {
     this.setSource(source);
@@ -39,12 +41,21 @@ public abstract class AbstractAdministratedApplicationConfig implements Administ
   }
 
   @Override
-  public String getDonationAddress() {
-    return donationAddress;
+  public String getHostDonationAddress() {
+    return hostDonationAddress;
   }
 
-  public void setDonationAddress(final String donationAddress) {
-    this.donationAddress = donationAddress;
+  public void setHostDonationAddress(final String hostDonationAddress) {
+    this.hostDonationAddress = hostDonationAddress;
+  }
+
+  @Override
+  public String getProjectDonationAddress() {
+    return projectDonationAddress;
+  }
+
+  public void setProjectDonationAddress(final String projectDonationAddress) {
+    this.projectDonationAddress = projectDonationAddress;
   }
 
   /**

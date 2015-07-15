@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain.config;
 
+import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
+
 
 /**
  * There's some duplication with administrator app context I'm not happy about, but considering
@@ -8,9 +10,13 @@ package com.yoghurt.crypto.transactions.shared.domain.config;
 public class UserApplicationConfig implements ApplicationContextBase {
   private static final long serialVersionUID = 8385948536213767529L;
 
+  private BlockchainSource blockchainSource;
+
   private String applicationTitle;
   private String applicationSubTitle;
-  private String donationAddress;
+
+  private String hostDonationAddress;
+  private String projectDonationAddress;
 
   public UserApplicationConfig() {
   }
@@ -33,17 +39,34 @@ public class UserApplicationConfig implements ApplicationContextBase {
     this.applicationSubTitle = applicationSubTitle;
   }
 
+  public void setHostDonationAddress(final String hostDonationAddress) {
+    this.hostDonationAddress = hostDonationAddress;
+  }
+
+  @Override
+  public String getHostDonationAddress() {
+    return hostDonationAddress;
+  }
+
+  public void setProjectDonationAddress(final String projectDonationAddress) {
+    this.projectDonationAddress = projectDonationAddress;
+  }
+
+  @Override
+  public String getProjectDonationAddress() {
+    return projectDonationAddress;
+  }
+
+  public void setBlockchainSource(final BlockchainSource blockchainSource) {
+    this.blockchainSource = blockchainSource;
+  }
+
+  public BlockchainSource getBlockchainSource() {
+    return blockchainSource;
+  }
+
   @Override
   public String toString() {
     return "UserApplicationConfig [applicationTitle=" + applicationTitle + ", applicationSubTitle=" + applicationSubTitle + "]";
-  }
-
-  public void setDonationAddress(final String donationAddress) {
-    this.donationAddress = donationAddress;
-  }
-
-  @Override
-  public String getDonationAddress() {
-    return donationAddress;
   }
 }
