@@ -14,6 +14,7 @@ import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
+import com.yoghurt.crypto.transactions.client.widget.BitsTargetHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
@@ -37,6 +38,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField Label notFoundLabel;
 
   @UiField HashHexViewer blockHashViewer;
+  @UiField BitsTargetHexViewer targetViewer;
   @UiField HashHexViewer coinbaseHashViewer;
 
   @UiField ValueViewer versionViewer;
@@ -88,6 +90,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     }
 
     blockHashViewer.setHash(block.getBlockHash());
+    targetViewer.setBits(block.getBits());
     coinbaseHashViewer.setHash(coinbase.getTransactionId());
 
     versionViewer.setValue(block.getVersion());

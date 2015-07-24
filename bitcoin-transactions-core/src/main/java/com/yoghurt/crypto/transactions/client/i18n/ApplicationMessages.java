@@ -161,6 +161,9 @@ public interface ApplicationMessages extends Messages {
   @Description("Bits:")
   String blockBits();
 
+  @Description("Bits target explanation.")
+  String blockBitsTargetExplain();
+
   @Description("Nonce:")
   String blockNonce();
 

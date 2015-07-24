@@ -157,6 +157,12 @@ public final class ColorBuilder {
     COLORS.put("rebeccapurple", interpretHex("663399"));
   }
 
+  public static Color interpret(final String color, final double a) {
+    final Color clr = interpret(color);
+    clr.setA(a);
+    return clr;
+  }
+
   public static Color interpret(final String color) {
     final String fixedColor = color.toLowerCase().replace("-", "");
 

@@ -21,9 +21,10 @@ import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.RepeatingExecutor;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
+import com.yoghurt.crypto.transactions.client.widget.BitsTargetHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
-import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.TargettedHashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
@@ -50,8 +51,9 @@ public class MineViewImpl extends Composite implements MineView {
   @UiField ValueViewer nonceViewer;
 
   @UiField BlockHexViewer blockHexViewer;
-  @UiField HashHexViewer blockHashViewer;
+  @UiField TargettedHashHexViewer blockHashViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
+  @UiField BitsTargetHexViewer targetViewer;
 
   private final ScheduledCommand defferedTimeHash = new ScheduledCommand() {
     @Override
@@ -135,6 +137,8 @@ public class MineViewImpl extends Composite implements MineView {
     // Set up viewBlock for display in hex
     blockHexViewer.setValue(viewBlock.entrySet());
     coinbaseHexViewer.setValue(coinbase);
+    targetViewer.setBits(initialBlock.getBits());
+    blockHashViewer.setDifficulty(initialBlock.getBits());
     blockHashViewer.setHash(initialBlock.getBlockHash());
 
     // If we need to stay fly with the latest on the hood, set up the timers

@@ -57,6 +57,7 @@
     <w:HeadingWidget n="2" text="{i18n.minePlaceTitleCoinbase}" />
     <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <w:HeadingWidget n="2" text="{i18n.minePlaceTitleBlockHash}" />
-    <w:HashHexViewer ui:field="blockHashViewer" styleName="{style.hexViewer} {res.css.flex}" color="{res.color.blockHash}" />
+    <w:TargettedHashHexViewer ui:field="blockHashViewer" color="{res.color.blockHash}" />
+    <w:BitsTargetHexViewer ui:field="targetViewer" color="{res.color.blockBits}" />
   </g:FlowPanel>
 </ui:UiBinder>

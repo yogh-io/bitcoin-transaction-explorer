@@ -46,7 +46,7 @@ public class SimpleColorPicker implements ColorPicker {
 
   @Override
   public Color blockBits() {
-    return ColorBuilder.interpret("cyan");
+    return ColorBuilder.interpret("teal");
   }
 
   @Override
