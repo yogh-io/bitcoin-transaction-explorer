@@ -20,6 +20,7 @@
     <g:Label styleName="{style.contentHeading}" text="{i18n.blockPlaceTitle}" />
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="blockHashViewer" color="{res.color.blockHash}" />
+    <w:BitsTargetHexViewer ui:field="targetViewer" color="{res.color.blockBits}" />
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleCoinbase}" />
     <w:HashHexViewer ui:field="coinbaseHashViewer" color="{res.color.transactionHash}" />
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleExtraInformation}" />

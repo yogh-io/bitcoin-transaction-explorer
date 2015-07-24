@@ -27,7 +27,7 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
 
   private FlowPanel byteSetContainer;
 
-  private ArrayList<ContextField<Entry<T, byte[]>>> activeFields;
+  protected ArrayList<ContextField<Entry<T, byte[]>>> activeFields;
 
   public HexViewer() {
     this(null);

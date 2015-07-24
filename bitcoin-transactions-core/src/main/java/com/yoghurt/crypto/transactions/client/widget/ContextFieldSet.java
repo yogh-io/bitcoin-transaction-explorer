@@ -151,7 +151,7 @@ public class ContextFieldSet<T> extends FlowPanel {
   }
 
   public ContextField<T> addField(final T value, final Color color, final String text) {
-    final ContextField<T> field = new ContextField<T>(value, color, text);
+    final ContextField<T> field = createContextField(value, color, text);
 
     field.addMouseOverHandler(mouseOverHandler);
     field.addMouseOutHandler(mouseOutHandler);
@@ -159,6 +159,10 @@ public class ContextFieldSet<T> extends FlowPanel {
 
     fields.add(field);
     return addField(field);
+  }
+
+  protected ContextField<T> createContextField(final T value, final Color color, final String text) {
+    return new ContextField<T>(value, color, text);
   }
 
   protected Color getFieldColor(final T value) {
@@ -198,7 +202,7 @@ public class ContextFieldSet<T> extends FlowPanel {
     final ContextPanel panel = new ContextPanel();
     panel.setWidget(popupContent);
 
-    final Color borderColor = getFieldColor(field.getValue());
+    final Color borderColor = getFieldColor(field.getValue()).copy();
     final Color backgroundColor = borderColor.copy();
     borderColor.setA(0.8);
     backgroundColor.setA(0.01);
