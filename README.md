@@ -34,7 +34,7 @@ A sneak-preview client-only version of this is available at http://jornc.github.
 
 This preview also includes the block and transaction hex viewers with contextual information for each field.
 
-#### Script viewer (Under construction)
+#### Script viewer
 
 Visualizes bitcoin script interpretation in a step-by-step basis.
 
@@ -46,9 +46,13 @@ Insert any raw transaction and this explorer will display em like it would any o
 
 Insert any raw block and --- see above.
 
-#### Raw script interpreter (Under construction) 
+#### Raw script interpreter
 
 See above.
+
+#### Direct JSON-RPC interface (Optional, and under construction)
+
+If this explorer is run on top of a node (rather than an external API), then a direct JSON-RPC interface to the node may be spoken to. Just insert any command you're used to (getblock, getrawtransaction, getbestblockhash, etc.), and the explorer will display the response, and show some extra information of the stuff it understands (transaction/block ids or their serialized form, script, and many other bitcoin-specific and unspecific fields).
 
 # How to run it
 
