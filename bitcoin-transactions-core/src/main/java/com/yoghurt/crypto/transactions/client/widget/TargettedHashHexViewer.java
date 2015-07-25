@@ -11,9 +11,9 @@ import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 public class TargettedHashHexViewer extends HashHexViewer {
   private final Color[] colors = new Color[] {
       ColorBuilder.interpret("green", 0.2),
-      ColorBuilder.interpret("3FFF00", 0.75),
-      ColorBuilder.interpret("7FFF00", 0.75),
-      ColorBuilder.interpret("BFFF00", 0.75),
+      ColorBuilder.interpret("3FFF00", 0.5),
+      ColorBuilder.interpret("7FFF00", 0.6),
+      ColorBuilder.interpret("BFFF00", 0.7),
       ColorBuilder.interpret("FFFF00", 0.75),
       ColorBuilder.interpret("FFBF00", 0.75),
       ColorBuilder.interpret("FF7F00", 0.75),
