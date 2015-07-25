@@ -9,6 +9,7 @@
   <properties>
     <com.google.gwt.version>2.7.0</com.google.gwt.version>
     <org.codehaus.mojo.gwtmavenplugin.version>2.7.0</org.codehaus.mojo.gwtmavenplugin.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <build>
