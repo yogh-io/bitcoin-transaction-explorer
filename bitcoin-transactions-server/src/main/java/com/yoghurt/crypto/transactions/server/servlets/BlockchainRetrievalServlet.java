@@ -4,6 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
@@ -40,5 +41,10 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   @Override
   public String getLatestBlockHash() throws ApplicationException {
     return BlockchainRetrievalFactory.get().getLastBlockHash();
+  }
+
+  @Override
+  public String getJSONRPCRespone(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
+    return BlockchainRetrievalFactory.get().getJSONRPCResponse(method, arguments);
   }
 }

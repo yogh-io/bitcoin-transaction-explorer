@@ -39,25 +39,29 @@ public abstract class LookupActivity<E, P extends Place> extends AbstractActivit
 
   /**
    * Whether or not to perform an asynchronous lookup.
-   * 
+   *
    * @param place The place to determine whether or not to lookup for.
-   * 
+   *
    * @return Whether or not to lookup asynchronously.
    */
-  protected abstract boolean mustPerformLookup(final P place);
+  protected boolean mustPerformLookup(final P place) {
+    return true;
+  }
 
   /**
    * Create the desired information object out of the place (not doing asynchronous lookup, all information is already available)
-   * 
+   *
    * @param place Place to get information out of.
-   * 
+   *
    * @return Information
    */
-  protected abstract E createInfo(final P place);
+  protected E createInfo(final P place) {
+    return null;
+  }
 
   /**
    * Deferredly start the activity after the information to be given to the concrete implementation has been determined.
-   * 
+   *
    * @param panel Panel in which content may live.
    * @param info Information for which content will be created.
    */
@@ -65,7 +69,7 @@ public abstract class LookupActivity<E, P extends Place> extends AbstractActivit
 
   /**
    * Defferedly error out because something went wrong.
-   * 
+   *
    * @param panel Panel in which content may live.
    * @param caught All information we're allowed to have about what may have gone wrong.
    */

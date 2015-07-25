@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.shared.util;
 
+
 public final class ArrayUtil {
   private ArrayUtil() {}
 
@@ -31,5 +32,11 @@ public final class ArrayUtil {
 
   public static byte[] arrayCopy(final byte[] bytes) {
     return arrayCopy(bytes, 0, bytes.length);
+  }
+
+  public static String[] copyFrom(final String[] origin, final int i) {
+    final String[] dest = new String[origin.length - i];
+    System.arraycopy(origin, i, dest, 0, origin.length - i);
+    return dest;
   }
 }

@@ -8,11 +8,13 @@ import com.yoghurt.crypto.transactions.client.place.ConfigPlace;
 import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
+import com.yoghurt.crypto.transactions.client.place.RPCResponsePlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
+import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 public final class PlaceTokenParseUtil {
@@ -20,6 +22,7 @@ public final class PlaceTokenParseUtil {
   private static final String LAST_BLOCK_TOKEN = "last";
   private static final String CONFIG_TOKEN = "config";
   private static final String CONTRIBUTE_TOKEN = "contribute";
+  private static final String NBSP = " ";
 
   // Bunch of zeroes every valid block starts with
   private static final String BLOCK_TOKEN_START = "0000000000";
@@ -50,6 +53,11 @@ public final class PlaceTokenParseUtil {
 
     if(CONTRIBUTE_TOKEN.equals(cleanToken)) {
       return new ContributePlace();
+    }
+
+    final String[] splitToken = token.split(NBSP);
+    if(JSONRPCMethod.fromName(splitToken[0]) != null) {
+      return new RPCResponsePlace(splitToken);
     }
 
     // Check if the token is exactly equal to the length of a hash, meaning this is probably a transaction or block hash

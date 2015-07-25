@@ -32,6 +32,8 @@ import com.yoghurt.crypto.transactions.client.ui.ContributeView;
 import com.yoghurt.crypto.transactions.client.ui.ContributeViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.MineView;
 import com.yoghurt.crypto.transactions.client.ui.MineViewImpl;
+import com.yoghurt.crypto.transactions.client.ui.RPCResponseView;
+import com.yoghurt.crypto.transactions.client.ui.RPCResponseViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.ScriptView;
 import com.yoghurt.crypto.transactions.client.ui.ScriptViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.StartupView;
@@ -60,6 +62,7 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(ScriptView.class).to(ScriptViewImpl.class);
     bind(ConfigView.class).to(ConfigViewImpl.class);
     bind(ContributeView.class).to(ContributeViewImpl.class);
+    bind(RPCResponseView.class).to(RPCResponseViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }
