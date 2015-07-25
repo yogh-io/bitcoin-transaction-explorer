@@ -13,8 +13,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.BlockrApiParser;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException.Reason;
 
 public class BlockrAPIRetriever implements BlockchainRetrievalHook {
   private static final String BLOCKR_API_LATEST_BLOCK = "http://btc.blockr.io/api/v1/block/info/last";
@@ -130,5 +132,10 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
   @Override
   public BlockInformation getBlockInformationLast() throws ApplicationException {
     return getBlockInformationFromHash(LAST_BLOCK_KEYWORD);
+  }
+
+  @Override
+  public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
+    throw new ApplicationException(Reason.UNSUPPORTED_OPERATION);
   }
 }

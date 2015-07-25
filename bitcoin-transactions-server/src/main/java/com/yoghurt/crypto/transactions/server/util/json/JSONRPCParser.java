@@ -21,6 +21,12 @@ public class JSONRPCParser {
 
   private JSONRPCParser() {}
 
+  public static String getString(final InputStream jsonData) throws JsonProcessingException, IOException {
+    final JsonNode tree = JsonParser.mapper.readTree(jsonData);
+
+    return tree.getTextValue();
+  }
+
   public static String getResultString(final InputStream jsonData) throws JsonProcessingException, IOException {
     final JsonNode tree = JsonParser.mapper.readTree(jsonData);
 

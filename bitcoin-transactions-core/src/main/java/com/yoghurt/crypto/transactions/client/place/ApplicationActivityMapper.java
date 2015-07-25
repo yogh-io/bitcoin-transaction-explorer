@@ -8,6 +8,7 @@ import com.yoghurt.crypto.transactions.client.ui.BlockActivity;
 import com.yoghurt.crypto.transactions.client.ui.ConfigActivity;
 import com.yoghurt.crypto.transactions.client.ui.ContributeActivity;
 import com.yoghurt.crypto.transactions.client.ui.MineActivity;
+import com.yoghurt.crypto.transactions.client.ui.RPCResponseActivity;
 import com.yoghurt.crypto.transactions.client.ui.ScriptActivity;
 import com.yoghurt.crypto.transactions.client.ui.StartupActivity;
 import com.yoghurt.crypto.transactions.client.ui.TransactionActivity;
@@ -35,6 +36,8 @@ public class ApplicationActivityMapper implements ActivityMapper {
       presenter = factory.createConfigPresenter((ConfigPlace) place);
     } else if (place instanceof ContributePlace) {
       presenter = factory.createContributePresenter((ContributePlace) place);
+    } else if (place instanceof RPCResponsePlace) {
+      presenter = factory.createRPCReponsePresenter((RPCResponsePlace) place);
     }
 
     return presenter;
@@ -42,6 +45,8 @@ public class ApplicationActivityMapper implements ActivityMapper {
 
   public interface ActivityFactory {
     StartupActivity createStartupPresenter(StartupPlace place);
+
+    RPCResponseActivity createRPCReponsePresenter(RPCResponsePlace place);
 
     ContributeActivity createContributePresenter(ContributePlace place);
 
