@@ -1,142 +1,147 @@
-@def contentColor #fff;
+@def backgroundColor #575757;
+@def contentColor #F7F7F7;
+@def fontColor #555;
+@def fontSubColor #888;
+@def accentColor #999;
+@def linkColor #FA8F08;
 
 html {
-	margin: 0;
-	padding: 0;
-	height: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font: normal normal normal 0.75em/normal 'Courier New', 'FreeMono',
+    'Consolas', 'Lucida Grande';
 }
 
 body {
-	color: #555;
-	font: normal normal normal 0.75em/normal 'Lucida Grande', sans-serif;
-	text-align: center;
-	background-color: #575757; /*rgb( 250, 143, 8);*/
-	margin: 0;
-	padding: 0;
-	overflow-y: auto;
-	height: 100%;
+  color: fontColor;
+  text-align: center;
+  background-color: backgroundColor; margin : 0;
+  padding: 0;
+  overflow-y: auto;
+  height: 100%;
+  margin: 0;
+}
+
+input {
+  font: normal normal normal 0.75em/normal 'Courier New', 'FreeMono',
+    'Consolas', 'Lucida Grande';
 }
 
 .applicationMainPanel {
-	margin: 0 auto;
-	padding-top: 0;
-	text-align: left;
-	width: 800px;
-	position: relative;
-	min-height: 100%;
+  margin: 0 auto;
+  padding-top: 0;
+  text-align: left;
+  width: 800px;
+  position: relative;
+  min-height: 100%;
 }
 
 .applicationHeaderPanel {
-	background-color: contentColor;
-	padding: 20px;
-	padding-top: 1px;
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	/*box-shadow: 0px 0px 5px #fff;*/
-	height: 140px;
+  background-color: contentColor;
+  padding: 20px;
+  padding-top: 1px;
+  height: 140px;
 }
 
 .applicationTitle {
-	color: #555;
-	line-height: 36px;
-	float: left;
-	font-size: 31px;
-	font-weight: bold;
-	margin: 20px 0px;
-	text-decoration: none;
+  color: fontColor;
+  line-height: 36px;
+  float: left;
+  font-size: 31px;
+  font-weight: bold;
+  margin: 20px 0px;
+  text-decoration: none;
 }
 
 .alignRight {
-	text-align: right;
+  text-align: right;
 }
 
 .applicationSubTitle {
-	font-size: 16px;
-	color: #888;
-	font-weight: bold;
-	line-height: 41px;
-	margin: 20px;
+  font-size: 16px;
+  color: fontSubColor;
+  font-weight: bold;
+  line-height: 41px;
+  margin: 20px;
 }
 
 .applicationContentContainer {
-	padding-bottom: 120px;
-  	padding-top: 30px;
+  padding-bottom: 120px;
+  padding-top: 30px;
 }
 
 .applicationContent {
-  	padding: 20px;
-  	background-color: #fff;
-  	border-radius: 5px;
+  padding: 20px;
+  background-color: contentColor;
 }
 
 .applicationFooter {
-	position: absolute;
-	height: 92px;
-	width: 800px;
-	bottom: 0px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	/*box-shadow: 0px 0px 5px #fff;*/
-	background-color: contentColor;
+  position: absolute;
+  height: 92px;
+  width: 800px;
+  bottom: 0px;
+  background-color: contentColor;
 }
 
 .applicationInnerFooter {
-	margin: 10px 20px;
-	text-align: right;
+  margin: 10px 20px;
+  text-align: right;
 }
 
 .textBox {
- 	border: 1px solid #999;
- 	border-radius: 5px;
- 	font-size: 2.4em;
- 	width: 740px;
- 	padding: 10px 9px;
+  border: 1px solid accentColor;
+  border-radius: 5px;
+  font-size: 2.4em;
+  width: 740px;
+  padding: 10px 9px;
 }
 
 .link {
-	text-decoration: none;
-	margin-bottom: 9px;
+  text-decoration: none;
+  margin-bottom: 9px;
 }
 
 .link:hover {
-	color: rgb(250, 143, 8);
-	cursor: pointer;
-	text-decoration: underline;
+  color: linkColor;
+  cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 button {
-	padding: 5px;
-	margin: 10px;
+  padding: 5px;
+  margin: 10px;
 }
 
 .labelledValueFieldLabel {
-	min-width: 85px;
-	vertical-align: top;
-	line-height: 30px;
+  min-width: 175px;
 }
 
 .labelledValueFieldValue {
-	margin-left: 10px;
+  margin-left: 10px;
+  overflow: auto;
 }
 
 .labelledValueContainer {
-	margin-bottom: 10px;
-	display: flex;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .flex {
-	display: flex;
+  display: flex;
 }
 
-.flex > * {
-	min-width: 0;
-	min-height: 0;
+.flex>* {
+  min-width: 0;
+  min-height: 0;
 }
 
 .grow {
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 .panel {
-	flex-direction: column;
+  flex-direction: column;
 }
