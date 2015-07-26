@@ -3,16 +3,6 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-    .content {
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px #fff;
-    }
-    .contentHeading {
-    font-size: 31px;
-    height: 37px;
-    font-weight: bold;
-    }
     .linkPanel {
     flex-wrap: wrap;
     align-items: center;
