@@ -26,5 +26,7 @@ public class RPCResponseViewImpl extends Composite implements RPCResponseView {
   @Override
   public void setResponse(final String info) {
     html.setHTML(info);
+
+
   }
 }

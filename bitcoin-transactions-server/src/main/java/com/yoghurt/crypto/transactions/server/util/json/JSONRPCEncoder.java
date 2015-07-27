@@ -27,10 +27,31 @@ public class JSONRPCEncoder {
     return writer.toString();
   }
 
+  /**
+   * TODO If we could get the nasty pre-serialization stuff into the serialization policy, that'd be great.
+   */
   public static String getRequestString(final String method, final Object... parameters) throws JsonGenerationException, JsonMappingException, IOException {
     final ArrayList<Object> parameterLst = new ArrayList<>();
 
-    for (final Object parameter : parameters) {
+    for (Object parameter : parameters) {
+      // Just check if this parameter is a number, if it is, make it an explicit
+      // number
+      if (parameter instanceof String) {
+        try {
+          parameter = Integer.parseInt((String) parameter);
+
+          // Also, if this did happen to be a number, check if it's 1 or 0, then
+          // turn it into an appropriate boolean
+          if ((int) parameter == 1) {
+            parameter = true;
+          } else if ((int) parameter == 0) {
+            parameter = false;
+          }
+        } catch (final NumberFormatException e) {
+          // eat
+        }
+      }
+
       parameterLst.add(parameter);
     }
 
