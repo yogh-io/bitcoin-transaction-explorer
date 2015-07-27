@@ -49,7 +49,7 @@
     border-color: darkgreen;
     }
   </ui:style>
-  <g:FlowPanel styleName="{style.content}">
+  <g:FlowPanel>
     <w:HeadingWidget n="2" text="{i18n.startupGeneral}" />
     <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
       <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
