@@ -12,6 +12,14 @@ public final class ArrayUtil {
     return destBytes;
   }
 
+  public static byte[] reverseCopy(final byte[] src) {
+    final byte[] arrayCopy = arrayCopy(src);
+
+    reverse(arrayCopy);
+
+    return arrayCopy;
+  }
+
   public static void reverse(final byte[] array) {
     if (array == null) {
       return;

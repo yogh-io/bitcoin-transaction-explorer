@@ -36,7 +36,7 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
   /**
    * Thirty seconds
    */
-  private static final int LATEST_BLOCK_POLL_DELAY = 10 * 1000;
+  private static final int LATEST_BLOCK_POLL_DELAY = 30 * 1000;
   private static final int SHORT_INITIAL_POLL_DELAY = 500;
 
   private final MineView view;
@@ -155,15 +155,15 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
       return;
     }
 
-    // Set the previous block hash to last/current block hash
-    final byte[] blockHash = ComputeUtil.computeDoubleSHA256(rawBlock.values());
-    block.setPreviousBlockHash(blockHash);
-    rawBlock.setPreviousBlockHash(blockHash);
-
     final boolean customMiningSession = isCustomMiningPlace();
 
-    // If this is a custom mining session (which includes custom coinbase), do some special stuff
+    // If this is a custom mining session (which includes custom coinbase), do some special stuff (mining on top of tip)
     if(customMiningSession) {
+      // Set the previous block hash to last/current block hash
+      final byte[] blockHash = ComputeUtil.computeDoubleSHA256(rawBlock.values());
+      block.setPreviousBlockHash(blockHash);
+      rawBlock.setPreviousBlockHash(blockHash);
+
       // Reset the nonce
       block.setNonce(0);
       rawBlock.setNonce(NumberEncodeUtil.encodeUint32(0));
