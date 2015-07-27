@@ -126,7 +126,10 @@ public class MineViewImpl extends Composite implements MineView {
     this.custom = custom;
 
     versionViewer.setValue(initialBlock.getVersion());
-    previousBlockHashViewer.setValue(Str.toString(Hex.encode(initialBlock.getPreviousBlockHash())).toUpperCase());
+
+    final byte[] previousBlockHashFlipped = ArrayUtil.reverseCopy(initialBlock.getPreviousBlockHash());
+
+    previousBlockHashViewer.setValue(Str.toString(Hex.encode(previousBlockHashFlipped)).toUpperCase());
     merkleRootViewer.setValue(Str.toString(Hex.encode(initialBlock.getMerkleRoot())).toUpperCase());
     timestampViewer.setValue(FormatUtil.formatDateTime(initialBlock.getTimestamp()));
     bitsViewer.setValue(initialBlock.getBits());
