@@ -18,7 +18,7 @@
     }
   </ui:style>
   <g:FlowPanel>
-    <w:HeadingWidget n="2"    ui:field="outputTitle" />
+    <w:HeadingWidget n="3" ui:field="outputTitle" />
     <w:LabelledWidget label="{i18n.transactionAmount}">
       <w:ValueViewer ui:field="amountViewer" color="{res.color.transactionOutputAmount}" />
     </w:LabelledWidget>

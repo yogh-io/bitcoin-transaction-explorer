@@ -31,22 +31,22 @@
     border-color: black;
     }
     .red {
-    background-color: red;
+    background-color: rgba(200, 0, 0, 0.4);
     }
     .red:hover {
-    border-color: darkred;
+    border-color: rgba(100, 0, 0, 0.4);
     }
     .blue {
-    background-color: blue;
+    background-color: rgba(0, 0, 200, 0.4);
     }
     .blue:hover {
-    border-color: darkblue;
+    border-color: rgba(0, 0, 100, 0.4);
     }
     .green {
-    background-color: green;
+    background-color: rgba(0, 200, 0, 0.4);
     }
     .green:hover {
-    border-color: darkgreen;
+    border-color: rgba(0, 100, 0, 0.4);
     }
   </ui:style>
   <g:FlowPanel>

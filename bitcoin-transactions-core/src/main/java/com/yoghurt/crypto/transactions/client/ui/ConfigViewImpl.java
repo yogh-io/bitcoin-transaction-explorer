@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 
 import com.google.gwt.core.client.GWT;
@@ -15,7 +16,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -40,7 +40,7 @@ public class ConfigViewImpl extends Composite implements ConfigView {
   @UiField PasswordTextBox createPassword;
   @UiField PasswordTextBox createPasswordRepeat;
 
-  @UiField ListBox connectorListBox;
+  @UiField MaterialListBox connectorListBox;
   @UiField SimplePanel configEditorContainer;
 
   @UiField MaterialTextBox applicationTitle;

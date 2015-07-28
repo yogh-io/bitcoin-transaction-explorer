@@ -13,18 +13,18 @@
 	}
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel} {res.css.flex} {res.css.columns} {res.css.grow}">
-    <g:FlowPanel styleName="{res.css.applicationHeaderPanel}" ui:field="header">
+    <g:FlowPanel styleName="{res.css.applicationHeaderPanel} z-depth-1" ui:field="header">
       <g:FlowPanel styleName="{res.css.flex} {res.css.alignCenter}">
         <w:HeadingWidget n="1" styleName="{res.css.grow} {res.css.link}" ui:field="applicationTitle" />
-        <w:HeadingWidget n="2" styleName="{res.css.alignRight}" ui:field="applicationSubTitle" />
+        <w:HeadingWidget n="3" styleName="{res.css.alignRight}" ui:field="applicationSubTitle" />
       </g:FlowPanel>
       <m:MaterialTextBox ui:field="lookupField" placeholder="{i18n.applicationLookupFieldPlaceHolder}" />
     </g:FlowPanel>
     <g:SimplePanel ui:field="progressContainer" styleName="{res.css.applicationProgressContainer}">
       <m:MaterialProgress ui:field="progress" />
     </g:SimplePanel>
-    <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent} {res.css.flex} {res.css.grow}" />
-	<c:CustomFooter addStyleNames="{res.css.applicationFooterPanel}">
+    <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent} {res.css.flex} {res.css.grow} z-depth-1" />
+	<c:CustomFooter addStyleNames="{res.css.applicationFooterPanel} z-depth-1">
 	  <g:FlowPanel styleName="{res.css.flex} {res.css.justify} {style.footerText}">
         <g:Label text="{i18n.applicationVersion}" styleName="{res.css.grow}" />
         <g:Anchor text="{i18n.applicationContributionText}" ui:field="contributeLink" styleName="{res.css.link}" />
