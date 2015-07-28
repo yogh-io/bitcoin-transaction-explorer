@@ -67,7 +67,7 @@ public class ComputeUtil {
 
   @Deprecated
   public static byte[] computeMerkleRoot(final byte[] tx) {
-    return computeDoubleSHA256(tx, tx);
+    return computeDoubleSHA256(tx);
   }
 
   /**
@@ -81,7 +81,7 @@ public class ComputeUtil {
 
     final byte[] bs = txs.get(0);
 
-    return computeDoubleSHA256(bs, bs);
+    return computeDoubleSHA256(bs);
   }
 
   public static byte[] computeHash160(final byte[] bytes) {
