@@ -1,5 +1,8 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import gwt.material.design.client.ui.MaterialButton;
+import gwt.material.design.client.ui.MaterialTextBox;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -10,12 +13,11 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.StyleUtil;
@@ -32,19 +34,19 @@ public class ConfigViewImpl extends Composite implements ConfigView {
 
   @UiField DeckPanel switchPanel;
 
-  @UiField Button login;
+  @UiField MaterialButton login;
 
-  @UiField TextBox password;
-  @UiField TextBox createPassword;
-  @UiField TextBox createPasswordRepeat;
+  @UiField PasswordTextBox password;
+  @UiField PasswordTextBox createPassword;
+  @UiField PasswordTextBox createPasswordRepeat;
 
   @UiField ListBox connectorListBox;
   @UiField SimplePanel configEditorContainer;
 
-  @UiField TextBox applicationTitle;
-  @UiField TextBox applicationSubtitle;
+  @UiField MaterialTextBox applicationTitle;
+  @UiField MaterialTextBox applicationSubtitle;
 
-  @UiField TextBox donationAddress;
+  @UiField MaterialTextBox donationAddress;
 
   private Presenter presenter;
 
@@ -62,10 +64,6 @@ public class ConfigViewImpl extends Composite implements ConfigView {
     StyleUtil.setPlaceHolder(createPassword, M.messages().configPasswordPlaceHolder());
     StyleUtil.setPlaceHolder(password, M.messages().configPasswordPlaceHolder());
     StyleUtil.setPlaceHolder(createPasswordRepeat, M.messages().configPasswordRepeatPlaceHolder());
-
-    StyleUtil.setPlaceHolder(applicationTitle, M.messages().configTitlePlaceHolder());
-    StyleUtil.setPlaceHolder(applicationSubtitle, M.messages().configSubTitlePlaceHolder());
-    StyleUtil.setPlaceHolder(donationAddress, M.messages().configContributeAddressPlaceHolder());
   }
 
   @Override
@@ -101,18 +99,18 @@ public class ConfigViewImpl extends Composite implements ConfigView {
   @UiHandler("login")
   public void onLoginClick(final ClickEvent e) {
     presenter.checkAuthenticed(password.getValue());
-    login.setEnabled(false);
+    login.setDisable(true);
   }
 
   @Override
   public void setCreatePassword(final boolean create) {
-    login.setEnabled(true);
+    login.setDisable(false);
     switchPanel.showWidget(create ? 0 : 1);
   }
 
   @Override
   public void setAuthentic(final boolean result) {
-    login.setEnabled(true);
+    login.setDisable(false);
     switchPanel.showWidget(2);
   }
 

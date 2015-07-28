@@ -50,7 +50,7 @@
     }
   </ui:style>
   <g:FlowPanel>
-    <w:HeadingWidget n="2" text="{i18n.startupGeneral}" />
+    <w:HeadingWidget n="1"   text="{i18n.startupGeneral}" />
     <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
       <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
       <g:Label styleName="{style.blockLink} {style.blue}" text="Mining simulator" ui:field="mining" />

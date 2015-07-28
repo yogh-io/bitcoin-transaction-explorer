@@ -3,11 +3,6 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-    .contentHeading {
-    font-size: 31px;
-    height: 37px;
-    font-weight: bold;
-    }
     .hexViewer {
     width: 780px;
     flex-wrap: wrap;
@@ -22,7 +17,7 @@
     }
   </ui:style>
   <g:FlowPanel>
-    <g:Label styleName="{style.contentHeading}" text="{i18n.transactionPlaceTitle}" />
+    <w:HeadingWidget n="1" text="{i18n.transactionPlaceTitle}" />
     <g:FlowPanel ui:field="errorView" visible="false" styleName="{style.parseError}">
       <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleError}" />
       <g:Label ui:field="transactionFullBlownErrorLabel" text="{i18n.transactionPlaceParseError}" />

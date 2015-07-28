@@ -8,10 +8,10 @@
   }
   </ui:style>
   <g:FlowPanel>
-    <w:HeadingWidget n="2" text="{i18n.contributePlaceTitle}" />
+    <w:HeadingWidget n="1"   text="{i18n.contributePlaceTitle}" />
     <g:HTML ui:field="contributeProjectText" />
     <w:QRCodeWidget ui:field="contributeProjectQRCode" />
-    <w:HeadingWidget n="2" text="{i18n.contributePlaceNodeTitle}" styleName="{style.margin}" ui:field="contributeNodeTitle" />
+    <w:HeadingWidget n="1"   text="{i18n.contributePlaceNodeTitle}" styleName="{style.margin}" ui:field="contributeNodeTitle" />
     <g:HTML ui:field="contributeNodeText" />
     <w:QRCodeWidget ui:field="contributeNodeQRCode" />
   </g:FlowPanel>

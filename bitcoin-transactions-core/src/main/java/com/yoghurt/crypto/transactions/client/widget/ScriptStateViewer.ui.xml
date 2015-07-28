@@ -21,7 +21,7 @@
   }
   </ui:style>
   <g:FlowPanel styleName="{style.container}">
-    <w:HeadingWidget n="3" ui:field="scriptStepTitle" />
+    <w:HeadingWidget n="2"    ui:field="scriptStepTitle" />
     <w:LabelledWidget label="{i18n.scriptOperation}">
       <w:ScriptExecutionViewer ui:field="operationViewer" />
     </w:LabelledWidget>

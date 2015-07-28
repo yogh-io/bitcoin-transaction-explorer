@@ -20,17 +20,11 @@ public final class R {
 
     String applicationHeaderPanel();
 
-    String applicationTitle();
-
-    String applicationSubTitle();
-
-    String applicationContentContainer();
+    String applicationProgressContainer();
 
     String applicationContent();
 
-    String applicationFooter();
-
-    String applicationInnerFooter();
+    String applicationFooterPanel();
 
     String labelledValueFieldLabel();
 
@@ -38,13 +32,17 @@ public final class R {
 
     String labelledValueContainer();
 
-    String textBox();
-
     String link();
 
     String alignRight();
 
+    String alignCenter();
+
     String flex();
+
+    String columns();
+
+    String justify();
 
     String grow();
 

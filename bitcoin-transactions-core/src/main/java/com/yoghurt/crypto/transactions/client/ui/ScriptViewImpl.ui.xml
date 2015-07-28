@@ -19,7 +19,7 @@
   <g:FlowPanel>
     <g:Label styleName="{style.contentHeading}" text="{i18n.scriptPlaceTitleScriptViewer}" />
     <g:FlowPanel ui:field="fullTransactionInformation">
-      <w:HeadingWidget n="2" text="{i18n.scriptPlaceTitleOutpointViewer}" />
+      <w:HeadingWidget n="1"   text="{i18n.scriptPlaceTitleOutpointViewer}" />
       <w:LabelledWidget label="{i18n.scriptPlaceOutpointHash}">
         <w:ValueViewer ui:field="hashViewer" />
       </w:LabelledWidget>
@@ -27,7 +27,7 @@
         <w:ValueViewer ui:field="indexViewer" color="{res.color.transactionInputIndex}" />
       </w:LabelledWidget>
     </g:FlowPanel>
-    <w:HeadingWidget n="2" text="{i18n.scriptPlaceTitleScripts}" />
+    <w:HeadingWidget n="1"   text="{i18n.scriptPlaceTitleScripts}" />
     <w:LabelledWidget label="{i18n.transactionScriptSig}">
       <w:ScriptViewer ui:field="scriptSigViewer" />
     </w:LabelledWidget>
@@ -37,13 +37,13 @@
     <w:LabelledWidget label="{i18n.scriptPlaceFullScript}">
       <w:ScriptExecutionViewer ui:field="fullScriptViewer" />
     </w:LabelledWidget>
-    <w:HeadingWidget n="2" text="{i18n.scriptPlaceStepByStep}" />
+    <w:HeadingWidget n="1"   text="{i18n.scriptPlaceStepByStep}" />
     <g:FlowPanel ui:field="scriptExecutionContainer" />
-    <w:HeadingWidget n="2" text="{i18n.scriptPlaceExecutionResult}" />
+    <w:HeadingWidget n="1"   text="{i18n.scriptPlaceExecutionResult}" />
     <g:Label ui:field="scriptExecutionResult" />
-    <w:HeadingWidget n="2" text="{i18n.scriptPlaceScriptSigRawHex}" />
+    <w:HeadingWidget n="1"   text="{i18n.scriptPlaceScriptSigRawHex}" />
     <w:ScriptHexViewer ui:field="scriptSigHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <w:HeadingWidget n="2" text="{i18n.scriptPlaceScriptPubKeyRawHex}" />
+    <w:HeadingWidget n="1"   text="{i18n.scriptPlaceScriptPubKeyRawHex}" />
     <w:ScriptHexViewer ui:field="pubKeySigHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
   </g:FlowPanel>
 </ui:UiBinder>

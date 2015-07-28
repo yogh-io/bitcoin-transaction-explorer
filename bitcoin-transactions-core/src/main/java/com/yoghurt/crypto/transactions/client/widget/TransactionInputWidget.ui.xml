@@ -6,7 +6,7 @@
 
   </ui:style>
   <g:FlowPanel>
-    <w:HeadingWidget n="3" ui:field="inputTitle" />
+    <w:HeadingWidget n="2"    ui:field="inputTitle" />
     <w:LabelledWidget label="{i18n.transactionPreviousTransactionId}">
       <w:ValueViewer ui:field="hashViewer" />
     </w:LabelledWidget>

@@ -1,13 +1,12 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import gwt.material.design.client.ui.MaterialTextBox;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
-import com.yoghurt.crypto.transactions.client.i18n.M;
-import com.yoghurt.crypto.transactions.client.util.StyleUtil;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 
 public class NodeConfigEditor extends Composite implements ConfigEditor<BitcoinCoreNodeConfig> {
@@ -16,36 +15,31 @@ public class NodeConfigEditor extends Composite implements ConfigEditor<BitcoinC
 
   private static final NodeConfigEditorUiBinder UI_BINDER = GWT.create(NodeConfigEditorUiBinder.class);
 
-  @UiField TextBox hostField;
-  @UiField TextBox portField;
-  @UiField TextBox rpcUserField;
-  @UiField TextBox rpcPassField;
+  @UiField MaterialTextBox hostField;
+  @UiField MaterialTextBox portField;
+  @UiField MaterialTextBox rpcUserField;
+  @UiField MaterialTextBox rpcPassField;
 
   public NodeConfigEditor() {
     initWidget(UI_BINDER.createAndBindUi(this));
-
-    StyleUtil.setPlaceHolder(hostField, M.messages().configNodeHost());
-    StyleUtil.setPlaceHolder(portField, M.messages().configNodePort());
-    StyleUtil.setPlaceHolder(rpcUserField, M.messages().configNodeRpcUser());
-    StyleUtil.setPlaceHolder(rpcPassField, M.messages().configNodeRpcPass());
   }
 
   @Override
   public void setValue(final BitcoinCoreNodeConfig value) {
-    hostField.setValue(value.getHost());
-    portField.setValue(value.getPort());
-    rpcUserField.setValue(value.getRpcUser());
-    rpcPassField.setValue(value.getRpcPass());
+    hostField.setText(value.getHost());
+    portField.setText(value.getPort());
+    rpcUserField.setText(value.getRpcUser());
+    rpcPassField.setText(value.getRpcPass());
   }
 
   @Override
   public BitcoinCoreNodeConfig getValue() {
     final BitcoinCoreNodeConfig config = new BitcoinCoreNodeConfig();
 
-    config.setHost(hostField.getValue());
-    config.setPort(portField.getValue());
-    config.setRpcUser(rpcUserField.getValue());
-    config.setRpcPass(rpcPassField.getValue());
+    config.setHost(hostField.getText());
+    config.setPort(portField.getText());
+    config.setRpcUser(rpcUserField.getText());
+    config.setRpcPass(rpcPassField.getText());
 
     return config;
   }
