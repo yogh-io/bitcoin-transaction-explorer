@@ -10,9 +10,12 @@
     .button {
     margin-left: 0px;
     }
+    .hoi {
+      padding: 10px;
+    }
   </ui:style>
-  <g:FlowPanel>
-    <w:HeadingWidget n="1"   text="{i18n.configPlaceTitle}" />
+  <g:FlowPanel styleName="{res.css.grow}">
+    <w:HeadingWidget n="1" text="{i18n.configPlaceTitle}" />
     <g:DeckPanel ui:field="switchPanel">
       <g:FlowPanel>
         <g:HTML hTML="{i18n.configPlaceCreatePasswordText}" styleName="{style.explainText}" />
@@ -26,16 +29,16 @@
         <m:MaterialButton ui:field="login" text="{i18n.configPasswordLogin}" />
       </g:FlowPanel>
       <g:FlowPanel>
-        <w:HeadingWidget n="1"   text="{i18n.configBlockchainHookTitle}" />
+        <w:HeadingWidget n="2" text="{i18n.configBlockchainHookTitle}" />
         <w:LabelledWidget label="{i18n.configBlockchainHook}">
-          <g:ListBox ui:field="connectorListBox" />
+          <m:MaterialListBox ui:field="connectorListBox" />
         </w:LabelledWidget>
         <g:SimplePanel ui:field="configEditorContainer" />
-        <w:HeadingWidget n="1"   text="{i18n.configMiscellaneousSettingsTitle}" />
-        <w:HeadingWidget n="2"    text="{i18n.configTitles}" />
+        <w:HeadingWidget n="2" text="{i18n.configMiscellaneousSettingsTitle}" />
+        <w:HeadingWidget n="3" text="{i18n.configTitles}" />
         <m:MaterialTextBox ui:field="applicationTitle" placeholder="{i18n.configTitlePlaceHolder}" />
         <m:MaterialTextBox ui:field="applicationSubtitle" placeholder="{i18n.configSubTitlePlaceHolder}" />
-        <w:HeadingWidget n="2"    text="{i18n.configContribution}" />
+        <w:HeadingWidget n="3" text="{i18n.configContribution}" />
         <m:MaterialTextBox ui:field="donationAddress" placeholder="{i18n.configContributeAddressPlaceHolder}" />
         <m:MaterialButton ui:field="saveConfig" styleName="{style.button}" text="{i18n.configSubmitSettings}" />
       </g:FlowPanel>

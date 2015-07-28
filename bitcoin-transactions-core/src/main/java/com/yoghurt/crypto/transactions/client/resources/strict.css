@@ -1,4 +1,4 @@
-@def BACKGROUND_COLOR #575757;
+@def BACKGROUND_COLOR #DADADA;
 @def CONTENT_COLOR #F7F7F7;
 @def FONT_COLOR #555;
 @def FONT_SUB_COLOR #888;
@@ -6,19 +6,23 @@
 @def LINK_COLOR #FA8F08;
 
 html {
-  color: #555;
-  font: normal normal normal 0.75em/normal 'Courier New', 'Consolas', 'FreeMono', 'Lucida Grande';
+  color: #333;
+  font: normal normal normal 0.75em/normal FreeMono, Consolas, 'Courier New', 'Roboto', 'Lucida Grande';
 }
 body {
   background-color: BACKGROUND_COLOR;
 }
 
-input {
-	font-size: 1.5em;
+h1,h2,h3,h4,h5,h6 {
+  color: #555;
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.4em;
 }
 
 .applicationMainPanel {
@@ -32,7 +36,7 @@ h1 {
 
 .applicationProgressContainer {
   height: 4px;
-  background-color: white;
+  background-color: CONTENT_COLOR;
 }
 
 .alignRight {
@@ -52,6 +56,7 @@ h1 {
 
 .link {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .link:hover {
