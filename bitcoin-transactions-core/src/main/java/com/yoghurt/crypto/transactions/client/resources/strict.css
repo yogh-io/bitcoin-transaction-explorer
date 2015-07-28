@@ -1,121 +1,66 @@
-@def backgroundColor #575757;
-@def contentColor #F7F7F7;
-@def fontColor #555;
-@def fontSubColor #888;
-@def accentColor #999;
-@def linkColor #FA8F08;
+@def BACKGROUND_COLOR #575757;
+@def CONTENT_COLOR #F7F7F7;
+@def FONT_COLOR #555;
+@def FONT_SUB_COLOR #888;
+@def ACCENT_COLOR #999;
+@def LINK_COLOR #FA8F08;
 
 html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font: normal normal normal 0.75em/normal 'Courier New', 'FreeMono',
-    'Consolas', 'Lucida Grande';
+  color: #555;
+  font: normal normal normal 0.75em/normal 'Courier New', 'Consolas', 'FreeMono', 'Lucida Grande';
 }
-
 body {
-  color: fontColor;
-  text-align: center;
-  background-color: backgroundColor; margin : 0;
-  padding: 0;
-  overflow-y: auto;
-  height: 100%;
-  margin: 0;
+  background-color: BACKGROUND_COLOR;
 }
 
 input {
-  font: normal normal normal 0.75em/normal 'Courier New', 'FreeMono',
-    'Consolas', 'Lucida Grande';
+	font-size: 1.5em;
+}
+
+h1 {
+  font-size: 3em;
 }
 
 .applicationMainPanel {
-  margin: 0 auto;
-  padding-top: 0;
-  text-align: left;
   width: 800px;
-  position: relative;
-  min-height: 100%;
 }
 
 .applicationHeaderPanel {
-  background-color: contentColor;
-  padding: 20px;
-  padding-top: 1px;
-  height: 140px;
+  background-color: CONTENT_COLOR;
+  padding: 0px 20px;
 }
 
-.applicationTitle {
-  color: fontColor;
-  line-height: 36px;
-  float: left;
-  font-size: 31px;
-  font-weight: bold;
-  margin: 20px 0px;
-  text-decoration: none;
+.applicationProgressContainer {
+  height: 4px;
+  background-color: white;
 }
 
 .alignRight {
   text-align: right;
 }
 
-.applicationSubTitle {
-  font-size: 16px;
-  color: fontSubColor;
-  font-weight: bold;
-  line-height: 41px;
-  margin: 20px;
-}
-
-.applicationContentContainer {
-  padding-bottom: 120px;
-  padding-top: 30px;
-}
-
 .applicationContent {
-  padding: 20px;
-  background-color: contentColor;
+  padding: 0px 20px 20px 20px;
+  margin: 20px 0px;
+  background-color: CONTENT_COLOR;
 }
 
-.applicationFooter {
-  position: absolute;
-  height: 92px;
-  width: 800px;
-  bottom: 0px;
-  background-color: contentColor;
-}
-
-.applicationInnerFooter {
-  margin: 10px 20px;
-  text-align: right;
-}
-
-.textBox {
-  border: 1px solid accentColor;
-  border-radius: 5px;
-  font-size: 2.4em;
-  width: 740px;
-  padding: 10px 9px;
+.applicationFooterPanel {
+  background-color: CONTENT_COLOR;
+  padding: 0px 20px 0px;
 }
 
 .link {
   text-decoration: none;
-  margin-bottom: 9px;
 }
 
 .link:hover {
-  color: linkColor;
-  cursor: pointer;
+  color: LINK_COLOR;
   text-decoration: underline;
-  cursor: pointer;
-}
-
-button {
-  padding: 5px;
-  margin: 10px;
 }
 
 .labelledValueFieldLabel {
-  min-width: 175px;
+  min-width: 165px;
 }
 
 .labelledValueFieldValue {
@@ -136,6 +81,18 @@ button {
 .flex>* {
   min-width: 0;
   min-height: 0;
+}
+
+.columns {
+  flex-direction: column;
+}
+
+.justify {
+  flex-justify: justify-content;
+}
+
+.alignCenter {
+  align-items: center;
 }
 
 .grow {

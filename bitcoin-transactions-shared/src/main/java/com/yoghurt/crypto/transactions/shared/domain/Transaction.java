@@ -1,6 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Transaction {
   private byte[] txId;
@@ -73,4 +74,11 @@ public class Transaction {
   public boolean isCoinbase() {
     return !inputs.isEmpty() && inputs.get(0).isCoinbase();
   }
+
+  @Override
+  public String toString() {
+    return "Transaction [txId=" + Arrays.toString(txId) + ", version=" + version + ", lockTime=" + lockTime + ", inputSize=" + inputSize + ", inputs=" + inputs + ", outputSize=" + outputSize + ", outputs=" + outputs + "]";
+  }
+
+
 }
