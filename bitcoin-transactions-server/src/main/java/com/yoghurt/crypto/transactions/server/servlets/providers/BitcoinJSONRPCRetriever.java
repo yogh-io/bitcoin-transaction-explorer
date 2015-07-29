@@ -168,12 +168,17 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params) throws IOException,
   IllegalStateException, ParseException, HttpException {
+    return doComplexJSONRPCMethod(client, method, false, params);
+  }
+
+  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final boolean unsafe, final Object... params) throws IOException,
+  IllegalStateException, ParseException, HttpException {
     final String payload = JSONRPCEncoder.getRequestString(method, params);
 
     // Temporary
     System.out.println("> " + payload);
 
-    return HttpClientProxy.postRemoteContent(client, uri, payload);
+    return HttpClientProxy.postRemoteContent(client, unsafe, uri, payload);
   }
 
   private CloseableHttpClient getAuthenticatedHttpClientProxy() {
@@ -187,7 +192,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
     }
 
     try (final CloseableHttpClient client = getAuthenticatedHttpClientProxy()) {
-      final HttpEntity jsonData = doComplexJSONRPCMethod(client, method.getMethodName(), (Object[]) arguments);
+      final HttpEntity jsonData = doComplexJSONRPCMethod(client, method.getMethodName(), true, (Object[]) arguments);
 
       return EntityUtils.toString(jsonData);
     } catch (final IOException | IllegalStateException | ParseException | HttpException e) {

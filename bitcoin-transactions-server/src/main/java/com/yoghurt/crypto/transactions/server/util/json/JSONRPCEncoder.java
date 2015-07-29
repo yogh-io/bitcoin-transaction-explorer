@@ -37,18 +37,16 @@ public class JSONRPCEncoder {
       // Just check if this parameter is a number, if it is, make it an explicit
       // number
       if (parameter instanceof String) {
-        try {
-          parameter = Integer.parseInt((String) parameter);
-
-          // Also, if this did happen to be a number, check if it's 1 or 0, then
-          // turn it into an appropriate boolean
-          if ((int) parameter == 1) {
-            parameter = true;
-          } else if ((int) parameter == 0) {
-            parameter = false;
+        if (((String) parameter).toLowerCase().equals("true")) {
+          parameter = true;
+        } else if (((String) parameter).toLowerCase().equals("false")) {
+          parameter = false;
+        } else if (parameter instanceof String) {
+          try {
+            parameter = Integer.parseInt((String) parameter);
+          } catch (final NumberFormatException e) {
+            // eat
           }
-        } catch (final NumberFormatException e) {
-          // eat
         }
       }
 
