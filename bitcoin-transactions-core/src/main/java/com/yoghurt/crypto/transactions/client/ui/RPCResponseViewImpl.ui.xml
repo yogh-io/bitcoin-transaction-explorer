@@ -3,9 +3,13 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
+  .highlight {
+	color: darkred;
+	}
   </ui:style>
-  <g:FlowPanel>
+  <g:FlowPanel styleName="{res.css.flex} {res.css.columns} {res.css.grow}">
     <w:HeadingWidget n="1"   text="RPC Response" />
-    <g:HTML ui:field="html" />
+    <g:HTML ui:field="html" styleName="{style.highlight}" />
+    <g:FlowPanel ui:field="container" />
   </g:FlowPanel>
 </ui:UiBinder>
