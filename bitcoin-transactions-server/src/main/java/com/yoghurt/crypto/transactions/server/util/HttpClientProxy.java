@@ -28,37 +28,40 @@ public class HttpClientProxy {
 
   private final static RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(TIMEOUT).build();
 
-  public static HttpEntity getRemoteContent(final HttpClient client, final String url) throws URISyntaxException, ClientProtocolException,
-  IOException, ParseException, HttpException {
-    return executeRemoteContent(client, new HttpGet(url));
+  public static HttpEntity getRemoteContent(final CloseableHttpClient client, final String url) throws ClientProtocolException, ParseException, URISyntaxException, IOException, HttpException {
+    return getRemoteContent(client, false, url);
   }
 
-  public static HttpEntity postRemoteContent(final HttpClient client, final String url, final String payload) throws ClientProtocolException,
-  IOException, ParseException, HttpException {
+  public static HttpEntity getRemoteContent(final HttpClient client, final boolean unsafe, final String url) throws URISyntaxException, ClientProtocolException, IOException, ParseException, HttpException {
+    return executeRemoteContent(client, unsafe, new HttpGet(url));
+  }
+
+  public static HttpEntity postRemoteContent(final HttpClient client, final String url, final String payload) throws ClientProtocolException, ParseException, IOException, HttpException {
+    return postRemoteContent(client, false, url, payload);
+  }
+
+  public static HttpEntity postRemoteContent(final HttpClient client, final boolean unsafe, final String url, final String payload) throws ClientProtocolException, IOException, ParseException, HttpException {
     final HttpPost httpPost = new HttpPost(url);
     httpPost.setEntity(new StringEntity(payload));
 
-    return executeRemoteContent(client, httpPost);
+    return executeRemoteContent(client, unsafe, httpPost);
   }
 
-  public static HttpEntity postRemoteContent(final CloseableHttpClient client, final String uri, final String req,
-      final HttpClientContext localContext) throws ClientProtocolException, ParseException, IOException, HttpException {
+  public static HttpEntity postRemoteContent(final CloseableHttpClient client, final boolean unsafe, final String uri, final String req, final HttpClientContext localContext) throws ClientProtocolException, ParseException, IOException, HttpException {
     final HttpPost httpPost = new HttpPost(uri);
     httpPost.setEntity(new StringEntity(req));
 
-    return executeRemoteContent(client, httpPost, localContext);
+    return executeRemoteContent(client, unsafe, httpPost, localContext);
   }
 
-  private static HttpEntity executeRemoteContent(final HttpClient client, final HttpUriRequest request) throws ClientProtocolException, IOException,
-  ParseException, HttpException {
-    return executeRemoteContent(client, request, null);
+  private static HttpEntity executeRemoteContent(final HttpClient client, final boolean unsafe, final HttpUriRequest request) throws ClientProtocolException, IOException, ParseException, HttpException {
+    return executeRemoteContent(client, unsafe, request, null);
   }
 
-  private static HttpEntity executeRemoteContent(final HttpClient client, final HttpUriRequest request, final HttpClientContext localContext)
-      throws ClientProtocolException, IOException, ParseException, HttpException {
+  private static HttpEntity executeRemoteContent(final HttpClient client, final boolean unsafe, final HttpUriRequest request, final HttpClientContext localContext) throws ClientProtocolException, IOException, ParseException, HttpException {
     final HttpResponse httpResponse = client.execute(request);
 
-    if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+    if (unsafe || httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
       return httpResponse.getEntity();
     } else {
       throw new HttpException(httpResponse.getStatusLine().toString() + EntityUtils.toString(httpResponse.getEntity()));
