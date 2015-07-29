@@ -16,6 +16,12 @@ public class HeadingWidget extends Widget implements HasText, HasHTML, HasClickH
     setElement(Document.get().createHElement(n));
   }
 
+  public HeadingWidget(final int n, final String key) {
+    this(n);
+
+    setText(key);
+  }
+
   @Override
   public String getText() {
     return getElement().getInnerText();
