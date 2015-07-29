@@ -10,9 +10,9 @@
     .button {
     margin-left: 0px;
     }
-    .hoi {
-      padding: 10px;
-    }
+    .listBox {
+	  overflow: visible;
+	}
   </ui:style>
   <g:FlowPanel styleName="{res.css.grow}">
     <w:HeadingWidget n="1" text="{i18n.configPlaceTitle}" />
@@ -31,7 +31,7 @@
       <g:FlowPanel>
         <w:HeadingWidget n="2" text="{i18n.configBlockchainHookTitle}" />
         <w:LabelledWidget label="{i18n.configBlockchainHook}">
-          <m:MaterialListBox ui:field="connectorListBox" />
+          <m:MaterialListBox ui:field="connectorListBox" styleName="{style.listBox} {res.css.grow}" />
         </w:LabelledWidget>
         <g:SimplePanel ui:field="configEditorContainer" />
         <w:HeadingWidget n="2" text="{i18n.configMiscellaneousSettingsTitle}" />

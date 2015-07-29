@@ -36,10 +36,10 @@ public class NodeConfigEditor extends Composite implements ConfigEditor<BitcoinC
   public BitcoinCoreNodeConfig getValue() {
     final BitcoinCoreNodeConfig config = new BitcoinCoreNodeConfig();
 
-    config.setHost(hostField.getText());
-    config.setPort(portField.getText());
-    config.setRpcUser(rpcUserField.getText());
-    config.setRpcPass(rpcPassField.getText());
+    config.setHost(hostField.getValue());
+    config.setPort(portField.getValue());
+    config.setRpcUser(rpcUserField.getValue());
+    config.setRpcPass(rpcPassField.getValue());
 
     return config;
   }
