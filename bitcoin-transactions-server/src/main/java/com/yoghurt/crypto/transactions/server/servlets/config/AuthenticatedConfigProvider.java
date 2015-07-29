@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 public class AuthenticatedConfigProvider {
@@ -16,9 +17,7 @@ public class AuthenticatedConfigProvider {
     final Properties props = getProperties();
 
     // If there is no password or the given old password is valid, then proceed
-    if (!isPasswordPresent(props)
-        || isAuthentic(props, oldPasswordHashed)
-        && newPasswordHashed != null && !newPasswordHashed.isEmpty()) {
+    if (!isPasswordPresent(props) || isAuthentic(props, oldPasswordHashed) && newPasswordHashed != null && !newPasswordHashed.isEmpty()) {
       props.setProperty(CONFIG_PASSWORD_KEY, newPasswordHashed);
       saveConfig(props);
     } else {
@@ -58,7 +57,14 @@ public class AuthenticatedConfigProvider {
   }
 
   private void saveConfig(final Properties props) throws IOException {
-    final File f = new File(Thread.currentThread().getContextClassLoader().getResource(CONFIG_FILE_NAME).getFile());
+    File f;
+    try {
+      f = new File(Thread.currentThread().getContextClassLoader().getResource(CONFIG_FILE_NAME).toURI());
+    } catch (final URISyntaxException e) {
+      e.printStackTrace();
+      throw new IOException("Could not find file.");
+    }
+
     if (!f.exists()) {
       f.createNewFile();
     }
