@@ -4,6 +4,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
+import com.yoghurt.crypto.transactions.client.ui.AddressActivity;
 import com.yoghurt.crypto.transactions.client.ui.BlockActivity;
 import com.yoghurt.crypto.transactions.client.ui.ConfigActivity;
 import com.yoghurt.crypto.transactions.client.ui.ContributeActivity;
@@ -38,6 +39,8 @@ public class ApplicationActivityMapper implements ActivityMapper {
       presenter = factory.createContributePresenter((ContributePlace) place);
     } else if (place instanceof RPCResponsePlace) {
       presenter = factory.createRPCReponsePresenter((RPCResponsePlace) place);
+    } else if (place instanceof AddressPlace) {
+      presenter = factory.createAddressPresenter((AddressPlace) place);
     }
 
     return presenter;
@@ -45,6 +48,8 @@ public class ApplicationActivityMapper implements ActivityMapper {
 
   public interface ActivityFactory {
     StartupActivity createStartupPresenter(StartupPlace place);
+
+    AddressActivity createAddressPresenter(AddressPlace place);
 
     RPCResponseActivity createRPCReponsePresenter(RPCResponsePlace place);
 

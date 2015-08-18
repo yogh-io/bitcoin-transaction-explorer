@@ -12,13 +12,13 @@
     }
   </ui:style>
   <g:FlowPanel>
-    <w:HeadingWidget n="1"  text="{i18n.blockPlaceTitle}" />
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleInformation}" />
+    <w:HeadingWidget n="1" text="{i18n.blockPlaceTitle}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="blockHashViewer" color="{res.color.blockHash}" />
     <w:BitsTargetHexViewer ui:field="targetViewer" color="{res.color.blockBits}" />
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleCoinbase}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleCoinbase}" />
     <w:HashHexViewer ui:field="coinbaseHashViewer" color="{res.color.transactionHash}" />
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleExtraInformation}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleExtraInformation}" />
     <g:Label text="{i18n.blockPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />
     <g:FlowPanel ui:field="extraInformationContainer" visible="false">
       <w:LabelledWidget label="{i18n.blockHeight}">
@@ -37,7 +37,7 @@
         <w:ValueViewer ui:field="sizeViewer" animate="true" color="{res.color.blockSize}" />
       </w:LabelledWidget>
     </g:FlowPanel>
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleBlockHeaders}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleBlockHeaders}" />
     <w:LabelledWidget label="{i18n.blockVersion}">
       <w:ValueViewer ui:field="versionViewer" animate="true" color="{res.color.blockVersion}" />
     </w:LabelledWidget>
@@ -56,11 +56,11 @@
     <w:LabelledWidget label="{i18n.blockNonce}">
       <w:ValueViewer ui:field="nonceViewer" animate="true" color="{res.color.blockNonce}" />
     </w:LabelledWidget>
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleRawBlockHex}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleRawBlockHex}" />
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleRawCoinbaseHex}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleRawCoinbaseHex}" />
     <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <w:HeadingWidget n="2"   text="{i18n.blockPlaceTitleTransactionList}" />
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleTransactionList}" />
     <!-- <w:LabelledWidget label="{i18n.transactionCoinbaseInput}">
       <w:ValueViewer ui:field="coinbaseInputViewer" color="{res.color.transactionArbitraryData}" />
     </w:LabelledWidget> -->

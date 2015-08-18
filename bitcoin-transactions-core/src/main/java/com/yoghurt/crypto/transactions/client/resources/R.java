@@ -47,6 +47,8 @@ public final class R {
     String grow();
 
     String panel();
+
+    String error();
   }
 
   /**

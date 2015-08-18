@@ -24,6 +24,8 @@ import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.SimpleColorPicker;
+import com.yoghurt.crypto.transactions.client.ui.AddressView;
+import com.yoghurt.crypto.transactions.client.ui.AddressViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.BlockView;
 import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.ConfigView;
@@ -63,6 +65,7 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(ConfigView.class).to(ConfigViewImpl.class);
     bind(ContributeView.class).to(ContributeViewImpl.class);
     bind(RPCResponseView.class).to(RPCResponseViewImpl.class);
+    bind(AddressView.class).to(AddressViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
   }
@@ -96,6 +99,11 @@ public class ApplicationClientModule extends AbstractGinModule {
     @Override
     public void goToScript(final String transactionHash, final int outputIndex, final String scriptSig) {
       goTo(new ScriptPlace(transactionHash, outputIndex, scriptSig));
+    }
+
+    @Override
+    public void goToAddress(final String addr) {
+      goTo(new TransactionPlace(TransactionDataType.ID, addr));
     }
   }
 }

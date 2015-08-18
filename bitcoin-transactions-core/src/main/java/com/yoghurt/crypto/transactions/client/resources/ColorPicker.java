@@ -64,4 +64,20 @@ public interface ColorPicker {
   Color stackData();
 
   Color stackSingle();
+
+  Color address();
+
+  Color addressHex();
+
+  Color addressPayload();
+
+  Color addressVersion();
+
+  Color addressChecksum();
+
+  Color addressValidity();
+
+  Color addressAdverisedChecksum();
+
+  Color addressComputedChecksum();
 }

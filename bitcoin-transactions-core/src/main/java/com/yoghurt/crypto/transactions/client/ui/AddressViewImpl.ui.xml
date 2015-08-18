@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+  <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
+  <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
+  <ui:style>
+  </ui:style>
+  <g:FlowPanel>
+    <w:HeadingWidget n="1" text="{i18n.addressPlaceTitle}" />
+    <w:HeadingWidget n="2" text="{i18n.addressPlaceBase58CheckTitle}" />
+    <w:LabelledWidget label="{i18n.addressAddress}">
+      <w:ValueViewer ui:field="addressViewer" animate="true" color="{res.color.address}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.addressAddressHex}">
+      <w:ValueViewer ui:field="addressHexViewer" animate="true" color="{res.color.addressHex}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.addressVersion}">
+      <w:ValueViewer ui:field="versionViewer" animate="true" color="{res.color.addressVersion}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.addressHash160}">
+      <w:ValueViewer ui:field="payloadViewer" animate="true" color="{res.color.addressPayload}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.addressChecksum}">
+      <w:ValueViewer ui:field="checksumViewer" animate="true" color="{res.color.addressChecksum}" />
+    </w:LabelledWidget>
+    <g:FlowPanel ui:field="malformedContainer">
+      <g:Label styleName="{res.css.error}" text="{i18n.addressMalformedText}" />
+      <w:LabelledWidget label="{i18n.addressAdvertisedChecksum}">
+        <w:ValueViewer ui:field="advertisedChecksumViewer" animate="true" color="{res.color.addressAdverisedChecksum}" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.addressComputedChecksum}">
+        <w:ValueViewer ui:field="computedChecksumViewer" animate="true" color="{res.color.addressComputedChecksum}" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.addressValidFormat}">
+        <w:ValueViewer ui:field="validityViewer" animate="true" color="{res.color.addressValidity}" />
+      </w:LabelledWidget>
+      <g:Label styleName="{res.css.error}" text="{i18n.addressMalformedWarning}" />
+    </g:FlowPanel>
+  </g:FlowPanel>
+</ui:UiBinder>
