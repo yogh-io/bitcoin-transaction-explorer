@@ -158,4 +158,44 @@ public class SimpleColorPicker implements ColorPicker {
   public Color stackSingle() {
     return ColorBuilder.interpret("maroon");
   }
+
+  @Override
+  public Color address() {
+    return ColorBuilder.interpret("cornflowerblue");
+  }
+
+  @Override
+  public Color addressHex() {
+    return ColorBuilder.interpret("cadetblue");
+  }
+
+  @Override
+  public Color addressPayload() {
+    return ColorBuilder.interpret("green");
+  }
+
+  @Override
+  public Color addressVersion() {
+    return ColorBuilder.interpret("grey");
+  }
+
+  @Override
+  public Color addressChecksum() {
+    return ColorBuilder.interpret("teal");
+  }
+
+  @Override
+  public Color addressValidity() {
+    return ColorBuilder.interpret("red");
+  }
+
+  @Override
+  public Color addressAdverisedChecksum() {
+    return ColorBuilder.interpret("pink");
+  }
+
+  @Override
+  public Color addressComputedChecksum() {
+    return ColorBuilder.interpret("cyan");
+  }
 }

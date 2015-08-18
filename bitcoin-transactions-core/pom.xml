@@ -39,7 +39,7 @@
 	  <groupId>com.github.gwtmaterialdesign</groupId>
 	  <artifactId>gwt-material</artifactId>
 	  <version>1.3.3-SNAPSHOT</version>
-      <scope>provided</scope>
+      <scope>compile</scope>
 	</dependency>
     <dependency>
       <groupId>com.googlecode.gwt-crypto</groupId>

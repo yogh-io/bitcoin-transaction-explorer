@@ -33,16 +33,6 @@ public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> 
   }
 
   @Override
-  protected boolean mustPerformLookup(final BlockPlace place) {
-    return true;
-  }
-
-  @Override
-  protected BlockInformation createInfo(final BlockPlace place) {
-    return null;
-  }
-
-  @Override
   protected void doLookup(final BlockPlace place, final AsyncCallback<BlockInformation> callback) {
     switch (place.getType()) {
     case HEIGHT:

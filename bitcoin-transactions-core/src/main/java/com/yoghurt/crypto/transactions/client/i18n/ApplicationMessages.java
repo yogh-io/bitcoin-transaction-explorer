@@ -23,6 +23,42 @@ public interface ApplicationMessages extends Messages {
   @Description("Last block")
   String startupLastBlock();
 
+  @Description("Address")
+  String addressPlaceTitle();
+
+  @Description("Base58Check breakdown")
+  String addressPlaceBase58CheckTitle();
+
+  @Description("Hash160:")
+  String addressHash160();
+
+  @Description("Checksum:")
+  String addressChecksum();
+
+  @Description("Version:")
+  String addressVersion();
+
+  @Description("Address:")
+  String addressAddress();
+
+  @Description("Address (hex):")
+  String addressAddressHex();
+
+  @Description("Well formed:")
+  String addressValidFormat();
+
+  @Description("Address malformed.")
+  String addressMalformedText();
+
+  @Description("Computed checksum")
+  String addressComputedChecksum();
+
+  @Description("Advertised checksum")
+  String addressAdvertisedChecksum();
+
+  @Description("Do not send money here!")
+  String addressMalformedWarning();
+
   @Description("Transaction")
   String transactionPlaceTitle();
 

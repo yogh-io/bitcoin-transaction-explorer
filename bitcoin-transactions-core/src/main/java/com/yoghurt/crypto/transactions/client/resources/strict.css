@@ -107,3 +107,12 @@ h2 {
 .panel {
   flex-direction: column;
 }
+
+.error {
+  border: 4px dashed red;
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}

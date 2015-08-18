@@ -3,16 +3,6 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-  .error {
-    padding: 20px;
-    border: 4px dashed red;
-    color: red;
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    text-align: center;
-  }
   .description {
     align-items: center;
   }
@@ -34,6 +24,6 @@
     <w:LabelledWidget label="{i18n.scriptRemainingScript}">
       <w:ScriptExecutionViewer ui:field="scriptExecutionViewer" />
     </w:LabelledWidget>
-    <g:Label ui:field="executionError" styleName="{style.error}" text="This step caused an execution error. The transaction this script is a part of is invalid." />
+    <g:Label ui:field="executionError" styleName="{res.css.error}" text="This step caused an execution error. The transaction this script is a part of is invalid." />
   </g:FlowPanel>
 </ui:UiBinder>
