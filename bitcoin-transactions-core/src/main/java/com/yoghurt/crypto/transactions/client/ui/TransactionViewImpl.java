@@ -125,7 +125,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   }
 
   @Override
-  public void setBlockchainInformation(final TransactionInformation transactionInformation) {
+  public void setTransactionInformation(final TransactionInformation transactionInformation) {
     extraInformationContainer.setVisible(transactionInformation != null);
 
     if (transactionInformation == null) {

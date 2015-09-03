@@ -1,13 +1,13 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
 import com.yoghurt.crypto.transactions.server.servlets.providers.BitcoinJSONRPCRetriever;
-import com.yoghurt.crypto.transactions.server.servlets.providers.BlockchainRetrievalHook;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BlockrAPIRetriever;
-import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
+import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
 
 public class BlockchainRetrievalFactory {
-  private BlockchainRetrievalHook hook;
+  private BlockchainRetrievalService hook;
 
   private static BlockchainRetrievalFactory instance;
 
@@ -19,12 +19,12 @@ public class BlockchainRetrievalFactory {
     return instance;
   }
 
-  public static BlockchainRetrievalHook get() {
+  public static BlockchainRetrievalService get() {
     return create().hook;
   }
 
   public static void set(final AdministratedApplicationConfig config) {
-    BlockchainRetrievalHook hook;
+    BlockchainRetrievalService hook;
 
     switch (config.getBlockchainSource()) {
     case NODE:
@@ -39,7 +39,7 @@ public class BlockchainRetrievalFactory {
     set(hook);
   }
 
-  private static void set(final BlockchainRetrievalHook hook) {
+  private static void set(final BlockchainRetrievalService hook) {
     create().hook = hook;
   }
 }

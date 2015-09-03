@@ -1,7 +1,10 @@
-package com.yoghurt.crypto.transactions.client.util.address;
+package com.yoghurt.crypto.transactions.shared.domain;
 
+import java.io.Serializable;
 
-public class Base58CheckContents {
+public class Base58CheckContents implements Serializable {
+  private static final long serialVersionUID = -8409900829487614335L;
+
   private byte version;
   private byte[] payload;
   private byte[] checksum;

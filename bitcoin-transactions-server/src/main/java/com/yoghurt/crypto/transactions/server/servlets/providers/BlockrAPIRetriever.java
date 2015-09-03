@@ -12,13 +12,16 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.BlockrApiParser;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException.Reason;
+import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
 
-public class BlockrAPIRetriever implements BlockchainRetrievalHook {
+public class BlockrAPIRetriever implements BlockchainRetrievalService {
   private static final String BLOCKR_API_LATEST_BLOCK = "http://btc.blockr.io/api/v1/block/info/last";
 
   private static final String LAST_BLOCK_KEYWORD = "last";
@@ -32,7 +35,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
   private static final String BLOCKR_API_BLOCK_INFO_FORMAT = "http://btc.blockr.io/api/v1/block/info/%s";
 
   @Override
-  public String getLastBlockHash() {
+  public String getLatestBlockHash() {
     try (CloseableHttpClient client = HttpClientBuilder.create().build();
         InputStream jsonData = HttpClientProxy.getRemoteContent(client, BLOCKR_API_LATEST_BLOCK).getContent()) {
 
@@ -44,7 +47,6 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
     return null;
   }
 
-  @Override
   public String getRawTransactionHex(final String txid) throws ApplicationException {
     try (final CloseableHttpClient client = HttpClientProxy.buildProxyClient();
         InputStream stream = HttpClientProxy.getRemoteContent(client, String.format(BLOCKR_API_TX_RAW_FORMAT, txid)).getContent()) {
@@ -66,6 +68,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
       // We need to do another call just for the block hash
       final String hash = BlockrApiParser.getBlockHashFromTransaction(jsonDataRaw);
       transactionInformation.setBlockHash(hash);
+      transactionInformation.setRawHex(getRawTransactionHex(txid));
 
       return transactionInformation;
     } catch (ParseException | URISyntaxException | IOException | HttpException e) {
@@ -86,7 +89,6 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
 
       final String rawCoinbase = getRawTransactionHex(coinbaseTransactionHash);
       final TransactionInformation coinbaseInformation = getTransactionInformation(coinbaseTransactionHash);
-      blockInformation.setRawCoinbaseTransaction(rawCoinbase);
       blockInformation.setCoinbaseInformation(coinbaseInformation);
 
       return blockInformation;
@@ -137,5 +139,11 @@ public class BlockrAPIRetriever implements BlockchainRetrievalHook {
   @Override
   public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
     throw new ApplicationException(Reason.UNSUPPORTED_OPERATION);
+  }
+
+  @Override
+  public AddressInformation getAddressInformation(final Base58CheckContents address) {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

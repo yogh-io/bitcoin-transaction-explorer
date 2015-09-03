@@ -12,6 +12,8 @@ public class TransactionInformation implements Serializable {
   private String blockHash;
   private int fee;
 
+  private String hex;
+
   public TransactionInformation() {}
 
   public TransactionState getState() {
@@ -57,5 +59,13 @@ public class TransactionInformation implements Serializable {
   @Override
   public String toString() {
     return "TransactionInformation [state=" + state + ", block=" + blockHash + ", time=" + time + ", confirmations=" + confirmations + "]";
+  }
+
+  public void setRawHex(final String hex) {
+    this.hex = hex;
+  }
+
+  public String getRawHex() {
+    return hex;
   }
 }

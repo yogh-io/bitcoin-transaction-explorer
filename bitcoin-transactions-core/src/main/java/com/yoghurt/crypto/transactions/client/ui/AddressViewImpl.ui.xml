@@ -22,6 +22,10 @@
     <w:LabelledWidget label="{i18n.addressChecksum}">
       <w:ValueViewer ui:field="checksumViewer" animate="true" color="{res.color.addressChecksum}" />
     </w:LabelledWidget>
+    <g:FlowPanel ui:field="wellFormedContainer">
+      <w:HeadingWidget n="2" text="{i18n.addressPlaceQRCode}" />
+      <w:QRCodeWidget ui:field="qrCode" />
+    </g:FlowPanel>
     <g:FlowPanel ui:field="malformedContainer">
       <g:Label styleName="{res.css.error}" text="{i18n.addressMalformedText}" />
       <w:LabelledWidget label="{i18n.addressAdvertisedChecksum}">
