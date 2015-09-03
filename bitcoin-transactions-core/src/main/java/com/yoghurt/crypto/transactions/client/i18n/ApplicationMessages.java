@@ -29,6 +29,9 @@ public interface ApplicationMessages extends Messages {
   @Description("Base58Check breakdown")
   String addressPlaceBase58CheckTitle();
 
+  @Description("QR Code")
+  String addressPlaceQRCode();
+
   @Description("Hash160:")
   String addressHash160();
 

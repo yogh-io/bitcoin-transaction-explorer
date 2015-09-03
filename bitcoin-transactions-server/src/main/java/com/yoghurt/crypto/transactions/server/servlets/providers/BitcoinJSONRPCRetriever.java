@@ -25,18 +25,19 @@ import org.apache.http.util.EntityUtils;
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException.Reason;
+import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
 
-public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
+public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   private static final String JSON_RPC_REALM = "jsonrpc";
   private static final String AUTH_SCHEME = AuthSchemes.BASIC;
-
-  private static final String ERROR_TX_FORMAT = "Could not retrieve transaction information: %s";
 
   private static final String URI_FORMAT = "http://%s:%s";
 
@@ -71,22 +72,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   }
 
   @Override
-  public String getRawTransactionHex(final String txid) throws ApplicationException {
-    // Work-around for special case: genesis block coinbase
-    // If RPC isn't gonna return this, I'm gonna fucking do it for it.
-    if(GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
-      return GENESIS_COINBASE_RAW;
-    }
-
-    try {
-      return doSimpleJSONRPCMethod("getrawtransaction", txid);
-    } catch (IOException | HttpException e) {
-      throw new ApplicationException(String.format(ERROR_TX_FORMAT, txid));
-    }
-  }
-
-  @Override
-  public String getLastBlockHash() throws ApplicationException {
+  public String getLatestBlockHash() throws ApplicationException {
     try {
       return doSimpleJSONRPCMethod("getbestblockhash");
     } catch (IOException | HttpException e) {
@@ -98,7 +84,11 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
     if(GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
-      return null;
+      final TransactionInformation ti = new TransactionInformation();
+
+      ti.setRawHex(GENESIS_COINBASE_RAW);
+
+      return ti;
     }
 
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
@@ -127,7 +117,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   @Override
   public BlockInformation getBlockInformationLast() throws ApplicationException {
-    return getBlockInformationFromHash(getLastBlockHash());
+    return getBlockInformationFromHash(getLatestBlockHash());
   }
 
   @Override
@@ -137,20 +127,14 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
       final BlockInformation blockInformation = JSONRPCParser.getBlockInformation(jsonData);
 
-      // FIXME/TODO Refactor the below so we don't need to do 3 RPC calls, 2 of which are duplicate.
-      // Also refactor in a way that BlockInformation's rawCoinbaseTransaction is not abused by setting
-      // the coinbase txid in it, instead of the raw hex which it is meant for
-
-      // Extract the coinbase tx id
-      final String coinbaseTxid = blockInformation.getRawCoinbaseTransaction();
+      // Extract the coinbase tx id (TODO: Refactor, shouldn't be using a mock object like this)
+      final String coinbaseTxid = blockInformation.getCoinbaseInformation().getRawHex();
 
       // Retrieve raw coinbase tx and its blockchain information
-      final String rawTransactionHex = getRawTransactionHex(coinbaseTxid);
       final TransactionInformation ti = getTransactionInformation(coinbaseTxid);
 
       // Stick it in the block info
       blockInformation.setCoinbaseInformation(ti);
-      blockInformation.setRawCoinbaseTransaction(rawTransactionHex);
 
       // Return the result
       return blockInformation;
@@ -158,6 +142,27 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
       e.printStackTrace();
       throw new ApplicationException(e.getMessage());
     }
+  }
+
+  @Override
+  public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
+    if(!allowedRPCMethods.contains(method)) {
+      throw new ApplicationException(Reason.ILLEGAL_OPERATION);
+    }
+
+    try (final CloseableHttpClient client = getAuthenticatedHttpClientProxy()) {
+      final HttpEntity jsonData = doComplexJSONRPCMethod(client, method.getMethodName(), true, (Object[]) arguments);
+
+      return EntityUtils.toString(jsonData);
+    } catch (final IOException | IllegalStateException | ParseException | HttpException e) {
+      e.printStackTrace();
+      throw new ApplicationException(Reason.INTERNAL_ERROR);
+    }
+  }
+
+  @Override
+  public AddressInformation getAddressInformation(final Base58CheckContents address) {
+    return null;
   }
 
   private String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {
@@ -183,21 +188,5 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalHook {
 
   private CloseableHttpClient getAuthenticatedHttpClientProxy() {
     return HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
-  }
-
-  @Override
-  public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
-    if(!allowedRPCMethods.contains(method)) {
-      throw new ApplicationException(Reason.ILLEGAL_OPERATION);
-    }
-
-    try (final CloseableHttpClient client = getAuthenticatedHttpClientProxy()) {
-      final HttpEntity jsonData = doComplexJSONRPCMethod(client, method.getMethodName(), true, (Object[]) arguments);
-
-      return EntityUtils.toString(jsonData);
-    } catch (final IOException | IllegalStateException | ParseException | HttpException e) {
-      e.printStackTrace();
-      throw new ApplicationException(Reason.INTERNAL_ERROR);
-    }
   }
 }

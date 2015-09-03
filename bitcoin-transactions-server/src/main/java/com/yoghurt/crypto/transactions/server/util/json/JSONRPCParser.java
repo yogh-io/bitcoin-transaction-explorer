@@ -108,7 +108,9 @@ public class JSONRPCParser {
 
     // Set the raw coinbase transaction to its txid (this is a work-around, see
     // TODO in BitcoinJSONRPCRetriever)
-    blockInformation.setRawCoinbaseTransaction(tree.get("tx").get(0).getTextValue());
+    final TransactionInformation ti = new TransactionInformation();
+    ti.setRawHex(tree.get("tx").get(0).getTextValue());
+    blockInformation.setCoinbaseInformation(ti);
 
     return blockInformation;
   }
@@ -129,6 +131,8 @@ public class JSONRPCParser {
       transactionInformation.setTime(new Date(tree.get("time").getLongValue() * 1000));
       transactionInformation.setBlockHash(tree.get("blockhash").getTextValue());
     }
+
+    transactionInformation.setRawHex(tree.get("hex").getTextValue());
 
     return transactionInformation;
   }

@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
 
 public class LatestBlockRetriever {
   private static final long INITIAL_DELAY = 1;
@@ -19,16 +20,16 @@ public class LatestBlockRetriever {
     @Override
     public void run() {
       try {
-        atomicLastBlockHash.set(hook.getLastBlockHash());
+        atomicLastBlockHash.set(hook.getLatestBlockHash());
       } catch (final ApplicationException e) {
         // Ignore
       }
     }
   };
 
-  private final BlockchainRetrievalHook hook;
+  private final BlockchainRetrievalService hook;
 
-  public LatestBlockRetriever(final BlockchainRetrievalHook hook) {
+  public LatestBlockRetriever(final BlockchainRetrievalService hook) {
     this.hook = hook;
     executor = Executors.newSingleThreadScheduledExecutor();
   }

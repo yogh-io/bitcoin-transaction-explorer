@@ -11,10 +11,11 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
 import com.yoghurt.crypto.transactions.client.util.address.Base58;
-import com.yoghurt.crypto.transactions.client.util.address.Base58CheckContents;
+import com.yoghurt.crypto.transactions.client.widget.QRCodeWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Address;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 
 public class AddressViewImpl extends Composite implements AddressView {
   interface AddressViewImplUiBinder extends UiBinder<Widget, AddressViewImpl> {}
@@ -26,6 +27,9 @@ public class AddressViewImpl extends Composite implements AddressView {
   @UiField ValueViewer versionViewer;
   @UiField ValueViewer payloadViewer;
   @UiField ValueViewer checksumViewer;
+
+  @UiField FlowPanel wellFormedContainer;
+  @UiField QRCodeWidget qrCode;
 
   @UiField FlowPanel malformedContainer;
   @UiField ValueViewer validityViewer;
@@ -41,9 +45,10 @@ public class AddressViewImpl extends Composite implements AddressView {
     final Address address = AddressParseUtil.parseAddress(addressParts);
 
     final byte[] addressBytes = AddressEncodeUtil.encodeAddress(address);
+    final String addressBase58 = Base58.encode(addressBytes);
 
     addressHexViewer.setValue(Str.toString(Hex.encode(addressBytes)).toUpperCase());
-    addressViewer.setValue(Base58.encode(addressBytes));
+    addressViewer.setValue(addressBase58);
 
     versionViewer.setValue(address.getVersion());
     payloadViewer.setValue(address.getHash160());
@@ -52,9 +57,15 @@ public class AddressViewImpl extends Composite implements AddressView {
     final boolean valid = AddressParseUtil.isValid(addressParts);
 
     malformedContainer.setVisible(!valid);
-    validityViewer.setValue(String.valueOf(valid).toUpperCase());
-    advertisedChecksumViewer.setValue(addressParts.getChecksum());
-    computedChecksumViewer.setValue(AddressParseUtil.getChecksum(address));
+    wellFormedContainer.setVisible(valid);
+
+    if (!valid) {
+      validityViewer.setValue(String.valueOf(valid).toUpperCase());
+      advertisedChecksumViewer.setValue(addressParts.getChecksum());
+      computedChecksumViewer.setValue(AddressParseUtil.getChecksum(address));
+    } else {
+      qrCode.setValue(addressBase58);
+    }
   }
 
   @Override

@@ -3,6 +3,8 @@ package com.yoghurt.crypto.transactions.server.servlets;
 import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -12,11 +14,6 @@ import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService
 @WebServlet("/application/blockchain-retrieve")
 public class BlockchainRetrievalServlet extends RemoteServiceServlet implements BlockchainRetrievalService {
   private static final long serialVersionUID = 7984638304207123693L;
-
-  @Override
-  public String getRawTransactionHex(final String txid) throws ApplicationException {
-    return BlockchainRetrievalFactory.get().getRawTransactionHex(txid);
-  }
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
@@ -40,11 +37,16 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
 
   @Override
   public String getLatestBlockHash() throws ApplicationException {
-    return BlockchainRetrievalFactory.get().getLastBlockHash();
+    return BlockchainRetrievalFactory.get().getLatestBlockHash();
   }
 
   @Override
-  public String getJSONRPCRespone(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
+  public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
     return BlockchainRetrievalFactory.get().getJSONRPCResponse(method, arguments);
+  }
+
+  @Override
+  public AddressInformation getAddressInformation(final Base58CheckContents address) {
+    return BlockchainRetrievalFactory.get().getAddressInformation(address);
   }
 }

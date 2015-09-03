@@ -3,6 +3,8 @@ package com.yoghurt.crypto.transactions.shared.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -10,8 +12,6 @@ import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationExcept
 
 @RemoteServiceRelativePath("blockchain-retrieve")
 public interface BlockchainRetrievalService extends RemoteService {
-  String getRawTransactionHex(String txid) throws ApplicationException;
-
   TransactionInformation getTransactionInformation(String txid) throws ApplicationException;
 
   BlockInformation getBlockInformationFromHash(String blockHash) throws ApplicationException;
@@ -22,5 +22,7 @@ public interface BlockchainRetrievalService extends RemoteService {
 
   String getLatestBlockHash() throws ApplicationException;
 
-  String getJSONRPCRespone(JSONRPCMethod method, String[] arguments) throws ApplicationException;
+  String getJSONRPCResponse(JSONRPCMethod method, String[] arguments) throws ApplicationException;
+
+  AddressInformation getAddressInformation(Base58CheckContents address);
 }

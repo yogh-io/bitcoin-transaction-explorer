@@ -9,13 +9,21 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
-import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.client.util.ParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 
-public class TransactionActivity extends LookupActivity<Transaction, TransactionPlace> implements TransactionView.Presenter {
+/**
+ * Refactor this catastrophe.
+ *
+ * - Gracefully handle the case where a raw transaction is passed.
+ * - Less code
+ * - Less confusing code
+ * - Less redundant code
+ * - Error to the views
+ */
+public class TransactionActivity extends LookupActivity<TransactionInformation, TransactionPlace> implements TransactionView.Presenter {
   private final TransactionView view;
 
   private boolean transactionHasError;
@@ -27,22 +35,28 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
   }
 
   @Override
-  protected void doDeferredStart(final AcceptsOneWidget panel, final Transaction transaction) {
+  protected void doDeferredStart(final AcceptsOneWidget panel, final TransactionInformation transactionInformation) {
     panel.setWidget(view);
 
-    view.setTransaction(transaction, transactionHasError);
+    final Transaction transactionFromHex = ParseUtil.getTransactionFromHex(transactionInformation.getRawHex());
+
+    view.setTransaction(transactionFromHex, transactionHasError);
 
     // If an error occurred while parsing, don't bother getting the tx info
-    if(transactionHasError) {
+    if (transactionHasError) {
       return;
     }
 
-    service.getTransactionInformation(Str.toString(Hex.encode(transaction.getTransactionId())), new AppAsyncCallback<TransactionInformation>() {
-      @Override
-      public void onSuccess(final TransactionInformation result) {
-        view.setBlockchainInformation(result);
-      }
-    });
+    if (transactionInformation.getState() != null) {
+      view.setTransactionInformation(transactionInformation);
+    } else {
+      service.getTransactionInformation(Str.toString(Hex.encode(transactionFromHex.getTransactionId())), new AppAsyncCallback<TransactionInformation>() {
+        @Override
+        public void onSuccess(final TransactionInformation result) {
+          view.setTransactionInformation(result);
+        }
+      });
+    }
   }
 
   @Override
@@ -58,17 +72,14 @@ public class TransactionActivity extends LookupActivity<Transaction, Transaction
   }
 
   @Override
-  protected Transaction createInfo(final TransactionPlace place) {
-    return ParseUtil.getTransactionFromHex(place.getHex());
+  protected TransactionInformation createInfo(final TransactionPlace place) {
+    final TransactionInformation ti = new TransactionInformation();
+    ti.setRawHex(place.getHex());
+    return ti;
   }
 
   @Override
-  protected void doLookup(final TransactionPlace place, final AsyncCallback<Transaction> callback) {
-    service.getRawTransactionHex(place.getHex(), new MorphCallback<String, Transaction>(callback) {
-      @Override
-      protected Transaction morphResult(final String result) {
-        return ParseUtil.getTransactionFromHex(result);
-      }
-    });
+  protected void doLookup(final TransactionPlace place, final AsyncCallback<TransactionInformation> callback) {
+    service.getTransactionInformation(place.getHex(), callback);
   }
 }

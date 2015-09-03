@@ -21,7 +21,7 @@ public class RPCResponseActivity extends LookupActivity<String, RPCResponsePlace
 
   @Override
   protected void doLookup(final RPCResponsePlace place, final AsyncCallback<String> callback) {
-    service.getJSONRPCRespone(place.getMethod(), place.getArguments(), callback);
+    service.getJSONRPCResponse(place.getMethod(), place.getArguments(), callback);
   }
 
   @Override

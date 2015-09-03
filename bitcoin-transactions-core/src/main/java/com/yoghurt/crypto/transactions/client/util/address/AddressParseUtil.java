@@ -2,6 +2,7 @@ package com.yoghurt.crypto.transactions.client.util.address;
 
 import com.yoghurt.crypto.transactions.shared.domain.Address;
 import com.yoghurt.crypto.transactions.shared.domain.Address.TYPE;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 
 public class AddressParseUtil {
 

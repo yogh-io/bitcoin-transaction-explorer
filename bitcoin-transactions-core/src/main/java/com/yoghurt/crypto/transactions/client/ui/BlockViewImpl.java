@@ -75,7 +75,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
 
   @Override
   public void setBlock(final BlockInformation blockInformation) {
-    final Transaction coinbase = getTransactionFromHex(blockInformation.getRawCoinbaseTransaction());
+    final Transaction coinbase = getTransactionFromHex(blockInformation.getCoinbaseInformation().getRawHex());
     final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
 
     final RawTransactionContainer rawTransaction = new RawTransactionContainer();

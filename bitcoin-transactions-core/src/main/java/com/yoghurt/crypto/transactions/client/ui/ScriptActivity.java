@@ -15,6 +15,7 @@ import com.yoghurt.crypto.transactions.client.util.transaction.ScriptParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
@@ -62,11 +63,11 @@ public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlac
 
   @Override
   protected void doLookup(final ScriptPlace place, final AsyncCallback<ScriptInformation> callback) {
-    final MorphCallback<String, ScriptInformation> morphCallback = new MorphCallback<String, ScriptInformation>(callback) {
+    final MorphCallback<TransactionInformation, ScriptInformation> morphCallback = new MorphCallback<TransactionInformation, ScriptInformation>(callback) {
       @Override
-      protected ScriptInformation morphResult(final String result) {
+      protected ScriptInformation morphResult(final TransactionInformation result) {
         // Parse the outpoint transaction in full
-        final Transaction tx = ParseUtil.getTransactionFromHex(result);
+        final Transaction tx = ParseUtil.getTransactionFromHex(result.getRawHex());
 
         // Parse the ScriptSig from the place
         final ScriptEntity scriptSig = ScriptParseUtil.parseScript(Hex.decode(place.getScriptSig()));
@@ -90,7 +91,7 @@ public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlac
 
     switch (place.getType()) {
     case ID:
-      service.getRawTransactionHex(place.getOutpointTransaction(), morphCallback);
+      service.getTransactionInformation(place.getOutpointTransaction(), morphCallback);
       break;
     default:
       callback.onFailure(new IllegalStateException("No support lookup for type: " + place.getType().name()));

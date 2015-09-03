@@ -7,7 +7,6 @@ public class BlockInformation implements Serializable {
   private static final long serialVersionUID = -6695967392021472565L;
 
   private String rawBlockHeaders;
-  private String rawCoinbaseTransaction;
 
   private int height;
   private int numConfirmations;
@@ -69,14 +68,6 @@ public class BlockInformation implements Serializable {
     this.numTransactions = numTransactions;
   }
 
-  public String getRawCoinbaseTransaction() {
-    return rawCoinbaseTransaction;
-  }
-
-  public void setRawCoinbaseTransaction(final String rawCoinbaseTransaction) {
-    this.rawCoinbaseTransaction = rawCoinbaseTransaction;
-  }
-
   public TransactionInformation getCoinbaseInformation() {
     return coinbaseInformation;
   }
@@ -85,7 +76,7 @@ public class BlockInformation implements Serializable {
     this.coinbaseInformation = coinbaseInformation;
   }
 
-  public void setTransactions(ArrayList<String> transactions) {
+  public void setTransactions(final ArrayList<String> transactions) {
     this.transactions = transactions;
   }
 
@@ -96,7 +87,6 @@ public class BlockInformation implements Serializable {
   @Override
   public String toString() {
     return "BlockInformation [rawBlockHeaders=" + rawBlockHeaders + ", height=" + height + ", numConfirmations=" + numConfirmations
-        + ", numTransactions=" + numTransactions + ", size=" + size + ", nextBlockHash=" + nextBlockHash + ", rawCoinbaseTransaction="
-        + rawCoinbaseTransaction + ", coinbaseInformation=" + coinbaseInformation + "]";
+        + ", numTransactions=" + numTransactions + ", size=" + size + ", nextBlockHash=" + nextBlockHash + ", coinbaseInformation=" + coinbaseInformation + "]";
   }
 }

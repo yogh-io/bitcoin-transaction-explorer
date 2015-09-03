@@ -2,6 +2,7 @@ package com.yoghurt.crypto.transactions.client.util.address;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.Arrays;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
+import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 
 public class Base58CheckUtil {
