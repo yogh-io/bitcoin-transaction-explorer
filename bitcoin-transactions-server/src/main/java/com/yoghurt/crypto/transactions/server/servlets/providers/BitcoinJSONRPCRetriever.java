@@ -26,7 +26,6 @@ import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -106,6 +105,18 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
     return getBlockInformationFromHash(getBlockHashFromHeight(height));
   }
 
+  @Override
+  public AddressInformation getAddressInformation(final String address) {
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        InputStream jsonData = doComplexJSONRPCMethod(client, "searchrawtransactions", address, 1).getContent()) {
+
+      return JSONRPCParser.getAddressInformation(jsonData);
+    } catch (IOException | HttpException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   private String getBlockHashFromHeight(final int height) throws ApplicationException {
     try {
       return doSimpleJSONRPCMethod("getblockhash", height);
@@ -158,11 +169,6 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
       e.printStackTrace();
       throw new ApplicationException(Reason.INTERNAL_ERROR);
     }
-  }
-
-  @Override
-  public AddressInformation getAddressInformation(final Base58CheckContents address) {
-    return null;
   }
 
   private String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {

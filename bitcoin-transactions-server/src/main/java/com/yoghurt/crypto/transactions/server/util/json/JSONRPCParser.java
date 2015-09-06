@@ -10,6 +10,7 @@ import org.apache.commons.codec.binary.Hex;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
@@ -135,5 +136,10 @@ public class JSONRPCParser {
     transactionInformation.setRawHex(tree.get("hex").getTextValue());
 
     return transactionInformation;
+  }
+
+  public static AddressInformation getAddressInformation(final InputStream jsonData) {
+    // TODO Auto-generated method stub
+    return null;
   }
 }

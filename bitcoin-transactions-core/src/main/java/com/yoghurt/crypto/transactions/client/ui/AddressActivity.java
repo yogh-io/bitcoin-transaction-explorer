@@ -6,7 +6,9 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace;
+import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
+import com.yoghurt.crypto.transactions.client.util.address.Base58;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
@@ -43,7 +45,8 @@ public class AddressActivity extends LazyLookupActivity<AddressInformation, Addr
       return;
     }
 
-    service.getAddressInformation(address, callback);
+    final String addressString = Base58.encode(AddressEncodeUtil.encodeAddress(address));
+    service.getAddressInformation(addressString, callback);
   }
 
   @Override
