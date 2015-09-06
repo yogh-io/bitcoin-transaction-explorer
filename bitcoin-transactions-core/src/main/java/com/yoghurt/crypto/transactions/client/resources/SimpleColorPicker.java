@@ -161,17 +161,17 @@ public class SimpleColorPicker implements ColorPicker {
 
   @Override
   public Color address() {
-    return ColorBuilder.interpret("red");
+    return ColorBuilder.interpret("skyblue");
   }
 
   @Override
   public Color addressHex() {
-    return ColorBuilder.interpret("darkred");
+    return ColorBuilder.interpret("teal");
   }
 
   @Override
   public Color addressPayload() {
-    return ColorBuilder.interpret("green");
+    return ColorBuilder.interpret("red");
   }
 
   @Override
@@ -181,7 +181,7 @@ public class SimpleColorPicker implements ColorPicker {
 
   @Override
   public Color addressChecksum() {
-    return ColorBuilder.interpret("teal");
+    return ColorBuilder.interpret("green");
   }
 
   @Override

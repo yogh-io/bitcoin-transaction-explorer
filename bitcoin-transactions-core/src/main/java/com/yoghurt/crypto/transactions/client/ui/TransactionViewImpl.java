@@ -102,7 +102,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
     if (transaction.getOutputs() != null) {
       for (final TransactionOutput output : transaction.getOutputs()) {
-        final TransactionOutputWidget inputWidget = new TransactionOutputWidget(output);
+        final TransactionOutputWidget inputWidget = new TransactionOutputWidget(router, output);
         outputContainer.add(inputWidget);
       }
     }
