@@ -24,14 +24,14 @@ import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
+import com.yoghurt.crypto.transactions.client.ui.LazyProgressWidget.LazyProgressListener;
 import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
 import com.yoghurt.crypto.transactions.client.widget.HeadingWidget;
 import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 
 @Singleton
-public class ApplicationRootView extends Composite implements AcceptsOneWidget {
-  interface ApplicationRootViewUiBinder extends UiBinder<Widget, ApplicationRootView> {
-  }
+public class ApplicationRootView extends Composite implements AcceptsOneWidget, LazyProgressListener {
+  interface ApplicationRootViewUiBinder extends UiBinder<Widget, ApplicationRootView> {}
 
   private static final ApplicationRootViewUiBinder UI_BINDER = GWT.create(ApplicationRootViewUiBinder.class);
 
@@ -88,8 +88,17 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget {
       return;
     }
 
-    progress.removeFromParent();
+    if (w instanceof LazyProgressWidget) {
+      ((LazyProgressWidget) w).subscribeProgressListener(this);
+    } else {
+      progressComplete();
+    }
 
     contentPanel.setWidget(w);
+  }
+
+  @Override
+  public void progressComplete() {
+    progress.removeFromParent();
   }
 }

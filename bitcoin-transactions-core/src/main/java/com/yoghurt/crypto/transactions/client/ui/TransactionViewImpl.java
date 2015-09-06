@@ -69,6 +69,8 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   private final BitcoinPlaceRouter router;
 
+  private LazyProgressListener progressListener;
+
   @Inject
   public TransactionViewImpl(final BitcoinPlaceRouter router) {
     this.router = router;
@@ -130,7 +132,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
     if (transactionInformation == null) {
       notFoundLabel.setVisible(true);
-    } else {
+    } else if(transactionInformation.getState() != null) {
       txStateViewer.setValue(transactionInformation.getState().name());
 
       if (transactionInformation.getState() == TransactionState.CONFIRMED) {
@@ -146,6 +148,8 @@ public class TransactionViewImpl extends Composite implements TransactionView {
         txBlockContainer.setVisible(false);
       }
     }
+
+    progressListener.progressComplete();
   }
 
   @Override
@@ -153,10 +157,17 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     txIdViewer.setHash(Hex.decode(hash));
     setErrorText(M.messages().transactionPlaceBlockchainExistenceNotFound());
     fullTransactionInformation.setVisible(false);
+
+    progressListener.progressComplete();
   }
 
   private void setErrorText(final String text) {
     errorView.setVisible(true);
     transactionFullBlownErrorLabel.setText(text);
+  }
+
+  @Override
+  public void subscribeProgressListener(final LazyProgressListener listener) {
+    this.progressListener = listener;
   }
 }

@@ -26,6 +26,9 @@ public class AddressViewImpl extends Composite implements AddressView {
 
   private static final AddressViewImplUiBinder UI_BINDER = GWT.create(AddressViewImplUiBinder.class);
 
+  @UiField ValueViewer balanceViewer;
+  @UiField ValueViewer transactionAmountViewer;
+
   @UiField ValueViewer addressViewer;
   @UiField ValueViewer addressHexViewer;
   @UiField ValueViewer versionViewer;
@@ -43,6 +46,8 @@ public class AddressViewImpl extends Composite implements AddressView {
   @UiField ValueViewer computedChecksumViewer;
 
   private final BitcoinPlaceRouter router;
+
+  private LazyProgressListener progressListener;
 
   @Inject
   public AddressViewImpl(final BitcoinPlaceRouter router) {
@@ -81,9 +86,24 @@ public class AddressViewImpl extends Composite implements AddressView {
 
   @Override
   public void setAddressInformation(final AddressInformation addressInformation) {
+    transactionAmountViewer.setValue(addressInformation.getOutpoints().size());
+
+    long balance = 0;
     int count = 0;
     for (final AddressOutpoint addressOutpoint : addressInformation.getOutpoints()) {
       outpointContainer.add(new AddressOutpointWidget(router, addressOutpoint, ++count));
+      if(!addressOutpoint.isSpent()) {
+        balance += addressOutpoint.getOutput().getTransactionValue();
+      }
     }
+
+    balanceViewer.setValue(balance / 100000000d + " BTC");
+
+    progressListener.progressComplete();
+  }
+
+  @Override
+  public void subscribeProgressListener(final LazyProgressListener progressListener) {
+    this.progressListener = progressListener;
   }
 }

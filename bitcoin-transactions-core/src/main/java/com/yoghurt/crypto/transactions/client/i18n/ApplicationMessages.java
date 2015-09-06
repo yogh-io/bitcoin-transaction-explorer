@@ -29,6 +29,9 @@ public interface ApplicationMessages extends Messages {
   @Description("Base58Check breakdown")
   String addressPlaceBase58CheckTitle();
 
+  @Description("Finance")
+  String addressPlaceFinance();
+
   @Description("QR Code")
   String addressPlaceQRCode();
 
@@ -61,6 +64,15 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Do not send money here!")
   String addressMalformedWarning();
+
+  @Description("Spent:")
+  String addressOutpointSpent();
+
+  @Description("# Transactions:")
+  String addressNumberOfTransactions();
+
+  @Description("Balance:")
+  String addressBalance();
 
   @Description("Transaction")
   String transactionPlaceTitle();
