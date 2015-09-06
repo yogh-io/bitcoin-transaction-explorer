@@ -4,7 +4,6 @@ import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -46,7 +45,7 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   }
 
   @Override
-  public AddressInformation getAddressInformation(final Base58CheckContents address) {
+  public AddressInformation getAddressInformation(final String address) throws ApplicationException {
     return BlockchainRetrievalFactory.get().getAddressInformation(address);
   }
 }

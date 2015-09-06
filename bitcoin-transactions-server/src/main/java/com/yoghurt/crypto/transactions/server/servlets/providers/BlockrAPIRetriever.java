@@ -13,7 +13,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.BlockrApiParser;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -87,7 +86,6 @@ public class BlockrAPIRetriever implements BlockchainRetrievalService {
 
       final String coinbaseTransactionHash = BlockrApiParser.getCoinbaseTransaction(jsonDataRaw);
 
-      final String rawCoinbase = getRawTransactionHex(coinbaseTransactionHash);
       final TransactionInformation coinbaseInformation = getTransactionInformation(coinbaseTransactionHash);
       blockInformation.setCoinbaseInformation(coinbaseInformation);
 
@@ -142,8 +140,7 @@ public class BlockrAPIRetriever implements BlockchainRetrievalService {
   }
 
   @Override
-  public AddressInformation getAddressInformation(final Base58CheckContents address) {
-    // TODO Auto-generated method stub
-    return null;
+  public AddressInformation getAddressInformation(final String address) throws ApplicationException {
+    throw new ApplicationException(Reason.UNSUPPORTED_OPERATION);
   }
 }

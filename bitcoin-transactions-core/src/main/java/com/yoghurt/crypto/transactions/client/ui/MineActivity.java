@@ -23,6 +23,7 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
@@ -95,6 +96,9 @@ public class MineActivity extends LookupActivity<BlockInformation, MinePlace> im
       service.getBlockInformationLast(new MorphCallback<BlockInformation, BlockInformation>(callback) {
         @Override
         protected BlockInformation morphResult(final BlockInformation result) {
+          final TransactionInformation ti = new TransactionInformation();
+          ti.setRawHex(SEAN_OUTPOST_HASH_160);
+          result.setCoinbaseInformation(ti);
           return result;
         }
       });
