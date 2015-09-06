@@ -9,6 +9,17 @@
   <packaging>war</packaging>
   <name>Bitcoin transaction explorer Core</name>
 
+  <repositories>
+    <repository>
+      <id>gwt-material-mvn-repo</id>
+      <url>https://raw.github.com/JornC/gwt-material/mvn-repo/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>com.yoghurt.crypto</groupId>
@@ -38,7 +49,7 @@
     <dependency>
       <groupId>com.github.gwtmaterialdesign</groupId>
       <artifactId>gwt-material</artifactId>
-      <version>1.3.3-SNAPSHOT</version>
+      <version>1.3.3-YOGH</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
