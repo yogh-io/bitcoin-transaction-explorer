@@ -161,12 +161,12 @@ public class SimpleColorPicker implements ColorPicker {
 
   @Override
   public Color address() {
-    return ColorBuilder.interpret("cornflowerblue");
+    return ColorBuilder.interpret("red");
   }
 
   @Override
   public Color addressHex() {
-    return ColorBuilder.interpret("cadetblue");
+    return ColorBuilder.interpret("darkred");
   }
 
   @Override
@@ -196,6 +196,21 @@ public class SimpleColorPicker implements ColorPicker {
 
   @Override
   public Color addressComputedChecksum() {
+    return ColorBuilder.interpret("cyan");
+  }
+
+  @Override
+  public Color addressOutpointSpent() {
+    return ColorBuilder.interpret("red");
+  }
+
+  @Override
+  public Color addressOutpointUnspent() {
+    return ColorBuilder.interpret("green");
+  }
+
+  @Override
+  public Color addressNumberOfTransactions() {
     return ColorBuilder.interpret("cyan");
   }
 }

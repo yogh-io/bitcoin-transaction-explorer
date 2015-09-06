@@ -183,4 +183,8 @@ public class JSONRPCParser {
 
     return ai;
   }
+
+  public static boolean isNullResult(final InputStream jsonData) throws JsonProcessingException, IOException {
+    return getResultNode(jsonData).isNull();
+  }
 }

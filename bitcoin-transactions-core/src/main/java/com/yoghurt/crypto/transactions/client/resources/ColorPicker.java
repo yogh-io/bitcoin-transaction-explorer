@@ -80,4 +80,10 @@ public interface ColorPicker {
   Color addressAdverisedChecksum();
 
   Color addressComputedChecksum();
+
+  Color addressOutpointSpent();
+
+  Color addressOutpointUnspent();
+
+  Color addressNumberOfTransactions();
 }

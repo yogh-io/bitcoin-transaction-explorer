@@ -42,12 +42,6 @@ public class AddressActivity extends LazyLookupActivity<AddressInformation, Addr
 
   @Override
   protected void doLookup(final AddressPlace place, final AsyncCallback<AddressInformation> callback) {
-    GWT.log("Gonna ask server for things..");;
-    if(!AddressParseUtil.isValid(address)) {
-      GWT.log("INVALID?!");
-      return;
-    }
-
     final String addressString = Base58.encode(AddressEncodeUtil.encodeAddress(address));
     service.getAddressInformation(addressString, callback);
   }

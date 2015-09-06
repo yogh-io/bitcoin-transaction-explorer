@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
@@ -26,6 +27,7 @@ import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.AddressOutpoint;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
@@ -40,6 +42,9 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
   private static final String URI_FORMAT = "http://%s:%s";
 
+  /**
+   * The JSON-RPC interface doesn't return the genesis coinbase transaction, so it's been hard-coded here.
+   */
   private static final String GENESIS_COINBASE_TXID = "4A5E1E4BAAB89F3A32518A88C31BC87F618F76673E2CC77AB2127B7AFDEDA33B";
   private static final String GENESIS_COINBASE_RAW = "01000000010000000000000000000000000000000000000000000000000000000000000000FFFFFFFF4D04FFFF001D0104455468652054696D65732030332F4A616E2F32303039204368616E63656C6C6F72206F6E206272696E6B206F66207365636F6E64206261696C6F757420666F722062616E6B73FFFFFFFF0100F2052A01000000434104678AFDB0FE5548271967F1A67130B7105CD6A828E03909A67962E0EA1F61DEB649F6BC3F4CEF38C4F35504E51EC112DE5C384DF7BA0B8D578A4C702B6BF11D5FAC00000000";
 
@@ -107,10 +112,19 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
   @Override
   public AddressInformation getAddressInformation(final String address) throws ApplicationException {
-    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
-        InputStream jsonData = doComplexJSONRPCMethod(client, "searchrawtransactions", address).getContent()) {
+    try (final CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        final InputStream jsonData = doComplexJSONRPCMethod(client, "searchrawtransactions", address).getContent()) {
 
-      return JSONRPCParser.getAddressInformation(address, jsonData);
+      final AddressInformation addressInformation = JSONRPCParser.getAddressInformation(address, jsonData);
+
+      for(final AddressOutpoint outpoint : addressInformation.getOutpoints()) {
+        final String txid = new String(Hex.encodeHex(outpoint.getReferenceTransaction()));
+        try (final InputStream utxoJsonData = doComplexJSONRPCMethod(client, "gettxout", txid, outpoint.getIndex()).getContent()) {
+          outpoint.setSpent(JSONRPCParser.isNullResult(utxoJsonData));
+        }
+      }
+
+      return addressInformation;
     } catch (IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       throw new ApplicationException(e.getMessage());

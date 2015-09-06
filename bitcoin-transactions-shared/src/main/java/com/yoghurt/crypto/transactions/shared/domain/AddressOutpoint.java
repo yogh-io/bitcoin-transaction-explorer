@@ -6,6 +6,7 @@ public class AddressOutpoint extends TransactionOutPoint implements Serializable
   private static final long serialVersionUID = -2104537209099839858L;
 
   private TransactionOutput output;
+  private boolean spent;
 
   public AddressOutpoint() {}
 
@@ -15,5 +16,13 @@ public class AddressOutpoint extends TransactionOutPoint implements Serializable
 
   public void setOutput(final TransactionOutput output) {
     this.output = output;
+  }
+
+  public void setSpent(final boolean spent) {
+    this.spent = spent;
+  }
+
+  public boolean isSpent() {
+    return spent;
   }
 }
