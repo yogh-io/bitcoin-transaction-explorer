@@ -5,12 +5,12 @@ import java.util.Map.Entry;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-import com.yoghurt.crypto.transactions.client.util.transaction.ScriptOperationUtil;
 import com.yoghurt.crypto.transactions.client.widget.ContextFieldSet.FieldContextFactory;
 import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.ScriptOperationUtil;
 
 public class SimpleTransactionContextWidget implements FieldContextFactory<Entry<TransactionPartType, byte[]>> {
   @Override

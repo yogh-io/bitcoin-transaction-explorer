@@ -1,13 +1,9 @@
-package com.yoghurt.crypto.transactions.client.util.transaction;
+package com.yoghurt.crypto.transactions.shared.util;
 
-import com.google.gwt.core.client.GWT;
-import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 
 public final class ScriptParseUtil {
   private ScriptParseUtil() {}
@@ -39,7 +35,7 @@ public final class ScriptParseUtil {
   private static int parseCoinbaseScriptBytes(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final long value) {
     int pointer = initialPointer;
 
-    entity.addInstruction(new ScriptPart(null, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + (int) entity.getScriptSize().getValue())));
+    entity.getInstructions().add(new ScriptPart(null, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + (int) entity.getScriptSize().getValue())));
 
     return pointer;
   }
@@ -50,7 +46,7 @@ public final class ScriptParseUtil {
     return pointer + variableInteger.getByteSize();
   }
 
-  private static int parseScriptBytes(final ScriptEntity scriptEntity, final int initialPointer, final byte[] bytes, final long length) {
+  public static int parseScriptBytes(final ScriptEntity scriptEntity, final int initialPointer, final byte[] bytes, final long length) {
     int pointer = initialPointer;
 
     while (pointer < initialPointer + length) {
@@ -73,7 +69,7 @@ public final class ScriptParseUtil {
       pointer = parsePushData(pointer, opcode, script, bytes);
     } else {
       pointer++;
-      script.addInstruction(new ScriptPart(ScriptOperationUtil.getOperation(opcode)));
+      script.getInstructions().add(new ScriptPart(ScriptOperationUtil.getOperation(opcode)));
     }
 
     return pointer;
@@ -85,7 +81,7 @@ public final class ScriptParseUtil {
     // Simple 1-byte pushdata notation.
     if (opcode <= 75) {
       pointer++;
-      script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + opcode)));
+      script.getInstructions().add(new ScriptPart(Operation.OP_PUSHDATA, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + opcode)));
     } else {
       // Switch over remaining options; OP_PUSHDATA1, 2, 4
       switch (opcode) {
@@ -94,12 +90,11 @@ public final class ScriptParseUtil {
 
         pointer++;
         final byte[] payload = ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + size);
-        script.addInstruction(new ScriptPart(Operation.OP_PUSHDATA1, payload));
+        script.getInstructions().add(new ScriptPart(Operation.OP_PUSHDATA1, payload));
         break;
       case 77:
       case 78:
         // TODO Support OP_PUSHDATA2 and 4
-        GWT.log("Unsupported data push operation: " + opcode + " (" + Str.toString(Hex.encode(new byte[] { (byte) (opcode & 0xFF) })) + ")");
         throw new UnsupportedOperationException();
       default:
         throw new IllegalStateException("Unreachable code reached. (..)");

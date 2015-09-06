@@ -79,6 +79,4 @@ public class Transaction {
   public String toString() {
     return "Transaction [txId=" + Arrays.toString(txId) + ", version=" + version + ", lockTime=" + lockTime + ", inputSize=" + inputSize + ", inputs=" + inputs + ", outputSize=" + outputSize + ", outputs=" + outputs + "]";
   }
-
-
 }

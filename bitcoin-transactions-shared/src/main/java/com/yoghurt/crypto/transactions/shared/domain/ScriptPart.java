@@ -1,8 +1,15 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
-public class ScriptPart {
-  private final byte[] bytes;
-  private final Operation operation;
+import java.io.Serializable;
+
+public class ScriptPart implements Serializable {
+  private static final long serialVersionUID = 5588940226816723169L;
+
+  private byte[] bytes;
+  private Operation operation;
+
+  public ScriptPart() {
+  }
 
   public ScriptPart(final Operation operation) {
     this(operation, null);
@@ -19,5 +26,15 @@ public class ScriptPart {
 
   public Operation getOperation() {
     return operation;
+  }
+
+  @SuppressWarnings("unused")
+  private void setBytes(final byte[] bytes) {
+    this.bytes = bytes;
+  }
+
+  @SuppressWarnings("unused")
+  private void setOperation(final Operation operation) {
+    this.operation = operation;
   }
 }

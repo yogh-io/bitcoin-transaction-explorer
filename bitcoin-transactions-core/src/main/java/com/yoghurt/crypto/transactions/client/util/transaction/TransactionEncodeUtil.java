@@ -8,6 +8,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
+import com.yoghurt.crypto.transactions.shared.util.ScriptEncodeUtil;
 
 public final class TransactionEncodeUtil extends TransactionUtil {
   private TransactionEncodeUtil() {}

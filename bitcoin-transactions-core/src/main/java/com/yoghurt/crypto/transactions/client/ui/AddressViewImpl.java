@@ -6,15 +6,19 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
 import com.yoghurt.crypto.transactions.client.util.address.Base58;
+import com.yoghurt.crypto.transactions.client.widget.AddressOutpointWidget;
 import com.yoghurt.crypto.transactions.client.widget.QRCodeWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Address;
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.AddressOutpoint;
 import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 
 public class AddressViewImpl extends Composite implements AddressView {
@@ -31,12 +35,19 @@ public class AddressViewImpl extends Composite implements AddressView {
   @UiField FlowPanel wellFormedContainer;
   @UiField QRCodeWidget qrCode;
 
+  @UiField FlowPanel outpointContainer;
+
   @UiField FlowPanel malformedContainer;
   @UiField ValueViewer validityViewer;
   @UiField ValueViewer advertisedChecksumViewer;
   @UiField ValueViewer computedChecksumViewer;
 
-  public AddressViewImpl() {
+  private final BitcoinPlaceRouter router;
+
+  @Inject
+  public AddressViewImpl(final BitcoinPlaceRouter router) {
+    this.router = router;
+
     initWidget(UI_BINDER.createAndBindUi(this));
   }
 
@@ -70,6 +81,9 @@ public class AddressViewImpl extends Composite implements AddressView {
 
   @Override
   public void setAddressInformation(final AddressInformation addressInformation) {
-
+    int count = 0;
+    for (final AddressOutpoint addressOutpoint : addressInformation.getOutpoints()) {
+      outpointContainer.add(new AddressOutpointWidget(router, addressOutpoint, ++count));
+    }
   }
 }

@@ -11,11 +11,14 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
 import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.AddressOutpoint;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
+import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 
 public class JSONRPCParser {
   private static final String ZERO_HASH = "0000000000000000000000000000000000000000000000000000000000000000";
@@ -138,8 +141,46 @@ public class JSONRPCParser {
     return transactionInformation;
   }
 
-  public static AddressInformation getAddressInformation(final InputStream jsonData) {
-    // TODO Auto-generated method stub
-    return null;
+  public static AddressInformation getAddressInformation(final String address, final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
+    final JsonNode tree = getResultNode(jsonData);
+
+    final ArrayList<AddressOutpoint> outpoints = new ArrayList<>();
+
+    for (final JsonNode tx : tree) {
+      final byte[] txId = Hex.decodeHex(tx.get("txid").getTextValue().toCharArray());
+
+      for (final JsonNode vout : tx.get("vout")) {
+        final JsonNode voutScriptPubKey = vout.get("scriptPubKey");
+        final JsonNode voutAddresses = voutScriptPubKey.get("addresses");
+        for (final JsonNode voutAddress : voutAddresses) {
+          if (address.equals(voutAddress.getTextValue())) {
+            final AddressOutpoint outpoint = new AddressOutpoint();
+
+            final int idx = vout.get("n").getIntValue();
+
+            outpoint.setIndex(idx);
+            outpoint.setReferenceTransaction(txId);
+
+            final TransactionOutput output = new TransactionOutput();
+
+            output.setOutputIndex(idx);
+            output.setTransactionValue((long) (vout.get("value").getDoubleValue() * 100000000d));
+
+            final byte[] script = Hex.decodeHex(voutScriptPubKey.get("hex").getTextValue().toCharArray());
+
+            ScriptParseUtil.parseScriptBytes(output, 0, script, script.length);
+
+            outpoint.setOutput(output);
+
+            outpoints.add(outpoint);
+          }
+        }
+      }
+    }
+
+    final AddressInformation ai = new AddressInformation();
+    ai.setOutpoints(outpoints);
+
+    return ai;
   }
 }

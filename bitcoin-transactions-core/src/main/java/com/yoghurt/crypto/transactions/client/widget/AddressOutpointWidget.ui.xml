@@ -5,12 +5,15 @@
   <ui:style>
   </ui:style>
   <g:FlowPanel>
-    <w:HeadingWidget n="3" ui:field="outputTitle" />
+    <w:HeadingWidget n="3" ui:field="outpointTitle" />
+    <w:LabelledWidget label="{i18n.transactionPreviousTransactionId}">
+      <w:ValueViewer ui:field="hashViewer" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.transactionOutpointIndex}">
+      <w:ValueViewer ui:field="indexViewer" color="{res.color.transactionInputIndex}" />
+    </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.transactionAmount}">
       <w:ValueViewer ui:field="amountViewer" color="{res.color.transactionOutputAmount}" />
-    </w:LabelledWidget>
-    <w:LabelledWidget label="{i18n.transactionScriptPubKey}">
-      <w:ScriptViewer ui:field="signatureScriptViewer" />
     </w:LabelledWidget>
   </g:FlowPanel>
 </ui:UiBinder>

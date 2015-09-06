@@ -9,6 +9,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
+import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 
 public final class TransactionParseUtil extends TransactionUtil {
   private TransactionParseUtil() {}

@@ -2,6 +2,8 @@ package com.yoghurt.crypto.transactions.shared.domain;
 
 
 public class TransactionInput extends ScriptEntity  {
+  private static final long serialVersionUID = 7502719027342265379L;
+
   private TransactionOutPoint outPoint;
   private long inputIndex;
   private long transactionSequence;

@@ -1,6 +1,5 @@
-package com.yoghurt.crypto.transactions.client.util.transaction;
+package com.yoghurt.crypto.transactions.shared.util;
 
-import com.google.gwt.core.client.GWT;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
@@ -35,7 +34,6 @@ public final class ScriptEncodeUtil {
   }
 
   private static int encodePushDataOperation(final int opcode, final byte[] bytes, final byte[] partBytes, int pointer) {
-    GWT.log("Encoding OP_PUSHDATA");
     switch (opcode) {
     case 76:
       bytes[pointer] = (byte) partBytes.length;

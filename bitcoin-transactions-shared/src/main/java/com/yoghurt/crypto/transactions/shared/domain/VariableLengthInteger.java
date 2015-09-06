@@ -1,14 +1,21 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
+import java.io.Serializable;
+
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 
 
-public final class VariableLengthInteger {
-  private final long value;
+public final class VariableLengthInteger implements Serializable {
+  private static final long serialVersionUID = 3006944545057671762L;
+
+  private long value;
   private int byteSize;
 
-  private final byte[] bytes;
+  private byte[] bytes;
+
+  public VariableLengthInteger() {
+  }
 
   public VariableLengthInteger(final byte[] bytes) {
     this(bytes, 0);
@@ -46,7 +53,17 @@ public final class VariableLengthInteger {
     return value;
   }
 
+  @SuppressWarnings("unused")
+  private void setValue(final long value) {
+    this.value = value;
+  }
+
   public byte[] getBytes() {
     return bytes;
+  }
+
+  @SuppressWarnings("unused")
+  private void setBytes(final byte[] bytes) {
+    this.bytes = bytes;
   }
 }

@@ -96,7 +96,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
       return JSONRPCParser.getTransactionInformation(jsonData);
     } catch (IOException | HttpException e) {
       e.printStackTrace();
-      return null;
+      throw new ApplicationException(e.getMessage());
     }
   }
 
@@ -106,14 +106,14 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   }
 
   @Override
-  public AddressInformation getAddressInformation(final String address) {
+  public AddressInformation getAddressInformation(final String address) throws ApplicationException {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
-        InputStream jsonData = doComplexJSONRPCMethod(client, "searchrawtransactions", address, 1).getContent()) {
+        InputStream jsonData = doComplexJSONRPCMethod(client, "searchrawtransactions", address).getContent()) {
 
-      return JSONRPCParser.getAddressInformation(jsonData);
-    } catch (IOException | HttpException e) {
+      return JSONRPCParser.getAddressInformation(address, jsonData);
+    } catch (IOException | HttpException | DecoderException e) {
       e.printStackTrace();
-      return null;
+      throw new ApplicationException(e.getMessage());
     }
   }
 

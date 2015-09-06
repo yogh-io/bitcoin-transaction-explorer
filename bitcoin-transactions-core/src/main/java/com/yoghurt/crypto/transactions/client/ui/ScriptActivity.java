@@ -11,7 +11,6 @@ import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.client.util.ParseUtil;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachine;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachineFactory;
-import com.yoghurt.crypto.transactions.client.util.transaction.ScriptParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
@@ -19,6 +18,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 
 public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlace> implements BlockView.Presenter {
   private final ScriptView view;

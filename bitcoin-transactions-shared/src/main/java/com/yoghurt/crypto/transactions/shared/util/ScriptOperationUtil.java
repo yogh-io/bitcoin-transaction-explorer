@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.client.util.transaction;
+package com.yoghurt.crypto.transactions.shared.util;
 
 import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
