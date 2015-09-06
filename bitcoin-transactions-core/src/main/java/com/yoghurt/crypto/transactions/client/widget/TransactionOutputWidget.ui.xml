@@ -12,5 +12,8 @@
     <w:LabelledWidget label="{i18n.transactionScriptPubKey}">
       <w:ScriptViewer ui:field="signatureScriptViewer" />
     </w:LabelledWidget>
+    <w:LabelledWidget ui:field="outputContainer" label="{i18n.transactionOutputAddress}">
+      <w:AddressViewer ui:field="outputAddress" />
+    </w:LabelledWidget>
   </g:FlowPanel>
 </ui:UiBinder>

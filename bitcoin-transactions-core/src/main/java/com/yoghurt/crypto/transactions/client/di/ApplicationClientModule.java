@@ -12,6 +12,8 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.yoghurt.crypto.transactions.client.ApplicationConfigProvider;
+import com.yoghurt.crypto.transactions.client.place.AddressPlace;
+import com.yoghurt.crypto.transactions.client.place.AddressPlace.AddressDataType;
 import com.yoghurt.crypto.transactions.client.place.ApplicationActivityMapper;
 import com.yoghurt.crypto.transactions.client.place.ApplicationActivityMapper.ActivityFactory;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlaceHistoryMapper;
@@ -103,7 +105,7 @@ public class ApplicationClientModule extends AbstractGinModule {
 
     @Override
     public void goToAddress(final String addr) {
-      goTo(new TransactionPlace(TransactionDataType.ID, addr));
+      goTo(new AddressPlace(AddressDataType.ID, addr));
     }
   }
 }

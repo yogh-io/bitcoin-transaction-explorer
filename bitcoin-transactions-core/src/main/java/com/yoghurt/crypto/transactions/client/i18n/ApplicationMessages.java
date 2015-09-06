@@ -173,6 +173,9 @@ public interface ApplicationMessages extends Messages {
   @Description("State:")
   String transactionState();
 
+  @Description("Derived address:")
+  String transactionOutputAddress();
+
   @Description("Time:")
   String transactionTime();
 
