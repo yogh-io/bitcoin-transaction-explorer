@@ -1,6 +1,8 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
-public enum Operation {
+import java.io.Serializable;
+
+public enum Operation implements Serializable {
   // Constants
   OP_FALSE(0x00),
   OP_PUSHDATA,

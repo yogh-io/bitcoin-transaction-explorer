@@ -3,19 +3,6 @@
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
-    .label {
-    margin: 10px 10px 10px 0px;
-    display: inline-block;
-    width: 85px;
-    }
-    .labelledValue {
-    display: inline-block;
-    font-weight: bold;
-    word-wrap: break-word;
-    }
-    .widg {
-    display: inline-block;
-    }
   </ui:style>
   <g:FlowPanel>
     <w:HeadingWidget n="3" ui:field="outputTitle" />

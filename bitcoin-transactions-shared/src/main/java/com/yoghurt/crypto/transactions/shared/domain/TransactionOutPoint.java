@@ -1,8 +1,14 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
-public class TransactionOutPoint {
+import java.io.Serializable;
+
+public class TransactionOutPoint implements Serializable {
+  private static final long serialVersionUID = -4673465272462836094L;
+
   private long index;
   private byte[] referenceTransaction;
+
+  public TransactionOutPoint() {}
 
   public byte[] getReferenceTransaction() {
     return referenceTransaction;

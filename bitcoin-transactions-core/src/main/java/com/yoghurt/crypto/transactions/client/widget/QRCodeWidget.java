@@ -36,8 +36,19 @@ public class QRCodeWidget extends Widget implements TakesValue<String> {
   }
 
   @Override
+  protected void onLoad() {
+    if(value != null) {
+      setValue(value);
+    }
+  }
+
+  @Override
   public void setValue(final String value) {
     this.value = value;
+
+    if(!isAttached()) {
+      return;
+    }
 
     if(!initted) {
       initQRCodeImpl(id, value);

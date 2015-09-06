@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -26,8 +27,6 @@ public class AddressActivity extends LazyLookupActivity<AddressInformation, Addr
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    super.start(panel, eventBus);
-
     address = AddressParseUtil.parseAddress(place.getPayload());
 
     panel.setWidget(view);
@@ -37,11 +36,15 @@ public class AddressActivity extends LazyLookupActivity<AddressInformation, Addr
     }
 
     view.setAddress(address);
+
+    super.start(panel, eventBus);
   }
 
   @Override
   protected void doLookup(final AddressPlace place, final AsyncCallback<AddressInformation> callback) {
+    GWT.log("Gonna ask server for things..");;
     if(!AddressParseUtil.isValid(address)) {
+      GWT.log("INVALID?!");
       return;
     }
 
@@ -52,11 +55,12 @@ public class AddressActivity extends LazyLookupActivity<AddressInformation, Addr
   @Override
   protected void doDeferredError(final AcceptsOneWidget panel, final Throwable caught) {
     // Not supported
+    GWT.log("boohoo " + caught.getMessage());
   }
 
   @Override
   protected void doDeferredStart(final AcceptsOneWidget panel, final AddressInformation info) {
-    // TODO Auto-generated method stub
-
+    GWT.log("yay?");
+    view.setAddressInformation(info);
   }
 }

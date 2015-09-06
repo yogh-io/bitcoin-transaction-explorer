@@ -24,6 +24,7 @@ public class TransactionOutputWidget extends Composite {
 
     outputTitle.setText("Output #" + output.getOutputIndex());
     amountViewer.setValue(output.getTransactionValue() / 100000000d + " BTC");
+
     signatureScriptViewer.setScript(output.getInstructions());
   }
 }

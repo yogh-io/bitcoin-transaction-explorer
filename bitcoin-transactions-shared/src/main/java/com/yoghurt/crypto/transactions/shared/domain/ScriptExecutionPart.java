@@ -1,7 +1,9 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
 public class ScriptExecutionPart extends ScriptPart {
-  private final ScriptType origin;
+  private static final long serialVersionUID = -7301049146790848018L;
+
+  private ScriptType origin;
 
   public ScriptExecutionPart(final ScriptType origin, final Operation operation) {
     super(operation);
@@ -20,5 +22,10 @@ public class ScriptExecutionPart extends ScriptPart {
 
   public ScriptType getOrigin() {
     return origin;
+  }
+
+  @SuppressWarnings("unused")
+  private void setOrigin(final ScriptType origin) {
+    this.origin = origin;
   }
 }
