@@ -13,8 +13,6 @@
     <w:LabelledWidget label="{i18n.addressNumberOfTransactions}">
       <w:ValueViewer ui:field="transactionAmountViewer" animate="true" color="{res.color.addressNumberOfTransactions}" />
     </w:LabelledWidget>
-    <w:HeadingWidget n="2" text="Outpoints" />
-    <g:FlowPanel ui:field="outpointContainer" />
     <w:HeadingWidget n="2" text="{i18n.addressPlaceBase58CheckTitle}" />
     <w:LabelledWidget label="{i18n.addressAddress}">
       <w:ValueViewer ui:field="addressViewer" animate="true" color="{res.color.address}" />
@@ -31,6 +29,8 @@
     <w:LabelledWidget label="{i18n.addressChecksum}">
       <w:ValueViewer ui:field="checksumViewer" animate="true" color="{res.color.addressChecksum}" />
     </w:LabelledWidget>
+    <w:HeadingWidget n="2" text="Outpoints" />
+    <g:FlowPanel ui:field="outpointContainer" />
     <g:FlowPanel ui:field="wellFormedContainer">
       <w:HeadingWidget n="2" text="{i18n.addressPlaceQRCode}" />
       <w:QRCodeWidget ui:field="qrCode" />
