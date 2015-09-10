@@ -8,8 +8,8 @@
 	}
   </ui:style>
   <g:FlowPanel styleName="{res.css.flex} {res.css.columns} {res.css.grow}">
-    <w:HeadingWidget n="1"   text="RPC Response" />
+    <w:HeadingWidget n="1" text="{i18n.jsonPlaceTitle}" />
     <g:HTML ui:field="html" styleName="{style.highlight}" />
-    <g:FlowPanel ui:field="container" />
+    <w:BitcoinJSONViewer ui:field="jsonViewer" />
   </g:FlowPanel>
 </ui:UiBinder>

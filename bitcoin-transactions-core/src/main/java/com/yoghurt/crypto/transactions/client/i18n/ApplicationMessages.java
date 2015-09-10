@@ -377,4 +377,7 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Donate to node text")
   String contributePlaceNodeText(String donationAddress);
+
+  @Description("JSON Response view")
+  String jsonPlaceTitle();
 }
