@@ -8,10 +8,6 @@ It runs as a simple web application you can run on any J2EE Web Container (Jetty
 
 This block explorer remains pure to the blockchain, this means it is not dependent on any source of data other than the blockchain. Bitcoin amount values will not be displayed in fiat, transaction or block receive times do not exist.
 
-In this initial release, even addressess are not recognized, nor can a balance be derived for them (without heaps of effort). Addresses may be integral to bitcoin, but the blockchain itself does not have any knowledge of them, they are not included for this reason.
-
-Future releases likely will contain transaction heuristics such as that, but how this will be implemented unobtrusively is still in a grey area.
-
 # Features
 
 #### Block viewer
