@@ -54,6 +54,10 @@ See above.
 
 If this explorer is run on top of a node (rather than an external API), then a direct JSON-RPC interface to the node may be spoken to. Just insert any command you're used to (getblock, getrawtransaction, getbestblockhash, etc.), and the explorer will display the response, and show some extra information of the stuff it understands (transaction/block ids or their serialized form, script, and many other bitcoin-specific and unspecific fields).
 
+#### Address balances
+
+If this explorer is run on top of a node that has an address index such as this one: https://github.com/btcdrak/bitcoin/tree/addrindex-0.11 then this explorer will be able to look up the balance of an address and show every output associated with it.
+
 # How to run it
 
 This project is currently hosted on top of the following 2 nodes:
