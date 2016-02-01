@@ -86,6 +86,8 @@ h2 {
 .flex>* {
   min-width: 0;
   min-height: 0;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .columns {
