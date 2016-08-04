@@ -32,6 +32,8 @@ h2 {
 .applicationHeaderPanel {
   background-color: CONTENT_COLOR;
   padding: 0px 20px;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .applicationProgressContainer {
@@ -47,11 +49,15 @@ h2 {
   padding: 0px 20px 20px 20px;
   margin: 20px 0px;
   background-color: CONTENT_COLOR;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .applicationFooterPanel {
   background-color: CONTENT_COLOR;
   padding: 0px 20px 0px;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .link {
