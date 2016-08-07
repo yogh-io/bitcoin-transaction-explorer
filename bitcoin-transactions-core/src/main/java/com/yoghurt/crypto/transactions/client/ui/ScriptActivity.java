@@ -20,7 +20,7 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 
-public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlace> implements BlockView.Presenter {
+public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlace> implements ScriptView.Presenter {
   private final ScriptView view;
 
   @Inject
