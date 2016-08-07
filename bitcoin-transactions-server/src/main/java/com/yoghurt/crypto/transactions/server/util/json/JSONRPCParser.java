@@ -23,7 +23,8 @@ import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 public class JSONRPCParser {
   private static final String ZERO_HASH = "0000000000000000000000000000000000000000000000000000000000000000";
 
-  private JSONRPCParser() {}
+  private JSONRPCParser() {
+  }
 
   public static String getString(final InputStream jsonData) throws JsonProcessingException, IOException {
     final JsonNode tree = JsonParser.mapper.readTree(jsonData);
@@ -41,7 +42,22 @@ public class JSONRPCParser {
     return JsonParser.mapper.readTree(jsonData).get("result");
   }
 
-  public static BlockInformation getBlockInformation(final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
+  public static ArrayList<String> getTransactionList(final InputStream jsonData)
+      throws JsonProcessingException, IOException {
+    final JsonNode tree = getResultNode(jsonData);
+
+    // Array of txs
+    final ArrayList<String> txs = new ArrayList<>();
+    final JsonNode txNode = tree.get("tx");
+    for (int i = 0; i < txNode.size(); i++) {
+      txs.add(txNode.get(i).getTextValue());
+    }
+
+    return txs;
+  }
+
+  public static BlockInformation getBlockInformation(final InputStream jsonData)
+      throws JsonProcessingException, IOException, DecoderException {
     final JsonNode tree = getResultNode(jsonData);
 
     // Create a builder to assemble the block headers
@@ -82,15 +98,6 @@ public class JSONRPCParser {
     // Create a BlockInformation object to store the block information in
     final BlockInformation blockInformation = new BlockInformation();
 
-    // Array of txs
-    final ArrayList<String> txs = new ArrayList<>();
-    final JsonNode txNode = tree.get("tx");
-    for (int i = 0; i < txNode.size(); i++) {
-      txs.add(txNode.get(i).getTextValue());
-    }
-
-    blockInformation.setTransactions(txs);
-
     // Set the raw block headers
     blockInformation.setRawBlockHeaders(builder.toString());
 
@@ -119,7 +126,8 @@ public class JSONRPCParser {
     return blockInformation;
   }
 
-  public static TransactionInformation getTransactionInformation(final InputStream jsonData) throws JsonProcessingException, IOException {
+  public static TransactionInformation getTransactionInformation(final InputStream jsonData)
+      throws JsonProcessingException, IOException {
     final JsonNode tree = getResultNode(jsonData);
 
     final TransactionInformation transactionInformation = new TransactionInformation();
@@ -141,7 +149,8 @@ public class JSONRPCParser {
     return transactionInformation;
   }
 
-  public static AddressInformation getAddressInformation(final String address, final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
+  public static AddressInformation getAddressInformation(final String address, final InputStream jsonData)
+      throws JsonProcessingException, IOException, DecoderException {
     final JsonNode tree = getResultNode(jsonData);
 
     final ArrayList<AddressOutpoint> outpoints = new ArrayList<>();

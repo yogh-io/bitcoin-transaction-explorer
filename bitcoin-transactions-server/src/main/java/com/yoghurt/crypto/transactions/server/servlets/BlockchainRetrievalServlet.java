@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
+import java.util.ArrayList;
+
 import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -47,5 +49,10 @@ public class BlockchainRetrievalServlet extends RemoteServiceServlet implements 
   @Override
   public AddressInformation getAddressInformation(final String address) throws ApplicationException {
     return BlockchainRetrievalFactory.get().getAddressInformation(address);
+  }
+
+  @Override
+  public ArrayList<String> getTransactionList(final int height) throws ApplicationException {
+    return BlockchainRetrievalFactory.get().getTransactionList(height);
   }
 }

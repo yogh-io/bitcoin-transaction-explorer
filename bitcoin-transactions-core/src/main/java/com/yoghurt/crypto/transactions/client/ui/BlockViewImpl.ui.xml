@@ -1,5 +1,5 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:m="urn:import:gwt.material.design.client.ui" xmlns:w="urn:import:com.yoghurt.crypto.transactions.client.widget">
   <ui:with field="i18n" type="com.yoghurt.crypto.transactions.client.i18n.ApplicationMessages" />
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
@@ -60,10 +60,11 @@
     <w:BlockHexViewer ui:field="blockHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleRawCoinbaseHex}" />
     <w:TransactionHexViewer ui:field="coinbaseHexViewer" styleName="{style.hexViewer} {res.css.flex}" />
-    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleTransactionList}" />
-    <!-- <w:LabelledWidget label="{i18n.transactionCoinbaseInput}">
+    <w:LabelledWidget label="{i18n.transactionCoinbaseInput}">
       <w:ValueViewer ui:field="coinbaseInputViewer" color="{res.color.transactionArbitraryData}" />
-    </w:LabelledWidget> -->
+    </w:LabelledWidget>
+    <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleTransactionList}" />
+    <m:MaterialButton ui:field="loadTransactionsButton" waves="light" text="Load transaction list" />
     <g:FlowPanel ui:field="transactionPanel" styleName="{style.transactionList}" />
   </g:FlowPanel>
 </ui:UiBinder>

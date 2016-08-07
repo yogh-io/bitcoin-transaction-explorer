@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.http.HttpException;
@@ -141,6 +142,11 @@ public class BlockrAPIRetriever implements BlockchainRetrievalService {
 
   @Override
   public AddressInformation getAddressInformation(final String address) throws ApplicationException {
+    throw new ApplicationException(Reason.UNSUPPORTED_OPERATION);
+  }
+
+  @Override
+  public ArrayList<String> getTransactionList(final int height) throws ApplicationException {
     throw new ApplicationException(Reason.UNSUPPORTED_OPERATION);
   }
 }

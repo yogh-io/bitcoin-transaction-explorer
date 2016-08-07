@@ -61,7 +61,8 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
   private BitcoinJSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
     uri = String.format(URI_FORMAT, host, port);
-    credentialsProvider.setCredentials(new AuthScope(host, port, JSON_RPC_REALM, AUTH_SCHEME), new UsernamePasswordCredentials(rpcUser, rpcPassword));
+    credentialsProvider.setCredentials(new AuthScope(host, port, JSON_RPC_REALM, AUTH_SCHEME),
+        new UsernamePasswordCredentials(rpcUser, rpcPassword));
 
     final AuthCache authCache = new BasicAuthCache();
     authCache.put(new HttpHost(host, port), new BasicScheme());
@@ -70,7 +71,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
     localContext.setAuthCache(authCache);
 
     allowedRPCMethods = new ArrayList<JSONRPCMethod>();
-    for(final JSONRPCMethod method : JSONRPCMethod.values()) {
+    for (final JSONRPCMethod method : JSONRPCMethod.values()) {
       allowedRPCMethods.add(method);
     }
   }
@@ -87,7 +88,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
   @Override
   public TransactionInformation getTransactionInformation(final String txid) throws ApplicationException {
-    if(GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
+    if (GENESIS_COINBASE_TXID.equalsIgnoreCase(txid)) {
       final TransactionInformation ti = new TransactionInformation();
 
       ti.setRawHex(GENESIS_COINBASE_RAW);
@@ -117,9 +118,10 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
       final AddressInformation addressInformation = JSONRPCParser.getAddressInformation(address, jsonData);
 
-      for(final AddressOutpoint outpoint : addressInformation.getOutpoints()) {
+      for (final AddressOutpoint outpoint : addressInformation.getOutpoints()) {
         final String txid = new String(Hex.encodeHex(outpoint.getReferenceTransaction()));
-        try (final InputStream utxoJsonData = doComplexJSONRPCMethod(client, "gettxout", txid, outpoint.getIndex()).getContent()) {
+        try (final InputStream utxoJsonData = doComplexJSONRPCMethod(client, "gettxout", txid, outpoint.getIndex())
+            .getContent()) {
           outpoint.setSpent(JSONRPCParser.isNullResult(utxoJsonData));
         }
       }
@@ -146,13 +148,28 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   }
 
   @Override
+  public ArrayList<String> getTransactionList(final int height) throws ApplicationException {
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", getBlockHashFromHeight(height))
+            .getContent()) {
+
+      return JSONRPCParser.getTransactionList(jsonData);
+    } catch (IOException | HttpException e) {
+      e.printStackTrace();
+      System.out.println("What up.");
+      throw new ApplicationException(e.getMessage());
+    }
+  }
+
+  @Override
   public BlockInformation getBlockInformationFromHash(final String identifier) throws ApplicationException {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
         InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", identifier).getContent()) {
 
       final BlockInformation blockInformation = JSONRPCParser.getBlockInformation(jsonData);
 
-      // Extract the coinbase tx id (TODO: Refactor, shouldn't be using a mock object like this)
+      // Extract the coinbase tx id (TODO: Refactor, shouldn't be using a mock
+      // object like this)
       final String coinbaseTxid = blockInformation.getCoinbaseInformation().getRawHex();
 
       // Retrieve raw coinbase tx and its blockchain information
@@ -171,7 +188,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
   @Override
   public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
-    if(!allowedRPCMethods.contains(method)) {
+    if (!allowedRPCMethods.contains(method)) {
       throw new ApplicationException(Reason.ILLEGAL_OPERATION);
     }
 
@@ -186,18 +203,19 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   }
 
   private String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {
-    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy(); InputStream stream = doComplexJSONRPCMethod(client, method, params).getContent()) {
+    try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
+        InputStream stream = doComplexJSONRPCMethod(client, method, params).getContent()) {
       return JSONRPCParser.getResultString(stream);
     }
   }
 
-  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params) throws IOException,
-  IllegalStateException, ParseException, HttpException {
+  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method,
+      final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
     return doComplexJSONRPCMethod(client, method, false, params);
   }
 
-  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final boolean unsafe, final Object... params) throws IOException,
-  IllegalStateException, ParseException, HttpException {
+  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final boolean unsafe,
+      final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
     final String payload = JSONRPCEncoder.getRequestString(method, params);
 
     // Temporary

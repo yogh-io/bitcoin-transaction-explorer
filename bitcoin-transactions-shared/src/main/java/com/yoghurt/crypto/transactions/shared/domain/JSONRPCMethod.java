@@ -29,7 +29,7 @@ public enum JSONRPCMethod {
   }
 
   /**
-   * Return the JSONRPCMethod fromthe given name.
+   * Return the JSONRPCMethod from the given name.
    *
    * @param name
    *          Name to get the method for.

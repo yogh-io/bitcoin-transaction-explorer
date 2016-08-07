@@ -1,9 +1,12 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Timer;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -12,6 +15,7 @@ import com.google.inject.Singleton;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
+import com.yoghurt.crypto.transactions.client.util.TextConversionUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.widget.BitsTargetHexViewer;
@@ -26,6 +30,9 @@ import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+
+import gwt.material.design.client.ui.MaterialButton;
 
 @Singleton
 public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
@@ -57,11 +64,14 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
 
-  // @UiField ValueViewer coinbaseInputViewer;
+  @UiField ValueViewer coinbaseInputViewer;
 
+  @UiField MaterialButton loadTransactionsButton;
   @UiField FlowPanel transactionPanel;
 
   private final BitcoinPlaceRouter router;
+
+  private Presenter presenter;
 
   @Inject
   public BlockViewImpl(final BitcoinPlaceRouter router) {
@@ -71,6 +81,11 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     previousBlockHashViewer = new BlockViewer(router);
 
     initWidget(UI_BINDER.createAndBindUi(this));
+  }
+
+  @Override
+  public void setPresenter(final Presenter presenter) {
+    this.presenter = presenter;
   }
 
   @Override
@@ -112,19 +127,26 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
     sizeViewer.setValue(blockInformation.getSize());
 
-    new Timer() {
-      @Override
-      public void run() {
-        transactionPanel.clear();
-        if (blockInformation.getTransactions() != null) {
-          for (final String txid : blockInformation.getTransactions()) {
-            final TransactionViewer hashViewer = new TransactionViewer(router, false, false);
-            transactionPanel.add(hashViewer);
+    coinbaseInputViewer.setValue(
+        TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
 
-            hashViewer.setValue(Hex.decode(txid));
-          }
-        }
-      }
-    }.schedule(400);
+    transactionPanel.clear();
+    loadTransactionsButton.setVisible(true);
+  }
+
+  @UiHandler("loadTransactionsButton")
+  public void onTransactionListClick(final ClickEvent e) {
+    presenter.loadTransactionList();
+    loadTransactionsButton.setVisible(false);
+  }
+
+  @Override
+  public void setTransactionList(final ArrayList<String> transactions) {
+    for (final String txid : transactions) {
+      final TransactionViewer hashViewer = new TransactionViewer(router, false, false);
+      transactionPanel.add(hashViewer);
+
+      hashViewer.setValue(Hex.decode(txid));
+    }
   }
 }

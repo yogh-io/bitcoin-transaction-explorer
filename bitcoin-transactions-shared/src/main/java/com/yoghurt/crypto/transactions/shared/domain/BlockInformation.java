@@ -16,8 +16,6 @@ public class BlockInformation implements Serializable {
 
   private TransactionInformation coinbaseInformation;
 
-  private ArrayList<String> transactions;
-
   public BlockInformation() {}
 
   public String getRawBlockHeaders() {
@@ -74,14 +72,6 @@ public class BlockInformation implements Serializable {
 
   public void setCoinbaseInformation(final TransactionInformation coinbaseInformation) {
     this.coinbaseInformation = coinbaseInformation;
-  }
-
-  public void setTransactions(final ArrayList<String> transactions) {
-    this.transactions = transactions;
-  }
-
-  public ArrayList<String> getTransactions() {
-    return transactions;
   }
 
   @Override
