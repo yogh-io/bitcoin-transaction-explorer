@@ -6,19 +6,18 @@
     .linkPanel {
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     }
     .blockLink {
-    width: 230px;
+    width: 240px;
     height: 130px;
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px;
-    color: white;
-    font-size: 18px;
-    border: 0px solid white;
+    border: 0px solid transparent;
     font-weight: bold;
+    font-size: 18px;
+    color: white;
     cursor: pointer;
     box-sizing: border-box;
     transition: all 0.15s ease-out;
@@ -47,8 +46,11 @@
     .green:hover {
     border-color: rgba(60, 105, 12, 0.4);
     }
+    .container {
+	width: 780px;
+    }
   </ui:style>
-  <g:FlowPanel styleName="{res.css.flex} {res.css.columns}">
+  <g:FlowPanel styleName="{res.css.flex} {res.css.columns} {style.container}">
     <w:HeadingWidget n="1" text="{i18n.startupGeneral}" />
     <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
       <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
