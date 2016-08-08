@@ -7,6 +7,12 @@
     width: 780px;
     flex-wrap: wrap;
     }
+    
+    .stepLink {
+	font-size: 2em;
+	font-weight: bold;
+	-webkit-user-select: none;
+	}
   </ui:style>
   <g:FlowPanel>
     <w:HeadingWidget n="1" text="{i18n.scriptPlaceTitleScriptViewer}" />
@@ -34,7 +40,11 @@
       <w:ScriptExecutionViewer ui:field="fullScriptViewer" />
     </w:LabelledWidget>
     <w:HeadingWidget n="2" text="{i18n.scriptPlaceStepByStep}" />
-    <g:FlowPanel ui:field="scriptExecutionContainer" />
+    <g:FlowPanel styleName="{res.css.flex} {res.css.stretch} {res.css.grow}">
+	  <g:Label ui:field="previousExecutionStep" styleName="{res.css.link} {style.stepLink}" text="&lt;===" />
+	  <g:Label ui:field="nextExecutionStep" styleName="{res.css.link} {style.stepLink}" text="===&gt;" />
+    </g:FlowPanel>
+    <g:DeckPanel ui:field="scriptExecutionContainer" />
     <w:HeadingWidget n="2" text="{i18n.scriptPlaceExecutionResult}" />
     <g:Label ui:field="scriptExecutionResult" />
   </g:FlowPanel>

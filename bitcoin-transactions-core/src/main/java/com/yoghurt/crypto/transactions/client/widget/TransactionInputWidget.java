@@ -6,7 +6,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
@@ -18,6 +17,8 @@ import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.ScriptEncodeUtil;
 
+import gwt.material.design.client.ui.MaterialButton;
+
 public class TransactionInputWidget extends Composite {
   interface TransactionInputWidgetUiBinder extends UiBinder<Widget, TransactionInputWidget> {}
 
@@ -28,7 +29,7 @@ public class TransactionInputWidget extends Composite {
   @UiField(provided = true) ScriptViewer signatureScriptViewer;
   @UiField ValueViewer indexViewer;
   @UiField ValueViewer sequenceViewer;
-  @UiField Label scriptViewField;
+  @UiField MaterialButton scriptViewField;
 
   private final BitcoinPlaceRouter router;
   private final TransactionInput input;
