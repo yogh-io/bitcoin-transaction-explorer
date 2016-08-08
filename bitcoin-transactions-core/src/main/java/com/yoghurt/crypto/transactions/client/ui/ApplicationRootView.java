@@ -1,8 +1,5 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
-import gwt.material.design.client.ui.MaterialProgress;
-import gwt.material.design.client.ui.MaterialTextBox;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -28,6 +25,9 @@ import com.yoghurt.crypto.transactions.client.ui.LazyProgressWidget.LazyProgress
 import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
 import com.yoghurt.crypto.transactions.client.widget.HeadingWidget;
 import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
+
+import gwt.material.design.client.ui.MaterialProgress;
+import gwt.material.design.client.ui.MaterialTextBox;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget, LazyProgressListener {

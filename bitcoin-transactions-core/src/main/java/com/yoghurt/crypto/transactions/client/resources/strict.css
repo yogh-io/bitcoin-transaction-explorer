@@ -61,13 +61,11 @@ h2 {
 }
 
 .link {
-  text-decoration: none;
   cursor: pointer;
 }
 
 .link:hover {
   color: LINK_COLOR;
-  text-decoration: underline;
 }
 
 .labelledValueFieldLabel {
@@ -98,10 +96,6 @@ h2 {
   flex-direction: column;
 }
 
-.justify {
-  flex-justify: justify-content;
-}
-
 .alignCenter {
   align-items: center;
 }
@@ -112,6 +106,14 @@ h2 {
 
 .panel {
   flex-direction: column;
+}
+
+.distribute {
+  justify-content: space-around;
+}
+
+.stretch {
+  justify-content: space-between;
 }
 
 .error {

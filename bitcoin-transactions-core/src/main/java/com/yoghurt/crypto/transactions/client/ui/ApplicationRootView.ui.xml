@@ -25,7 +25,7 @@
     </g:SimplePanel>
     <g:SimplePanel ui:field="contentPanel" styleName="{res.css.applicationContent} {res.css.flex} {res.css.grow} z-depth-1" />
 	<c:CustomFooter addStyleNames="{res.css.applicationFooterPanel} z-depth-1">
-	  <g:FlowPanel styleName="{res.css.flex} {res.css.justify} {style.footerText}">
+	  <g:FlowPanel styleName="{res.css.flex} {res.css.stretch} {style.footerText}">
         <g:Label text="{i18n.applicationVersion}" styleName="{res.css.grow}" />
         <g:Anchor text="{i18n.applicationContributionText}" ui:field="contributeLink" styleName="{res.css.link}" />
 	  </g:FlowPanel>

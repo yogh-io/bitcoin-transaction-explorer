@@ -1,10 +1,12 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -36,13 +38,18 @@ public class ScriptViewImpl extends Composite implements ScriptView {
   @UiField ScriptHexViewer pubKeySigHexViewer;
   @UiField ScriptHexViewer scriptSigHexViewer;
 
-  @UiField FlowPanel scriptExecutionContainer;
+  @UiField DeckPanel scriptExecutionContainer;
 
   @UiField Label scriptExecutionResult;
 
   @UiField(provided = true) ScriptViewer scriptSigViewer;
   @UiField(provided = true) ScriptViewer pubKeySigViewer;
   @UiField ScriptExecutionViewer fullScriptViewer;
+
+  @UiField Label previousExecutionStep;
+  @UiField Label nextExecutionStep;
+
+  private int step;
 
   @Inject
   public ScriptViewImpl(final BitcoinPlaceRouter router) {
@@ -51,6 +58,32 @@ public class ScriptViewImpl extends Composite implements ScriptView {
     pubKeySigViewer = new ScriptViewer(ScriptType.SCRIPT_PUB_KEY, false);
 
     initWidget(UI_BINDER.createAndBindUi(this));
+  }
+
+  private void updateStepCounter() {
+    previousExecutionStep.setText(step == 0 ? "" : "<== step " + step);
+    nextExecutionStep
+        .setText(step >= scriptExecutionContainer.getWidgetCount() - 1 ? "" : "step " + (step + 2) + " ==>");
+  }
+
+  @UiHandler("nextExecutionStep")
+  public void onNextExecutionClick(final ClickEvent e) {
+    if (step >= scriptExecutionContainer.getWidgetCount() - 1) {
+      return;
+    }
+
+    scriptExecutionContainer.showWidget(++step);
+    updateStepCounter();
+  }
+
+  @UiHandler("previousExecutionStep")
+  public void onPreviousExecutionClick(final ClickEvent e) {
+    if (step <= 0) {
+      return;
+    }
+
+    scriptExecutionContainer.showWidget(--step);
+    updateStepCounter();
   }
 
   @Override
@@ -93,5 +126,8 @@ public class ScriptViewImpl extends Composite implements ScriptView {
     } else {
       scriptExecutionResult.setText(M.messages().scriptPlaceExecutionResultSuccess());
     }
+
+    scriptExecutionContainer.showWidget(0);
+    updateStepCounter();
   }
 }

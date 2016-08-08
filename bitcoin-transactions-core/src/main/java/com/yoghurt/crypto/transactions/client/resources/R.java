@@ -42,7 +42,9 @@ public final class R {
 
     String columns();
 
-    String justify();
+    String distribute();
+    
+    String stretch();
 
     String grow();
 
