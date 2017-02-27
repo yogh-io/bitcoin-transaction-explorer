@@ -52,7 +52,7 @@
         <executions>
           <execution>
             <configuration>
-              <servicePattern>**/shared/**/*Service.java</servicePattern>
+              <servicePattern>**/*Service.java</servicePattern>
             </configuration>
             <goals>
               <goal>generateAsync</goal>
@@ -62,9 +62,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-        </configuration>
       </plugin>
     </plugins>
   </build>

@@ -63,6 +63,11 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.gwt.eventbinder</groupId>
+      <artifactId>eventbinder</artifactId>
+      <version>1.1.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -76,23 +81,16 @@
       <resource>
         <directory>/bitcoin-transactions-core/war/WEB-INF/classes</directory>
       </resource>
-      <resource>
-        <directory>${project.build.directory}/generated-sources/gwt</directory>
-      </resource>
     </resources>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
-        <configuration>
-          <extraJvmArgs>-Xmx1024m -Xms1024m -Dgwt.jjs.permutationWorkerFactory=com.google.gwt.dev.ThreadedPermutationWorkerFactory</extraJvmArgs>
-          <localWorkers>1</localWorkers>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.6</source>
+          <source>1.8</source>
         </configuration>
       </plugin>
       <plugin>
@@ -104,22 +102,4 @@
       </plugin>
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>ide</id>
-      <build>
-        <directory>war/WEB-INF</directory>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>gwt-maven-plugin</artifactId>
-            <configuration>
-              <gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
