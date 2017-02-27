@@ -23,11 +23,11 @@ import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionState;
 
 public class TransactionViewImpl extends Composite implements TransactionView {
   interface TransactionViewImplUiBinder extends UiBinder<Widget, TransactionViewImpl> {}

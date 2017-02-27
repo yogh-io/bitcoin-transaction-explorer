@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
-import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;

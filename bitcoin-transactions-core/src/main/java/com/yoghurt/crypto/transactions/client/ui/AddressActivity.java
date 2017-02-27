@@ -10,9 +10,9 @@ import com.yoghurt.crypto.transactions.client.place.AddressPlace;
 import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
 import com.yoghurt.crypto.transactions.client.util.address.Base58;
-import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
 import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
 
 public class AddressActivity extends LazyLookupActivity<AddressInformation, AddressPlace> implements AddressView.Presenter {
   private final AddressView view;

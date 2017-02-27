@@ -30,8 +30,6 @@ import com.yoghurt.crypto.transactions.client.ui.AddressView;
 import com.yoghurt.crypto.transactions.client.ui.AddressViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.BlockView;
 import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
-import com.yoghurt.crypto.transactions.client.ui.ConfigView;
-import com.yoghurt.crypto.transactions.client.ui.ConfigViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.ContributeView;
 import com.yoghurt.crypto.transactions.client.ui.ContributeViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.MineView;
@@ -64,7 +62,6 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(BlockView.class).to(BlockViewImpl.class);
     bind(MineView.class).to(MineViewImpl.class);
     bind(ScriptView.class).to(ScriptViewImpl.class);
-    bind(ConfigView.class).to(ConfigViewImpl.class);
     bind(ContributeView.class).to(ContributeViewImpl.class);
     bind(RPCResponseView.class).to(RPCResponseViewImpl.class);
     bind(AddressView.class).to(AddressViewImpl.class);

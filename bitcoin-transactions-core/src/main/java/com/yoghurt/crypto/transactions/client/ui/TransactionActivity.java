@@ -11,8 +11,8 @@ import com.yoghurt.crypto.transactions.client.place.TransactionPlace.Transaction
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.ParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
 
 /**
  * Refactor this catastrophe.

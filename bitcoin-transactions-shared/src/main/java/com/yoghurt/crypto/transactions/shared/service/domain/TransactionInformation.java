@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.domain;
+package com.yoghurt.crypto.transactions.shared.service.domain;
 
 import java.io.Serializable;
 import java.util.Date;

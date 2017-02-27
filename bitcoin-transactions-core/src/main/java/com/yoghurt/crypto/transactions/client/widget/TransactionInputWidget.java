@@ -12,7 +12,7 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionOutPoint;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.ScriptEncodeUtil;

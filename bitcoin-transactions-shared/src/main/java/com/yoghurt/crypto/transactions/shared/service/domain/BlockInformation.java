@@ -1,7 +1,6 @@
-package com.yoghurt.crypto.transactions.shared.domain;
+package com.yoghurt.crypto.transactions.shared.service.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class BlockInformation implements Serializable {
   private static final long serialVersionUID = -6695967392021472565L;

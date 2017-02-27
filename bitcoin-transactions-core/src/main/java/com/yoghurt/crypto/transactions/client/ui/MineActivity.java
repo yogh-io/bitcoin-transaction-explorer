@@ -19,12 +19,12 @@ import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 

@@ -26,11 +26,11 @@ import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
 
 import gwt.material.design.client.ui.MaterialButton;
 

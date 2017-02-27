@@ -6,7 +6,6 @@ import com.yoghurt.crypto.transactions.client.place.AddressPlace.AddressDataType
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
-import com.yoghurt.crypto.transactions.client.place.ConfigPlace;
 import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
@@ -24,7 +23,6 @@ import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 public final class PlaceTokenParseUtil {
   private static final String MINE_TOKEN = "mine";
   private static final String LAST_BLOCK_TOKEN = "last";
-  private static final String CONFIG_TOKEN = "config";
   private static final String CONTRIBUTE_TOKEN = "contribute";
   private static final String NBSP = " ";
 
@@ -50,10 +48,6 @@ public final class PlaceTokenParseUtil {
     }
     if (LAST_BLOCK_TOKEN.equals(cleanToken)) {
       return new BlockPlace(BlockDataType.LAST);
-    }
-
-    if (CONFIG_TOKEN.equals(cleanToken)) {
-      return new ConfigPlace();
     }
 
     if (CONTRIBUTE_TOKEN.equals(cleanToken)) {

@@ -15,9 +15,6 @@ import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
 import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.ui.ApplicationRootView;
-import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
-import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
-import com.yoghurt.crypto.transactions.shared.service.ConfigServiceAsync;
 
 public class Application implements EntryPoint {
 
@@ -33,10 +30,6 @@ public class Application implements EntryPoint {
 
   @Inject private ColorPicker colorPicker;
 
-  @Inject private ApplicationConfigProvider configProvider;
-
-  @Inject private ConfigServiceAsync configService;
-
   private ActivityManager appActivityManager;
 
   private PlaceHistoryHandler historyHandler;
@@ -50,14 +43,7 @@ public class Application implements EntryPoint {
     appActivityManager = new ActivityManager(actvityMapper, eventBus);
     historyHandler = new PlaceHistoryHandler(placeHistoryMapper);
 
-    configService.getApplicationConfig(new AppAsyncCallback<UserApplicationConfig>() {
-      @Override
-      public void onSuccess(final UserApplicationConfig result) {
-        configProvider.setApplicationConfig(result);
-
-        onFinishedLoading();
-      }
-    });
+    onFinishedLoading();
   }
 
   public void onFinishedLoading() {

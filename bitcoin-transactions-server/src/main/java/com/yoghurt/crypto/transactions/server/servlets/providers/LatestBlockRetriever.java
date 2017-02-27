@@ -5,8 +5,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
+import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
 
 public class LatestBlockRetriever {
   private static final long INITIAL_DELAY = 1;

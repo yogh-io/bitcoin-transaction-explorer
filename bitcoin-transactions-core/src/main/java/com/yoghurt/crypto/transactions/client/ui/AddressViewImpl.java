@@ -17,9 +17,9 @@ import com.yoghurt.crypto.transactions.client.widget.AddressOutpointWidget;
 import com.yoghurt.crypto.transactions.client.widget.QRCodeWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Address;
-import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.AddressOutpoint;
 import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressOutpoint;
 
 public class AddressViewImpl extends Composite implements AddressView {
   interface AddressViewImplUiBinder extends UiBinder<Widget, AddressViewImpl> {}

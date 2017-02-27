@@ -26,15 +26,15 @@ import org.apache.http.util.EntityUtils;
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
-import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.AddressOutpoint;
-import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
-import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
-import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException.Reason;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressOutpoint;
+import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException.Reason;
 
 public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   private static final String JSON_RPC_REALM = "jsonrpc";

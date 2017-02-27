@@ -13,13 +13,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.BlockrApiParser;
-import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
-import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException.Reason;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException.Reason;
 
 public class BlockrAPIRetriever implements BlockchainRetrievalService {
   private static final String BLOCKR_API_LATEST_BLOCK = "http://btc.blockr.io/api/v1/block/info/last";

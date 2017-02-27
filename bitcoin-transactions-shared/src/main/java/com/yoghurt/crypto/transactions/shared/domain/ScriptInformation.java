@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionOutPoint;
+
 public class ScriptInformation {
   private TransactionOutPoint outpoint;
   private ScriptEntity pubKeySig;

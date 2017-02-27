@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.domain.exception.ApplicationException;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
+import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
 
 @WebServlet("/application/blockchain-retrieve")
 public class BlockchainRetrievalServlet extends RemoteServiceServlet implements BlockchainRetrievalService {

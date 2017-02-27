@@ -11,9 +11,9 @@ import org.apache.commons.codec.binary.Hex;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
-import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
+import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.TransactionState;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
