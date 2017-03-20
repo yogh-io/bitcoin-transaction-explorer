@@ -1,9 +1,9 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.RawBlockContainer;
+import com.yoghurt.crypto.transactions.client.domain.RawTransactionContainer;
 
 public interface MineView extends IsWidget {
   public interface Presenter {

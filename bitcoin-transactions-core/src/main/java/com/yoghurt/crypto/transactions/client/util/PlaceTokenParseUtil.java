@@ -1,30 +1,25 @@
 package com.yoghurt.crypto.transactions.client.util;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.client.domain.Base58CheckContents;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace.AddressDataType;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
-import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
-import com.yoghurt.crypto.transactions.client.place.RPCResponsePlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 public final class PlaceTokenParseUtil {
   private static final String MINE_TOKEN = "mine";
   private static final String LAST_BLOCK_TOKEN = "last";
-  private static final String CONTRIBUTE_TOKEN = "contribute";
-  private static final String NBSP = " ";
 
   // Bunch of zeroes every valid block starts with
   private static final String BLOCK_TOKEN_START = "0000000000";
@@ -36,7 +31,8 @@ public final class PlaceTokenParseUtil {
   // so, I guess we're good
   private static final int MAX_BLOCK_HEIGHT_NUMBER_LENGTH = 7;
 
-  private PlaceTokenParseUtil() {}
+  private PlaceTokenParseUtil() {
+  }
 
   public static ApplicationPlace parseToken(final String token) {
     // Clean up the token first
@@ -50,15 +46,6 @@ public final class PlaceTokenParseUtil {
       return new BlockPlace(BlockDataType.LAST);
     }
 
-    if (CONTRIBUTE_TOKEN.equals(cleanToken)) {
-      return new ContributePlace();
-    }
-
-    final String[] splitToken = token.split(NBSP);
-    if (JSONRPCMethod.fromName(splitToken[0]) != null) {
-      return new RPCResponsePlace(splitToken);
-    }
-
     // Check if the token can be base58 decoded, and if so, if the result looks
     // like an address (20 byte payload)
     try {
@@ -70,7 +57,8 @@ public final class PlaceTokenParseUtil {
       // Guess not.
     }
 
-    // Check if the token is exactly equal to the length of a hash (32 bytes), meaning this
+    // Check if the token is exactly equal to the length of a hash (32 bytes),
+    // meaning this
     // is probably a transaction or block hash
     if (cleanToken.length() == HASH_LENGTH) {
       // If it starts with a bunch of zeroes, it's probably a block, otherwise

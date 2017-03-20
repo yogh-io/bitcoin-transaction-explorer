@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.resources.R;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressOutpoint;
+import com.yoghurt.crypto.transactions.shared.service.domain.OutpointInformation;
 
 public class AddressOutpointWidget extends Composite {
   interface AddressOutpointUiBinder extends UiBinder<Widget, AddressOutpointWidget> {}
@@ -20,7 +20,7 @@ public class AddressOutpointWidget extends Composite {
   @UiField ValueViewer amountViewer;
   @UiField ValueViewer spentViewer;
 
-  public AddressOutpointWidget(final BitcoinPlaceRouter router, final AddressOutpoint outpoint, final int idx) {
+  public AddressOutpointWidget(final BitcoinPlaceRouter router, final OutpointInformation outpoint, final int idx) {
     hashViewer = new TransactionViewer(router, false, false);
 
     initWidget(UI_BINDER.createAndBindUi(this));
@@ -29,7 +29,7 @@ public class AddressOutpointWidget extends Composite {
 
     hashViewer.setValue(outpoint.getReferenceTransaction());
     indexViewer.setValue(String.valueOf(outpoint.getIndex()));
-    amountViewer.setValue(outpoint.getOutput().getTransactionValue() / 100000000d + " BTC");
+    amountViewer.setValue(outpoint.getTransactionValue() / 100000000d + " BTC");
 
     final boolean spent = outpoint.isSpent();
 

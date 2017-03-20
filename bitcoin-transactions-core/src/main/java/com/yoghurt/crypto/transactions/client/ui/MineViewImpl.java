@@ -17,7 +17,13 @@ import com.google.inject.Singleton;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.RawBlockContainer;
+import com.yoghurt.crypto.transactions.client.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.client.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
+import com.yoghurt.crypto.transactions.client.util.NumberEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
 import com.yoghurt.crypto.transactions.client.util.RepeatingExecutor;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
@@ -27,13 +33,7 @@ import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.TargettedHashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
-import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 @Singleton
 public class MineViewImpl extends Composite implements MineView {

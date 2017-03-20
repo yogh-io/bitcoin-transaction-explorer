@@ -1,10 +1,10 @@
 package com.yoghurt.crypto.transactions.client.util;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 public final class ParseUtil {
   private ParseUtil() {}

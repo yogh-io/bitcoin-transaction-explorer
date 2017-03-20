@@ -8,12 +8,12 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> implements BlockView.Presenter {
   private final BlockView view;

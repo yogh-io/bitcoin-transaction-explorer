@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace;
 import com.yoghurt.crypto.transactions.client.place.BlockPlace.BlockDataType;
-import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 
@@ -36,10 +35,5 @@ public class StartupActivity extends AbstractActivity implements StartupView.Pre
   @Override
   public void onMiningClick() {
     placeController.goTo(new MinePlace(MineDataType.LAST));
-  }
-
-  @Override
-  public void onContributeClick() {
-    placeController.goTo(new ContributePlace());
   }
 }

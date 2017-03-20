@@ -1,0 +1,15 @@
+package com.yoghurt.crypto.transactions.client.domain;
+
+public enum BlockPartType {
+  VERSION,
+
+  PREV_BLOCK_HASH,
+
+  MERKLE_ROOT,
+
+  TIMESTAMP,
+
+  BITS,
+
+  NONCE
+}

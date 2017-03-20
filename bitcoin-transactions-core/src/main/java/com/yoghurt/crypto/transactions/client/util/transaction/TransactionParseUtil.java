@@ -2,14 +2,14 @@ package com.yoghurt.crypto.transactions.client.util.transaction;
 
 import java.util.ArrayList;
 
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
-import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.TransactionInput;
+import com.yoghurt.crypto.transactions.client.domain.TransactionOutput;
+import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
+import com.yoghurt.crypto.transactions.client.util.ScriptParseUtil;
+import com.yoghurt.crypto.transactions.client.util.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.service.domain.TransactionOutPoint;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
-import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
-import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public final class TransactionParseUtil extends TransactionUtil {
   private TransactionParseUtil() {}

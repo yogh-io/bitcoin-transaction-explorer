@@ -1,8 +1,8 @@
 package com.yoghurt.crypto.transactions.client.util;
 
+import com.yoghurt.crypto.transactions.client.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 
 /**
  * TODO Move to proper package.

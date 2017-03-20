@@ -21,20 +21,17 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
-import org.apache.http.util.EntityUtils;
 
+import com.yoghurt.crypto.transactions.server.domain.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
 import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
-import com.yoghurt.crypto.transactions.shared.domain.JSONRPCMethod;
-import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
 import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressOutpoint;
 import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.service.domain.OutpointInformation;
 import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
 import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
-import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException.Reason;
 
 public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   private static final String JSON_RPC_REALM = "jsonrpc";
@@ -53,8 +50,6 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   private final HttpClientContext localContext;
   private final CredentialsProvider credentialsProvider = new SystemDefaultCredentialsProvider();
 
-  private final ArrayList<JSONRPCMethod> allowedRPCMethods;
-
   public BitcoinJSONRPCRetriever(final BitcoinCoreNodeConfig config) {
     this(config.getHost(), Integer.parseInt(config.getPort()), config.getRpcUser(), config.getRpcPass());
   }
@@ -69,11 +64,6 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
     localContext = HttpClientContext.create();
     localContext.setAuthCache(authCache);
-
-    allowedRPCMethods = new ArrayList<JSONRPCMethod>();
-    for (final JSONRPCMethod method : JSONRPCMethod.values()) {
-      allowedRPCMethods.add(method);
-    }
   }
 
   @Override
@@ -118,7 +108,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
 
       final AddressInformation addressInformation = JSONRPCParser.getAddressInformation(address, jsonData);
 
-      for (final AddressOutpoint outpoint : addressInformation.getOutpoints()) {
+      for (final OutpointInformation outpoint : addressInformation.getOutpoints()) {
         final String txid = new String(Hex.encodeHex(outpoint.getReferenceTransaction()));
         try (final InputStream utxoJsonData = doComplexJSONRPCMethod(client, "gettxout", txid, outpoint.getIndex())
             .getContent()) {
@@ -183,22 +173,6 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
     } catch (IOException | HttpException | DecoderException e) {
       e.printStackTrace();
       throw new ApplicationException(e.getMessage());
-    }
-  }
-
-  @Override
-  public String getJSONRPCResponse(final JSONRPCMethod method, final String[] arguments) throws ApplicationException {
-    if (!allowedRPCMethods.contains(method)) {
-      throw new ApplicationException(Reason.ILLEGAL_OPERATION);
-    }
-
-    try (final CloseableHttpClient client = getAuthenticatedHttpClientProxy()) {
-      final HttpEntity jsonData = doComplexJSONRPCMethod(client, method.getMethodName(), true, (Object[]) arguments);
-
-      return EntityUtils.toString(jsonData);
-    } catch (final IOException | IllegalStateException | ParseException | HttpException e) {
-      e.printStackTrace();
-      throw new ApplicationException(Reason.INTERNAL_ERROR);
     }
   }
 

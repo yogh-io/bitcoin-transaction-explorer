@@ -1,8 +1,8 @@
 package com.yoghurt.crypto.transactions.client.util.address;
 
-import com.yoghurt.crypto.transactions.shared.domain.Address;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.client.domain.Address;
+import com.yoghurt.crypto.transactions.client.domain.Base58CheckContents;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public class AddressEncodeUtil {
 

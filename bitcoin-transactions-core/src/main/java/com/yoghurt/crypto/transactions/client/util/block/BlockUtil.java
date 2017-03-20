@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.client.util.block;
 
 import java.math.BigInteger;
 
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public class BlockUtil {
   protected static final int BLOCK_VERSION_FIELD_SIZE = 4;

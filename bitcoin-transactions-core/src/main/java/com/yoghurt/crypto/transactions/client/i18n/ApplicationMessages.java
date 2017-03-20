@@ -1,9 +1,8 @@
 package com.yoghurt.crypto.transactions.client.i18n;
 
 import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
+import com.yoghurt.crypto.transactions.client.domain.Operation;
 import com.google.gwt.i18n.client.Messages;
-import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
-import com.yoghurt.crypto.transactions.shared.domain.Operation;
 
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {
@@ -322,16 +321,6 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Blockchain source settings")
   String configBlockchainHookTitle();
-
-  @Description("Unknown (not supported)")
-  @AlternateMessage({
-    "NODE", "Bitcoin Core Node",
-    "BLOCKR_API", "BLOCKR API"
-  })
-  String configConnectorOption(@Select BlockchainSource source);
-
-  @Description("No further config needed, press save to continue.")
-  String configBlockrConfigNote();
 
   @Description("Host (probably localhost)")
   String configNodeHost();

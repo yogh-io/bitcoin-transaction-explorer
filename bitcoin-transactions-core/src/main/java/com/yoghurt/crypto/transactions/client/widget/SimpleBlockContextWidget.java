@@ -5,8 +5,8 @@ import java.util.Map.Entry;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.yoghurt.crypto.transactions.client.domain.BlockPartType;
 import com.yoghurt.crypto.transactions.client.widget.ContextFieldSet.FieldContextFactory;
-import com.yoghurt.crypto.transactions.shared.domain.BlockPartType;
 
 public class SimpleBlockContextWidget implements FieldContextFactory<Entry<BlockPartType, byte[]>> {
   @Override

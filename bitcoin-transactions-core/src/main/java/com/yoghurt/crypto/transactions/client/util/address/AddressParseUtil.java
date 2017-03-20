@@ -2,12 +2,12 @@ package com.yoghurt.crypto.transactions.client.util.address;
 
 import java.util.ArrayList;
 
-import com.yoghurt.crypto.transactions.shared.domain.Address;
-import com.yoghurt.crypto.transactions.shared.domain.Address.TYPE;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
-import com.yoghurt.crypto.transactions.shared.domain.Operation;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
+import com.yoghurt.crypto.transactions.client.domain.Address;
+import com.yoghurt.crypto.transactions.client.domain.Address.TYPE;
+import com.yoghurt.crypto.transactions.client.domain.Base58CheckContents;
+import com.yoghurt.crypto.transactions.client.domain.Operation;
+import com.yoghurt.crypto.transactions.client.domain.ScriptPart;
+import com.yoghurt.crypto.transactions.client.domain.TransactionOutput;
 
 public class AddressParseUtil {
   private static final Operation[] P2PKH_TEMPLATE = new Operation[] { Operation.OP_DUP, Operation.OP_HASH160, Operation.OP_PUSHDATA, Operation.OP_EQUALVERIFY, Operation.OP_CHECKSIG };

@@ -5,11 +5,11 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.yoghurt.crypto.transactions.client.domain.Address;
+import com.yoghurt.crypto.transactions.client.domain.ScriptType;
+import com.yoghurt.crypto.transactions.client.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.client.place.AddressPlaceRouter;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
-import com.yoghurt.crypto.transactions.shared.domain.Address;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 
 public class TransactionOutputWidget extends Composite {
   interface TransactionOutputWidgetUiBinder extends UiBinder<Widget, TransactionOutputWidget> {}

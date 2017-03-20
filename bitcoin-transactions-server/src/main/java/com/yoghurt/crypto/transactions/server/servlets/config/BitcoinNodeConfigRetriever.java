@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.server.servlets.config;
 
 import java.util.Properties;
 
-import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
+import com.yoghurt.crypto.transactions.server.domain.BitcoinCoreNodeConfig;
 
 public class BitcoinNodeConfigRetriever extends AbstractConfigRetriever<BitcoinCoreNodeConfig> {
   public static final String RPC_USER_KEY = "com.yoghurt.crypto.node.rpcUser";

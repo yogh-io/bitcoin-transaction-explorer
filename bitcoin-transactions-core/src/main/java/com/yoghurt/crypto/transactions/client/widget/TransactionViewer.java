@@ -4,7 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlaceRouter;
 import com.yoghurt.crypto.transactions.client.resources.R;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public class TransactionViewer extends ValueViewer {
   private final ClickHandler mouseClickHandler = new ClickHandler() {

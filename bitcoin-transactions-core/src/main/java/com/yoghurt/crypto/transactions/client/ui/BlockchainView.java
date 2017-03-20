@@ -1,7 +1,7 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
 
 public interface BlockchainView {
   Block getBlockFromHex(final String hex);

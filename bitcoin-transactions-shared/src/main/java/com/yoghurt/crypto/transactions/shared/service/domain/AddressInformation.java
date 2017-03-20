@@ -6,13 +6,13 @@ import java.util.ArrayList;
 public class AddressInformation implements Serializable {
   private static final long serialVersionUID = -221605929040046034L;
 
-  private ArrayList<AddressOutpoint> outpoints;
+  private ArrayList<OutpointInformation> outpoints;
 
-  public void setOutpoints(final ArrayList<AddressOutpoint> outpoints) {
+  public void setOutpoints(final ArrayList<OutpointInformation> outpoints) {
     this.outpoints = outpoints;
   }
 
-  public ArrayList<AddressOutpoint> getOutpoints() {
+  public ArrayList<OutpointInformation> getOutpoints() {
     return outpoints;
   }
 

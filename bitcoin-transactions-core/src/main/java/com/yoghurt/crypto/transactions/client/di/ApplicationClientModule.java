@@ -7,11 +7,9 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.inject.Inject;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.yoghurt.crypto.transactions.client.ApplicationConfigProvider;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace.AddressDataType;
 import com.yoghurt.crypto.transactions.client.place.ApplicationActivityMapper;
@@ -30,25 +28,21 @@ import com.yoghurt.crypto.transactions.client.ui.AddressView;
 import com.yoghurt.crypto.transactions.client.ui.AddressViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.BlockView;
 import com.yoghurt.crypto.transactions.client.ui.BlockViewImpl;
-import com.yoghurt.crypto.transactions.client.ui.ContributeView;
-import com.yoghurt.crypto.transactions.client.ui.ContributeViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.MineView;
 import com.yoghurt.crypto.transactions.client.ui.MineViewImpl;
-import com.yoghurt.crypto.transactions.client.ui.RPCResponseView;
-import com.yoghurt.crypto.transactions.client.ui.RPCResponseViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.ScriptView;
 import com.yoghurt.crypto.transactions.client.ui.ScriptViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.StartupView;
 import com.yoghurt.crypto.transactions.client.ui.StartupViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.TransactionView;
 import com.yoghurt.crypto.transactions.client.ui.TransactionViewImpl;
-import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 
 public class ApplicationClientModule extends AbstractGinModule {
   @Override
   protected void configure() {
     // Binding application critical architecture
-    bind(ActivityMapper.class).to(ApplicationActivityMapper.class).in(Singleton.class);;
+    bind(ActivityMapper.class).to(ApplicationActivityMapper.class).in(Singleton.class);
+    ;
     bind(Place.class).annotatedWith(DefaultPlace.class).to(StartupPlace.class).in(Singleton.class);
     bind(PlaceController.class).to(ApplicationPlaceController.class).in(Singleton.class);
     bind(BitcoinPlaceRouter.class).to(ApplicationPlaceController.class).in(Singleton.class);
@@ -62,16 +56,9 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(BlockView.class).to(BlockViewImpl.class);
     bind(MineView.class).to(MineViewImpl.class);
     bind(ScriptView.class).to(ScriptViewImpl.class);
-    bind(ContributeView.class).to(ContributeViewImpl.class);
-    bind(RPCResponseView.class).to(RPCResponseViewImpl.class);
     bind(AddressView.class).to(AddressViewImpl.class);
 
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
-  }
-
-  @Provides
-  public UserApplicationConfig getUserApplicationConfig(final ApplicationConfigProvider provider) {
-    return provider.getApplicationConfig();
   }
 
   public static class ApplicationPlaceController extends PlaceController implements BitcoinPlaceRouter {

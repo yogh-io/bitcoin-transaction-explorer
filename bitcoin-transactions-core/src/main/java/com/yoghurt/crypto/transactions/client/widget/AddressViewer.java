@@ -2,11 +2,11 @@ package com.yoghurt.crypto.transactions.client.widget;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.yoghurt.crypto.transactions.client.domain.Address;
 import com.yoghurt.crypto.transactions.client.place.AddressPlaceRouter;
 import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.Base58;
-import com.yoghurt.crypto.transactions.shared.domain.Address;
 
 public class AddressViewer extends ValueViewer {
   private final ClickHandler mouseClickHandler = new ClickHandler() {

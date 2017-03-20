@@ -5,12 +5,12 @@ import java.util.Collection;
 import com.google.gwt.dom.client.Style.Unit;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.domain.ScriptExecutionPart;
+import com.yoghurt.crypto.transactions.client.domain.ScriptPartType;
+import com.yoghurt.crypto.transactions.client.util.ScriptOperationUtil;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptExecutionPart;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
-import com.yoghurt.crypto.transactions.shared.util.ScriptOperationUtil;
 
 public class ScriptExecutionViewer extends ContextFieldSet<ScriptExecutionPart> {
   private static final int HASH_ELLIPSIS = 16;

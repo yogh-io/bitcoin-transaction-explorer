@@ -4,9 +4,9 @@ import java.util.Deque;
 import java.util.Iterator;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.Arrays;
+import com.yoghurt.crypto.transactions.client.domain.StackObject;
+import com.yoghurt.crypto.transactions.client.util.ScriptOperationUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.domain.StackObject;
-import com.yoghurt.crypto.transactions.shared.util.ScriptOperationUtil;
 
 public final class ScriptExecutionUtil {
   private static final byte[] FALSE = new byte[] { };

@@ -6,12 +6,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.yoghurt.crypto.transactions.client.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.client.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace;
 import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
 import com.yoghurt.crypto.transactions.client.util.address.Base58;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
 
 public class AddressActivity extends LazyLookupActivity<AddressInformation, AddressPlace> implements AddressView.Presenter {

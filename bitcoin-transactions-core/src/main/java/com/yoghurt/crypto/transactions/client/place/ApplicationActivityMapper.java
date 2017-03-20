@@ -6,9 +6,7 @@ import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.yoghurt.crypto.transactions.client.ui.AddressActivity;
 import com.yoghurt.crypto.transactions.client.ui.BlockActivity;
-import com.yoghurt.crypto.transactions.client.ui.ContributeActivity;
 import com.yoghurt.crypto.transactions.client.ui.MineActivity;
-import com.yoghurt.crypto.transactions.client.ui.RPCResponseActivity;
 import com.yoghurt.crypto.transactions.client.ui.ScriptActivity;
 import com.yoghurt.crypto.transactions.client.ui.StartupActivity;
 import com.yoghurt.crypto.transactions.client.ui.TransactionActivity;
@@ -31,10 +29,6 @@ public class ApplicationActivityMapper implements ActivityMapper {
       presenter = factory.createMinePresenter((MinePlace) place);
     } else if (place instanceof ScriptPlace) {
       presenter = factory.createScriptPresenter((ScriptPlace) place);
-    } else if (place instanceof ContributePlace) {
-      presenter = factory.createContributePresenter((ContributePlace) place);
-    } else if (place instanceof RPCResponsePlace) {
-      presenter = factory.createRPCReponsePresenter((RPCResponsePlace) place);
     } else if (place instanceof AddressPlace) {
       presenter = factory.createAddressPresenter((AddressPlace) place);
     }
@@ -46,10 +40,6 @@ public class ApplicationActivityMapper implements ActivityMapper {
     StartupActivity createStartupPresenter(StartupPlace place);
 
     AddressActivity createAddressPresenter(AddressPlace place);
-
-    RPCResponseActivity createRPCReponsePresenter(RPCResponsePlace place);
-
-    ContributeActivity createContributePresenter(ContributePlace place);
 
     BlockActivity createBlockPresenter(BlockPlace place);
 

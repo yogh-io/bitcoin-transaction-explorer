@@ -2,9 +2,9 @@ package com.yoghurt.crypto.transactions.server.servlets.config;
 
 import java.util.Properties;
 
+import com.yoghurt.crypto.transactions.server.domain.AbstractAdministratedApplicationConfig;
 import com.yoghurt.crypto.transactions.server.servlets.config.ConfigFactory.ConfigPropertiesRetriever;
-import com.yoghurt.crypto.transactions.shared.domain.config.AbstractAdministratedApplicationConfig;
-import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.service.domain.UserApplicationConfig;
 
 public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApplicationConfig> implements ConfigPropertiesRetriever {
 
@@ -19,8 +19,6 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
 
     config.setApplicationTitle(props.getProperty(APPLICATION_TITLE_KEY));
     config.setApplicationSubTitle(props.getProperty(APPLICATION_SUBTITLE_KEY));
-    config.setHostDonationAddress(props.getProperty(HOST_DONATION_ADDRESS_KEY));
-    config.setProjectDonationAddress(props.getProperty(PROJECT_DONATION_ADDRESS_KEY));
   }
 
   @Override
@@ -35,7 +33,6 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
     props.put(SOURCE_TYPE_KEY, config.getBlockchainSource().name());
     props.put(APPLICATION_TITLE_KEY, config.getApplicationTitle());
     props.put(APPLICATION_SUBTITLE_KEY, config.getApplicationSubTitle());
-    props.put(HOST_DONATION_ADDRESS_KEY, config.getHostDonationAddress());
 
     return props;
   }
@@ -51,9 +48,6 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
 
     userConfig.setApplicationTitle(config.getApplicationTitle());
     userConfig.setApplicationSubTitle(config.getApplicationSubTitle());
-    userConfig.setHostDonationAddress(config.getHostDonationAddress());
-    userConfig.setProjectDonationAddress(config.getProjectDonationAddress());
-    userConfig.setBlockchainSource(config.getBlockchainSource());
 
     return userConfig;
   }

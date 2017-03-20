@@ -1,6 +1,6 @@
 package com.yoghurt.crypto.transactions.client.util.script;
 
-import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
+import com.yoghurt.crypto.transactions.client.domain.ScriptInformation;
 
 public class StackMachineFactory {
 

@@ -1,6 +1,6 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
 
 public interface TransactionView extends LazyProgressWidget {

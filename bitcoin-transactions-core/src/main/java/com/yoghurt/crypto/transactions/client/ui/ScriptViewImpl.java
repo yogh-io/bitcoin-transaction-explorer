@@ -12,7 +12,11 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.client.domain.ScriptInformation;
+import com.yoghurt.crypto.transactions.client.domain.ScriptType;
 import com.yoghurt.crypto.transactions.client.i18n.M;
+import com.yoghurt.crypto.transactions.client.util.ScriptEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.script.ExecutionStep;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachine;
 import com.yoghurt.crypto.transactions.client.widget.ScriptExecutionViewer;
@@ -21,10 +25,6 @@ import com.yoghurt.crypto.transactions.client.widget.ScriptStateViewer;
 import com.yoghurt.crypto.transactions.client.widget.ScriptViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
-import com.yoghurt.crypto.transactions.shared.util.ScriptEncodeUtil;
 
 @Singleton
 public class ScriptViewImpl extends Composite implements ScriptView {

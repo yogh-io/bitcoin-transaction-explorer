@@ -9,8 +9,6 @@ public interface StartupView extends IsWidget {
 
     void onMiningClick();
 
-    void onContributeClick();
-
   }
 
   void setPresenter(Presenter presenter);

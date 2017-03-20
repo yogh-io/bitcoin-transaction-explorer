@@ -2,8 +2,8 @@ package com.yoghurt.crypto.transactions.client.util.script;
 
 import java.util.Deque;
 
-import com.yoghurt.crypto.transactions.shared.domain.ScriptExecutionPart;
-import com.yoghurt.crypto.transactions.shared.domain.StackObject;
+import com.yoghurt.crypto.transactions.client.domain.ScriptExecutionPart;
+import com.yoghurt.crypto.transactions.client.domain.StackObject;
 
 public class ExecutionStep {
   private Deque<StackObject> stack;

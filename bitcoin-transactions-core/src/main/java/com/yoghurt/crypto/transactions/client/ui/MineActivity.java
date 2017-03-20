@@ -9,24 +9,24 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.RawBlockContainer;
+import com.yoghurt.crypto.transactions.client.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.client.place.MinePlace;
 import com.yoghurt.crypto.transactions.client.place.MinePlace.MineDataType;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
+import com.yoghurt.crypto.transactions.client.util.NumberEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionParseUtil;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
-import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
+import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 /**
  * TODO GET RID OF HISTORICAL SIMULATION AND USE GETWORK/GETBLOCKTEMPLATE TYPE OF CONSTRUCT

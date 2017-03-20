@@ -10,16 +10,16 @@ import com.google.inject.Inject;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.domain.Address;
+import com.yoghurt.crypto.transactions.client.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.client.util.address.AddressEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.address.AddressParseUtil;
 import com.yoghurt.crypto.transactions.client.util.address.Base58;
 import com.yoghurt.crypto.transactions.client.widget.AddressOutpointWidget;
 import com.yoghurt.crypto.transactions.client.widget.QRCodeWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
-import com.yoghurt.crypto.transactions.shared.domain.Address;
-import com.yoghurt.crypto.transactions.shared.domain.Base58CheckContents;
 import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressOutpoint;
+import com.yoghurt.crypto.transactions.shared.service.domain.OutpointInformation;
 
 public class AddressViewImpl extends Composite implements AddressView {
   interface AddressViewImplUiBinder extends UiBinder<Widget, AddressViewImpl> {}
@@ -90,10 +90,10 @@ public class AddressViewImpl extends Composite implements AddressView {
 
     long balance = 0;
     int count = 0;
-    for (final AddressOutpoint addressOutpoint : addressInformation.getOutpoints()) {
+    for (final OutpointInformation addressOutpoint : addressInformation.getOutpoints()) {
       outpointContainer.add(new AddressOutpointWidget(router, addressOutpoint, ++count));
       if(!addressOutpoint.isSpent()) {
-        balance += addressOutpoint.getOutput().getTransactionValue();
+        balance += addressOutpoint.getTransactionValue();
       }
     }
 

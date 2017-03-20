@@ -3,10 +3,10 @@ package com.yoghurt.crypto.transactions.client.widget;
 import java.util.Map.Entry;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
+import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockUtil;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.ColorBuilder;
-import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 
 public class TargettedHashHexViewer extends HashHexViewer {
   private final Color[] colors = new Color[] {

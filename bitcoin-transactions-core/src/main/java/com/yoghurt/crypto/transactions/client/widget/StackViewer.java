@@ -5,10 +5,10 @@ import java.util.Collection;
 import com.google.gwt.dom.client.Style.Unit;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
+import com.yoghurt.crypto.transactions.client.domain.StackObject;
 import com.yoghurt.crypto.transactions.client.resources.R;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
-import com.yoghurt.crypto.transactions.shared.domain.StackObject;
 
 public class StackViewer extends ContextFieldSet<StackObject> {
 

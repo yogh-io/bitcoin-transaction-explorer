@@ -1,9 +1,9 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
 import com.google.gwt.user.client.ui.Composite;
+import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.client.util.ParseUtil;
-import com.yoghurt.crypto.transactions.shared.domain.Block;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 
 public class AbstractBlockchainView extends Composite implements BlockchainView {
   @Override

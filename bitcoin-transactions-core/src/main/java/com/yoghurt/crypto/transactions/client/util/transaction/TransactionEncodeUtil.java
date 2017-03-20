@@ -1,14 +1,14 @@
 package com.yoghurt.crypto.transactions.client.util.transaction;
 
-import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
-import com.yoghurt.crypto.transactions.shared.domain.Transaction;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
-import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
-import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.util.ScriptEncodeUtil;
+import com.yoghurt.crypto.transactions.client.domain.RawTransactionContainer;
+import com.yoghurt.crypto.transactions.client.domain.ScriptType;
+import com.yoghurt.crypto.transactions.client.domain.Transaction;
+import com.yoghurt.crypto.transactions.client.domain.TransactionInput;
+import com.yoghurt.crypto.transactions.client.domain.TransactionOutput;
+import com.yoghurt.crypto.transactions.client.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.client.util.NumberEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.ScriptEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.VariableLengthInteger;
 
 public final class TransactionEncodeUtil extends TransactionUtil {
   private TransactionEncodeUtil() {}
@@ -95,6 +95,10 @@ public final class TransactionEncodeUtil extends TransactionUtil {
 
   private static byte[] encodeNumInputs(final Transaction transaction) {
     return encodeVariableInteger(transaction.getInputSize());
+  }
+
+  private static byte[] encodeVariableInteger(final long value) {
+    return new VariableLengthInteger(value).getBytes();
   }
 
   private static byte[] encodeVariableInteger(final VariableLengthInteger varInt) {

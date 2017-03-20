@@ -8,7 +8,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 public class StartupViewImpl extends Composite implements StartupView {
-  interface StartupViewImplUiBinder extends UiBinder<Widget, StartupViewImpl> {}
+  interface StartupViewImplUiBinder extends UiBinder<Widget, StartupViewImpl> {
+  }
 
   private static final StartupViewImplUiBinder UI_BINDER = GWT.create(StartupViewImplUiBinder.class);
 
@@ -31,10 +32,5 @@ public class StartupViewImpl extends Composite implements StartupView {
   @UiHandler("mining")
   public void onMiningClick(final ClickEvent event) {
     presenter.onMiningClick();
-  }
-
-  @UiHandler("contribute")
-  public void onContributeClick(final ClickEvent event) {
-    presenter.onContributeClick();
   }
 }

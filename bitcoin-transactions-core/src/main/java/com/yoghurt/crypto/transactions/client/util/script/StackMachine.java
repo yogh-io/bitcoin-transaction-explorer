@@ -5,11 +5,11 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.yoghurt.crypto.transactions.shared.domain.ScriptExecutionPart;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptInformation;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
-import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
-import com.yoghurt.crypto.transactions.shared.domain.StackObject;
+import com.yoghurt.crypto.transactions.client.domain.ScriptExecutionPart;
+import com.yoghurt.crypto.transactions.client.domain.ScriptInformation;
+import com.yoghurt.crypto.transactions.client.domain.ScriptPart;
+import com.yoghurt.crypto.transactions.client.domain.ScriptType;
+import com.yoghurt.crypto.transactions.client.domain.StackObject;
 
 public class StackMachine implements Iterable<ExecutionStep>, Iterator<ExecutionStep> {
   private final LinkedList<ScriptExecutionPart> script = new LinkedList<ScriptExecutionPart>();

@@ -1,0 +1,60 @@
+package com.yoghurt.crypto.transactions.server.domain;
+
+public abstract class AbstractAdministratedApplicationConfig implements AdministratedApplicationConfig {
+  private static final long serialVersionUID = 1194639229241504631L;
+
+  private BlockchainSource source;
+
+  private String applicationTitle;
+  private String applicationSubTitle;
+
+  private String hostDonationAddress;
+  private String projectDonationAddress;
+
+  public AbstractAdministratedApplicationConfig(final BlockchainSource source) {
+    this.setSource(source);
+  }
+
+  @Override
+  public BlockchainSource getBlockchainSource() {
+    return source;
+  }
+
+  @Override
+  public String getApplicationTitle() {
+    return applicationTitle;
+  }
+
+  @Override
+  public String getApplicationSubTitle() {
+    return applicationSubTitle;
+  }
+
+  public void setApplicationTitle(final String applicationTitle) {
+    this.applicationTitle = applicationTitle;
+  }
+
+  public void setApplicationSubTitle(final String applicationSubTitle) {
+    this.applicationSubTitle = applicationSubTitle;
+  }
+
+  public void setHostDonationAddress(final String hostDonationAddress) {
+    this.hostDonationAddress = hostDonationAddress;
+  }
+
+  public void setProjectDonationAddress(final String projectDonationAddress) {
+    this.projectDonationAddress = projectDonationAddress;
+  }
+
+  /**
+   * Private setter to (really) prevent field from being made final.
+   */
+  private void setSource(final BlockchainSource source) {
+    this.source = source;
+  }
+
+  @Override
+  public String toString() {
+    return "AbstractAdministratedApplicationConfig [source=" + source + ", applicationTitle=" + applicationTitle + ", applicationSubTitle=" + applicationSubTitle + "]";
+  }
+}
