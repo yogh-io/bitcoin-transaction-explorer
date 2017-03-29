@@ -1,11 +1,11 @@
-package com.yoghurt.crypto.transactions.client;
+package com.yoghurt.crypto.transactions.client.service;
 
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 
 public interface BlockchainRetrievalServiceAsync {
   void getTransactionInformation(String txid, AsyncCallback<TransactionInformation> callback);

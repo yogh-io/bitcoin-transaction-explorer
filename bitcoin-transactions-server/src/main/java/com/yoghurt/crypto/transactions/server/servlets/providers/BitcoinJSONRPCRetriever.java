@@ -24,28 +24,28 @@ import org.apache.http.impl.client.SystemDefaultCredentialsProvider;
 
 import com.yoghurt.crypto.transactions.server.domain.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.server.util.HttpClientProxy;
-import com.yoghurt.crypto.transactions.server.util.json.JSONRPCEncoder;
-import com.yoghurt.crypto.transactions.server.util.json.JSONRPCParser;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.OutpointInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
+import com.yoghurt.crypto.transactions.server.util.json.core.JSONRPCEncoder;
+import com.yoghurt.crypto.transactions.server.util.json.core.JSONRPCParser;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.OutpointInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 
 public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   private static final String JSON_RPC_REALM = "jsonrpc";
   private static final String AUTH_SCHEME = AuthSchemes.BASIC;
 
-  private static final String URI_FORMAT = "http://%s:%s";
+  private static final String URI_FORMAT = "http://%s:%s@%s:%s";
 
   /**
-   * The JSON-RPC interface doesn't return the genesis coinbase transaction, so it's been hard-coded here.
+   * The JSON-RPC interface doesn't return the genesis coinbase transaction, so
+   * it's been hard-coded here.
    */
   private static final String GENESIS_COINBASE_TXID = "4A5E1E4BAAB89F3A32518A88C31BC87F618F76673E2CC77AB2127B7AFDEDA33B";
   private static final String GENESIS_COINBASE_RAW = "01000000010000000000000000000000000000000000000000000000000000000000000000FFFFFFFF4D04FFFF001D0104455468652054696D65732030332F4A616E2F32303039204368616E63656C6C6F72206F6E206272696E6B206F66207365636F6E64206261696C6F757420666F722062616E6B73FFFFFFFF0100F2052A01000000434104678AFDB0FE5548271967F1A67130B7105CD6A828E03909A67962E0EA1F61DEB649F6BC3F4CEF38C4F35504E51EC112DE5C384DF7BA0B8D578A4C702B6BF11D5FAC00000000";
 
-  private final String uri;
+  protected final String uri;
 
   private final HttpClientContext localContext;
   private final CredentialsProvider credentialsProvider = new SystemDefaultCredentialsProvider();
@@ -54,10 +54,9 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
     this(config.getHost(), Integer.parseInt(config.getPort()), config.getRpcUser(), config.getRpcPass());
   }
 
-  private BitcoinJSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
-    uri = String.format(URI_FORMAT, host, port);
-    credentialsProvider.setCredentials(new AuthScope(host, port, JSON_RPC_REALM, AUTH_SCHEME),
-        new UsernamePasswordCredentials(rpcUser, rpcPassword));
+  protected BitcoinJSONRPCRetriever(final String host, final int port, final String rpcUser, final String rpcPassword) {
+    uri = String.format(URI_FORMAT, rpcUser, rpcPassword, host, port);
+    credentialsProvider.setCredentials(new AuthScope(host, port, JSON_RPC_REALM, AUTH_SCHEME), new UsernamePasswordCredentials(rpcUser, rpcPassword));
 
     final AuthCache authCache = new BasicAuthCache();
     authCache.put(new HttpHost(host, port), new BasicScheme());
@@ -109,9 +108,8 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
       final AddressInformation addressInformation = JSONRPCParser.getAddressInformation(address, jsonData);
 
       for (final OutpointInformation outpoint : addressInformation.getOutpoints()) {
-        final String txid = new String(Hex.encodeHex(outpoint.getReferenceTransaction()));
-        try (final InputStream utxoJsonData = doComplexJSONRPCMethod(client, "gettxout", txid, outpoint.getIndex())
-            .getContent()) {
+        final String txid = outpoint.getReferenceTransaction();
+        try (final InputStream utxoJsonData = doComplexJSONRPCMethod(client, "gettxout", txid, outpoint.getIndex()).getContent()) {
           outpoint.setSpent(JSONRPCParser.isNullResult(utxoJsonData));
         }
       }
@@ -140,8 +138,7 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
   @Override
   public ArrayList<String> getTransactionList(final int height) throws ApplicationException {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
-        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", getBlockHashFromHeight(height))
-            .getContent()) {
+        InputStream jsonData = doComplexJSONRPCMethod(client, "getblock", getBlockHashFromHeight(height)).getContent()) {
 
       return JSONRPCParser.getTransactionList(jsonData);
     } catch (IOException | HttpException e) {
@@ -176,29 +173,30 @@ public class BitcoinJSONRPCRetriever implements BlockchainRetrievalService {
     }
   }
 
-  private String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {
+  protected String doSimpleJSONRPCMethod(final String method, final Object... params) throws IOException, HttpException {
     try (CloseableHttpClient client = getAuthenticatedHttpClientProxy();
         InputStream stream = doComplexJSONRPCMethod(client, method, params).getContent()) {
       return JSONRPCParser.getResultString(stream);
     }
   }
 
-  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method,
-      final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
-    return doComplexJSONRPCMethod(client, method, false, params);
-  }
-
-  private HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final boolean unsafe,
-      final Object... params) throws IOException, IllegalStateException, ParseException, HttpException {
+  protected HttpEntity doComplexJSONRPCMethod(final CloseableHttpClient client, final String method, final Object... params)
+      throws IOException, IllegalStateException, ParseException, HttpException {
     final String payload = JSONRPCEncoder.getRequestString(method, params);
+
+    System.out.println(uri);
 
     // Temporary
     System.out.println("> " + payload);
 
-    return HttpClientProxy.postRemoteContent(client, unsafe, uri, payload);
+    return HttpClientProxy.postRemoteContent(client, uri, payload);
   }
 
-  private CloseableHttpClient getAuthenticatedHttpClientProxy() {
+  protected CloseableHttpClient getAuthenticatedHttpClientProxy() {
     return HttpClients.custom().setDefaultCredentialsProvider(credentialsProvider).build();
+  }
+
+  protected CloseableHttpClient getHttpClientProxy() {
+    return HttpClients.createDefault();
   }
 }

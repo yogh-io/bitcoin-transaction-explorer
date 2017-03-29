@@ -6,13 +6,13 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.googlecode.gwt.crypto.util.Str;
-import com.yoghurt.crypto.transactions.client.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
+import com.yoghurt.crypto.transactions.client.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
 import com.yoghurt.crypto.transactions.client.util.ParseUtil;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 
 /**
  * Refactor this catastrophe.

@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.service.domain;
+package com.yoghurt.crypto.transactions.shared.domain;
 
 import java.io.Serializable;
 
@@ -6,16 +6,15 @@ public class OutpointInformation implements Serializable {
   private static final long serialVersionUID = -3935787088468311231L;
 
   private int idx;
-  private byte[] referenceTransaction;
+  private String referenceTransaction;
   private long amount;
-  private byte[] script;
   private boolean spent;
 
   public void setIndex(int idx) {
     this.idx = idx;
   }
 
-  public void setReferenceTransaction(byte[] referenceTransaction) {
+  public void setReferenceTransaction(String referenceTransaction) {
     this.referenceTransaction = referenceTransaction;
   }
 
@@ -23,15 +22,11 @@ public class OutpointInformation implements Serializable {
     this.amount = amount;
   }
 
-  public void setOutputScript(byte[] script) {
-    this.script = script;
-  }
-
   public void setSpent(boolean spent) {
     this.spent = spent;
   }
 
-  public byte[] getReferenceTransaction() {
+  public String getReferenceTransaction() {
     return referenceTransaction;
   }
 

@@ -22,7 +22,7 @@ import com.yoghurt.crypto.transactions.client.place.StartupPlace;
 import com.yoghurt.crypto.transactions.client.ui.LazyProgressWidget.LazyProgressListener;
 import com.yoghurt.crypto.transactions.client.util.PlaceTokenParseUtil;
 import com.yoghurt.crypto.transactions.client.widget.HeadingWidget;
-import com.yoghurt.crypto.transactions.shared.service.domain.UserApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.domain.UserApplicationConfig;
 
 import gwt.material.design.client.ui.MaterialProgress;
 import gwt.material.design.client.ui.MaterialTextBox;

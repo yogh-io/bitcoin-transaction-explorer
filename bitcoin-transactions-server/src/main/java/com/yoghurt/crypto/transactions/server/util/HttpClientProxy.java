@@ -14,57 +14,47 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-import com.google.gwt.core.shared.GWT;
-
 /**
  * Wrapper to get remote content and return it as an inputstream simply.
  */
 public class HttpClientProxy {
-  private static final int TIMEOUT = 5 * 1000;
+  private static final int TIMEOUT = 15 * 1000;
 
   private final static RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(TIMEOUT).build();
 
-  public static HttpEntity getRemoteContent(final CloseableHttpClient client, final String url) throws ClientProtocolException, ParseException, URISyntaxException, IOException, HttpException {
-    return getRemoteContent(client, false, url);
+  public static HttpEntity getRemoteContent(final HttpClient client, final String url)
+      throws URISyntaxException, ClientProtocolException, IOException, ParseException, HttpException {
+    return executeRemoteContent(client, new HttpGet(url));
   }
 
-  public static HttpEntity getRemoteContent(final HttpClient client, final boolean unsafe, final String url) throws URISyntaxException, ClientProtocolException, IOException, ParseException, HttpException {
-    return executeRemoteContent(client, unsafe, new HttpGet(url));
+  public static HttpEntity postRemoteContent(CloseableHttpClient client, String format)
+      throws ClientProtocolException, ParseException, IOException, HttpException {
+    return postRemoteContent(client, format, null);
   }
 
-  public static HttpEntity postRemoteContent(final HttpClient client, final String url, final String payload) throws ClientProtocolException, ParseException, IOException, HttpException {
-    return postRemoteContent(client, false, url, payload);
-  }
-
-  public static HttpEntity postRemoteContent(final HttpClient client, final boolean unsafe, final String url, final String payload) throws ClientProtocolException, IOException, ParseException, HttpException {
+  public static HttpEntity postRemoteContent(final HttpClient client, final String url, final String payload)
+      throws ClientProtocolException, ParseException, IOException, HttpException {
     final HttpPost httpPost = new HttpPost(url);
-    httpPost.setEntity(new StringEntity(payload));
 
-    return executeRemoteContent(client, unsafe, httpPost);
+    if (payload != null) {
+      httpPost.setEntity(new StringEntity(payload));
+    }
+
+    return executeRemoteContent(client, httpPost);
   }
 
-  public static HttpEntity postRemoteContent(final CloseableHttpClient client, final boolean unsafe, final String uri, final String req, final HttpClientContext localContext) throws ClientProtocolException, ParseException, IOException, HttpException {
-    final HttpPost httpPost = new HttpPost(uri);
-    httpPost.setEntity(new StringEntity(req));
-
-    return executeRemoteContent(client, unsafe, httpPost, localContext);
-  }
-
-  private static HttpEntity executeRemoteContent(final HttpClient client, final boolean unsafe, final HttpUriRequest request) throws ClientProtocolException, IOException, ParseException, HttpException {
-    return executeRemoteContent(client, unsafe, request, null);
-  }
-
-  private static HttpEntity executeRemoteContent(final HttpClient client, final boolean unsafe, final HttpUriRequest request, final HttpClientContext localContext) throws ClientProtocolException, IOException, ParseException, HttpException {
+  private static HttpEntity executeRemoteContent(final HttpClient client, final HttpUriRequest request)
+      throws ClientProtocolException, IOException, ParseException, HttpException {
     final HttpResponse httpResponse = client.execute(request);
+    
+    System.out.println(request.toString());
 
-    if (unsafe || httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-      GWT.log("Done.");
+    if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
       return httpResponse.getEntity();
     } else {
       throw new HttpException(httpResponse.getStatusLine().toString() + EntityUtils.toString(httpResponse.getEntity()));

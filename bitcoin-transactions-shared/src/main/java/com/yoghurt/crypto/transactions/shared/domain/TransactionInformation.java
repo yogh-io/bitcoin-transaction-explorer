@@ -1,13 +1,12 @@
-package com.yoghurt.crypto.transactions.shared.service.domain;
+package com.yoghurt.crypto.transactions.shared.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class TransactionInformation implements Serializable {
   private static final long serialVersionUID = -5230934399747974590L;
 
   private TransactionState state;
-  private Date time;
+  private long time;
   private int confirmations;
   private String blockHash;
   private int fee;
@@ -24,11 +23,11 @@ public class TransactionInformation implements Serializable {
     this.state = state;
   }
 
-  public Date getTime() {
+  public long getTime() {
     return time;
   }
 
-  public void setTime(final Date time) {
+  public void setTime(final long time) {
     this.time = time;
   }
 

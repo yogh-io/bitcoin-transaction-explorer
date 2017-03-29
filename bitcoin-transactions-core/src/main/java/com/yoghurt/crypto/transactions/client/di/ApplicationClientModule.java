@@ -7,9 +7,11 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.inject.Inject;
+import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.yoghurt.crypto.transactions.client.ApplicationConfigProvider;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace;
 import com.yoghurt.crypto.transactions.client.place.AddressPlace.AddressDataType;
 import com.yoghurt.crypto.transactions.client.place.ApplicationActivityMapper;
@@ -24,6 +26,10 @@ import com.yoghurt.crypto.transactions.client.place.TransactionPlace;
 import com.yoghurt.crypto.transactions.client.place.TransactionPlace.TransactionDataType;
 import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.SimpleColorPicker;
+import com.yoghurt.crypto.transactions.client.service.BlockchainRetrievalServiceAsync;
+import com.yoghurt.crypto.transactions.client.service.BlockchainRetrievalServiceAsyncImpl;
+import com.yoghurt.crypto.transactions.client.service.ConfigServiceAsync;
+import com.yoghurt.crypto.transactions.client.service.ConfigServiceAsyncImpl;
 import com.yoghurt.crypto.transactions.client.ui.AddressView;
 import com.yoghurt.crypto.transactions.client.ui.AddressViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.BlockView;
@@ -36,13 +42,13 @@ import com.yoghurt.crypto.transactions.client.ui.StartupView;
 import com.yoghurt.crypto.transactions.client.ui.StartupViewImpl;
 import com.yoghurt.crypto.transactions.client.ui.TransactionView;
 import com.yoghurt.crypto.transactions.client.ui.TransactionViewImpl;
+import com.yoghurt.crypto.transactions.shared.domain.UserApplicationConfig;
 
 public class ApplicationClientModule extends AbstractGinModule {
   @Override
   protected void configure() {
     // Binding application critical architecture
     bind(ActivityMapper.class).to(ApplicationActivityMapper.class).in(Singleton.class);
-    ;
     bind(Place.class).annotatedWith(DefaultPlace.class).to(StartupPlace.class).in(Singleton.class);
     bind(PlaceController.class).to(ApplicationPlaceController.class).in(Singleton.class);
     bind(BitcoinPlaceRouter.class).to(ApplicationPlaceController.class).in(Singleton.class);
@@ -58,7 +64,16 @@ public class ApplicationClientModule extends AbstractGinModule {
     bind(ScriptView.class).to(ScriptViewImpl.class);
     bind(AddressView.class).to(AddressViewImpl.class);
 
+    // Services
+    bind(ConfigServiceAsync.class).to(ConfigServiceAsyncImpl.class);
+    bind(BlockchainRetrievalServiceAsync.class).to(BlockchainRetrievalServiceAsyncImpl.class);
+
     install(new GinFactoryModuleBuilder().build(ActivityFactory.class));
+  }
+
+  @Provides
+  public UserApplicationConfig getUserApplicationConfig(final ApplicationConfigProvider provider) {
+    return provider.getApplicationConfig();
   }
 
   public static class ApplicationPlaceController extends PlaceController implements BitcoinPlaceRouter {

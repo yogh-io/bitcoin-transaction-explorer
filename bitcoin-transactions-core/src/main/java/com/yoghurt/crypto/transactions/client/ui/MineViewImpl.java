@@ -21,6 +21,7 @@ import com.yoghurt.crypto.transactions.client.domain.Block;
 import com.yoghurt.crypto.transactions.client.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.client.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.client.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.client.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.NumberEncodeUtil;
 import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
@@ -33,7 +34,6 @@ import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.TargettedHashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 @Singleton
 public class MineViewImpl extends Composite implements MineView {

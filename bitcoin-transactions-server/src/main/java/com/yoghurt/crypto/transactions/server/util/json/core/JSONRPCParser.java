@@ -1,43 +1,43 @@
-package com.yoghurt.crypto.transactions.server.util.json;
+package com.yoghurt.crypto.transactions.server.util.json.core;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonProcessingException;
 
+import com.yoghurt.crypto.transactions.server.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.server.util.NumberEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.OutpointInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionState;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.server.util.json.JsonParser;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.OutpointInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 
-public class JSONRPCParser {
+public final class JSONRPCParser {
   private static final String ZERO_HASH = "0000000000000000000000000000000000000000000000000000000000000000";
 
   private JSONRPCParser() {
   }
 
   public static String getString(final InputStream jsonData) throws JsonProcessingException, IOException {
-    final JsonNode tree = JsonParser.mapper.readTree(jsonData);
+    final JsonNode tree = JsonParser.readTree(jsonData);
 
     return tree.getTextValue();
   }
 
   public static String getResultString(final InputStream jsonData) throws JsonProcessingException, IOException {
-    final JsonNode tree = JsonParser.mapper.readTree(jsonData);
+    final JsonNode tree = JsonParser.readTree(jsonData);
 
     return tree.get("result").getTextValue();
   }
 
   private static JsonNode getResultNode(final InputStream jsonData) throws JsonProcessingException, IOException {
-    return JsonParser.mapper.readTree(jsonData).get("result");
+    return JsonParser.readTree(jsonData).get("result");
   }
 
   public static ArrayList<String> getTransactionList(final InputStream jsonData) throws JsonProcessingException, IOException {
@@ -135,7 +135,7 @@ public class JSONRPCParser {
     } else {
       transactionInformation.setConfirmations(confirmationsNode.getIntValue());
       transactionInformation.setState(TransactionState.CONFIRMED);
-      transactionInformation.setTime(new Date(tree.get("time").getLongValue() * 1000));
+      transactionInformation.setTime(tree.get("time").getLongValue() * 1000);
       transactionInformation.setBlockHash(tree.get("blockhash").getTextValue());
     }
 
@@ -151,7 +151,7 @@ public class JSONRPCParser {
     final ArrayList<OutpointInformation> outpoints = new ArrayList<>();
 
     for (final JsonNode tx : tree) {
-      final byte[] txId = Hex.decodeHex(tx.get("txid").getTextValue().toCharArray());
+      final String txId = tx.get("txid").getTextValue();
 
       for (final JsonNode vout : tx.get("vout")) {
         final JsonNode voutScriptPubKey = vout.get("scriptPubKey");
@@ -161,13 +161,15 @@ public class JSONRPCParser {
             final OutpointInformation outpoint = new OutpointInformation();
 
             final int idx = vout.get("n").getIntValue();
-            final byte[] script = Hex.decodeHex(voutScriptPubKey.get("hex").getTextValue().toCharArray());
 
             outpoint.setIndex(idx);
             outpoint.setReferenceTransaction(txId);
             outpoint.setTransactionValue((long) (vout.get("value").getDoubleValue() * 100000000d));
 
-            outpoint.setOutputScript(script);
+            // Not actually needed.
+            // final byte[] script =
+            // Hex.decodeHex(voutScriptPubKey.get("hex").getTextValue().toCharArray());
+            // outpoint.setOutputScript(script);
 
             outpoints.add(outpoint);
           }

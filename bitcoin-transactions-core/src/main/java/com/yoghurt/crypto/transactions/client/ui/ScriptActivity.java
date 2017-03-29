@@ -5,20 +5,20 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
-import com.yoghurt.crypto.transactions.client.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.client.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.client.domain.ScriptInformation;
 import com.yoghurt.crypto.transactions.client.domain.Transaction;
 import com.yoghurt.crypto.transactions.client.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace;
 import com.yoghurt.crypto.transactions.client.place.ScriptPlace.ScriptDataType;
+import com.yoghurt.crypto.transactions.client.service.BlockchainRetrievalServiceAsync;
 import com.yoghurt.crypto.transactions.client.util.MorphCallback;
 import com.yoghurt.crypto.transactions.client.util.ParseUtil;
 import com.yoghurt.crypto.transactions.client.util.ScriptParseUtil;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachine;
 import com.yoghurt.crypto.transactions.client.util.script.StackMachineFactory;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionOutPoint;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 
 public class ScriptActivity extends LookupActivity<ScriptInformation, ScriptPlace> implements ScriptView.Presenter {
   private final ScriptView view;

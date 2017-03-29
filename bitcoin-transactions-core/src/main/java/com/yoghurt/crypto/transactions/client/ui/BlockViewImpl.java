@@ -30,7 +30,7 @@ import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
-import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 
 import gwt.material.design.client.ui.MaterialButton;
 
@@ -90,23 +90,35 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
 
   @Override
   public void setBlock(final BlockInformation blockInformation) {
-    final Transaction coinbase = getTransactionFromHex(blockInformation.getCoinbaseInformation().getRawHex());
+    Transaction coinbase = null;
+    if (blockInformation.getCoinbaseInformation() != null) {
+      coinbase = getTransactionFromHex(blockInformation.getCoinbaseInformation().getRawHex());
+    }
+
     final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
 
-    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
-    final RawBlockContainer rawBlock = new RawBlockContainer();
+    RawTransactionContainer rawTransaction = null;
+    RawBlockContainer rawBlock = null;
 
     try {
-      BlockEncodeUtil.encodeBlock(block, rawBlock);
-      TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
+      RawBlockContainer tryBlock = new RawBlockContainer();
+      BlockEncodeUtil.encodeBlock(block, tryBlock);
+      rawBlock = tryBlock;
+      
+      RawTransactionContainer tryTransaction = new RawTransactionContainer();
+      TransactionEncodeUtil.encodeTransaction(coinbase, tryTransaction);
+      rawTransaction = tryTransaction;
     } catch (final Throwable e) {
-      e.printStackTrace();
+      GWT.log(e.getClass().getName() + " > " + e.getMessage());
       // Eat.
     }
 
     blockHashViewer.setHash(block.getBlockHash());
     targetViewer.setBits(block.getBits());
-    coinbaseHashViewer.setHash(coinbase.getTransactionId());
+
+    if (coinbase != null) {
+      coinbaseHashViewer.setHash(coinbase.getTransactionId());
+    }
 
     versionViewer.setValue(block.getVersion());
     previousBlockHashViewer.setValue(block.getPreviousBlockHash());
@@ -115,20 +127,27 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     bitsViewer.setValue(block.getBits());
     nonceViewer.setValue(block.getNonce());
 
-    blockHexViewer.setValue(rawBlock.entrySet());
+    if (rawBlock != null) {
+      blockHexViewer.setValue(rawBlock.entrySet());
+    }
+    
     notFoundLabel.setVisible(blockInformation == null);
     extraInformationContainer.setVisible(blockInformation != null);
 
-    coinbaseHexViewer.setValue(rawTransaction);
+    if (rawTransaction != null) {
+      coinbaseHexViewer.setValue(rawTransaction);
+    }
 
     heightViewer.setValue(blockInformation.getHeight());
     numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
     numTransactionsViewer.setValue(blockInformation.getNumTransactions());
+    
     nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
     sizeViewer.setValue(blockInformation.getSize());
 
-    coinbaseInputViewer.setValue(
-        TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
+    if (rawTransaction != null) {
+      coinbaseInputViewer.setValue(TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
+    }
 
     transactionPanel.clear();
     loadTransactionsButton.setVisible(true);

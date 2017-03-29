@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.service.domain;
+package com.yoghurt.crypto.transactions.shared.domain;
 
 /**
  * There's some duplication with administrator app context I'm not happy about,

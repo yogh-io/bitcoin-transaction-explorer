@@ -55,7 +55,6 @@
     <g:FlowPanel styleName="{res.css.flex} {style.linkPanel}">
       <g:Label styleName="{style.blockLink} {style.red}" text="{i18n.startupLastBlock}" ui:field="lastBlock" />
       <g:Label styleName="{style.blockLink} {style.blue}" text="Mining simulator" ui:field="mining" />
-      <g:Label styleName="{style.blockLink} {style.green}" text="Contribute" ui:field="contribute" />
     </g:FlowPanel>
     <!-- <w:HeadingWidget n="1" text="Recent blocks" /> -->
   </g:FlowPanel>

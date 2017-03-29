@@ -1,6 +1,6 @@
 package com.yoghurt.crypto.transactions.client.domain;
 
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionOutPoint;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 
 public class ScriptInformation {
   private TransactionOutPoint outpoint;

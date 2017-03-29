@@ -3,9 +3,6 @@ package com.yoghurt.crypto.transactions.client.util;
 import com.yoghurt.crypto.transactions.client.domain.Operation;
 import com.yoghurt.crypto.transactions.client.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.client.domain.ScriptPart;
-import com.yoghurt.crypto.transactions.client.util.ScriptOperationUtil;
-import com.yoghurt.crypto.transactions.client.util.VariableLengthInteger;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public final class ScriptParseUtil {
   private ScriptParseUtil() {

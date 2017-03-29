@@ -1,16 +1,14 @@
-package com.yoghurt.crypto.transactions.shared.service;
+package com.yoghurt.crypto.transactions.server.servlets.providers;
 
 
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.yoghurt.crypto.transactions.shared.service.domain.AddressInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.exception.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.domain.AddressInformation;
+import com.yoghurt.crypto.transactions.shared.domain.ApplicationException;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
 
-@RemoteServiceRelativePath("blockchain-retrieve")
 public interface BlockchainRetrievalService extends RemoteService {
   TransactionInformation getTransactionInformation(String txid) throws ApplicationException;
 

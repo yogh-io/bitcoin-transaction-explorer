@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.service.util;
+package com.yoghurt.crypto.transactions.client.util;
 
 public final class ArrayUtil {
   private ArrayUtil() {}

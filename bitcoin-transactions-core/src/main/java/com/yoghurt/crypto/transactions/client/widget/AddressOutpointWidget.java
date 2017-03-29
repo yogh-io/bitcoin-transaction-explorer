@@ -7,7 +7,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
 import com.yoghurt.crypto.transactions.client.resources.R;
-import com.yoghurt.crypto.transactions.shared.service.domain.OutpointInformation;
+import com.yoghurt.crypto.transactions.shared.domain.OutpointInformation;
 
 public class AddressOutpointWidget extends Composite {
   interface AddressOutpointUiBinder extends UiBinder<Widget, AddressOutpointWidget> {}

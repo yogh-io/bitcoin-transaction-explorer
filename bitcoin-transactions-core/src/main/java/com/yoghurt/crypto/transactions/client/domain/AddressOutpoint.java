@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.client.domain;
 
 import java.io.Serializable;
 
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionOutPoint;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 
 public class AddressOutpoint extends TransactionOutPoint implements Serializable {
   private static final long serialVersionUID = -2104537209099839858L;

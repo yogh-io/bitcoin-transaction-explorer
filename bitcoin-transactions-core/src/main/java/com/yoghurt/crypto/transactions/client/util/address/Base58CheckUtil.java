@@ -2,8 +2,8 @@ package com.yoghurt.crypto.transactions.client.util.address;
 
 import com.googlecode.gwt.crypto.bouncycastle.util.Arrays;
 import com.yoghurt.crypto.transactions.client.domain.Base58CheckContents;
+import com.yoghurt.crypto.transactions.client.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public class Base58CheckUtil {
   private static final int CHECKSUM_LENGTH = 4;

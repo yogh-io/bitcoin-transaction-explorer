@@ -3,7 +3,7 @@ package com.yoghurt.crypto.transactions.client.ui;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.ui.IsWidget;
-import com.yoghurt.crypto.transactions.shared.service.domain.BlockInformation;
+import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 
 public interface BlockView extends BlockchainView, IsWidget {
 

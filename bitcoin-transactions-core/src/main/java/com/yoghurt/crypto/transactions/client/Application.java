@@ -3,6 +3,7 @@ package com.yoghurt.crypto.transactions.client;
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
@@ -14,7 +15,10 @@ import com.yoghurt.crypto.transactions.client.di.ApplicationGinjector;
 import com.yoghurt.crypto.transactions.client.place.DefaultPlace;
 import com.yoghurt.crypto.transactions.client.resources.ColorPicker;
 import com.yoghurt.crypto.transactions.client.resources.R;
+import com.yoghurt.crypto.transactions.client.service.ConfigServiceAsync;
 import com.yoghurt.crypto.transactions.client.ui.ApplicationRootView;
+import com.yoghurt.crypto.transactions.client.util.AppAsyncCallback;
+import com.yoghurt.crypto.transactions.shared.domain.UserApplicationConfig;
 
 public class Application implements EntryPoint {
 
@@ -30,6 +34,10 @@ public class Application implements EntryPoint {
 
   @Inject private ColorPicker colorPicker;
 
+  @Inject private ApplicationConfigProvider configProvider;
+  
+  @Inject private ConfigServiceAsync configService;
+
   private ActivityManager appActivityManager;
 
   private PlaceHistoryHandler historyHandler;
@@ -43,7 +51,15 @@ public class Application implements EntryPoint {
     appActivityManager = new ActivityManager(actvityMapper, eventBus);
     historyHandler = new PlaceHistoryHandler(placeHistoryMapper);
 
-    onFinishedLoading();
+    configService.getApplicationConfig(new AppAsyncCallback<UserApplicationConfig>() {
+      @Override
+      public void onSuccess(final UserApplicationConfig result) {
+        GWT.log("Setting config: " + result.getApplicationTitle());
+        configProvider.setApplicationConfig(result);
+
+        onFinishedLoading();
+      }
+    });
   }
 
   public void onFinishedLoading() {

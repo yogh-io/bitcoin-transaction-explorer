@@ -1,8 +1,8 @@
 package com.yoghurt.crypto.transactions.client.i18n;
 
 import com.google.gwt.i18n.client.LocalizableResource.DefaultLocale;
-import com.yoghurt.crypto.transactions.client.domain.Operation;
 import com.google.gwt.i18n.client.Messages;
+import com.yoghurt.crypto.transactions.client.domain.Operation;
 
 @DefaultLocale("EN")
 public interface ApplicationMessages extends Messages {

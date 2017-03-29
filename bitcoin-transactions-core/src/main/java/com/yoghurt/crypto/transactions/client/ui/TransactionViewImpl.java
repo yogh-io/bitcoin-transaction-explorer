@@ -1,5 +1,7 @@
 package com.yoghurt.crypto.transactions.client.ui;
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -26,8 +28,8 @@ import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionInformation;
-import com.yoghurt.crypto.transactions.shared.service.domain.TransactionState;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionInformation;
+import com.yoghurt.crypto.transactions.shared.domain.TransactionState;
 
 public class TransactionViewImpl extends Composite implements TransactionView {
   interface TransactionViewImplUiBinder extends UiBinder<Widget, TransactionViewImpl> {}
@@ -141,7 +143,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
         txConfirmationsContainer.setVisible(true);
         txConfirmationsViewer.setValue(transactionInformation.getConfirmations());
         txTimeContainer.setVisible(true);
-        txTimeViewer.setValue(FormatUtil.formatDateTime(transactionInformation.getTime()));
+        txTimeViewer.setValue(FormatUtil.formatDateTime(new Date(transactionInformation.getTime())));
       } else {
         txTimeContainer.setVisible(false);
         txConfirmationsContainer.setVisible(false);

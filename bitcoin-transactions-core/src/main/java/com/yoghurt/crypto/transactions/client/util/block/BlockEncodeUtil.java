@@ -4,8 +4,8 @@ import java.util.Date;
 
 import com.yoghurt.crypto.transactions.client.domain.Block;
 import com.yoghurt.crypto.transactions.client.domain.RawBlockContainer;
+import com.yoghurt.crypto.transactions.client.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.client.util.NumberEncodeUtil;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public final class BlockEncodeUtil {
   private BlockEncodeUtil() {}

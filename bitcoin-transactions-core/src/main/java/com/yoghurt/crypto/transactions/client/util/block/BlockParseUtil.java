@@ -3,9 +3,9 @@ package com.yoghurt.crypto.transactions.client.util.block;
 import java.util.Date;
 
 import com.yoghurt.crypto.transactions.client.domain.Block;
+import com.yoghurt.crypto.transactions.client.util.ArrayUtil;
 import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.ComputeUtil;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
 
 public final class BlockParseUtil extends BlockUtil {
   private static final int MS_TO_S = 1000;

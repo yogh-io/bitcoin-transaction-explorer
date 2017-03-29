@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import com.yoghurt.crypto.transactions.server.domain.AbstractAdministratedApplicationConfig;
 import com.yoghurt.crypto.transactions.server.servlets.config.ConfigFactory.ConfigPropertiesRetriever;
-import com.yoghurt.crypto.transactions.shared.service.domain.UserApplicationConfig;
+import com.yoghurt.crypto.transactions.shared.domain.UserApplicationConfig;
 
 public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApplicationConfig> implements ConfigPropertiesRetriever {
 
@@ -19,11 +19,6 @@ public abstract class AbstractConfigRetriever<E extends AbstractAdministratedApp
 
     config.setApplicationTitle(props.getProperty(APPLICATION_TITLE_KEY));
     config.setApplicationSubTitle(props.getProperty(APPLICATION_SUBTITLE_KEY));
-  }
-
-  @Override
-  public void attemptAutoFillProperties() {
-    // Defaults to no-op
   }
 
   @Override

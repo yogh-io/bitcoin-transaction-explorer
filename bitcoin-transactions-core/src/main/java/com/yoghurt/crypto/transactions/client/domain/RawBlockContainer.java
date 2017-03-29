@@ -2,7 +2,7 @@ package com.yoghurt.crypto.transactions.client.domain;
 
 import java.util.LinkedHashMap;
 
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.client.util.ArrayUtil;
 
 public class RawBlockContainer extends LinkedHashMap<BlockPartType, byte[]> {
   private static final long serialVersionUID = -8651827947470285501L;

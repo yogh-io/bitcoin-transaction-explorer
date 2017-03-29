@@ -1,9 +1,11 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
 import com.yoghurt.crypto.transactions.server.domain.AdministratedApplicationConfig;
+import com.yoghurt.crypto.transactions.server.domain.BcoinNodeConfig;
 import com.yoghurt.crypto.transactions.server.domain.BitcoinCoreNodeConfig;
+import com.yoghurt.crypto.transactions.server.servlets.providers.BcoinJSONRetriever;
 import com.yoghurt.crypto.transactions.server.servlets.providers.BitcoinJSONRPCRetriever;
-import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
+import com.yoghurt.crypto.transactions.server.servlets.providers.BlockchainRetrievalService;
 
 public class BlockchainRetrievalFactory {
   private BlockchainRetrievalService hook;
@@ -23,17 +25,19 @@ public class BlockchainRetrievalFactory {
   }
 
   public static void set(final AdministratedApplicationConfig config) {
-    BlockchainRetrievalService hook;
+    set(getHook(config));
+  }
+
+  private static BlockchainRetrievalService getHook(AdministratedApplicationConfig config) {
 
     switch (config.getBlockchainSource()) {
     case CORE:
-      hook = new BitcoinJSONRPCRetriever((BitcoinCoreNodeConfig) config);
-      break;
+      return new BitcoinJSONRPCRetriever((BitcoinCoreNodeConfig) config);
+    case BCOIN:
+      return new BcoinJSONRetriever((BcoinNodeConfig) config);
     default:
       throw new IllegalArgumentException("Explorer improperly configured; blockchain source not set.");
     }
-
-    set(hook);
   }
 
   private static void set(final BlockchainRetrievalService hook) {

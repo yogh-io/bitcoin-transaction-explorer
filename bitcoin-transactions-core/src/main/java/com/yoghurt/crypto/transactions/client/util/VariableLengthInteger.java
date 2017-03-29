@@ -2,9 +2,6 @@ package com.yoghurt.crypto.transactions.client.util;
 
 import java.io.Serializable;
 
-import com.yoghurt.crypto.transactions.client.util.NumberParseUtil;
-import com.yoghurt.crypto.transactions.shared.service.util.ArrayUtil;
-
 public final class VariableLengthInteger implements Serializable {
   private static final long serialVersionUID = 3006944545057671762L;
 
@@ -41,22 +38,25 @@ public final class VariableLengthInteger implements Serializable {
   }
 
   public VariableLengthInteger(long value) {
-    byte[] bytes;
     switch (sizeOf(value)) {
     case 1:
       bytes = new byte[] { (byte) value };
+      break;
     case 3:
       bytes = new byte[] { (byte) 253, (byte) (value), (byte) (value >> 8) };
+      break;
     case 5:
       bytes = new byte[5];
       bytes[0] = (byte) 254;
       byte[] encodeUint32 = NumberEncodeUtil.encodeUint32(value);
-      bytes = ArrayUtil.arrayCopy(encodeUint32, 1, 5);
+      System.arraycopy(encodeUint32, 0, bytes, 1, 4);
+      break;
     default:
       bytes = new byte[9];
       bytes[0] = (byte) 255;
       byte[] encodeUint64 = NumberEncodeUtil.encodeUint64(value);
-      bytes = ArrayUtil.arrayCopy(encodeUint64, 1, 9);
+      System.arraycopy(encodeUint64, 0, bytes, 1, 8);
+      break;
     }
   }
 

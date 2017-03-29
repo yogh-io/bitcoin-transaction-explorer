@@ -1,4 +1,4 @@
-package com.yoghurt.crypto.transactions.shared.service.domain.exception;
+package com.yoghurt.crypto.transactions.shared.domain;
 
 public class ApplicationException extends Exception {
   private static final long serialVersionUID = 6580816542322401116L;

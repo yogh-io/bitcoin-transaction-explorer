@@ -34,10 +34,4 @@ public class BitcoinNodeConfigRetriever extends AbstractConfigRetriever<BitcoinC
 
     return props;
   }
-
-  @Override
-  public void attemptAutoFillProperties() {
-    // Unsupported for now.
-  }
-
 }
