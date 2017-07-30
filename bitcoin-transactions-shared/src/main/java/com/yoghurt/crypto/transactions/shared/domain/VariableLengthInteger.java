@@ -3,8 +3,8 @@ package com.yoghurt.crypto.transactions.shared.domain;
 import java.io.Serializable;
 
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;
+import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
-
 
 public final class VariableLengthInteger implements Serializable {
   private static final long serialVersionUID = 3006944545057671762L;
@@ -39,6 +39,48 @@ public final class VariableLengthInteger implements Serializable {
     }
 
     this.bytes = ArrayUtil.arrayCopy(bytes, pointer, pointer + byteSize);
+  }
+
+  public VariableLengthInteger(long value) {
+    switch (sizeOf(value)) {
+    case 1:
+      bytes = new byte[] { (byte) value };
+      break;
+    case 3:
+      bytes = new byte[] { (byte) 253, (byte) (value), (byte) (value >> 8) };
+      break;
+    case 5:
+      bytes = new byte[5];
+      bytes[0] = (byte) 254;
+      byte[] encodeUint32 = NumberEncodeUtil.encodeUint32(value);
+      System.arraycopy(encodeUint32, 0, bytes, 1, 4);
+      break;
+    default:
+      bytes = new byte[9];
+      bytes[0] = (byte) 255;
+      byte[] encodeUint64 = NumberEncodeUtil.encodeUint64(value);
+      System.arraycopy(encodeUint64, 0, bytes, 1, 8);
+      break;
+    }
+  }
+
+  /**
+   * Returns the minimum encoded size of the given unsigned long value.
+   *
+   * @param value
+   *          the unsigned long value (beware widening conversion of negatives!)
+   */
+  public static int sizeOf(long value) {
+    // if negative, it's actually a very large unsigned long value
+    if (value < 0)
+      return 9; // 1 marker + 8 data bytes
+    if (value < 253)
+      return 1; // 1 data byte
+    if (value <= 0xFFFFL)
+      return 3; // 1 marker + 2 data bytes
+    if (value <= 0xFFFFFFFFL)
+      return 5; // 1 marker + 4 data bytes
+    return 9; // 1 marker + 8 data bytes
   }
 
   public int getByteSize() {

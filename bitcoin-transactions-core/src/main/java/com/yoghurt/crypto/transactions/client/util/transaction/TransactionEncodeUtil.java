@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.client.util.transaction;
 
+import com.yoghurt.crypto.transactions.client.util.witness.WitnessEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
@@ -7,11 +8,13 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
+import com.yoghurt.crypto.transactions.shared.domain.WitnessEntity;
 import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 import com.yoghurt.crypto.transactions.shared.util.ScriptEncodeUtil;
 
 public final class TransactionEncodeUtil extends TransactionUtil {
-  private TransactionEncodeUtil() {}
+  private TransactionEncodeUtil() {
+  }
 
   public static RawTransactionContainer encodeTransaction(final Transaction transaction) {
     return encodeTransaction(transaction, new RawTransactionContainer());
@@ -20,6 +23,11 @@ public final class TransactionEncodeUtil extends TransactionUtil {
   public static RawTransactionContainer encodeTransaction(final Transaction transaction, final RawTransactionContainer container) {
     // Encode the version
     container.add(TransactionPartType.VERSION, encodeVersion(transaction));
+
+    if (transaction.isSegregatedWitness()) {
+      container.add(TransactionPartType.WITNESS_MARKER, encodeWitnessMarker(transaction));
+      container.add(TransactionPartType.WITNESS_FLAG, encodeWitnessFlag(transaction));
+    }
 
     // Encode the input length
     container.add(TransactionPartType.INPUT_SIZE, encodeNumInputs(transaction));
@@ -33,10 +41,22 @@ public final class TransactionEncodeUtil extends TransactionUtil {
     // Encode the outputs
     encodeTransactionOutputs(transaction, container);
 
+    if (transaction.isSegregatedWitness()) {
+      encodeWitnesses(transaction, container);
+    }
+
     // Encode the lock time
     container.add(TransactionPartType.LOCK_TIME, encodeLockTime(transaction));
 
     return container;
+  }
+
+  private static byte[] encodeWitnessMarker(Transaction transaction) {
+    return new byte[] { 0x00 };
+  }
+
+  private static byte[] encodeWitnessFlag(Transaction transaction) {
+    return new byte[] { transaction.getWitnessFlag() };
   }
 
   private static void encodeTransactionInputs(final Transaction transaction, final RawTransactionContainer container) {
@@ -83,6 +103,17 @@ public final class TransactionEncodeUtil extends TransactionUtil {
 
     // Encode the output script
     ScriptEncodeUtil.encodeScript(output, container, ScriptType.SCRIPT_PUB_KEY);
+  }
+
+  private static void encodeWitnesses(Transaction transaction, final RawTransactionContainer container) {
+    for (int i = 0; i < transaction.getWitnessScripts().size(); i++) {
+      encodeWitness(transaction.getWitnessScripts().get(i), container);
+    }
+  }
+
+  private static void encodeWitness(WitnessEntity witness, RawTransactionContainer container) {
+    // Encode the witness script
+    WitnessEncodeUtil.encodeWitnesses(witness, container);
   }
 
   private static byte[] encodeLockTime(final Transaction transaction) {

@@ -8,18 +8,19 @@ import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 
 public final class ScriptOperationUtil {
 
-  private ScriptOperationUtil() {}
+  private ScriptOperationUtil() {
+  }
 
   // TODO Get these out of some cache instead of iterating over the enum values
   public static Operation getOperation(final int opcode) {
     // Test for simple push data ops
-    if(opcode > 0 && 75 >= opcode) {
+    if (opcode > 0 && 75 >= opcode) {
       return Operation.OP_PUSHDATA;
     }
 
     // Iterate over all operations and give back a match
-    for(final Operation op : Operation.values()) {
-      if(op.getOpcode() == opcode) {
+    for (final Operation op : Operation.values()) {
+      if (op.getOpcode() == opcode) {
         return op;
       }
     }
@@ -54,7 +55,8 @@ public final class ScriptOperationUtil {
   }
 
   /**
-   * Data push operations are 1-75, OP_PUSHDATA1, 2 and 4 (so up to opcode 78), excluding OP0 through 16.
+   * Data push operations are 1-75, OP_PUSHDATA1, 2 and 4 (so up to opcode 78),
+   * excluding OP0 through 16.
    *
    * And also null (indicating coinbase input TODO: remind me why again?)
    */
@@ -67,7 +69,7 @@ public final class ScriptOperationUtil {
   }
 
   public static byte getOperationOpCode(final ScriptPart part) {
-    if(part.getOperation() == Operation.OP_PUSHDATA) {
+    if (part.getOperation() == Operation.OP_PUSHDATA) {
       return (byte) (part.getBytes().length & 0xFF);
     }
 

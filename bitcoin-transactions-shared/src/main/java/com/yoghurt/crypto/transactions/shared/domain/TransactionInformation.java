@@ -3,7 +3,9 @@ package com.yoghurt.crypto.transactions.shared.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TransactionInformation implements Serializable {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class TransactionInformation implements Serializable, IsSerializable {
   private static final long serialVersionUID = -5230934399747974590L;
 
   private TransactionState state;

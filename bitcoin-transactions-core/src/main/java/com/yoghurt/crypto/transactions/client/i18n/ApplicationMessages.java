@@ -146,6 +146,12 @@ public interface ApplicationMessages extends Messages {
   @Description("Transaction ID:")
   String transactionId();
 
+  @Description("Transaction hash")
+  String transactionIdContext();
+
+  @Description("Witness hash")
+  String witnessIdContext();
+
   @Description("Previous tx:")
   String transactionPreviousTransactionId();
 
@@ -166,6 +172,9 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Sequence:")
   String transactionSequence();
+  
+  @Description("Segwit enabled:")
+  String transactionSegwitEnabled();
 
   @Description("Amount:")
   String transactionAmount();

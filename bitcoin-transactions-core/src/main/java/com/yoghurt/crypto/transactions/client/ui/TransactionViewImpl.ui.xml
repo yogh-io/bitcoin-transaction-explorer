@@ -24,6 +24,12 @@
     </g:FlowPanel>
     <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="txIdViewer" color="{res.color.transactionHash}" />
+    <g:FlowPanel ui:field="witnessContainer">
+	    <w:HashHexViewer ui:field="witnessIdViewer" color="{res.color.transactionWitness}" />
+    </g:FlowPanel>
+    <w:LabelledWidget label="{i18n.transactionSegwitEnabled}">
+      <w:ValueViewer ui:field="witnessEnabledViewer" color="{res.color.transactionWitness}" />
+    </w:LabelledWidget>
     <g:FlowPanel ui:field="fullTransactionInformation">
       <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleExtraInformation}" />
       <g:Label text="{i18n.transactionPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />

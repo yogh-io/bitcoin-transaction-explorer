@@ -1,8 +1,11 @@
 package com.yoghurt.crypto.transactions.shared.domain.config;
 
+import java.io.Serializable;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 
-public abstract class AbstractAdministratedApplicationConfig implements AdministratedApplicationConfig {
+public abstract class AbstractAdministratedApplicationConfig implements AdministratedApplicationConfig, Serializable, IsSerializable {
   private static final long serialVersionUID = 1194639229241504631L;
 
   private BlockchainSource source;

@@ -24,6 +24,8 @@ public interface ColorPicker {
   Color blockNonce();
 
   Color transactionHash();
+  
+  Color transactionWitness();
 
   Color transactionConfirmedState();
 
@@ -86,4 +88,12 @@ public interface ColorPicker {
   Color addressOutpointUnspent();
 
   Color addressNumberOfTransactions();
+
+  Color witnessMarker();
+
+  Color witnessFlag();
+
+  Color witnessPushData();
+
+  Color witnessPushDataLength();
 }

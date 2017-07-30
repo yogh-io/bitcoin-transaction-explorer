@@ -17,6 +17,7 @@ import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncode
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.LabelledWidget;
+import com.yoghurt.crypto.transactions.client.widget.TextContextFactory;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionInputWidget;
 import com.yoghurt.crypto.transactions.client.widget.TransactionOutputWidget;
@@ -42,6 +43,10 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   // General information
   @UiField HashHexViewer txIdViewer;
+  @UiField FlowPanel witnessContainer;
+  @UiField HashHexViewer witnessIdViewer;
+  
+  @UiField ValueViewer witnessEnabledViewer;
 
   // Widgets related to extra (blockchain information)
   @UiField FlowPanel extraInformationContainer;
@@ -71,17 +76,18 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
   private LazyProgressListener progressListener;
 
-  @Inject
-  public TransactionViewImpl(final BitcoinPlaceRouter router) {
+  @Inject public TransactionViewImpl(final BitcoinPlaceRouter router) {
     this.router = router;
 
     txBlockViewer = new BlockViewer(router);
 
     initWidget(UI_BINDER.createAndBindUi(this));
+    
+    txIdViewer.setContextFactory(new TextContextFactory(M.messages().transactionIdContext()));
+    witnessIdViewer.setContextFactory(new TextContextFactory(M.messages().witnessIdContext()));
   }
 
-  @Override
-  public void setTransaction(final Transaction transaction, final boolean transactionHasErrors) {
+  @Override public void setTransaction(final Transaction transaction, final boolean transactionHasErrors) {
     errorView.setVisible(transactionHasErrors);
     fullTransactionInformation.setVisible(true);
     if (transactionHasErrors) {
@@ -89,6 +95,11 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     }
 
     txIdViewer.setHash(transaction.getTransactionId());
+
+    witnessContainer.setVisible(transaction.isSegregatedWitness());
+    witnessIdViewer.setHash(transaction.getWitnessId());
+
+    witnessEnabledViewer.setValue(String.valueOf(transaction.isSegregatedWitness()).toUpperCase());
 
     txVersionViewer.setValue(transaction.getVersion());
     txLockTimeViewer.setValue(transaction.getLockTime());
@@ -118,7 +129,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     txHexViewer.setValue(rawTransaction);
 
     //
-    if(transaction.isCoinbase()) {
+    if (transaction.isCoinbase()) {
       coinbaseInputContainer.setVisible(true);
       coinbaseInputViewer.setValue(TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
     } else {
@@ -126,13 +137,12 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     }
   }
 
-  @Override
-  public void setTransactionInformation(final TransactionInformation transactionInformation) {
+  @Override public void setTransactionInformation(final TransactionInformation transactionInformation) {
     extraInformationContainer.setVisible(transactionInformation != null);
 
     if (transactionInformation == null) {
       notFoundLabel.setVisible(true);
-    } else if(transactionInformation.getState() != null) {
+    } else if (transactionInformation.getState() != null) {
       txStateViewer.setValue(transactionInformation.getState().name());
 
       if (transactionInformation.getState() == TransactionState.CONFIRMED) {
@@ -152,8 +162,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     progressListener.progressComplete();
   }
 
-  @Override
-  public void setError(final String hash, final Throwable caught) {
+  @Override public void setError(final String hash, final Throwable caught) {
     txIdViewer.setHash(Hex.decode(hash));
     setErrorText(M.messages().transactionPlaceBlockchainExistenceNotFound());
     fullTransactionInformation.setVisible(false);
@@ -166,8 +175,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     transactionFullBlownErrorLabel.setText(text);
   }
 
-  @Override
-  public void subscribeProgressListener(final LazyProgressListener listener) {
+  @Override public void subscribeProgressListener(final LazyProgressListener listener) {
     this.progressListener = listener;
   }
 }
