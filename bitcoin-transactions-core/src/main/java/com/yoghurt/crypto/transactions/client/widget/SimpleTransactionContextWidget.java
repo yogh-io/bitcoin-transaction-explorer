@@ -70,6 +70,8 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
       return "Witness marker";
     case WITNESS_FLAG:
       return "Witness flag";
+    case WITNESS_ITEM_LENGTH:
+      return "Number of witness items: " +  new VariableLengthInteger(value.getValue()).getValue();
     case WITNESS_PUSH_DATA_LENGTH:
       return "Witness item size: " + new VariableLengthInteger(value.getValue()).getValue() + " byte";
     case WITNESS_PUSH_DATA:

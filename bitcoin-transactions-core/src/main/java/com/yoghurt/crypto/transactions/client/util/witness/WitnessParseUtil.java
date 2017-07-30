@@ -14,10 +14,12 @@ public final class WitnessParseUtil {
   public static int parseWitness(final int initialPointer, final WitnessEntity witness, final byte[] bytes) {
     int pointer = initialPointer;
 
-    int size = (int) bytes[pointer++];
+    VariableLengthInteger witnessItemLength = new VariableLengthInteger(bytes, pointer);
+    pointer += witnessItemLength.getByteSize();
+    witness.setItemsLength(witnessItemLength);
     
     ArrayList<WitnessPart> parts = new ArrayList<WitnessPart>();
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < witnessItemLength.getValue(); i++) {
       WitnessPart part = new WitnessPart();
 
       VariableLengthInteger witnessItemSize = new VariableLengthInteger(bytes, pointer);

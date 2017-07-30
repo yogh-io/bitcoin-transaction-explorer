@@ -11,6 +11,7 @@ public final class WitnessEncodeUtil {
   }
 
   public static void encodeWitnesses(WitnessEntity witness, RawTransactionContainer container) {
+    container.add(TransactionPartType.WITNESS_ITEM_LENGTH, witness.getItemsLength().getBytes());
     for (WitnessPart part : witness.getPushDatas()) {
       container.add(TransactionPartType.WITNESS_PUSH_DATA_LENGTH, part.getLength().getBytes());
       container.add(TransactionPartType.WITNESS_PUSH_DATA, part.getData());

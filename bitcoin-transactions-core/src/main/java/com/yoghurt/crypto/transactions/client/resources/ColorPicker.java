@@ -93,6 +93,8 @@ public interface ColorPicker {
 
   Color witnessFlag();
 
+  Color witnessItemLength();
+
   Color witnessPushData();
 
   Color witnessPushDataLength();

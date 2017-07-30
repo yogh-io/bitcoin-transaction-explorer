@@ -230,6 +230,11 @@ public class SimpleColorPicker implements ColorPicker {
   }
 
   @Override
+  public Color witnessItemLength() {
+    return ColorBuilder.interpret("pink");
+  }
+
+  @Override
   public Color witnessPushDataLength() {
     return ColorBuilder.interpret("mediumvioletred");
   }
