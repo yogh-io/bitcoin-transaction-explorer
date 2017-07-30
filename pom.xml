@@ -30,13 +30,6 @@
           <version>${org.codehaus.mojo.gwtmavenplugin.version}</version>
           <executions>
             <execution>
-              <configuration>
-                <enableClosureCompiler>true</enableClosureCompiler>
-                <force>true</force>
-                <localWorkers>4</localWorkers>
-                <module>${aerius.gwt.module}</module>
-                <strict>true</strict>
-              </configuration>
               <goals>
                 <goal>compile</goal>
               </goals>
@@ -86,48 +79,6 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
-        <module>bitcoin-transactions-core</module>
-        <module>bitcoin-transactions-server</module>
-        <module>bitcoin-transactions-shared</module>
-      </modules>
-    </profile>
-    
-    
-    <profile>
-      <id>ide</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>gwt-maven-plugin</artifactId>
-              <executions>
-                <execution>
-                  <configuration>
-                    <extraJvmArgs>-Xmx1024m</extraJvmArgs>
-                    <compileReport>true</compileReport>
-                    <draftCompile>true</draftCompile>
-                    <style>DETAILED</style>
-                    <force>true</force>
-                    <module>${aerius.gwt.module.debug}</module>
-                    <localWorkers>4</localWorkers>
-                    <soycDetailed>true</soycDetailed>
-                    <strict>true</strict>
-                  </configuration>
-                  <goals>
-                    <goal>compile</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-	
-    <profile>
-      <id>deploy</id>
-       <modules>
         <module>bitcoin-transactions-core</module>
         <module>bitcoin-transactions-server</module>
         <module>bitcoin-transactions-shared</module>
