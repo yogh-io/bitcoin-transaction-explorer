@@ -1,6 +1,8 @@
 package com.yoghurt.crypto.transactions.shared.domain.exception;
 
-public class ApplicationException extends Exception {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class ApplicationException extends Exception implements IsSerializable {
   private static final long serialVersionUID = 6580816542322401116L;
 
   private Reason reason;

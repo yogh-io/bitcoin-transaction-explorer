@@ -1,72 +1,75 @@
 package com.yoghurt.crypto.transactions.shared.domain.config;
 
+import java.io.Serializable;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 
-
 /**
- * There's some duplication with administrator app context I'm not happy about, but considering
- * they live in different security domains this is for the best.
+ * There's some duplication with administrator app context I'm not happy about,
+ * but considering they live in different security domains this is for the best.
  */
-public class UserApplicationConfig implements ApplicationContextBase {
-  private static final long serialVersionUID = 8385948536213767529L;
+public class UserApplicationConfig implements ApplicationContextBase, Serializable, IsSerializable {
+	private static final long serialVersionUID = 4614899684382428524L;
 
-  private BlockchainSource blockchainSource;
+	private BlockchainSource blockchainSource;
 
-  private String applicationTitle;
-  private String applicationSubTitle;
+	private String applicationTitle;
+	private String applicationSubTitle;
 
-  private String hostDonationAddress;
-  private String projectDonationAddress;
+	private String hostDonationAddress;
+	private String projectDonationAddress;
 
-  public UserApplicationConfig() {
-  }
+	public UserApplicationConfig() {
+	}
 
-  @Override
-  public String getApplicationTitle() {
-    return applicationTitle;
-  }
+	@Override
+	public String getApplicationTitle() {
+		return applicationTitle;
+	}
 
-  @Override
-  public String getApplicationSubTitle() {
-    return applicationSubTitle;
-  }
+	@Override
+	public String getApplicationSubTitle() {
+		return applicationSubTitle;
+	}
 
-  public void setApplicationTitle(final String applicationTitle) {
-    this.applicationTitle = applicationTitle;
-  }
+	public void setApplicationTitle(final String applicationTitle) {
+		this.applicationTitle = applicationTitle;
+	}
 
-  public void setApplicationSubTitle(final String applicationSubTitle) {
-    this.applicationSubTitle = applicationSubTitle;
-  }
+	public void setApplicationSubTitle(final String applicationSubTitle) {
+		this.applicationSubTitle = applicationSubTitle;
+	}
 
-  public void setHostDonationAddress(final String hostDonationAddress) {
-    this.hostDonationAddress = hostDonationAddress;
-  }
+	public void setHostDonationAddress(final String hostDonationAddress) {
+		this.hostDonationAddress = hostDonationAddress;
+	}
 
-  @Override
-  public String getHostDonationAddress() {
-    return hostDonationAddress;
-  }
+	@Override
+	public String getHostDonationAddress() {
+		return hostDonationAddress;
+	}
 
-  public void setProjectDonationAddress(final String projectDonationAddress) {
-    this.projectDonationAddress = projectDonationAddress;
-  }
+	public void setProjectDonationAddress(final String projectDonationAddress) {
+		this.projectDonationAddress = projectDonationAddress;
+	}
 
-  @Override
-  public String getProjectDonationAddress() {
-    return projectDonationAddress;
-  }
+	@Override
+	public String getProjectDonationAddress() {
+		return projectDonationAddress;
+	}
 
-  public void setBlockchainSource(final BlockchainSource blockchainSource) {
-    this.blockchainSource = blockchainSource;
-  }
+	public void setBlockchainSource(final BlockchainSource blockchainSource) {
+		this.blockchainSource = blockchainSource;
+	}
 
-  public BlockchainSource getBlockchainSource() {
-    return blockchainSource;
-  }
+	public BlockchainSource getBlockchainSource() {
+		return blockchainSource;
+	}
 
-  @Override
-  public String toString() {
-    return "UserApplicationConfig [applicationTitle=" + applicationTitle + ", applicationSubTitle=" + applicationSubTitle + "]";
-  }
+	@Override
+	public String toString() {
+		return "UserApplicationConfig [applicationTitle=" + applicationTitle + ", applicationSubTitle="
+				+ applicationSubTitle + "]";
+	}
 }

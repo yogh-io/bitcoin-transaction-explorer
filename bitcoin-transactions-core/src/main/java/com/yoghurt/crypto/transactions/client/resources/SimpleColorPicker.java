@@ -60,6 +60,11 @@ public class SimpleColorPicker implements ColorPicker {
   }
 
   @Override
+  public Color transactionWitness() {
+    return ColorBuilder.interpret("darkorange");
+  }
+
+  @Override
   public Color transactionConfirmedState() {
     return ColorBuilder.interpret("grey");
   }
@@ -212,5 +217,25 @@ public class SimpleColorPicker implements ColorPicker {
   @Override
   public Color addressNumberOfTransactions() {
     return ColorBuilder.interpret("cyan");
+  }
+
+  @Override
+  public Color witnessMarker() {
+    return ColorBuilder.interpret("darkorange");
+  }
+
+  @Override
+  public Color witnessFlag() {
+    return ColorBuilder.interpret("darkorange");
+  }
+
+  @Override
+  public Color witnessPushDataLength() {
+    return ColorBuilder.interpret("mediumvioletred");
+  }
+
+  @Override
+  public Color witnessPushData() {
+    return ColorBuilder.interpret("darkorange");
   }
 }

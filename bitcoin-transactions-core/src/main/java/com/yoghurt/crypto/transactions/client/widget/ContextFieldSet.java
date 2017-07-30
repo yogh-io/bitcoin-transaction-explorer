@@ -96,7 +96,7 @@ public class ContextFieldSet<T> extends FlowPanel {
     }
   };
 
-  protected FieldContextFactory<T> contextFactory;
+  private FieldContextFactory<T> contextFactory;
 
   private final AttachedContextPanel popupPanel = new AttachedContextPanel();
   private Timer popupShowTimer;
@@ -122,7 +122,7 @@ public class ContextFieldSet<T> extends FlowPanel {
 
   public ContextFieldSet(final FieldContextFactory<T> contextFactory) {
     this.contextFactory = contextFactory;
-
+    
     setStyleName(R.css().flex());
   }
 
@@ -242,5 +242,9 @@ public class ContextFieldSet<T> extends FlowPanel {
 
   public void setMouseClickHandler(final ClickHandler mouseClickHandler) {
     this.mouseClickHandler = mouseClickHandler;
+  }
+
+  public void setContextFactory(FieldContextFactory<T> contextFactory) {
+    this.contextFactory = contextFactory;
   }
 }

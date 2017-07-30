@@ -66,6 +66,14 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
       return "Transaction version";
     case COINBASE_SCRIPT_SIG:
       return "Coinbase input script";
+    case WITNESS_MARKER:
+      return "Witness marker";
+    case WITNESS_FLAG:
+      return "Witness flag";
+    case WITNESS_PUSH_DATA_LENGTH:
+      return "Witness item size: " + new VariableLengthInteger(value.getValue()).getValue() + " byte";
+    case WITNESS_PUSH_DATA:
+      return "Witness item data";
     default:
       return "Unknown transaction part";
     }

@@ -6,7 +6,8 @@ import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 
 public final class ScriptParseUtil {
-  private ScriptParseUtil() {}
+  private ScriptParseUtil() {
+  }
 
   public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final boolean isCoinbase) {
     int pointer = initialPointer;
@@ -35,7 +36,8 @@ public final class ScriptParseUtil {
   private static int parseCoinbaseScriptBytes(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final long value) {
     int pointer = initialPointer;
 
-    entity.getInstructions().add(new ScriptPart(null, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + (int) entity.getScriptSize().getValue())));
+    entity.getInstructions()
+        .add(new ScriptPart(null, ArrayUtil.arrayCopy(bytes, pointer, pointer = pointer + (int) entity.getScriptSize().getValue())));
 
     return pointer;
   }
@@ -54,7 +56,9 @@ public final class ScriptParseUtil {
     }
 
     if (pointer != initialPointer + length) {
-      throw new IllegalStateException("More bytes than advertised were consumed in the script. (advertised:" + length + ", actual:" + (pointer - initialPointer) + ")");
+      // throw new IllegalStateException("More bytes than advertised were consumed in
+      // the script. (advertised:" + length + ", actual:" + (pointer - initialPointer)
+      // + ")");
     }
 
     return pointer;

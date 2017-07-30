@@ -2,27 +2,30 @@ package com.yoghurt.crypto.transactions.shared.domain;
 
 import java.io.Serializable;
 
-public class AddressOutpoint extends TransactionOutPoint implements Serializable {
-  private static final long serialVersionUID = -2104537209099839858L;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-  private TransactionOutput output;
-  private boolean spent;
+public class AddressOutpoint extends TransactionOutPoint implements Serializable, IsSerializable {
+	private static final long serialVersionUID = -2104537209099839858L;
 
-  public AddressOutpoint() {}
+	private TransactionOutput output;
+	private boolean spent;
 
-  public TransactionOutput getOutput() {
-    return output;
-  }
+	public AddressOutpoint() {
+	}
 
-  public void setOutput(final TransactionOutput output) {
-    this.output = output;
-  }
+	public TransactionOutput getOutput() {
+		return output;
+	}
 
-  public void setSpent(final boolean spent) {
-    this.spent = spent;
-  }
+	public void setOutput(final TransactionOutput output) {
+		this.output = output;
+	}
 
-  public boolean isSpent() {
-    return spent;
-  }
+	public void setSpent(final boolean spent) {
+		this.spent = spent;
+	}
+
+	public boolean isSpent() {
+		return spent;
+	}
 }

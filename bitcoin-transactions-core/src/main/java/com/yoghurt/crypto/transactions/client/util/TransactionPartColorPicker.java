@@ -63,6 +63,18 @@ public class TransactionPartColorPicker {
     case VERSION:
       color = R.color().transactionVersion();
       break;
+    case WITNESS_MARKER:
+      color = R.color().witnessMarker();
+      break;
+    case WITNESS_FLAG:
+      color = R.color().witnessFlag();
+      break;
+    case WITNESS_PUSH_DATA_LENGTH:
+      color = R.color().witnessPushDataLength();
+      break;
+    case WITNESS_PUSH_DATA:
+      color = R.color().witnessPushData();
+      break;
     default:
       color = R.color().transactionArbitraryData();
       break;

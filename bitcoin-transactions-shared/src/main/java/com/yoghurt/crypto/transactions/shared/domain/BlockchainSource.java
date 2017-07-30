@@ -1,6 +1,9 @@
 package com.yoghurt.crypto.transactions.shared.domain;
 
+import java.io.Serializable;
 
-public enum BlockchainSource {
-  NODE, BLOCKR_API;
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public enum BlockchainSource implements Serializable, IsSerializable {
+	NODE, BLOCKR_API;
 }

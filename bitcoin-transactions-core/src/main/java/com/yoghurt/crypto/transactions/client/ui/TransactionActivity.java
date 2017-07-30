@@ -37,7 +37,7 @@ public class TransactionActivity extends LookupActivity<TransactionInformation, 
   @Override
   protected void doDeferredStart(final AcceptsOneWidget panel, final TransactionInformation transactionInformation) {
     panel.setWidget(view);
-
+    
     final Transaction transactionFromHex = ParseUtil.getTransactionFromHex(transactionInformation.getRawHex());
 
     view.setTransaction(transactionFromHex, transactionHasError);

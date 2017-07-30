@@ -63,7 +63,7 @@ public final class R {
   }
 
   public interface ApplicationResource extends ClientBundle {
-    @Source("strict.css")
+    @Source("strict.gss")
     ApplicationCssResource css();
   }
 

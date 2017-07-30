@@ -2,27 +2,30 @@ package com.yoghurt.crypto.transactions.shared.domain;
 
 import java.io.Serializable;
 
-public class TransactionOutput extends ScriptEntity implements Serializable {
-  private static final long serialVersionUID = 4196375417196417138L;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-  private long transactionValue;
-  private int outputIndex;
+public class TransactionOutput extends ScriptEntity implements Serializable, IsSerializable {
+	private static final long serialVersionUID = 4196375417196417138L;
 
-  public TransactionOutput() {}
+	private long transactionValue;
+	private int outputIndex;
 
-  public long getTransactionValue() {
-    return transactionValue;
-  }
+	public TransactionOutput() {
+	}
 
-  public void setTransactionValue(final long transactionValue) {
-    this.transactionValue = transactionValue;
-  }
+	public long getTransactionValue() {
+		return transactionValue;
+	}
 
-  public int getOutputIndex() {
-    return outputIndex;
-  }
+	public void setTransactionValue(final long transactionValue) {
+		this.transactionValue = transactionValue;
+	}
 
-  public void setOutputIndex(final int outputIndex) {
-    this.outputIndex = outputIndex;
-  }
+	public int getOutputIndex() {
+		return outputIndex;
+	}
+
+	public void setOutputIndex(final int outputIndex) {
+		this.outputIndex = outputIndex;
+	}
 }

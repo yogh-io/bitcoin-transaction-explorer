@@ -34,7 +34,31 @@ public enum TransactionPartType {
   SCRIPT_SIG_PUSH_DATA_EXTRA,
 
   /**
-   * We'll be special-casing the coinbase input scriptsig because it cannot be interpreted as usual.
+   * We'll be special-casing the coinbase input scriptsig because it cannot be
+   * interpreted as usual.
    */
-  COINBASE_SCRIPT_SIG;
+  COINBASE_SCRIPT_SIG,
+
+  WITNESS_MARKER(true),
+
+  WITNESS_FLAG(true),
+
+  WITNESS_PUSH_DATA_LENGTH(true),
+
+  WITNESS_PUSH_DATA(true);
+
+  private final boolean witnessPartType;
+
+  private TransactionPartType() {
+    this(false);
+  }
+
+  private TransactionPartType(boolean witnessPartType) {
+    this.witnessPartType = witnessPartType;
+
+  }
+
+  public boolean isWitnessPartType() {
+    return witnessPartType;
+  }
 }
