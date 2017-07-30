@@ -88,7 +88,7 @@ public final class TransactionParseUtil extends TransactionUtil {
     for (int i = 0; i < witnessSize; i++) {
       // For each witness, create an entity
       final WitnessEntity witness = new WitnessEntity();
-
+      
       // Add it to the list
       witnesses.add(witness);
 

@@ -42,6 +42,8 @@ public enum TransactionPartType {
   WITNESS_MARKER(true),
 
   WITNESS_FLAG(true),
+  
+  WITNESS_ITEM_LENGTH(true),
 
   WITNESS_PUSH_DATA_LENGTH(true),
 

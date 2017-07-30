@@ -69,6 +69,9 @@ public class TransactionPartColorPicker {
     case WITNESS_FLAG:
       color = R.color().witnessFlag();
       break;
+    case WITNESS_ITEM_LENGTH:
+      color = R.color().witnessItemLength();
+      break;
     case WITNESS_PUSH_DATA_LENGTH:
       color = R.color().witnessPushDataLength();
       break;
