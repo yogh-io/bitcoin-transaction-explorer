@@ -6,6 +6,12 @@
 	margin-bottom: 10px;
 	flex-shrink: 0;
   }
+  .byteSet:nth-child(4n) {
+  	margin-right: 0;
+  }
+  .byteField {
+  	width: 15px;
+  }
   </ui:style>
   <g:SimplePanel />
 </ui:UiBinder>

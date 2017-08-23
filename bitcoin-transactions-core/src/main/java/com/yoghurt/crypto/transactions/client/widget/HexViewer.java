@@ -21,6 +21,8 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
 
   public interface CustomStyle extends CssResource {
     String byteSet();
+
+    String byteField();
   }
 
   @UiField CustomStyle style;
@@ -55,7 +57,8 @@ public abstract class HexViewer<T> extends ContextFieldSet<Entry<T, byte[]>> {
         final String hex = getHexFromByte(bite);
 
         if(quickAdd || counter >= fields.size()) {
-          addField(entry, typeColor, hex);
+          ContextField<Entry<T, byte[]>> addField = addField(entry, typeColor, hex);
+          addField.addStyleName(style.byteField());
           quickAdd = true;
         } else {
           final ContextField<Entry<T, byte[]>> contextField = fields.get(counter);
