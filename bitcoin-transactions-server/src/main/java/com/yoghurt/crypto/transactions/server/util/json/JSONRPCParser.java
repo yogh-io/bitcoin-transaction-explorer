@@ -23,8 +23,7 @@ import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 public class JSONRPCParser {
   private static final String ZERO_HASH = "0000000000000000000000000000000000000000000000000000000000000000";
 
-  private JSONRPCParser() {
-  }
+  private JSONRPCParser() {}
 
   public static String getString(final InputStream jsonData) throws JsonProcessingException, IOException {
     final JsonNode tree = JsonParser.mapper.readTree(jsonData);
@@ -42,8 +41,7 @@ public class JSONRPCParser {
     return JsonParser.mapper.readTree(jsonData).get("result");
   }
 
-  public static ArrayList<String> getTransactionList(final InputStream jsonData)
-      throws JsonProcessingException, IOException {
+  public static ArrayList<String> getTransactionList(final InputStream jsonData) throws JsonProcessingException, IOException {
     final JsonNode tree = getResultNode(jsonData);
 
     // Array of txs
@@ -56,8 +54,7 @@ public class JSONRPCParser {
     return txs;
   }
 
-  public static BlockInformation getBlockInformation(final InputStream jsonData)
-      throws JsonProcessingException, IOException, DecoderException {
+  public static BlockInformation getBlockInformation(final InputStream jsonData) throws JsonProcessingException, IOException, DecoderException {
     final JsonNode tree = getResultNode(jsonData);
 
     // Create a builder to assemble the block headers
@@ -117,6 +114,12 @@ public class JSONRPCParser {
     // Set the byte size
     blockInformation.setSize(tree.get("size").getLongValue());
 
+    // Set the byte size
+    blockInformation.setWeight(tree.get("weight").getLongValue());
+
+    // Set the byte size
+    blockInformation.setStrippedSize(tree.get("strippedsize").getLongValue());
+
     // Set the raw coinbase transaction to its txid (this is a work-around, see
     // TODO in BitcoinJSONRPCRetriever)
     final TransactionInformation ti = new TransactionInformation();
@@ -126,8 +129,7 @@ public class JSONRPCParser {
     return blockInformation;
   }
 
-  public static TransactionInformation getTransactionInformation(final InputStream jsonData)
-      throws JsonProcessingException, IOException {
+  public static TransactionInformation getTransactionInformation(final InputStream jsonData) throws JsonProcessingException, IOException {
     final JsonNode tree = getResultNode(jsonData);
 
     final TransactionInformation transactionInformation = new TransactionInformation();

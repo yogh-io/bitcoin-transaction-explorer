@@ -80,6 +80,9 @@ public interface ApplicationMessages extends Messages {
   @Description("Transaction hash")
   String transactionPlaceTitleInformation();
 
+  @Description("Transaction information")
+  String transactionPlaceTitleContext();
+
   @Description("Presence in blockchain")
   String transactionPlaceTitleExtraInformation();
 
@@ -100,6 +103,30 @@ public interface ApplicationMessages extends Messages {
 
   @Description("An error occurred while parsing the transaction, what you are seeing below is the best we could make out of the data before we stopped understanding it.")
   String transactionPlaceParseError();
+
+  @Description("Transaction weight")
+  String transactionWeight();
+
+  @Description("Transaction weight is defined as Base transaction size * 3 + Total transaction size")
+  String transactionWeightContext();
+
+  @Description("Virtual transaction size")
+  String transactionVSize();
+
+  @Description("Virtual transaction size is defined as Transaction weight / 4 (rounded up to the next integer).")
+  String transactionVSizeContext();
+
+  @Description("Base transaction size")
+  String transactionBaseSize();
+
+  @Description("Base transaction size is the size of the transaction serialised with the witness data stripped.")
+  String transactionBaseSizeContext();
+
+  @Description("Total transaction size")
+  String transactionTotalSize();
+
+  @Description("Total transaction size is the transaction size in bytes serialized as described in BIP144, including base data and witness data.")
+  String transactionTotalSizeContext();
 
   @Description("Block")
   String blockPlaceTitle();
@@ -172,7 +199,7 @@ public interface ApplicationMessages extends Messages {
 
   @Description("Sequence:")
   String transactionSequence();
-  
+
   @Description("Segwit enabled:")
   String transactionSegwitEnabled();
 
@@ -239,8 +266,21 @@ public interface ApplicationMessages extends Messages {
   @Description("Next block:")
   String blockNextBlock();
 
-  @Description("Size (bytes):")
-  String blockSize();
+  @Description("Weight (kb):")
+  String blockWeight();
+  String blockWeightContext();
+
+  @Description("Virtual size (kb):")
+  String blockVirtualSize();
+  String blockVirtualSizeContext();
+
+  @Description("Base size (kb):")
+  String blockBaseSize();
+  String blockBaseSizeContext();
+
+  @Description("Total size (kb):")
+  String blockTotalSize();
+  String blockTotalSizeContext();
 
   @Description("Checking existence in the blockchain ...")
   String blockPlaceBlockchainExistenceLoading();
@@ -333,11 +373,9 @@ public interface ApplicationMessages extends Messages {
   String configBlockchainHookTitle();
 
   @Description("Unknown (not supported)")
-  @AlternateMessage({
-    "NODE", "Bitcoin Core Node",
-    "BLOCKR_API", "BLOCKR API"
-  })
-  String configConnectorOption(@Select BlockchainSource source);
+  @AlternateMessage({ "NODE", "Bitcoin Core Node", "BLOCKR_API", "BLOCKR API" })
+  String configConnectorOption(@Select
+  BlockchainSource source);
 
   @Description("No further config needed, press save to continue.")
   String configBlockrConfigNote();
@@ -370,7 +408,8 @@ public interface ApplicationMessages extends Messages {
   String configContribution();
 
   @Description("Script operation description")
-  String scriptOperationDescription(@Select Operation operation);
+  String scriptOperationDescription(@Select
+  Operation operation);
 
   @Description("Full script:")
   String scriptPlaceFullScript();

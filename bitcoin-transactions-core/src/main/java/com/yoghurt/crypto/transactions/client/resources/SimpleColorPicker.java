@@ -65,6 +65,23 @@ public class SimpleColorPicker implements ColorPicker {
   }
 
   @Override
+  public Color transactionWeight() {
+    return ColorBuilder.interpret("darkorange");
+  }
+  @Override
+  public Color transactionVSize() {
+    return ColorBuilder.interpret("orangered");
+  }
+  @Override
+  public Color transactionBaseSize() {
+    return ColorBuilder.interpret("green");
+  }
+  @Override
+  public Color transactionTotalSize() {
+    return ColorBuilder.interpret("lightseagreen");
+  }
+
+  @Override
   public Color transactionConfirmedState() {
     return ColorBuilder.interpret("grey");
   }

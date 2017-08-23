@@ -24,8 +24,16 @@ public interface ColorPicker {
   Color blockNonce();
 
   Color transactionHash();
-  
+
   Color transactionWitness();
+
+  Color transactionWeight();
+
+  Color transactionVSize();
+
+  Color transactionBaseSize();
+
+  Color transactionTotalSize();
 
   Color transactionConfirmedState();
 
