@@ -49,6 +49,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   
   @UiField ValueViewer witnessEnabledViewer;
   
+  @UiField FlowPanel segwitSizeContainer;
   @UiField ValueViewer txWeightViewer;
   @UiField ValueViewer txVSizeViewer;
   @UiField ValueViewer txBaseSizeViewer;
@@ -147,7 +148,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     } else {
       coinbaseInputContainer.setVisible(false);
     }
-    
+
     txWeightViewer.setValue(TransactionUtil.getWeight(rawTransaction));
     txVSizeViewer.setValue(TransactionUtil.getVirtualSize(rawTransaction));
     txBaseSizeViewer.setValue(TransactionUtil.getBaseSize(rawTransaction));

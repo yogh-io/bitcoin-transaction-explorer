@@ -15,6 +15,7 @@
   	position: relative;
 	height: 24px;
 	overflow: hidden;
+	min-width: 14.41px;
   }
   .contextField:hover {
   	background-color: #eee !important;

@@ -30,7 +30,7 @@ public class TransactionUtil {
   }
 
   public static Predicate<Entry<TransactionPartType, byte[]>> stripWitness() {
-    return p -> p.getKey().isWitnessPartType();
+    return p -> !p.getKey().isWitnessPartType();
   }
 
   private static Byte[] box(final byte[] arr) {

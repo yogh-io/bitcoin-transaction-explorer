@@ -4,14 +4,13 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
     .hexViewer {
-    width: 780px;
     flex-wrap: wrap;
     }
     .transactionList > * {
       margin-bottom: 10px;
     }
   </ui:style>
-  <g:FlowPanel>
+  <g:FlowPanel styleName="{res.css.flex} {res.css.columns}">
     <w:HeadingWidget n="1" text="{i18n.blockPlaceTitle}" />
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="blockHashViewer" color="{res.color.blockHash}" />
