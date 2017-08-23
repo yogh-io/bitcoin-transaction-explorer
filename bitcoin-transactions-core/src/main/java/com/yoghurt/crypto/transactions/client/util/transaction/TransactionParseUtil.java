@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import com.google.gwt.core.shared.GWT;
+import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.util.witness.WitnessParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
@@ -19,8 +21,7 @@ import com.yoghurt.crypto.transactions.shared.util.NumberParseUtil;
 import com.yoghurt.crypto.transactions.shared.util.ScriptParseUtil;
 
 public final class TransactionParseUtil extends TransactionUtil {
-  private TransactionParseUtil() {
-  }
+  private TransactionParseUtil() {}
 
   public static Transaction parseTransactionBytes(final byte[] bytes) {
     return parseTransactionBytes(bytes, new Transaction());
@@ -88,7 +89,7 @@ public final class TransactionParseUtil extends TransactionUtil {
     for (int i = 0; i < witnessSize; i++) {
       // For each witness, create an entity
       final WitnessEntity witness = new WitnessEntity();
-      
+
       // Add it to the list
       witnesses.add(witness);
 
@@ -115,10 +116,14 @@ public final class TransactionParseUtil extends TransactionUtil {
   private static void computeTransactionHash(Transaction transaction) {
     RawTransactionContainer trans = TransactionEncodeUtil.encodeTransaction(transaction);
 
-    List<byte[]> legacyTransaction = trans.stream().filter(e -> !e.getKey().isWitnessPartType()).map(e -> e.getValue()).collect(Collectors.toList());
+    List<byte[]> legacyTransaction = trans.stream().filter(TransactionUtil.stripWitness()).map(e -> e.getValue()).collect(Collectors.toList());
 
-    byte[] hash = ComputeUtil.computeDoubleSHA256(legacyTransaction);
-    transaction.setTransactionId(hash);
+    byte[] txHash = ComputeUtil.computeDoubleSHA256(legacyTransaction);
+
+    // Convert to LE
+    ArrayUtil.reverse(txHash);
+
+    transaction.setTransactionId(txHash);
   }
 
   private static void computeWitnessHash(final Transaction transaction, final int initialPointer, final int pointer, final byte[] bytes) {

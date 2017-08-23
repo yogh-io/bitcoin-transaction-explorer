@@ -14,6 +14,7 @@ import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.TextConversionUtil;
 import com.yoghurt.crypto.transactions.client.util.transaction.TransactionEncodeUtil;
+import com.yoghurt.crypto.transactions.client.util.transaction.TransactionUtil;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.LabelledWidget;
@@ -47,6 +48,11 @@ public class TransactionViewImpl extends Composite implements TransactionView {
   @UiField HashHexViewer witnessIdViewer;
   
   @UiField ValueViewer witnessEnabledViewer;
+  
+  @UiField ValueViewer txWeightViewer;
+  @UiField ValueViewer txVSizeViewer;
+  @UiField ValueViewer txBaseSizeViewer;
+  @UiField ValueViewer txTotalSizeViewer;
 
   // Widgets related to extra (blockchain information)
   @UiField FlowPanel extraInformationContainer;
@@ -85,6 +91,11 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     
     txIdViewer.setContextFactory(new TextContextFactory(M.messages().transactionIdContext()));
     witnessIdViewer.setContextFactory(new TextContextFactory(M.messages().witnessIdContext()));
+
+    txWeightViewer.setContextFactory(new TextContextFactory<String>(M.messages().transactionWeightContext()));
+    txVSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().transactionVSizeContext()));
+    txBaseSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().transactionBaseSizeContext()));
+    txTotalSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().transactionTotalSizeContext()));
   }
 
   @Override public void setTransaction(final Transaction transaction, final boolean transactionHasErrors) {
@@ -103,6 +114,7 @@ public class TransactionViewImpl extends Composite implements TransactionView {
 
     txVersionViewer.setValue(transaction.getVersion());
     txLockTimeViewer.setValue(transaction.getLockTime());
+    
 
     if (transaction.getInputs() != null) {
       for (final TransactionInput input : transaction.getInputs()) {
@@ -135,6 +147,11 @@ public class TransactionViewImpl extends Composite implements TransactionView {
     } else {
       coinbaseInputContainer.setVisible(false);
     }
+    
+    txWeightViewer.setValue(TransactionUtil.getWeight(rawTransaction));
+    txVSizeViewer.setValue(TransactionUtil.getVirtualSize(rawTransaction));
+    txBaseSizeViewer.setValue(TransactionUtil.getBaseSize(rawTransaction));
+    txTotalSizeViewer.setValue(TransactionUtil.getTotalSize(rawTransaction));
   }
 
   @Override public void setTransactionInformation(final TransactionInformation transactionInformation) {

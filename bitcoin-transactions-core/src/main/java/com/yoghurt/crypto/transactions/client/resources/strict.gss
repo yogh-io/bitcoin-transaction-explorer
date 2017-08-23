@@ -69,7 +69,7 @@ h2 {
 }
 
 .labelledValueFieldLabel {
-  min-width: 165px;
+  min-width: 175px;
 }
 
 .labelledValueFieldValue {

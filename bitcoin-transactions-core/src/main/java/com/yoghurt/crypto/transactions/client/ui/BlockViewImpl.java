@@ -14,6 +14,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.di.BitcoinPlaceRouter;
+import com.yoghurt.crypto.transactions.client.i18n.M;
 import com.yoghurt.crypto.transactions.client.util.FormatUtil;
 import com.yoghurt.crypto.transactions.client.util.TextConversionUtil;
 import com.yoghurt.crypto.transactions.client.util.block.BlockEncodeUtil;
@@ -22,6 +23,7 @@ import com.yoghurt.crypto.transactions.client.widget.BitsTargetHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.BlockViewer;
 import com.yoghurt.crypto.transactions.client.widget.HashHexViewer;
+import com.yoghurt.crypto.transactions.client.widget.TextContextFactory;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
@@ -31,6 +33,7 @@ import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
+import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 import gwt.material.design.client.ui.MaterialButton;
 
@@ -59,7 +62,11 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField ValueViewer numConfirmationsViewer;
   @UiField ValueViewer numTransactionsViewer;
   @UiField(provided = true) BlockViewer nextBlockViewer;
-  @UiField ValueViewer sizeViewer;
+  
+  @UiField ValueViewer blockWeightViewer;
+  //@UiField ValueViewer blockVSizeViewer;
+  @UiField ValueViewer blockBaseSizeViewer;
+  @UiField ValueViewer totalSizeViewer;
 
   @UiField BlockHexViewer blockHexViewer;
   @UiField TransactionHexViewer coinbaseHexViewer;
@@ -81,6 +88,11 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     previousBlockHashViewer = new BlockViewer(router);
 
     initWidget(UI_BINDER.createAndBindUi(this));
+    
+    blockWeightViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockWeightContext()));
+    //txVSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockVSizeContext()));
+    blockBaseSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockBaseSizeContext()));
+    totalSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockTotalSizeContext()));
   }
 
   @Override
@@ -108,7 +120,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     targetViewer.setBits(block.getBits());
     coinbaseHashViewer.setHash(coinbase.getTransactionId());
 
-    versionViewer.setValue(block.getVersion());
+    versionViewer.setValue(NumberEncodeUtil.encodeUint32(block.getVersion()));
     previousBlockHashViewer.setValue(block.getPreviousBlockHash());
     merkleRootViewer.setValue(block.getMerkleRoot());
     timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));
@@ -125,8 +137,13 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
     numTransactionsViewer.setValue(blockInformation.getNumTransactions());
     nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
-    sizeViewer.setValue(blockInformation.getSize());
+    
 
+    blockWeightViewer.setValue(blockInformation.getWeight() / 1000D);
+    //blockVSizeViewer.setValue(Math.ceil(blockInformation.getWeight() / 4D) / 1000D);
+    blockBaseSizeViewer.setValue(blockInformation.getStrippedSize()  / 1000D);
+    totalSizeViewer.setValue(blockInformation.getSize() / 1000D);
+    
     coinbaseInputViewer.setValue(
         TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
 

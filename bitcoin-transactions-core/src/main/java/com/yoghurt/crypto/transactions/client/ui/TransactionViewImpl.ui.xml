@@ -25,11 +25,30 @@
     <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleInformation}" />
     <w:HashHexViewer ui:field="txIdViewer" color="{res.color.transactionHash}" />
     <g:FlowPanel ui:field="witnessContainer">
-	    <w:HashHexViewer ui:field="witnessIdViewer" color="{res.color.transactionWitness}" />
+	  <w:HashHexViewer ui:field="witnessIdViewer" color="{res.color.transactionWitness}" />
     </g:FlowPanel>
     <w:LabelledWidget label="{i18n.transactionSegwitEnabled}">
       <w:ValueViewer ui:field="witnessEnabledViewer" color="{res.color.transactionWitness}" />
     </w:LabelledWidget>
+    
+    
+    
+    <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleContext}" />
+    <w:LabelledWidget label="{i18n.transactionWeight}">
+      <w:ValueViewer ui:field="txWeightViewer" color="{res.color.transactionWeight}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.transactionVSize}">
+      <w:ValueViewer ui:field="txVSizeViewer" color="{res.color.transactionVSize}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.transactionBaseSize}">
+      <w:ValueViewer ui:field="txBaseSizeViewer" color="{res.color.transactionBaseSize}" />
+    </w:LabelledWidget>
+    <w:LabelledWidget label="{i18n.transactionTotalSize}">
+      <w:ValueViewer ui:field="txTotalSizeViewer" color="{res.color.transactionTotalSize}" />
+    </w:LabelledWidget>
+    
+    
+    
     <g:FlowPanel ui:field="fullTransactionInformation">
       <w:HeadingWidget n="2" text="{i18n.transactionPlaceTitleExtraInformation}" />
       <g:Label text="{i18n.transactionPlaceBlockchainExistenceNotFound}" visible="false" ui:field="notFoundLabel" />

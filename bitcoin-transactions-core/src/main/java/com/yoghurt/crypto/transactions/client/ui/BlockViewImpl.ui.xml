@@ -33,8 +33,20 @@
       <w:LabelledWidget label="{i18n.blockNextBlock}">
         <w:BlockViewer ui:field="nextBlockViewer" animate="true" color="{res.color.blockHash}" />
       </w:LabelledWidget>
-      <w:LabelledWidget label="{i18n.blockSize}">
-        <w:ValueViewer ui:field="sizeViewer" animate="true" color="{res.color.blockSize}" />
+      
+      <w:LabelledWidget label="{i18n.blockWeight}">
+        <w:ValueViewer ui:field="blockWeightViewer" animate="true" color="{res.color.transactionWeight}" />
+      </w:LabelledWidget>
+      <!-- 
+      <w:LabelledWidget label="{i18n.blockVirtualSize}">
+        <w:ValueViewer ui:field="blockVSizeViewer" animate="true" color="{res.color.transactionVSize}" />
+      </w:LabelledWidget>
+      -->
+      <w:LabelledWidget label="{i18n.blockBaseSize}">
+        <w:ValueViewer ui:field="blockBaseSizeViewer" animate="true" color="{res.color.transactionBaseSize}" />
+      </w:LabelledWidget>
+      <w:LabelledWidget label="{i18n.blockTotalSize}">
+        <w:ValueViewer ui:field="totalSizeViewer" animate="true" color="{res.color.transactionTotalSize}" />
       </w:LabelledWidget>
     </g:FlowPanel>
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleBlockHeaders}" />

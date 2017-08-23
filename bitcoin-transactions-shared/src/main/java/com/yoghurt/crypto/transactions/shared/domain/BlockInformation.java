@@ -5,15 +5,18 @@ import java.io.Serializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class BlockInformation implements Serializable, IsSerializable {
-	private static final long serialVersionUID = -6695967392021472565L;
+  private static final long serialVersionUID = 4582485308423158376L;
 
-	private String rawBlockHeaders;
+  private String rawBlockHeaders;
 
 	private int height;
 	private int numConfirmations;
 	private int numTransactions;
 	private long size;
 	private String nextBlockHash;
+	
+	private long strippedSize;
+	private long weight;
 
 	private TransactionInformation coinbaseInformation;
 
@@ -75,6 +78,22 @@ public class BlockInformation implements Serializable, IsSerializable {
 	public void setCoinbaseInformation(final TransactionInformation coinbaseInformation) {
 		this.coinbaseInformation = coinbaseInformation;
 	}
+
+  public long getStrippedSize() {
+    return strippedSize;
+  }
+
+  public void setStrippedSize(long strippedSize) {
+    this.strippedSize = strippedSize;
+  }
+
+  public long getWeight() {
+    return weight;
+  }
+
+  public void setWeight(long weight) {
+    this.weight = weight;
+  }
 
 	@Override
 	public String toString() {
