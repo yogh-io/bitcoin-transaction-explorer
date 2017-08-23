@@ -27,6 +27,7 @@ import com.yoghurt.crypto.transactions.client.widget.TextContextFactory;
 import com.yoghurt.crypto.transactions.client.widget.TransactionHexViewer;
 import com.yoghurt.crypto.transactions.client.widget.TransactionViewer;
 import com.yoghurt.crypto.transactions.client.widget.ValueViewer;
+import com.yoghurt.crypto.transactions.client.widget.VersionViewer;
 import com.yoghurt.crypto.transactions.shared.domain.Block;
 import com.yoghurt.crypto.transactions.shared.domain.BlockInformation;
 import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
@@ -51,7 +52,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField BitsTargetHexViewer targetViewer;
   @UiField HashHexViewer coinbaseHashViewer;
 
-  @UiField ValueViewer versionViewer;
+  @UiField VersionViewer versionViewer;
   @UiField(provided = true) BlockViewer previousBlockHashViewer;
   @UiField ValueViewer merkleRootViewer;
   @UiField ValueViewer timestampViewer;
@@ -120,7 +121,7 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     targetViewer.setBits(block.getBits());
     coinbaseHashViewer.setHash(coinbase.getTransactionId());
 
-    versionViewer.setValue(NumberEncodeUtil.encodeUint32(block.getVersion()));
+    versionViewer.setValue(block.getVersion());
     previousBlockHashViewer.setValue(block.getPreviousBlockHash());
     merkleRootViewer.setValue(block.getMerkleRoot());
     timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));

@@ -51,7 +51,7 @@
     </g:FlowPanel>
     <w:HeadingWidget n="2" text="{i18n.blockPlaceTitleBlockHeaders}" />
     <w:LabelledWidget label="{i18n.blockVersion}">
-      <w:ValueViewer ui:field="versionViewer" animate="true" color="{res.color.blockVersion}" />
+      <w:VersionViewer ui:field="versionViewer" animate="true" color="{res.color.blockVersion}" />
     </w:LabelledWidget>
     <w:LabelledWidget label="{i18n.blockPreviousBlock}">
       <w:ValueViewer ui:field="previousBlockHashViewer" animate="true" color="{res.color.blockHash}" />
