@@ -4,7 +4,6 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R" />
   <ui:style>
     .hexViewer {
-    width: 780px;
     flex-wrap: wrap;
     }
     .distribute > * {
