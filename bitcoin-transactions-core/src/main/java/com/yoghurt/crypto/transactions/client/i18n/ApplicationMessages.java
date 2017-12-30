@@ -373,12 +373,9 @@ public interface ApplicationMessages extends Messages {
   String configBlockchainHookTitle();
 
   @Description("Unknown (not supported)")
-  @AlternateMessage({ "NODE", "Bitcoin Core Node", "BLOCKR_API", "BLOCKR API" })
+  @AlternateMessage({ "NODE", "Bitcoin Core Node" })
   String configConnectorOption(@Select
   BlockchainSource source);
-
-  @Description("No further config needed, press save to continue.")
-  String configBlockrConfigNote();
 
   @Description("Host (probably localhost)")
   String configNodeHost();

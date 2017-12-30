@@ -5,7 +5,6 @@ import java.util.Properties;
 import com.yoghurt.crypto.transactions.shared.domain.BlockchainSource;
 import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
-import com.yoghurt.crypto.transactions.shared.domain.config.BlockrRetrievalHookConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfig;
 
 public class ConfigFactory {
@@ -26,9 +25,7 @@ public class ConfigFactory {
   }
 
   public static ConfigPropertiesRetriever create(final AdministratedApplicationConfig config) {
-    switch(config.getBlockchainSource()) {
-    case BLOCKR_API:
-      return new BlockrConfigRetriever((BlockrRetrievalHookConfig) config);
+    switch (config.getBlockchainSource()) {
     case NODE:
       return new BitcoinNodeConfigRetriever((BitcoinCoreNodeConfig) config);
     default:
@@ -39,14 +36,12 @@ public class ConfigFactory {
   public static ConfigPropertiesRetriever create(final Properties props) {
     final String type = (String) props.get(ConfigPropertiesRetriever.SOURCE_TYPE_KEY);
 
-    final BlockchainSource source = type == null ? BlockchainSource.BLOCKR_API : BlockchainSource.valueOf(type);
+    final BlockchainSource source = type == null ? BlockchainSource.NODE : BlockchainSource.valueOf(type);
 
-    switch(source) {
+    switch (source) {
+    default:
     case NODE:
       return new BitcoinNodeConfigRetriever(props);
-    case BLOCKR_API:
-    default:
-      return new BlockrConfigRetriever(props);
     }
   }
 }

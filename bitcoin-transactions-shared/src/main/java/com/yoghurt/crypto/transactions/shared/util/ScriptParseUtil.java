@@ -1,25 +1,44 @@
 package com.yoghurt.crypto.transactions.shared.util;
 
+import com.google.gwt.core.client.GWT;
 import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 
 public final class ScriptParseUtil {
-  private ScriptParseUtil() {
-  }
+  private ScriptParseUtil() {}
 
   public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final boolean isCoinbase) {
     int pointer = initialPointer;
 
-    // Parse the number of bytes in the script
+    // Parse the number of bytes in the script 
     pointer = parseScriptSize(entity, pointer, bytes);
+    int startParsePointer = pointer;
 
     // Parse the actual script bytes
     if (isCoinbase) {
       pointer = parseCoinbaseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
     } else {
-      pointer = parseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
+      try {
+        pointer = parseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue()); 
+      } catch (Exception e) {
+        GWT.log("Falling back to error operation.");
+        e.printStackTrace();
+        
+        int endScriptPointer = (int) (startParsePointer + entity.getScriptSize().getValue());
+        
+        GWT.log("script ends at: " + endScriptPointer);
+        GWT.log("pointer: " + pointer);
+        GWT.log("script parts: " + entity.getInstructions().size());
+        
+        pointer = pointer + entity.getInstructions().stream().mapToInt(v -> v.getBytes() == null ? 1 : v.getBytes().length).sum();
+        
+        GWT.log("recoverd pointer: " + pointer);
+        
+        entity.getInstructions().add(new ScriptPart(Operation.ERROR, ArrayUtil.arrayCopy(bytes, pointer, endScriptPointer)));
+        return endScriptPointer;
+      }
     }
 
     return pointer;

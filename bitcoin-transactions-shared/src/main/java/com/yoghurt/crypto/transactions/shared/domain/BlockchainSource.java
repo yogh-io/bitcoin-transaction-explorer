@@ -5,5 +5,5 @@ import java.io.Serializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public enum BlockchainSource implements Serializable, IsSerializable {
-	NODE, BLOCKR_API;
+	NODE;
 }

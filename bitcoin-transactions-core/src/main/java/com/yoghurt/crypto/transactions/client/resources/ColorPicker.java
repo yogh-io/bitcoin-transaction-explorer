@@ -106,4 +106,6 @@ public interface ColorPicker {
   Color witnessPushData();
 
   Color witnessPushDataLength();
+
+  Color error();
 }

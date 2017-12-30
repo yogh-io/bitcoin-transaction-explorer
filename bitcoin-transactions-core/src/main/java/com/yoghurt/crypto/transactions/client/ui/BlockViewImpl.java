@@ -34,14 +34,12 @@ import com.yoghurt.crypto.transactions.shared.domain.RawBlockContainer;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
-import com.yoghurt.crypto.transactions.shared.util.NumberEncodeUtil;
 
 import gwt.material.design.client.ui.MaterialButton;
 
 @Singleton
 public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
-  interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {
-  }
+  interface BlockViewImplUiBinder extends UiBinder<Widget, BlockViewImpl> {}
 
   private static final BlockViewImplUiBinder UI_BINDER = GWT.create(BlockViewImplUiBinder.class);
 
@@ -63,9 +61,9 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
   @UiField ValueViewer numConfirmationsViewer;
   @UiField ValueViewer numTransactionsViewer;
   @UiField(provided = true) BlockViewer nextBlockViewer;
-  
+
   @UiField ValueViewer blockWeightViewer;
-  //@UiField ValueViewer blockVSizeViewer;
+  // @UiField ValueViewer blockVSizeViewer;
   @UiField ValueViewer blockBaseSizeViewer;
   @UiField ValueViewer totalSizeViewer;
 
@@ -89,9 +87,10 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
     previousBlockHashViewer = new BlockViewer(router);
 
     initWidget(UI_BINDER.createAndBindUi(this));
-    
+
     blockWeightViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockWeightContext()));
-    //txVSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockVSizeContext()));
+    // txVSizeViewer.setContextFactory(new
+    // TextContextFactory<String>(M.messages().blockVSizeContext()));
     blockBaseSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockBaseSizeContext()));
     totalSizeViewer.setContextFactory(new TextContextFactory<String>(M.messages().blockTotalSizeContext()));
   }
@@ -103,53 +102,52 @@ public class BlockViewImpl extends AbstractBlockchainView implements BlockView {
 
   @Override
   public void setBlock(final BlockInformation blockInformation) {
-    final Transaction coinbase = getTransactionFromHex(blockInformation.getCoinbaseInformation().getRawHex());
-    final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
-
-    final RawTransactionContainer rawTransaction = new RawTransactionContainer();
-    final RawBlockContainer rawBlock = new RawBlockContainer();
-
     try {
+      final Transaction coinbase = getTransactionFromHex(blockInformation.getCoinbaseInformation().getRawHex());
+      final Block block = getBlockFromHex(blockInformation.getRawBlockHeaders());
+
+      final RawTransactionContainer rawTransaction = new RawTransactionContainer();
+      final RawBlockContainer rawBlock = new RawBlockContainer();
+
       BlockEncodeUtil.encodeBlock(block, rawBlock);
       TransactionEncodeUtil.encodeTransaction(coinbase, rawTransaction);
+
+      blockHashViewer.setHash(block.getBlockHash());
+      targetViewer.setBits(block.getBits());
+      coinbaseHashViewer.setHash(coinbase.getTransactionId());
+
+      versionViewer.setValue(block.getVersion());
+      previousBlockHashViewer.setValue(block.getPreviousBlockHash());
+      merkleRootViewer.setValue(block.getMerkleRoot());
+      timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));
+      bitsViewer.setValue(block.getBits());
+      nonceViewer.setValue(block.getNonce());
+
+      blockHexViewer.setValue(rawBlock.entrySet());
+      notFoundLabel.setVisible(blockInformation == null);
+      extraInformationContainer.setVisible(blockInformation != null);
+
+      coinbaseHexViewer.setValue(rawTransaction);
+
+      heightViewer.setValue(blockInformation.getHeight());
+      numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
+      numTransactionsViewer.setValue(blockInformation.getNumTransactions());
+      nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
+
+      blockWeightViewer.setValue(blockInformation.getWeight() / 1000D);
+      // blockVSizeViewer.setValue(Math.ceil(blockInformation.getWeight() / 4D) /
+      // 1000D);
+      blockBaseSizeViewer.setValue(blockInformation.getStrippedSize() / 1000D);
+      totalSizeViewer.setValue(blockInformation.getSize() / 1000D);
+
+      coinbaseInputViewer.setValue(TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
+
+      transactionPanel.clear();
+      loadTransactionsButton.setVisible(true);
     } catch (final Throwable e) {
       e.printStackTrace();
       // Eat.
     }
-
-    blockHashViewer.setHash(block.getBlockHash());
-    targetViewer.setBits(block.getBits());
-    coinbaseHashViewer.setHash(coinbase.getTransactionId());
-
-    versionViewer.setValue(block.getVersion());
-    previousBlockHashViewer.setValue(block.getPreviousBlockHash());
-    merkleRootViewer.setValue(block.getMerkleRoot());
-    timestampViewer.setValue(FormatUtil.formatDateTime(block.getTimestamp()));
-    bitsViewer.setValue(block.getBits());
-    nonceViewer.setValue(block.getNonce());
-
-    blockHexViewer.setValue(rawBlock.entrySet());
-    notFoundLabel.setVisible(blockInformation == null);
-    extraInformationContainer.setVisible(blockInformation != null);
-
-    coinbaseHexViewer.setValue(rawTransaction);
-
-    heightViewer.setValue(blockInformation.getHeight());
-    numConfirmationsViewer.setValue(blockInformation.getNumConfirmations());
-    numTransactionsViewer.setValue(blockInformation.getNumTransactions());
-    nextBlockViewer.setValue(blockInformation.getNextBlockHash().toUpperCase());
-    
-
-    blockWeightViewer.setValue(blockInformation.getWeight() / 1000D);
-    //blockVSizeViewer.setValue(Math.ceil(blockInformation.getWeight() / 4D) / 1000D);
-    blockBaseSizeViewer.setValue(blockInformation.getStrippedSize()  / 1000D);
-    totalSizeViewer.setValue(blockInformation.getSize() / 1000D);
-    
-    coinbaseInputViewer.setValue(
-        TextConversionUtil.fromASCIIBytes(rawTransaction.find(TransactionPartType.COINBASE_SCRIPT_SIG).getValue()));
-
-    transactionPanel.clear();
-    loadTransactionsButton.setVisible(true);
   }
 
   @UiHandler("loadTransactionsButton")

@@ -78,6 +78,9 @@ public class TransactionPartColorPicker {
     case WITNESS_PUSH_DATA:
       color = R.color().witnessPushData();
       break;
+    case ERROR:
+      color = R.color().error();
+      break;
     default:
       color = R.color().transactionArbitraryData();
       break;
