@@ -13,6 +13,8 @@
   <inherits name="com.google.gwt.inject.Inject" />
   <inherits name="com.googlecode.gwt.crypto.Crypto" />
   <inherits name="gwt.material.design.GwtMaterialDesign" />
+  <inherits name='com.google.web.bindery.event.EventBinder' />
+  <inherits name="nl.yogh.gwt.Extras" />
 
   <entry-point class='com.yoghurt.crypto.transactions.client.Application' />
   

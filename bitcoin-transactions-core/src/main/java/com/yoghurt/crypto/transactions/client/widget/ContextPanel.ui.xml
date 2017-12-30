@@ -3,8 +3,8 @@
   <ui:with field="res" type="com.yoghurt.crypto.transactions.client.resources.R.ApplicationResource" />
   <ui:style>
   .contextPanel {
-	box-shadow: 2px 3px 6px 2px #888;
-	background-color: rgba(255, 255, 255, 0.90);
+	box-shadow: 2px 3px 6px 2px #333;
+	background-color: rgba(55, 55, 55, 0.98);
 	border-top: 6px solid transparent;
   }
   </ui:style>

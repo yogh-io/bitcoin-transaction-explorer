@@ -11,6 +11,16 @@
 	  font-size: 1.2em;
 	  padding: 20px 0px;
 	}
+    .notificationAbsolute {
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    }
+    .themeSwitcher {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    }
   </ui:style>
   <g:FlowPanel styleName="{res.css.applicationMainPanel} {res.css.flex} {res.css.columns} {res.css.grow}">
     <g:FlowPanel styleName="{res.css.applicationHeaderPanel} z-depth-1" ui:field="header">
@@ -29,6 +39,8 @@
         <g:Label text="{i18n.applicationVersion}" styleName="{res.css.grow}" />
         <g:Anchor text="{i18n.applicationContributionText}" ui:field="contributeLink" styleName="{res.css.link}" />
 	  </g:FlowPanel>
-	</c:CustomFooter>	
+	</c:CustomFooter>
+    <g:Widget styleName="{style.notificationAbsolute}" ui:field="notificationPanel" />
+    <g:Widget styleName="{style.themeSwitcher}" title="Switch theme" ui:field="themeSwitcher" />
   </g:FlowPanel>
 </ui:UiBinder>

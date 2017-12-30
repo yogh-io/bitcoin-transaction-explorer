@@ -1,7 +1,6 @@
 package com.yoghurt.crypto.transactions.server.servlets;
 
 import com.yoghurt.crypto.transactions.server.servlets.providers.BitcoinJSONRPCRetriever;
-import com.yoghurt.crypto.transactions.server.servlets.providers.BlockrAPIRetriever;
 import com.yoghurt.crypto.transactions.shared.domain.config.AdministratedApplicationConfig;
 import com.yoghurt.crypto.transactions.shared.domain.config.BitcoinCoreNodeConfig;
 import com.yoghurt.crypto.transactions.shared.service.BlockchainRetrievalService;
@@ -27,12 +26,9 @@ public class BlockchainRetrievalFactory {
     BlockchainRetrievalService hook;
 
     switch (config.getBlockchainSource()) {
+    default:
     case NODE:
       hook = new BitcoinJSONRPCRetriever((BitcoinCoreNodeConfig) config);
-      break;
-    default:
-    case BLOCKR_API:
-      hook = new BlockrAPIRetriever();
       break;
     }
 

@@ -32,11 +32,11 @@ public class BlockActivity extends LookupActivity<BlockInformation, BlockPlace> 
   protected void doDeferredStart(final AcceptsOneWidget panel, final BlockInformation blockInformation) {
     panel.setWidget(view);
 
-    height = blockInformation.getHeight();
-
     if(blockInformation == null) {
       return;
     }
+
+    height = blockInformation.getHeight();
 
     view.setBlock(blockInformation);
   }

@@ -24,7 +24,7 @@ public final class ScriptOperationUtil {
         return op;
       }
     }
-
+    
     // Can't find it, return invalid op
     return Operation.OP_INVALIDOPCODE;
   }

@@ -76,6 +76,8 @@ public class SimpleTransactionContextWidget implements FieldContextFactory<Entry
       return "Witness item size: " + new VariableLengthInteger(value.getValue()).getValue() + " byte";
     case WITNESS_PUSH_DATA:
       return "Witness item data";
+    case ERROR:
+      return "Uninterpretable script bytes. (this script is invalid and cannot be spent)";
     default:
       return "Unknown transaction part";
     }

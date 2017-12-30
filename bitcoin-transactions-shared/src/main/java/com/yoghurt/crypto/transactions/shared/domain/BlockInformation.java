@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class BlockInformation implements Serializable, IsSerializable {
-  private static final long serialVersionUID = 4582485308423158376L;
+  private static final long serialVersionUID = -9201052365998596379L;
 
   private String rawBlockHeaders;
 

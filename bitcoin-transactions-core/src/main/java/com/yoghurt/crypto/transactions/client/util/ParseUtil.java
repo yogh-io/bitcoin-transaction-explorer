@@ -32,6 +32,7 @@ public final class ParseUtil {
     }
 
     TransactionParseUtil.parseTransactionBytes(Hex.decode(hex), t);
+
     return t;
   }
 }

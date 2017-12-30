@@ -1,5 +1,6 @@
 package com.yoghurt.crypto.transactions.shared.util;
 
+import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptEntity;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
@@ -50,11 +51,13 @@ public final class ScriptEncodeUtil {
 
       if (part.getOperation() == null) {
         container.add(TransactionPartType.COINBASE_SCRIPT_SIG, part.getBytes());
+      } else if (part.getOperation() == Operation.ERROR) {
+        container.add(TransactionPartType.ERROR, part.getBytes());
       } else {
         container.add(partType, new byte[] { ScriptOperationUtil.getOperationOpCode(part) });
 
         if (ScriptOperationUtil.isDataPushOperation(part.getOperation())) {
-          switch(part.getOperation().getOpcode()) {
+          switch (part.getOperation().getOpcode()) {
           case 76:
             final TransactionPartType push1PartType = ScriptOperationUtil.getScriptPartType(type, ScriptPartType.PUSH_DATA_EXTRA);
 

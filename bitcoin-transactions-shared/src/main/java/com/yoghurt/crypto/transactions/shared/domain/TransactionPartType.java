@@ -47,7 +47,9 @@ public enum TransactionPartType {
 
   WITNESS_PUSH_DATA_LENGTH(true),
 
-  WITNESS_PUSH_DATA(true);
+  WITNESS_PUSH_DATA(true),
+  
+  ERROR;
 
   private final boolean witnessPartType;
 

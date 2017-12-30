@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style type="nl.yogh.gwt.wui.widget.NotificationWidget.CustomStyle">
+    .panel {
+    margin: 10px;
+    padding: 40px 20px;
+    border-radius: 15px;
+    width: 300px;
+    color: white;
+    cursor: pointer;
+    background-color: #0000cc;
+    }
+    .error {
+    background-color: #cc0000;
+    }
+  </ui:style>
+  <g:Label styleName="{style.panel}" ui:field="message" />
+</ui:UiBinder> 

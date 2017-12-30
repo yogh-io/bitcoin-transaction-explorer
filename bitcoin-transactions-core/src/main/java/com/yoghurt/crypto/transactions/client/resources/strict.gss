@@ -1,20 +1,12 @@
-@def BACKGROUND_COLOR #EEE;
-@def CONTENT_COLOR #F7F7F7;
-@def FONT_COLOR #555;
-@def FONT_SUB_COLOR #888;
-@def ACCENT_COLOR #999;
+@def CONTENT_COLOR #292929;
 @def LINK_COLOR #FA8F08;
 
 html {
-  color: #333;
   font: normal normal normal 0.75em/normal FreeMono, Consolas, 'Courier New', 'Roboto', 'Lucida Grande';
-}
-body {
-  background-color: BACKGROUND_COLOR;
 }
 
 h1,h2,h3,h4,h5,h6 {
-  color: #555;
+  color: #888;
 }
 
 h1 {
@@ -25,12 +17,38 @@ h2 {
   font-size: 1.4em;
 }
 
+.bodyDark {
+  background: #333 !important;
+  color: #ccc;
+  transition: color 0.15s ease-out, background 0.15s ease-out;
+}
+.bodyLight {
+  background: #ddd !important;
+  color: #333;
+  transition: color 0.15s ease-out, background 0.15s ease-out;
+}
+
+.bodyDark .applicationProgressContainer, .bodyDark .applicationHeaderPanel, .bodyDark .applicationContent, .bodyDark .applicationFooterPanel {
+  background-color: #292929;
+}
+.bodyLight .applicationProgressContainer, .bodyLight .applicationHeaderPanel, .bodyLight .applicationContent, .bodyLight .applicationFooterPanel {
+  background-color: #f7f7f7;
+}
+.applicationProgressContainer, .applicationHeaderPanel, .applicationContent, .applicationFooterPanel {
+  transition: color 0.15s ease-out, background 0.15s ease-out;
+}
+.bodyDark .link {
+  color: #ccc;
+}
+.bodyLight .link {
+  color: #333;
+}
+
 .applicationMainPanel {
   width: 821px;
 }
 
 .applicationHeaderPanel {
-  background-color: CONTENT_COLOR;
   padding: 0px 20px;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
@@ -38,7 +56,6 @@ h2 {
 
 .applicationProgressContainer {
   height: 4px;
-  background-color: CONTENT_COLOR;
 }
 
 .alignRight {
@@ -48,13 +65,11 @@ h2 {
 .applicationContent {
   padding: 0px 20px 20px 20px;
   margin: 20px 0px;
-  background-color: CONTENT_COLOR;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
 }
 
 .applicationFooterPanel {
-  background-color: CONTENT_COLOR;
   padding: 0px 20px 0px;
   -webkit-flex-shrink: 0;
   flex-shrink: 0;
@@ -62,6 +77,7 @@ h2 {
 
 .link {
   cursor: pointer;
+  transition: color 0.15s ease-out, background 0.15s ease-out;
 }
 
 .link:hover {

@@ -6,7 +6,7 @@
   	font-family: consolas, courier new;
   	line-height: 24px;
   	padding: 0px 4px;
-  	background-color: rgba(255, 255, 255, 0);
+  	background-color: rgba(155, 155, 155, 0);
   	border-top: 3px solid transparent;
   	border-bottom: 3px solid transparent;
   	border-bottom-color: transparent !important;
@@ -18,13 +18,13 @@
 	min-width: 14.41px;
   }
   .contextField:hover {
-  	background-color: #eee !important;
+  	background-color: #888 !important;
   }
   .contextField:active {
-  	background-color: white !important;
+  	background-color: #999 !important;
   }
   .fieldSelected {
-  	background-color: white !important;
+  	background-color: #aaa !important;
   }
   .fieldActive {
   	border-bottom-color: gray !important;

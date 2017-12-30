@@ -18,6 +18,8 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.yoghurt.crypto.transactions.client.place.ApplicationPlace;
 import com.yoghurt.crypto.transactions.client.place.ContributePlace;
 import com.yoghurt.crypto.transactions.client.place.StartupPlace;
@@ -28,6 +30,9 @@ import com.yoghurt.crypto.transactions.shared.domain.config.UserApplicationConfi
 
 import gwt.material.design.client.ui.MaterialProgress;
 import gwt.material.design.client.ui.MaterialTextBox;
+import nl.yogh.gwt.wui.ThemeSwitcher;
+import nl.yogh.gwt.wui.util.NotificationUtil;
+import nl.yogh.gwt.wui.widget.NotificationPanel;
 
 @Singleton
 public class ApplicationRootView extends Composite implements AcceptsOneWidget, LazyProgressListener {
@@ -45,11 +50,22 @@ public class ApplicationRootView extends Composite implements AcceptsOneWidget, 
   @UiField SimplePanel progressContainer;
   @UiField MaterialProgress progress;
 
+  @UiField(provided = true) Widget notificationPanel;
+  @UiField(provided = true) Widget themeSwitcher;
+
   private final PlaceController placeController;
 
   @Inject
-  public ApplicationRootView(final PlaceHistoryMapper historyMapper, final PlaceController placeController, final UserApplicationConfig appConfig) {
+  public ApplicationRootView(final PlaceHistoryMapper historyMapper, final PlaceController placeController, final UserApplicationConfig appConfig,
+      NotificationPanel notificationPanel, ThemeSwitcher themeSwitcher) {
     this.placeController = placeController;
+    this.notificationPanel = notificationPanel;
+    this.themeSwitcher = themeSwitcher;
+
+    EventBus simpleEventBus = new SimpleEventBus();
+
+    notificationPanel.setEventBus(simpleEventBus);
+    NotificationUtil.setEventBus(simpleEventBus);
 
     initWidget(UI_BINDER.createAndBindUi(this));
 

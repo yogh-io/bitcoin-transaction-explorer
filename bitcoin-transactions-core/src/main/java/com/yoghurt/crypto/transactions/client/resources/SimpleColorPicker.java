@@ -260,4 +260,9 @@ public class SimpleColorPicker implements ColorPicker {
   public Color witnessPushData() {
     return ColorBuilder.interpret("darkorange");
   }
+  
+  @Override
+  public Color error() {
+    return ColorBuilder.interpret("darkred");
+  }
 }

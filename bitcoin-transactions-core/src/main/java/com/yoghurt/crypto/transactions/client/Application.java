@@ -3,6 +3,7 @@ package com.yoghurt.crypto.transactions.client;
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
@@ -67,6 +68,7 @@ public class Application implements EntryPoint {
     historyHandler.register(placeController, eventBus, defaultPlace);
     historyHandler.handleCurrentHistory();
 
+    Document.get().getDocumentElement().setClassName(R.css().bodyDark());
     RootPanel.get().add(appDisplay);
   }
 }

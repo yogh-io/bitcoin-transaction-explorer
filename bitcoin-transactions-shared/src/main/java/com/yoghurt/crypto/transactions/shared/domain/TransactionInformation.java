@@ -6,8 +6,8 @@ import java.util.Date;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class TransactionInformation implements Serializable, IsSerializable {
-  private static final long serialVersionUID = -5230934399747974590L;
-
+  private static final long serialVersionUID = -8708804939163189283L;
+  
   private TransactionState state;
   private Date time;
   private int confirmations;

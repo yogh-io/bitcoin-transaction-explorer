@@ -51,6 +51,10 @@ public final class R {
     String panel();
 
     String error();
+
+    String bodyLight();
+
+    String bodyDark();
   }
 
   /**

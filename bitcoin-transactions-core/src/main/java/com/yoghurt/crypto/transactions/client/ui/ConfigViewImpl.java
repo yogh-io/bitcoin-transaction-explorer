@@ -116,8 +116,6 @@ public class ConfigViewImpl extends Composite implements ConfigView {
 
   private ConfigEditor<?> createEditor(final BlockchainSource source) {
     switch (source) {
-    case BLOCKR_API:
-      return new BlockrConfigEditor();
     case NODE:
       return new NodeConfigEditor();
     }
