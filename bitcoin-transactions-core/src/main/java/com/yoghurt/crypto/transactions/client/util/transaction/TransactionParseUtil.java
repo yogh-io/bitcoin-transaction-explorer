@@ -2,18 +2,14 @@ package com.yoghurt.crypto.transactions.client.util.transaction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import com.google.gwt.core.shared.GWT;
-import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Hex;
 import com.yoghurt.crypto.transactions.client.util.witness.WitnessParseUtil;
 import com.yoghurt.crypto.transactions.shared.domain.RawTransactionContainer;
 import com.yoghurt.crypto.transactions.shared.domain.Transaction;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionInput;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutPoint;
 import com.yoghurt.crypto.transactions.shared.domain.TransactionOutput;
-import com.yoghurt.crypto.transactions.shared.domain.TransactionPartType;
 import com.yoghurt.crypto.transactions.shared.domain.VariableLengthInteger;
 import com.yoghurt.crypto.transactions.shared.domain.WitnessEntity;
 import com.yoghurt.crypto.transactions.shared.util.ArrayUtil;

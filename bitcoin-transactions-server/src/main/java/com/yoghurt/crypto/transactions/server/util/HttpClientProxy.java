@@ -20,8 +20,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-import com.google.gwt.core.shared.GWT;
-
 /**
  * Wrapper to get remote content and return it as an inputstream simply.
  */
@@ -64,7 +62,6 @@ public class HttpClientProxy {
     final HttpResponse httpResponse = client.execute(request);
 
     if (unsafe || httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-      GWT.log("Done.");
       return httpResponse.getEntity();
     } else {
       throw new HttpException(httpResponse.getStatusLine().toString() + EntityUtils.toString(httpResponse.getEntity()));
