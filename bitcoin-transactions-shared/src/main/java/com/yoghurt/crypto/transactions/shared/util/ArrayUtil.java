@@ -1,19 +1,11 @@
 package com.yoghurt.crypto.transactions.shared.util;
 
-
-import com.google.gwt.core.shared.GWT;
-
 public final class ArrayUtil {
   private ArrayUtil() {}
 
   public static byte[] arrayCopy(final byte[] bytes, final int start, final int end) {
     final byte[] destBytes = new byte[end - start];
 
-    GWT.log("");
-    GWT.log("Hex size: " + bytes.length);
-    GWT.log("start: " + start);
-    GWT.log("end: " + end);
-    
     System.arraycopy(bytes, start, destBytes, 0, end - start);
 
     return destBytes;

@@ -12,7 +12,7 @@ public final class ScriptParseUtil {
   public static int parseScript(final ScriptEntity entity, final int initialPointer, final byte[] bytes, final boolean isCoinbase) {
     int pointer = initialPointer;
 
-    // Parse the number of bytes in the script 
+    // Parse the number of bytes in the script
     pointer = parseScriptSize(entity, pointer, bytes);
     int startParsePointer = pointer;
 
@@ -21,21 +21,24 @@ public final class ScriptParseUtil {
       pointer = parseCoinbaseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue());
     } else {
       try {
-        pointer = parseScriptBytes(entity, pointer, bytes, entity.getScriptSize().getValue()); 
+        byte[] scriptBytes = ArrayUtil.arrayCopy(bytes, pointer, (int) (pointer + entity.getScriptSize().getValue()));
+
+        pointer += parseScriptBytes(entity, 0, scriptBytes, entity.getScriptSize().getValue());
       } catch (Exception e) {
         GWT.log("Falling back to error operation.");
         e.printStackTrace();
-        
+
         int endScriptPointer = (int) (startParsePointer + entity.getScriptSize().getValue());
-        
+
+        GWT.log("script starts at: " + startParsePointer);
         GWT.log("script ends at: " + endScriptPointer);
         GWT.log("pointer: " + pointer);
         GWT.log("script parts: " + entity.getInstructions().size());
-        
+
         pointer = pointer + entity.getInstructions().stream().mapToInt(v -> v.getBytes() == null ? 1 : v.getBytes().length).sum();
-        
-        GWT.log("recoverd pointer: " + pointer);
-        
+
+        GWT.log("recovered pointer: " + (startParsePointer + entity.getScriptSize().getValue()));
+
         entity.getInstructions().add(new ScriptPart(Operation.ERROR, ArrayUtil.arrayCopy(bytes, pointer, endScriptPointer)));
         return endScriptPointer;
       }
@@ -71,13 +74,12 @@ public final class ScriptParseUtil {
     int pointer = initialPointer;
 
     while (pointer < initialPointer + length) {
-      pointer = parseOpcode(pointer, scriptEntity, bytes);
-    }
+      if (pointer > initialPointer + length) {
+        throw new IllegalStateException(
+            "More bytes than advertised were consumed in the script. (advertised:" + length + ", actual:" + (pointer - initialPointer) + ")");
+      }
 
-    if (pointer != initialPointer + length) {
-      // throw new IllegalStateException("More bytes than advertised were consumed in
-      // the script. (advertised:" + length + ", actual:" + (pointer - initialPointer)
-      // + ")");
+      pointer = parseOpcode(pointer, scriptEntity, bytes);
     }
 
     return pointer;

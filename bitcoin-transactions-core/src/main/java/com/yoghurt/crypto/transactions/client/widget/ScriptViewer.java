@@ -8,6 +8,7 @@ import com.googlecode.gwt.crypto.util.Str;
 import com.yoghurt.crypto.transactions.client.util.TransactionPartColorPicker;
 import com.yoghurt.crypto.transactions.client.util.misc.Color;
 import com.yoghurt.crypto.transactions.client.util.misc.EllipsisUtil;
+import com.yoghurt.crypto.transactions.shared.domain.Operation;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPart;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptPartType;
 import com.yoghurt.crypto.transactions.shared.domain.ScriptType;
@@ -51,6 +52,8 @@ public class ScriptViewer extends ContextFieldSet<ScriptPart> {
   @Override
   protected String getFieldText(final ScriptPart value) {
     if(ScriptOperationUtil.isDataPushOperation(value.getOperation())) {
+      return EllipsisUtil.applyInner(Str.toString(Hex.encode(value.getBytes())).toUpperCase(), HASH_ELLIPSIS);
+    } else if (value.getOperation() == Operation.ERROR) {
       return EllipsisUtil.applyInner(Str.toString(Hex.encode(value.getBytes())).toUpperCase(), HASH_ELLIPSIS);
     } else {
       return value.getOperation().name();
